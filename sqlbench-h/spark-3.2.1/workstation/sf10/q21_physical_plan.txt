@@ -1,0 +1,41 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   LocalTableScan <empty>, [s_name#109, numwait#777L]
++- == Initial Plan ==
+   TakeOrderedAndProject(limit=100, orderBy=[numwait#777L DESC NULLS LAST,s_name#109 ASC NULLS FIRST], output=[s_name#109,numwait#777L])
+   +- HashAggregate(keys=[s_name#109], functions=[count(1)], output=[s_name#109, numwait#777L])
+      +- Exchange hashpartitioning(s_name#109, 200), ENSURE_REQUIREMENTS, [id=#7042]
+         +- HashAggregate(keys=[s_name#109], functions=[partial_count(1)], output=[s_name#109, count#816L])
+            +- Project [s_name#109]
+               +- BroadcastHashJoin [s_nationkey#111L], [n_nationkey#48L], Inner, BuildRight, false
+                  :- Project [s_name#109, s_nationkey#111L]
+                  :  +- SortMergeJoin [l_orderkey#16L], [o_orderkey#56L], Inner
+                  :     :- Project [s_name#109, s_nationkey#111L, l_orderkey#16L]
+                  :     :  +- BroadcastHashJoin [s_suppkey#108L], [l_suppkey#18L], Inner, BuildLeft, false
+                  :     :     :- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [id=#7027]
+                  :     :     :  +- Filter (isnotnull(s_suppkey#108L) AND isnotnull(s_nationkey#111L))
+                  :     :     :     +- FileScan parquet [s_suppkey#108L,s_name#109,s_nationkey#111L] Batched: true, DataFilters: [isnotnull(s_suppkey#108L), isnotnull(s_nationkey#111L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/supplier.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(s_suppkey), IsNotNull(s_nationkey)], ReadSchema: struct<s_suppkey:bigint,s_name:string,s_nationkey:bigint>
+                  :     :     +- SortMergeJoin [l_orderkey#16L], [l_orderkey#797L], LeftAnti, NOT (l_suppkey#799L = l_suppkey#18L)
+                  :     :        :- SortMergeJoin [l_orderkey#16L], [l_orderkey#781L], LeftSemi, NOT (l_suppkey#783L = l_suppkey#18L)
+                  :     :        :  :- Sort [l_orderkey#16L ASC NULLS FIRST], false, 0
+                  :     :        :  :  +- Exchange hashpartitioning(l_orderkey#16L, 200), ENSURE_REQUIREMENTS, [id=#7016]
+                  :     :        :  :     +- Project [l_orderkey#16L, l_suppkey#18L]
+                  :     :        :  :        +- Filter ((((isnotnull(l_receiptdate#28) AND isnotnull(l_commitdate#27)) AND (l_receiptdate#28 > l_commitdate#27)) AND isnotnull(l_suppkey#18L)) AND isnotnull(l_orderkey#16L))
+                  :     :        :  :           +- FileScan parquet [l_orderkey#16L,l_suppkey#18L,l_commitdate#27,l_receiptdate#28] Batched: true, DataFilters: [isnotnull(l_receiptdate#28), isnotnull(l_commitdate#27), (l_receiptdate#28 > l_commitdate#27), i..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_receiptdate), IsNotNull(l_commitdate), IsNotNull(l_suppkey), IsNotNull(l_orderkey)], ReadSchema: struct<l_orderkey:bigint,l_suppkey:bigint,l_commitdate:date,l_receiptdate:date>
+                  :     :        :  +- Sort [l_orderkey#781L ASC NULLS FIRST], false, 0
+                  :     :        :     +- Exchange hashpartitioning(l_orderkey#781L, 200), ENSURE_REQUIREMENTS, [id=#7017]
+                  :     :        :        +- FileScan parquet [l_orderkey#781L,l_suppkey#783L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<l_orderkey:bigint,l_suppkey:bigint>
+                  :     :        +- Sort [l_orderkey#797L ASC NULLS FIRST], false, 0
+                  :     :           +- Exchange hashpartitioning(l_orderkey#797L, 200), ENSURE_REQUIREMENTS, [id=#7023]
+                  :     :              +- Project [l_orderkey#797L, l_suppkey#799L]
+                  :     :                 +- Filter ((isnotnull(l_receiptdate#809) AND isnotnull(l_commitdate#808)) AND (l_receiptdate#809 > l_commitdate#808))
+                  :     :                    +- FileScan parquet [l_orderkey#797L,l_suppkey#799L,l_commitdate#808,l_receiptdate#809] Batched: true, DataFilters: [isnotnull(l_receiptdate#809), isnotnull(l_commitdate#808), (l_receiptdate#809 > l_commitdate#808)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_receiptdate), IsNotNull(l_commitdate)], ReadSchema: struct<l_orderkey:bigint,l_suppkey:bigint,l_commitdate:date,l_receiptdate:date>
+                  :     +- Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+                  :        +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#7032]
+                  :           +- Project [o_orderkey#56L]
+                  :              +- Filter ((isnotnull(o_orderstatus#58) AND (o_orderstatus#58 = F)) AND isnotnull(o_orderkey#56L))
+                  :                 +- FileScan parquet [o_orderkey#56L,o_orderstatus#58] Batched: true, DataFilters: [isnotnull(o_orderstatus#58), (o_orderstatus#58 = F), isnotnull(o_orderkey#56L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_orderstatus), EqualTo(o_orderstatus,F), IsNotNull(o_orderkey)], ReadSchema: struct<o_orderkey:bigint,o_orderstatus:string>
+                  +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, true]),false), [id=#7037]
+                     +- Project [n_nationkey#48L]
+                        +- Filter ((isnotnull(n_name#49) AND (n_name#49 = ROMANIA)) AND isnotnull(n_nationkey#48L))
+                           +- FileScan parquet [n_nationkey#48L,n_name#49] Batched: true, DataFilters: [isnotnull(n_name#49), (n_name#49 = ROMANIA), isnotnull(n_nationkey#48L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/nation.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(n_name), EqualTo(n_name,ROMANIA), IsNotNull(n_nationkey)], ReadSchema: struct<n_nationkey:bigint,n_name:string>

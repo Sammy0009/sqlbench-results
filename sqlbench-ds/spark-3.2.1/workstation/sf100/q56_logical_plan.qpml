@@ -1,0 +1,241 @@
+---
+diagram:
+  title: "GlobalLimit (unknown)"
+  operator: "GlobalLimit"
+  inputs:
+  - title: "LocalLimit (unknown)"
+    operator: "LocalLimit"
+    inputs:
+    - title: "Sort (unknown)"
+      operator: "Sort"
+      inputs:
+      - title: "Aggregate (unknown)"
+        operator: "Aggregate"
+        inputs:
+        - title: "Union (unknown)"
+          operator: "Union"
+          inputs:
+          - title: "Aggregate (unknown)"
+            operator: "Aggregate"
+            inputs:
+            - title: "Projection: ss_ext_sales_price#267, i_item_id#669"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some((ss_addr_sk#258 = ca_address_sk#62))"
+                operator: "join"
+                inputs:
+                - title: "Projection: ss_addr_sk#258, ss_ext_sales_price#267, i_item_id#669"
+                  operator: "projection"
+                  inputs:
+                  - title: "Inner Join: Some((ss_item_sk#254 = i_item_sk#668))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: ss_item_sk#254, ss_addr_sk#258, ss_ext_sales_price#267"
+                      operator: "projection"
+                      inputs:
+                      - title: "Inner Join: Some((ss_sold_date_sk#252 = d_date_sk#612))"
+                        operator: "join"
+                        inputs:
+                        - title: "Projection: ss_sold_date_sk#252, ss_item_sk#254,\
+                            \ ss_addr_sk#258, ss_ext_sales_price#267"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (isnotnull(ss_sold_date_sk#252) AND (isnotnull(ss_item_sk#254)\
+                              \ AND isnotnull(ss_addr_sk#258)))"
+                            operator: "filter"
+                            inputs:
+                            - title: "store_sales.parquet"
+                              operator: "scan"
+                              inputs: []
+                        - title: "Projection: d_date_sk#612"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (((isnotnull(d_year#618) AND isnotnull(d_moy#620))\
+                              \ AND ((d_year#618 = 2000) AND (d_moy#620 = 5))) AND\
+                              \ isnotnull(d_date_sk#612))"
+                            operator: "filter"
+                            inputs:
+                            - title: "date_dim.parquet"
+                              operator: "scan"
+                              inputs: []
+                    - title: "LeftSemi Join: Some((i_item_id#669 = i_item_id#18106))"
+                      operator: "join"
+                      inputs:
+                      - title: "Projection: i_item_sk#668, i_item_id#669"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: isnotnull(i_item_sk#668)"
+                          operator: "filter"
+                          inputs:
+                          - title: "item.parquet"
+                            operator: "scan"
+                            inputs: []
+                      - title: "Projection: i_item_id#18106"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: i_color#18122 IN (cyan,royal,seashell)"
+                          operator: "filter"
+                          inputs:
+                          - title: "item.parquet"
+                            operator: "scan"
+                            inputs: []
+                - title: "Projection: ca_address_sk#62"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: ((isnotnull(ca_gmt_offset#73) AND (ca_gmt_offset#73\
+                      \ = -6.00)) AND isnotnull(ca_address_sk#62))"
+                    operator: "filter"
+                    inputs:
+                    - title: "customer_address.parquet"
+                      operator: "scan"
+                      inputs: []
+          - title: "Aggregate (unknown)"
+            operator: "Aggregate"
+            inputs:
+            - title: "Projection: cs_ext_sales_price#567, i_item_id#18021"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some((cs_bill_addr_sk#550 = ca_address_sk#18007))"
+                operator: "join"
+                inputs:
+                - title: "Projection: cs_bill_addr_sk#550, cs_ext_sales_price#567,\
+                    \ i_item_id#18021"
+                  operator: "projection"
+                  inputs:
+                  - title: "Inner Join: Some((cs_item_sk#559 = i_item_sk#18020))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: cs_bill_addr_sk#550, cs_item_sk#559, cs_ext_sales_price#567"
+                      operator: "projection"
+                      inputs:
+                      - title: "Inner Join: Some((cs_sold_date_sk#544 = d_date_sk#17979))"
+                        operator: "join"
+                        inputs:
+                        - title: "Projection: cs_sold_date_sk#544, cs_bill_addr_sk#550,\
+                            \ cs_item_sk#559, cs_ext_sales_price#567"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (isnotnull(cs_sold_date_sk#544) AND (isnotnull(cs_item_sk#559)\
+                              \ AND isnotnull(cs_bill_addr_sk#550)))"
+                            operator: "filter"
+                            inputs:
+                            - title: "catalog_sales.parquet"
+                              operator: "scan"
+                              inputs: []
+                        - title: "Projection: d_date_sk#17979"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (((isnotnull(d_year#17985) AND isnotnull(d_moy#17987))\
+                              \ AND ((d_year#17985 = 2000) AND (d_moy#17987 = 5)))\
+                              \ AND isnotnull(d_date_sk#17979))"
+                            operator: "filter"
+                            inputs:
+                            - title: "date_dim.parquet"
+                              operator: "scan"
+                              inputs: []
+                    - title: "LeftSemi Join: Some((i_item_id#18021 = i_item_id#18128))"
+                      operator: "join"
+                      inputs:
+                      - title: "Projection: i_item_sk#18020, i_item_id#18021"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: isnotnull(i_item_sk#18020)"
+                          operator: "filter"
+                          inputs:
+                          - title: "item.parquet"
+                            operator: "scan"
+                            inputs: []
+                      - title: "Projection: i_item_id#18128"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: i_color#18144 IN (cyan,royal,seashell)"
+                          operator: "filter"
+                          inputs:
+                          - title: "item.parquet"
+                            operator: "scan"
+                            inputs: []
+                - title: "Projection: ca_address_sk#18007"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: ((isnotnull(ca_gmt_offset#18018) AND (ca_gmt_offset#18018\
+                      \ = -6.00)) AND isnotnull(ca_address_sk#18007))"
+                    operator: "filter"
+                    inputs:
+                    - title: "customer_address.parquet"
+                      operator: "scan"
+                      inputs: []
+          - title: "Aggregate (unknown)"
+            operator: "Aggregate"
+            inputs:
+            - title: "Projection: ws_ext_sales_price#499, i_item_id#18084"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some((ws_bill_addr_sk#483 = ca_address_sk#18070))"
+                operator: "join"
+                inputs:
+                - title: "Projection: ws_bill_addr_sk#483, ws_ext_sales_price#499,\
+                    \ i_item_id#18084"
+                  operator: "projection"
+                  inputs:
+                  - title: "Inner Join: Some((ws_item_sk#479 = i_item_sk#18083))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: ws_item_sk#479, ws_bill_addr_sk#483, ws_ext_sales_price#499"
+                      operator: "projection"
+                      inputs:
+                      - title: "Inner Join: Some((ws_sold_date_sk#476 = d_date_sk#18042))"
+                        operator: "join"
+                        inputs:
+                        - title: "Projection: ws_sold_date_sk#476, ws_item_sk#479,\
+                            \ ws_bill_addr_sk#483, ws_ext_sales_price#499"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (isnotnull(ws_sold_date_sk#476) AND (isnotnull(ws_item_sk#479)\
+                              \ AND isnotnull(ws_bill_addr_sk#483)))"
+                            operator: "filter"
+                            inputs:
+                            - title: "web_sales.parquet"
+                              operator: "scan"
+                              inputs: []
+                        - title: "Projection: d_date_sk#18042"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (((isnotnull(d_year#18048) AND isnotnull(d_moy#18050))\
+                              \ AND ((d_year#18048 = 2000) AND (d_moy#18050 = 5)))\
+                              \ AND isnotnull(d_date_sk#18042))"
+                            operator: "filter"
+                            inputs:
+                            - title: "date_dim.parquet"
+                              operator: "scan"
+                              inputs: []
+                    - title: "LeftSemi Join: Some((i_item_id#18084 = i_item_id#18150))"
+                      operator: "join"
+                      inputs:
+                      - title: "Projection: i_item_sk#18083, i_item_id#18084"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: isnotnull(i_item_sk#18083)"
+                          operator: "filter"
+                          inputs:
+                          - title: "item.parquet"
+                            operator: "scan"
+                            inputs: []
+                      - title: "Projection: i_item_id#18150"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: i_color#18166 IN (cyan,royal,seashell)"
+                          operator: "filter"
+                          inputs:
+                          - title: "item.parquet"
+                            operator: "scan"
+                            inputs: []
+                - title: "Projection: ca_address_sk#18070"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: ((isnotnull(ca_gmt_offset#18081) AND (ca_gmt_offset#18081\
+                      \ = -6.00)) AND isnotnull(ca_address_sk#18070))"
+                    operator: "filter"
+                    inputs:
+                    - title: "customer_address.parquet"
+                      operator: "scan"
+                      inputs: []

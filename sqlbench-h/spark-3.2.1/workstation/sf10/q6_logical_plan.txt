@@ -1,0 +1,4 @@
+Aggregate [sum(CheckOverflow((promote_precision(l_extendedprice#21) * promote_precision(l_discount#22)), DecimalType(23,4), true)) AS revenue#331]
++- Project [l_extendedprice#21, l_discount#22]
+   +- Filter (((isnotnull(l_shipdate#26) AND isnotnull(l_discount#22)) AND isnotnull(l_quantity#20)) AND (((l_shipdate#26 >= 1997-01-01) AND (l_shipdate#26 < 1998-01-01)) AND (((l_discount#22 >= 0.06) AND (l_discount#22 <= 0.08)) AND (l_quantity#20 < 25.00))))
+      +- Relation [l_orderkey#16L,l_partkey#17L,l_suppkey#18L,l_linenumber#19,l_quantity#20,l_extendedprice#21,l_discount#22,l_tax#23,l_returnflag#24,l_linestatus#25,l_shipdate#26,l_commitdate#27,l_receiptdate#28,l_shipinstruct#29,l_shipmode#30,l_comment#31] parquet

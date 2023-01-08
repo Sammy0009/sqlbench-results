@@ -1,0 +1,45 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   *(5) Sort [l_shipmode#30 ASC NULLS FIRST], true, 0
+   +- AQEShuffleRead coalesced
+      +- ShuffleQueryStage 4
+         +- Exchange rangepartitioning(l_shipmode#30 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#3830]
+            +- *(4) HashAggregate(keys=[l_shipmode#30], functions=[sum(CASE WHEN ((o_orderpriority#61 = 1-URGENT) OR (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END), sum(CASE WHEN (NOT (o_orderpriority#61 = 1-URGENT) AND NOT (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END)], output=[l_shipmode#30, high_line_count#517L, low_line_count#518L])
+               +- AQEShuffleRead coalesced
+                  +- ShuffleQueryStage 3
+                     +- Exchange hashpartitioning(l_shipmode#30, 200), ENSURE_REQUIREMENTS, [id=#3797]
+                        +- *(3) HashAggregate(keys=[l_shipmode#30], functions=[partial_sum(CASE WHEN ((o_orderpriority#61 = 1-URGENT) OR (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END), partial_sum(CASE WHEN (NOT (o_orderpriority#61 = 1-URGENT) AND NOT (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END)], output=[l_shipmode#30, sum#526L, sum#527L])
+                           +- *(3) Project [o_orderpriority#61, l_shipmode#30]
+                              +- *(3) BroadcastHashJoin [o_orderkey#56L], [l_orderkey#16L], Inner, BuildRight, false
+                                 :- AQEShuffleRead local
+                                 :  +- ShuffleQueryStage 0
+                                 :     +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#3612]
+                                 :        +- *(1) Filter isnotnull(o_orderkey#56L)
+                                 :           +- *(1) ColumnarToRow
+                                 :              +- FileScan parquet [o_orderkey#56L,o_orderpriority#61] Batched: true, DataFilters: [isnotnull(o_orderkey#56L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_orderkey)], ReadSchema: struct<o_orderkey:bigint,o_orderpriority:string>
+                                 +- BroadcastQueryStage 2
+                                    +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, true]),false), [id=#3737]
+                                       +- AQEShuffleRead local
+                                          +- ShuffleQueryStage 1
+                                             +- Exchange hashpartitioning(l_orderkey#16L, 200), ENSURE_REQUIREMENTS, [id=#3631]
+                                                +- *(2) Project [l_orderkey#16L, l_shipmode#30]
+                                                   +- *(2) Filter ((((((((isnotnull(l_commitdate#27) AND isnotnull(l_receiptdate#28)) AND isnotnull(l_shipdate#26)) AND l_shipmode#30 IN (FOB,AIR)) AND (l_commitdate#27 < l_receiptdate#28)) AND (l_shipdate#26 < l_commitdate#27)) AND (l_receiptdate#28 >= 1994-01-01)) AND (l_receiptdate#28 < 1995-01-01)) AND isnotnull(l_orderkey#16L))
+                                                      +- *(2) ColumnarToRow
+                                                         +- FileScan parquet [l_orderkey#16L,l_shipdate#26,l_commitdate#27,l_receiptdate#28,l_shipmode#30] Batched: true, DataFilters: [isnotnull(l_commitdate#27), isnotnull(l_receiptdate#28), isnotnull(l_shipdate#26), l_shipmode#30..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_commitdate), IsNotNull(l_receiptdate), IsNotNull(l_shipdate), In(l_shipmode, [AIR,FO..., ReadSchema: struct<l_orderkey:bigint,l_shipdate:date,l_commitdate:date,l_receiptdate:date,l_shipmode:string>
++- == Initial Plan ==
+   Sort [l_shipmode#30 ASC NULLS FIRST], true, 0
+   +- Exchange rangepartitioning(l_shipmode#30 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#3575]
+      +- HashAggregate(keys=[l_shipmode#30], functions=[sum(CASE WHEN ((o_orderpriority#61 = 1-URGENT) OR (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END), sum(CASE WHEN (NOT (o_orderpriority#61 = 1-URGENT) AND NOT (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END)], output=[l_shipmode#30, high_line_count#517L, low_line_count#518L])
+         +- Exchange hashpartitioning(l_shipmode#30, 200), ENSURE_REQUIREMENTS, [id=#3572]
+            +- HashAggregate(keys=[l_shipmode#30], functions=[partial_sum(CASE WHEN ((o_orderpriority#61 = 1-URGENT) OR (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END), partial_sum(CASE WHEN (NOT (o_orderpriority#61 = 1-URGENT) AND NOT (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END)], output=[l_shipmode#30, sum#526L, sum#527L])
+               +- Project [o_orderpriority#61, l_shipmode#30]
+                  +- SortMergeJoin [o_orderkey#56L], [l_orderkey#16L], Inner
+                     :- Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+                     :  +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#3564]
+                     :     +- Filter isnotnull(o_orderkey#56L)
+                     :        +- FileScan parquet [o_orderkey#56L,o_orderpriority#61] Batched: true, DataFilters: [isnotnull(o_orderkey#56L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_orderkey)], ReadSchema: struct<o_orderkey:bigint,o_orderpriority:string>
+                     +- Sort [l_orderkey#16L ASC NULLS FIRST], false, 0
+                        +- Exchange hashpartitioning(l_orderkey#16L, 200), ENSURE_REQUIREMENTS, [id=#3565]
+                           +- Project [l_orderkey#16L, l_shipmode#30]
+                              +- Filter ((((((((isnotnull(l_commitdate#27) AND isnotnull(l_receiptdate#28)) AND isnotnull(l_shipdate#26)) AND l_shipmode#30 IN (FOB,AIR)) AND (l_commitdate#27 < l_receiptdate#28)) AND (l_shipdate#26 < l_commitdate#27)) AND (l_receiptdate#28 >= 1994-01-01)) AND (l_receiptdate#28 < 1995-01-01)) AND isnotnull(l_orderkey#16L))
+                                 +- FileScan parquet [l_orderkey#16L,l_shipdate#26,l_commitdate#27,l_receiptdate#28,l_shipmode#30] Batched: true, DataFilters: [isnotnull(l_commitdate#27), isnotnull(l_receiptdate#28), isnotnull(l_shipdate#26), l_shipmode#30..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_commitdate), IsNotNull(l_receiptdate), IsNotNull(l_shipdate), In(l_shipmode, [AIR,FO..., ReadSchema: struct<l_orderkey:bigint,l_shipdate:date,l_commitdate:date,l_receiptdate:date,l_shipmode:string>

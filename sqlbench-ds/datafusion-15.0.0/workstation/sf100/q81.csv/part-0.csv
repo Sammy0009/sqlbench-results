@@ -1,0 +1,101 @@
+c_customer_id,c_salutation,c_first_name,c_last_name,ca_street_number,ca_street_name,ca_street_type,ca_suite_number,ca_city,ca_county,ca_state,ca_zip,ca_country,ca_gmt_offset,ca_location_type,ctr_total_return
+AAAAAAAAAAACLBAA,Mr.,Robert,Quiroz,419,Willow View,Street,Suite 150,Antioch,Polk County,IA,58605,United States,-6.00,single family,5462.16
+AAAAAAAAAAADNAAA,Dr.,Mark,Mccall,87,Second ,ST,Suite X,Brunswick,Fremont County,IA,54642,United States,-6.00,apartment,2339.41
+AAAAAAAAAAADOBAA,Mrs.,Barbara,Colon,916,Fifteenth 6th,Street,Suite N,Pleasant Hill,Pocahontas County,IA,53604,United States,-6.00,condo,2112.60
+AAAAAAAAAAAFOBAA,Ms.,Sheila,Owens,646,Fourth Jackson,ST,Suite 160,Mountain View,Kossuth County,IA,54466,United States,-6.00,apartment,1866.51
+AAAAAAAAAAAJCBAA,Mrs.,Emily,Rivera,789,Walnut Sunset,Ln,Suite J,Buena Vista,Monona County,IA,55752,United States,-6.00,condo,11870.22
+AAAAAAAAAAAJHBAA,Sir,John,Mcintosh,948,12th ,Street,Suite S,Lebanon,Fremont County,IA,52898,United States,-6.00,apartment,2957.49
+AAAAAAAAAABHJAAA,Miss,Jane,Collins,855,View ,RD,Suite 350,Deerfield,Butler County,IA,59840,United States,-6.00,condo,3291.72
+AAAAAAAAAABJEAAA,Dr.,Keith,Souza,398,Madison Third,Dr.,Suite O,Macedonia,Carroll County,IA,51087,United States,-6.00,apartment,6616.72
+AAAAAAAAAABNFAAA,Dr.,Louise,West,930,Willow ,RD,Suite 300,The Meadows,Polk County,IA,50026,United States,-6.00,single family,5142.67
+AAAAAAAAAABOMBAA,Sir,William,Martin,781,Twelfth ,RD,Suite 150,Valley View,Taylor County,IA,55124,United States,-6.00,condo,10228.84
+AAAAAAAAAACADAAA,Ms.,Cathleen,Tucker,201,Franklin Cedar,Road,Suite 280,Cedar Grove,Lee County,IA,50411,United States,-6.00,condo,1969.36
+AAAAAAAAAACADAAA,Ms.,Cathleen,Tucker,201,Franklin Cedar,Road,Suite 280,Cedar Grove,Lee County,IA,50411,United States,-6.00,condo,4180.92
+AAAAAAAAAACHMAAA,Miss,Sharon,Mills,498,Pine 9th,Court,Suite O,Union,Monona County,IA,58721,United States,-6.00,condo,12509.60
+AAAAAAAAAACHOBAA,Ms.,Emma,Stott,450,View 6th,Dr.,Suite U,Crossroads,Lucas County,IA,50534,United States,-6.00,apartment,1765.73
+AAAAAAAAAADABBAA,Dr.,Daniel,Dempsey,263,Walnut ,Dr.,Suite 60,Oakwood,Webster County,IA,50169,United States,-6.00,single family,4081.83
+AAAAAAAAAADDABAA,,Eddie,,363,Washington Dogwood,Road,Suite D,Centerville,Carroll County,IA,50059,United States,-6.00,apartment,2245.56
+AAAAAAAAAADNLAAA,Sir,Scott,Odell,285,Hill ,Wy,Suite L,Green Acres,Madison County,IA,57683,United States,-6.00,single family,2629.22
+AAAAAAAAAADOEAAA,Dr.,Kassandra,Beasley,663,Hickory ,Circle,Suite O,Glendale,Van Buren County,IA,53951,United States,-6.00,condo,2346.51
+AAAAAAAAAAEGEBAA,Mrs.,Angeline,Paterson,663,South 3rd,Parkway,Suite 460,Ashley,Madison County,IA,54324,United States,-6.00,apartment,1958.88
+AAAAAAAAAAEIHAAA,Miss,Louise,Kline,723,Elm Meadow,Wy,Suite 210,Hamilton,Muscatine County,IA,52808,United States,-6.00,apartment,7675.14
+AAAAAAAAAAEIOBAA,Ms.,Faye,Martinson,573,West 13th,Road,Suite W,Enterprise,Tama County,IA,51757,United States,-6.00,apartment,7876.00
+AAAAAAAAAAELDBAA,Mrs.,Katherine,White,696,Sixth 10th,ST,Suite 100,Oakland,Muscatine County,IA,59843,United States,-6.00,condo,2906.26
+AAAAAAAAAAELDBAA,Mrs.,Katherine,White,696,Sixth 10th,ST,Suite 100,Oakland,Muscatine County,IA,59843,United States,-6.00,condo,4454.10
+AAAAAAAAAAELDBAA,Mrs.,Katherine,White,696,Sixth 10th,ST,Suite 100,Oakland,Muscatine County,IA,59843,United States,-6.00,condo,6663.33
+AAAAAAAAAAFDCAAA,Mrs.,Wynona,Serrano,859,Cherry 8th,Pkwy,Suite 450,Maple Grove,Sac County,IA,58252,United States,-6.00,condo,2252.44
+AAAAAAAAAAFIBAAA,Mrs.,Angela,Preston,569,Seventh Walnut,Dr.,Suite 410,Marion,Calhoun County,IA,50399,United States,-6.00,single family,4514.69
+AAAAAAAAAAFJOAAA,Sir,Elias,Rojas,386,Third ,Dr.,Suite 390,Mechanicsburg,Franklin County,IA,52219,United States,-6.00,single family,1830.33
+AAAAAAAAAAFNGAAA,Mrs.,Amanda,Quinones,939,Cedar ,Circle,Suite 430,New Hope,Keokuk County,IA,59431,United States,-6.00,single family,10676.39
+AAAAAAAAAAFONAAA,Ms.,Abigail,Keeney,146,Pine Lakeview,RD,Suite 370,Five Forks,Buena Vista County,IA,52293,United States,-6.00,apartment,3229.82
+AAAAAAAAAAFONAAA,Ms.,Abigail,Keeney,146,Pine Lakeview,RD,Suite 370,Five Forks,Buena Vista County,IA,52293,United States,-6.00,apartment,13044.35
+AAAAAAAAAAGNGAAA,Mr.,Mathew,Freeman,260,8th ,Way,Suite G,Union,Chickasaw County,IA,58721,United States,-6.00,apartment,5636.00
+AAAAAAAAAAHCHBAA,Dr.,Jeanine,Norman,146,Center 15th,Dr.,Suite 0,Riverdale,Franklin County,IA,59391,United States,-6.00,condo,3179.08
+AAAAAAAAAAHECAAA,Dr.,Daniel,Holmes,58,Spruce 4th,Pkwy,Suite B,Florence,Crawford County,IA,53394,United States,-6.00,condo,1678.14
+AAAAAAAAAAHEKBAA,Mr.,Kenneth,Johnson,615,,Wy,Suite 110,Greenville,,IA,,,,,2164.86
+AAAAAAAAAAHFFBAA,Sir,Robert,Acevedo,690,Ash ,Road,Suite H,Maple Grove,Davis County,IA,58252,United States,-6.00,single family,2115.31
+AAAAAAAAAAHGKAAA,,Paul,,977,Maple North,Circle,Suite 390,Highland Park,Page County,IA,56534,United States,-6.00,condo,3222.19
+AAAAAAAAAAHMCAAA,Mrs.,Maxine,Ulmer,891,Ridge South,Avenue,Suite 160,Shady Grove,Muscatine County,IA,52812,United States,-6.00,apartment,4601.57
+AAAAAAAAAAIAGAAA,Miss,Sharon,Howell,472,Jefferson ,Road,Suite X,Hillcrest,Calhoun County,IA,53003,United States,-6.00,condo,9012.64
+AAAAAAAAAAIFOAAA,Dr.,Mildred,Conners,251,3rd 13th,Drive,Suite 460,Harmony,Delaware County,IA,55804,United States,-6.00,apartment,4728.25
+AAAAAAAAAAIIBAAA,Dr.,Monique,Rivera,275,10th ,Wy,Suite N,Edgewood,Des Moines County,IA,50069,United States,-6.00,apartment,2681.25
+AAAAAAAAAAIOLBAA,Mrs.,Elizabeth,White,877,Thirteenth ,Ln,Suite 350,White Oak,Fremont County,IA,56668,United States,-6.00,condo,9921.66
+AAAAAAAAAAJAGAAA,Sir,Christopher,Guy,152,7th ,Parkway,Suite 260,Lebanon,Grundy County,IA,52898,United States,-6.00,apartment,5991.24
+AAAAAAAAAAJBAAAA,Sir,Frank,Johnson,763,Wilson ,ST,Suite 440,Belmont,Jasper County,IA,50191,United States,-6.00,single family,2220.27
+AAAAAAAAAAJCOBAA,Mr.,Lewis,Piazza,211,View Forest,Lane,Suite E,Woodville,Ida County,IA,54289,United States,-6.00,condo,1793.49
+AAAAAAAAAAJGBAAA,Sir,Walter,Smith,512,Spring ,Blvd,Suite P,Springdale,Dallas County,IA,58883,United States,-6.00,single family,1904.01
+AAAAAAAAAAJIKBAA,Dr.,Karen,Perales,799,Lincoln South,Ct.,Suite 90,Lakeside,Dallas County,IA,59532,United States,-6.00,condo,2690.63
+AAAAAAAAAAKAHBAA,Miss,Linda,Williams,716,4th 7th,Parkway,Suite B,Kingston,Chickasaw County,IA,54975,United States,-6.00,apartment,3095.15
+AAAAAAAAAAKDAAAA,Mr.,Stephen,Valdes,151,Maple ,Avenue,Suite A,Mount Pleasant,Shelby County,IA,51933,United States,-6.00,apartment,1813.87
+AAAAAAAAAAKDCAAA,Ms.,Sandra,Mccarthy,80,Oak Highland,Pkwy,Suite 200,Bethel,Delaware County,IA,55281,United States,-6.00,apartment,2012.18
+AAAAAAAAAAKFHAAA,Dr.,James,Garcia,197,First ,Court,Suite 470,Georgetown,Clayton County,IA,57057,United States,-6.00,condo,3011.11
+AAAAAAAAAAKFHAAA,Dr.,James,Garcia,197,First ,Court,Suite 470,Georgetown,Clayton County,IA,57057,United States,-6.00,condo,3624.04
+AAAAAAAAAAKMNAAA,Sir,David,Stark,366,Park ,ST,Suite M,Woodland,Shelby County,IA,54854,United States,-6.00,condo,1702.73
+AAAAAAAAAAKMNAAA,Sir,David,Stark,366,Park ,ST,Suite M,Woodland,Shelby County,IA,54854,United States,-6.00,condo,2104.79
+AAAAAAAAAAKPFAAA,Sir,Micheal,Serrano,875,Main ,Avenue,Suite W,Mount Vernon,Scott County,IA,58482,United States,-6.00,apartment,10024.56
+AAAAAAAAAALACBAA,Sir,Javier,Allen,603,Ninth ,Parkway,Suite 70,Jamestown,Scott County,IA,56867,United States,-6.00,apartment,2142.07
+AAAAAAAAAALAEAAA,,,Mckinney,865,Williams ,Circle,Suite 490,Unionville,Boone County,IA,51711,United States,-6.00,apartment,2739.46
+AAAAAAAAAALAEAAA,,,Mckinney,865,Williams ,Circle,Suite 490,Unionville,Boone County,IA,51711,United States,-6.00,apartment,10675.11
+AAAAAAAAAALHFBAA,Sir,Leopoldo,Owens,719,Jackson View,Road,Suite 460,Howell,O-Brien County,IA,54854,United States,-6.00,apartment,2922.81
+AAAAAAAAAALHFBAA,Sir,Leopoldo,Owens,719,Jackson View,Road,Suite 460,Howell,O-Brien County,IA,54854,United States,-6.00,apartment,6110.23
+AAAAAAAAAALINAAA,Dr.,Yun,Grimes,428,Ridge ,Ln,Suite M,Spring Valley,Mitchell County,IA,56060,United States,-6.00,apartment,2692.62
+AAAAAAAAAAMBKAAA,Dr.,Danny,Medley,863,Lakeview ,Cir.,Suite 50,Lakewood,Cedar County,IA,58877,United States,-6.00,condo,1916.41
+AAAAAAAAAAMDKAAA,Miss,Antonio,Peyton,145,Second ,Boulevard,Suite 60,Five Points,Calhoun County,IA,56098,United States,-6.00,condo,2090.88
+AAAAAAAAAAMDKAAA,Miss,Antonio,Peyton,145,Second ,Boulevard,Suite 60,Five Points,Calhoun County,IA,56098,United States,-6.00,condo,2471.92
+AAAAAAAAAAMEIAAA,Dr.,Judy,Hunter,126,North ,Ln,Suite 70,Crossroads,Keokuk County,IA,50534,United States,-6.00,condo,7608.36
+AAAAAAAAAAMEIBAA,Ms.,Sara,Hernandez,472,Madison Cherry,Avenue,Suite D,Five Forks,Page County,IA,52293,United States,-6.00,condo,2230.92
+AAAAAAAAAAMLFAAA,Ms.,Paulette,Manley,172,1st Lincoln,Wy,Suite 70,Hopewell,Henry County,IA,50587,United States,-6.00,apartment,6120.85
+AAAAAAAAAAMLGAAA,Dr.,Robert,Griffin,754,West Jackson,Blvd,Suite T,Greenfield,Marshall County,IA,55038,United States,-6.00,single family,9825.69
+AAAAAAAAAAMNEBAA,Mr.,Donovan,Blodgett,819,Sixth ,Dr.,Suite D,Waterloo,Marshall County,IA,51675,United States,-6.00,condo,2108.06
+AAAAAAAAAAMPHAAA,Mrs.,Diane,Miller,940,West Ridge,Ln,Suite 320,Belfast,Jefferson County,IA,50125,United States,-6.00,apartment,1928.13
+AAAAAAAAAANAMAAA,Ms.,Sandra,Navarro,130,Elm Washington,Ct.,Suite J,Five Forks,Jasper County,IA,52293,United States,-6.00,condo,4686.73
+AAAAAAAAAANAPAAA,Sir,John,Marble,953,3rd ,Pkwy,Suite 170,Oakland,Grundy County,IA,59843,United States,-6.00,single family,4031.33
+AAAAAAAAAANAPAAA,Sir,John,Marble,953,3rd ,Pkwy,Suite 170,Oakland,Grundy County,IA,59843,United States,-6.00,single family,8062.11
+AAAAAAAAAANEEAAA,Mr.,Juan,Travers,336,Highland Pine,Parkway,Suite 180,Centerville,Hamilton County,IA,50059,United States,-6.00,single family,2483.70
+AAAAAAAAAANELAAA,Dr.,Amy,Worrell,408,Wilson ,Wy,Suite 30,Floyd,Fayette County,IA,53235,United States,-6.00,apartment,2751.50
+AAAAAAAAAANHKAAA,Dr.,Michael,Stewart,35,Woodland Spring,Blvd,Suite 350,Liberty,Greene County,IA,53451,United States,-6.00,condo,2640.24
+AAAAAAAAAANPDBAA,Miss,Aaron,Brooks,501,Woodland East,Ct.,Suite 230,Ashley,Taylor County,IA,54324,United States,-6.00,apartment,2752.82
+AAAAAAAAAANPLBAA,Dr.,Nancy,Johnson,920,Willow 3rd,Pkwy,Suite N,Greenwood,Poweshiek County,IA,58828,United States,-6.00,apartment,7666.75
+AAAAAAAAAAOHOBAA,Mr.,James,Pearson,635,Lake ,Wy,Suite S,Hopewell,Davis County,IA,50587,United States,-6.00,apartment,2035.78
+AAAAAAAAAAOIGBAA,Dr.,Timothy,Allen,946,3rd ,Cir.,Suite F,Mount Pleasant,Webster County,IA,51933,United States,-6.00,apartment,2001.29
+AAAAAAAAAAOIKBAA,Ms.,Estela,Cash,602,Eigth ,Street,Suite 160,Greenville,Monroe County,IA,51387,United States,-6.00,condo,2524.58
+AAAAAAAAAAPGOAAA,Ms.,Esther,Justice,88,Spring Third,Cir.,Suite J,Woodland,Lyon County,IA,54854,United States,-6.00,single family,2071.83
+AAAAAAAAAAPGOAAA,Ms.,Esther,Justice,88,Spring Third,Cir.,Suite J,Woodland,Lyon County,IA,54854,United States,-6.00,single family,7578.48
+AAAAAAAAAAPKFBAA,Mrs.,Esmeralda,Murphy,490,Lincoln ,Parkway,Suite 280,Hamilton,Muscatine County,IA,52808,United States,-6.00,single family,2070.94
+AAAAAAAAAAPLKBAA,Mr.,Zachary,Fabian,663,Smith Lee,ST,Suite 430,Floyd,Plymouth County,IA,53235,United States,-6.00,single family,4272.25
+AAAAAAAAABABNBAA,Mr.,Charles,Thomas,624,Spring 5th,Way,Suite Q,Oakdale,Des Moines County,IA,59584,United States,-6.00,condo,3834.73
+AAAAAAAAABADEBAA,Dr.,Margaret,Matthews,895,5th ,Ln,Suite 300,Bunker Hill,Cass County,IA,50150,United States,-6.00,apartment,3764.59
+AAAAAAAAABAEKBAA,Mr.,Jody,Spann,760,North Lakeview,Ct.,Suite 230,Union,Ringgold County,IA,58721,United States,-6.00,condo,10213.56
+AAAAAAAAABAHEAAA,Miss,Evangelina,Rice,396,Jackson ,Street,Suite 80,Edgewood,Hamilton County,IA,50069,United States,-6.00,condo,5634.22
+AAAAAAAAABAIFBAA,Dr.,Ralph,Daley,621,Second Elm,RD,Suite F,Lakewood,Jefferson County,IA,58877,United States,-6.00,single family,2085.55
+AAAAAAAAABAJFBAA,Mr.,Dave,Barksdale,416,Second Pine,Blvd,Suite F,Spring Valley,Woodbury County,IA,56060,United States,-6.00,condo,3213.00
+AAAAAAAAABAJOAAA,Mrs.,Opal,Morrison,265,Pine ,Ln,Suite 200,Ashland,Delaware County,IA,54244,United States,-6.00,condo,3166.66
+AAAAAAAAABAJOAAA,Mrs.,Opal,Morrison,265,Pine ,Ln,Suite 200,Ashland,Delaware County,IA,54244,United States,-6.00,condo,5997.31
+AAAAAAAAABAOKAAA,Dr.,Alice,Shannon,854,Lee Hill,Boulevard,Suite 170,Oakland,Greene County,IA,59843,United States,-6.00,condo,1945.23
+AAAAAAAAABAPMBAA,Mrs.,Alma,Vanburen,755,Walnut Ninth,Court,Suite 270,Clifton,Humboldt County,IA,58014,United States,-6.00,apartment,2015.01
+AAAAAAAAABBCIBAA,Sir,David,,319,6th ,Wy,Suite A,Union Hill,Kossuth County,IA,57746,United States,-6.00,apartment,1870.76
+AAAAAAAAABBFNAAA,Dr.,Quincy,Williams,485,Lincoln 1st,Ln,Suite 40,Cedar Grove,Lyon County,IA,50411,United States,-6.00,single family,1844.52
+AAAAAAAAABBIHAAA,Sir,David,Hayes,740,1st ,ST,Suite 310,Arlington,Van Buren County,IA,56557,United States,-6.00,condo,5306.03
+AAAAAAAAABCBHBAA,Dr.,Danielle,Reynolds,415,Madison Center,Court,Suite 10,Lakewood,Kossuth County,IA,58877,United States,-6.00,apartment,1766.50
+AAAAAAAAABCCFBAA,Mrs.,Anna,Clifford,615,Jefferson Mill,Circle,Suite K,Brownsville,Butler County,IA,59310,United States,-6.00,single family,1757.86
+AAAAAAAAABDGFBAA,Mr.,Robert,Pelletier,286,1st ,Boulevard,Suite 170,Greenfield,Audubon County,IA,55038,United States,-6.00,condo,3463.91

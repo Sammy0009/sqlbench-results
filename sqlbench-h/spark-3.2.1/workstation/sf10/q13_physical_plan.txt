@@ -1,0 +1,47 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   *(7) Sort [custdist#550L DESC NULLS LAST, c_count#555L DESC NULLS LAST], true, 0
+   +- AQEShuffleRead coalesced
+      +- ShuffleQueryStage 3
+         +- Exchange rangepartitioning(custdist#550L DESC NULLS LAST, c_count#555L DESC NULLS LAST, 200), ENSURE_REQUIREMENTS, [id=#4138]
+            +- *(6) HashAggregate(keys=[c_count#555L], functions=[count(1)], output=[c_count#555L, custdist#550L])
+               +- AQEShuffleRead coalesced
+                  +- ShuffleQueryStage 2
+                     +- Exchange hashpartitioning(c_count#555L, 200), ENSURE_REQUIREMENTS, [id=#4092]
+                        +- *(5) HashAggregate(keys=[c_count#555L], functions=[partial_count(1)], output=[c_count#555L, count#559L])
+                           +- *(5) HashAggregate(keys=[c_custkey#0L], functions=[count(o_orderkey#56L)], output=[c_count#555L])
+                              +- *(5) HashAggregate(keys=[c_custkey#0L], functions=[partial_count(o_orderkey#56L)], output=[c_custkey#0L, count#561L])
+                                 +- *(5) Project [c_custkey#0L, o_orderkey#56L]
+                                    +- *(5) SortMergeJoin [c_custkey#0L], [o_custkey#57L], LeftOuter
+                                       :- *(3) Sort [c_custkey#0L ASC NULLS FIRST], false, 0
+                                       :  +- AQEShuffleRead coalesced
+                                       :     +- ShuffleQueryStage 0
+                                       :        +- Exchange hashpartitioning(c_custkey#0L, 200), ENSURE_REQUIREMENTS, [id=#3938]
+                                       :           +- *(1) ColumnarToRow
+                                       :              +- FileScan parquet [c_custkey#0L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<c_custkey:bigint>
+                                       +- *(4) Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+                                          +- AQEShuffleRead coalesced
+                                             +- ShuffleQueryStage 1
+                                                +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#3955]
+                                                   +- *(2) Project [o_orderkey#56L, o_custkey#57L]
+                                                      +- *(2) Filter ((isnotnull(o_comment#64) AND NOT o_comment#64 LIKE %special%requests%) AND isnotnull(o_custkey#57L))
+                                                         +- *(2) ColumnarToRow
+                                                            +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_comment#64] Batched: true, DataFilters: [isnotnull(o_comment#64), NOT o_comment#64 LIKE %special%requests%, isnotnull(o_custkey#57L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_comment), IsNotNull(o_custkey)], ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_comment:string>
++- == Initial Plan ==
+   Sort [custdist#550L DESC NULLS LAST, c_count#555L DESC NULLS LAST], true, 0
+   +- Exchange rangepartitioning(custdist#550L DESC NULLS LAST, c_count#555L DESC NULLS LAST, 200), ENSURE_REQUIREMENTS, [id=#3901]
+      +- HashAggregate(keys=[c_count#555L], functions=[count(1)], output=[c_count#555L, custdist#550L])
+         +- Exchange hashpartitioning(c_count#555L, 200), ENSURE_REQUIREMENTS, [id=#3898]
+            +- HashAggregate(keys=[c_count#555L], functions=[partial_count(1)], output=[c_count#555L, count#559L])
+               +- HashAggregate(keys=[c_custkey#0L], functions=[count(o_orderkey#56L)], output=[c_count#555L])
+                  +- HashAggregate(keys=[c_custkey#0L], functions=[partial_count(o_orderkey#56L)], output=[c_custkey#0L, count#561L])
+                     +- Project [c_custkey#0L, o_orderkey#56L]
+                        +- SortMergeJoin [c_custkey#0L], [o_custkey#57L], LeftOuter
+                           :- Sort [c_custkey#0L ASC NULLS FIRST], false, 0
+                           :  +- Exchange hashpartitioning(c_custkey#0L, 200), ENSURE_REQUIREMENTS, [id=#3888]
+                           :     +- FileScan parquet [c_custkey#0L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<c_custkey:bigint>
+                           +- Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+                              +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#3889]
+                                 +- Project [o_orderkey#56L, o_custkey#57L]
+                                    +- Filter ((isnotnull(o_comment#64) AND NOT o_comment#64 LIKE %special%requests%) AND isnotnull(o_custkey#57L))
+                                       +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_comment#64] Batched: true, DataFilters: [isnotnull(o_comment#64), NOT o_comment#64 LIKE %special%requests%, isnotnull(o_custkey#57L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_comment), IsNotNull(o_custkey)], ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_comment:string>

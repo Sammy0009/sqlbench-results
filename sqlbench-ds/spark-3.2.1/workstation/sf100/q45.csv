@@ -1,0 +1,101 @@
+ca_zip,ca_city,sum(ws_sales_price)
+null,null,136.00
+null,Albany,65.08
+null,Glendale,17.37
+null,Oak Grove,132.82
+null,Oakland,6.69
+null,Riverview,25.40
+null,White Oak,79.52
+00669,Edgewood,65.87
+04111,Glenwood,2.43
+08971,Oak Ridge,18.61
+09082,Mount Vernon,7.28
+09548,Siloam,75.31
+11749,Newtown,9.72
+13683,Plainview,63.10
+16098,Five Points,32.83
+16971,Wilson,4.87
+18059,Mount Olive,8.42
+19431,New Hope,42.69
+19532,Lakeside,22.21
+19584,Oakdale,43.60
+20150,Bunker Hill,26.47
+20162,Stringtown,79.31
+21711,Unionville,36.00
+21904,Midway,2.79
+24244,Ashland,40.38
+26668,White Oak,73.95
+28014,Clifton,69.25
+28579,Lakeview,95.48
+28605,Antioch,61.63
+29843,Oakland,65.44
+30069,Edgewood,41.34
+30169,Oakwood,47.57
+31675,Waterloo,69.12
+31749,Newtown,55.63
+31757,Enterprise,66.14
+32455,Wolf Creek,6.63
+33003,Hillcrest,51.57
+33511,Glenwood,27.21
+33951,Glendale,113.51
+34098,Woodlawn,18.46
+34536,Friendship,56.71
+34975,Red Bank,129.57
+34980,Stafford,39.40
+35281,Bethel,262.85
+35817,null,31.26
+35817,Bridgeport,50.82
+36060,Spring Valley,8.45
+36787,null,27.27
+36787,Spring Hill,261.17
+36867,Jamestown,24.82
+36971,Wilson,118.21
+37746,Union Hill,79.40
+38721,Union,131.74
+38877,Lakewood,38.61
+39003,Riverview,28.10
+39584,Oakdale,78.75
+40029,Afton,9.31
+40191,Belmont,39.01
+40534,Crossroads,28.28
+40587,Hopewell,19.72
+41387,Greenville,2.60
+44136,Pleasant Grove,66.05
+46534,Highland Park,57.69
+46622,White Plains,81.98
+46871,Wildwood,161.44
+48054,Mount Zion,109.95
+48579,Lakeview,9.08
+48877,Lakewood,2.38
+49310,Brownsville,52.31
+49981,Pinecrest,1.90
+51209,Rocky Point,51.29
+51757,Enterprise,4.39
+52812,Shady Grove,21.03
+53003,Hillcrest,52.60
+53394,Florence,80.50
+53511,Glenwood,132.90
+53604,Pleasant Hill,8.16
+54092,Buckingham,51.34
+54136,Pleasant Grove,201.41
+54536,Friendship,16.00
+54593,Pine Grove,13.53
+54975,Kingston,0.00
+56557,Arlington,55.77
+57746,Union Hill,65.54
+58370,Oak Grove,41.73
+58828,Greenwood,6.71
+59101,Franklin,84.78
+59231,Riverside,3.93
+59840,Deerfield,132.89
+59843,Oakland,188.55
+60540,Avoca,11.85
+61749,Newtown,25.48
+61952,Sunnyside,22.01
+62812,Shady Grove,82.43
+63511,Glenwood,44.10
+64107,Concord,28.24
+64153,Pomona,86.22
+64289,Woodville,77.33
+64694,Vista,21.38
+64854,Woodland,20.73

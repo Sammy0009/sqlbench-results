@@ -1,0 +1,29 @@
+Sort [s_name#109 ASC NULLS FIRST], true
++- Project [s_name#109, s_address#110]
+   +- Join Inner, (s_nationkey#111L = n_nationkey#48L)
+      :- Project [s_name#109, s_address#110, s_nationkey#111L]
+      :  +- Join LeftSemi, (s_suppkey#108L = ps_suppkey#93L)
+      :     :- Project [s_suppkey#108L, s_name#109, s_address#110, s_nationkey#111L]
+      :     :  +- Filter isnotnull(s_nationkey#111L)
+      :     :     +- Relation [s_suppkey#108L,s_name#109,s_address#110,s_nationkey#111L,s_phone#112,s_acctbal#113,s_comment#114] parquet
+      :     +- Project [ps_suppkey#93L]
+      :        +- Join Inner, (((cast(cast(ps_availqty#94 as decimal(10,0)) as decimal(23,3)) > (0.5 * sum(l_quantity))#759) AND (l_partkey#17L = ps_partkey#92L)) AND (l_suppkey#18L = ps_suppkey#93L))
+      :           :- Join LeftSemi, (ps_partkey#92L = p_partkey#74L)
+      :           :  :- Project [ps_partkey#92L, ps_suppkey#93L, ps_availqty#94]
+      :           :  :  +- Filter ((isnotnull(ps_availqty#94) AND isnotnull(ps_partkey#92L)) AND isnotnull(ps_suppkey#93L))
+      :           :  :     +- Relation [ps_partkey#92L,ps_suppkey#93L,ps_availqty#94,ps_supplycost#95,ps_comment#96] parquet
+      :           :  +- Project [p_partkey#74L]
+      :           :     +- Filter (isnotnull(p_name#75) AND StartsWith(p_name#75, brown))
+      :           :        +- Relation [p_partkey#74L,p_name#75,p_mfgr#76,p_brand#77,p_type#78,p_size#79,p_container#80,p_retailprice#81,p_comment#82] parquet
+      :           +- Filter isnotnull((0.5 * sum(l_quantity))#759)
+      :              +- Aggregate [l_partkey#17L, l_suppkey#18L], [CheckOverflow((0.50 * promote_precision(sum(l_quantity#20))), DecimalType(23,3), true) AS (0.5 * sum(l_quantity))#759, l_partkey#17L, l_suppkey#18L]
+      :                 +- Join LeftSemi, (l_partkey#17L = p_partkey#74L)
+      :                    :- Project [l_partkey#17L, l_suppkey#18L, l_quantity#20]
+      :                    :  +- Filter ((((isnotnull(l_shipdate#26) AND (l_shipdate#26 >= 1996-01-01)) AND (l_shipdate#26 < 1997-01-01)) AND isnotnull(l_partkey#17L)) AND isnotnull(l_suppkey#18L))
+      :                    :     +- Relation [l_orderkey#16L,l_partkey#17L,l_suppkey#18L,l_linenumber#19,l_quantity#20,l_extendedprice#21,l_discount#22,l_tax#23,l_returnflag#24,l_linestatus#25,l_shipdate#26,l_commitdate#27,l_receiptdate#28,l_shipinstruct#29,l_shipmode#30,l_comment#31] parquet
+      :                    +- Project [p_partkey#74L]
+      :                       +- Filter (isnotnull(p_name#75) AND StartsWith(p_name#75, brown))
+      :                          +- Relation [p_partkey#74L,p_name#75,p_mfgr#76,p_brand#77,p_type#78,p_size#79,p_container#80,p_retailprice#81,p_comment#82] parquet
+      +- Project [n_nationkey#48L]
+         +- Filter ((isnotnull(n_name#49) AND (n_name#49 = ROMANIA)) AND isnotnull(n_nationkey#48L))
+            +- Relation [n_nationkey#48L,n_name#49,n_regionkey#50L,n_comment#51] parquet

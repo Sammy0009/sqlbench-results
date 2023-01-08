@@ -1,0 +1,123 @@
+┌───────────────────────────┐                                                                                                                    
+│           TOP_N           │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│          Top 100          │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│   store.s_store_name ASC  │                                                                                                                    
+│ CAST((store.s_company_id -│                                                                                                                    
+│     1) AS UTINYINT) ASC   │                                                                                                                    
+│ store.s_street_number ASC │                                                                                                                    
+│  store.s_street_name ASC  │                                                                                                                    
+│  store.s_street_type ASC  │                                                                                                                    
+│  store.s_suite_number ASC │                                                                                                                    
+│      store.s_city ASC     │                                                                                                                    
+│     store.s_county ASC    │                                                                                                                    
+│     store.s_state ASC     │                                                                                                                    
+│      store.s_zip ASC      │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│       HASH_GROUP_BY       │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│             #0            │                                                                                                                    
+│             #1            │                                                                                                                    
+│             #2            │                                                                                                                    
+│             #3            │                                                                                                                    
+│             #4            │                                                                                                                    
+│             #5            │                                                                                                                    
+│             #6            │                                                                                                                    
+│             #7            │                                                                                                                    
+│             #8            │                                                                                                                    
+│             #9            │                                                                                                                    
+│          sum(#10)         │                                                                                                                    
+│          sum(#11)         │                                                                                                                    
+│          sum(#12)         │                                                                                                                    
+│          sum(#13)         │                                                                                                                    
+│          sum(#14)         │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│         PROJECTION        │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│        s_store_name       │                                                                                                                    
+│        s_company_id       │                                                                                                                    
+│      s_street_number      │                                                                                                                    
+│       s_street_name       │                                                                                                                    
+│       s_street_type       │                                                                                                                    
+│       s_suite_number      │                                                                                                                    
+│           s_city          │                                                                                                                    
+│          s_county         │                                                                                                                    
+│          s_state          │                                                                                                                    
+│           s_zip           │                                                                                                                    
+│       CASE  WHEN ((       │                                                                                                                    
+│(sr_returned_date_sk -...  │                                                                                                                    
+│ = 30)) THEN (1) ELSE 0 END│                                                                                                                    
+│       CASE  WHEN (((      │                                                                                                                    
+│(sr_returned_date_sk -...  │                                                                                                                    
+│        > 30) AND (        │                                                                                                                    
+│(sr_returned_date_sk -...  │                                                                                                                    
+│  60))) THEN (1) ELSE 0 END│                                                                                                                    
+│       CASE  WHEN (((      │                                                                                                                    
+│(sr_returned_date_sk -...  │                                                                                                                    
+│        > 60) AND (        │                                                                                                                    
+│(sr_returned_date_sk -...  │                                                                                                                    
+│  90))) THEN (1) ELSE 0 END│                                                                                                                    
+│       CASE  WHEN (((      │                                                                                                                    
+│(sr_returned_date_sk -...  │                                                                                                                    
+│        > 90) AND (        │                                                                                                                    
+│(sr_returned_date_sk -...  │                                                                                                                    
+│ 120))) THEN (1) ELSE 0 END│                                                                                                                    
+│       CASE  WHEN ((       │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│         HASH_JOIN         │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│           INNER           │                                                                                                                    
+│ss_sold_date_sk = d_date_sk├─────────────────────────────────────────────────────────────────────────────────────────────────────┐              
+│    EC = 57599428.800000   │                                                                                                     │              
+│  COST = 178551643.200000  │                                                                                                     │              
+└─────────────┬─────────────┘                                                                                                     │                                           
+┌─────────────┴─────────────┐                                                                                       ┌─────────────┴─────────────┐
+│         HASH_JOIN         │                                                                                       │        PARQUET_SCAN       │
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│           INNER           │                                                                                       │         d_date_sk         │
+│  ss_store_sk = s_store_sk ├────────────────────────────────────────────────────────────────────────┐              │          EC=40590         │
+│    EC = 57599428.800000   │                                                                        │              │                           │
+│  COST = 120952214.400000  │                                                                        │              │                           │
+└─────────────┬─────────────┘                                                                        │              └───────────────────────────┘                             
+┌─────────────┴─────────────┐                                                          ┌─────────────┴─────────────┐                             
+│         HASH_JOIN         │                                                          │        PARQUET_SCAN       │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│           INNER           │                                                          │         s_store_sk        │                             
+│  ss_item_sk = sr_item_sk  │                                                          │        s_store_name       │                             
+│     ss_ticket_number =    │                                                          │        s_company_id       │                             
+│      sr_ticket_number     │                                                          │      s_street_number      │                             
+│      ss_customer_sk =     │                                                          │       s_street_name       │                             
+│       sr_customer_sk      ├──────────────┐                                           │       s_street_type       │                             
+│    EC = 57599428.800000   │              │                                           │       s_suite_number      │                             
+│   COST = 63352785.600000  │              │                                           │           s_city          │                             
+│                           │              │                                           │          s_county         │                             
+│                           │              │                                           │          s_state          │                             
+│                           │              │                                           │           s_zip           │                             
+│                           │              │                                           │           EC=402          │                             
+└─────────────┬─────────────┘              │                                           └───────────────────────────┘                                                          
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐                                                                                       
+│        PARQUET_SCAN       ││         HASH_JOIN         │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│      ss_sold_date_sk      ││           INNER           │                                                                                       
+│         ss_item_sk        ││   sr_returned_date_sk =   │                                                                                       
+│       ss_customer_sk      ││          d_date_sk        ├──────────────┐                                                                        
+│        ss_store_sk        ││    EC = 5753356.800000    │              │                                                                        
+│      ss_ticket_number     ││   COST = 5753356.800000   │              │                                                                        
+│        EC=287997144       ││                           │              │                                                                        
+└───────────────────────────┘└─────────────┬─────────────┘              │                                                                                                     
+                             ┌─────────────┴─────────────┐┌─────────────┴─────────────┐                                                          
+                             │        PARQUET_SCAN       ││        PARQUET_SCAN       │                                                          
+                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+                             │    sr_returned_date_sk    ││         d_date_sk         │                                                          
+                             │         sr_item_sk        ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+                             │       sr_customer_sk      ││  Filters: d_year=1999 AND │                                                          
+                             │      sr_ticket_number     ││     d_year IS NOT NULL    │                                                          
+                             │        EC=28766784        ││ d_moy=10 AND d_moy IS NOT │                                                          
+                             │                           ││            NULL           │                                                          
+                             │                           ││          EC=8118          │                                                          
+                             └───────────────────────────┘└───────────────────────────┘                                                                                       
+

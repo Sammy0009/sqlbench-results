@@ -1,0 +1,33 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   LocalTableScan <empty>, [c_custkey#0L, c_name#1, revenue#432, c_acctbal#5, n_name#49, c_address#2, c_phone#4, c_comment#7]
++- == Initial Plan ==
+   TakeOrderedAndProject(limit=20, orderBy=[revenue#432 DESC NULLS LAST], output=[c_custkey#0L,c_name#1,revenue#432,c_acctbal#5,n_name#49,c_address#2,c_phone#4,c_comment#7])
+   +- HashAggregate(keys=[c_custkey#0L, c_name#1, c_acctbal#5, c_phone#4, n_name#49, c_address#2, c_comment#7], functions=[sum(CheckOverflow((promote_precision(cast(l_extendedprice#21 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#22 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true))], output=[c_custkey#0L, c_name#1, revenue#432, c_acctbal#5, n_name#49, c_address#2, c_phone#4, c_comment#7])
+      +- Exchange hashpartitioning(c_custkey#0L, c_name#1, c_acctbal#5, c_phone#4, n_name#49, c_address#2, c_comment#7, 200), ENSURE_REQUIREMENTS, [id=#2925]
+         +- HashAggregate(keys=[c_custkey#0L, c_name#1, c_acctbal#5, c_phone#4, n_name#49, c_address#2, c_comment#7], functions=[partial_sum(CheckOverflow((promote_precision(cast(l_extendedprice#21 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#22 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true))], output=[c_custkey#0L, c_name#1, c_acctbal#5, c_phone#4, n_name#49, c_address#2, c_comment#7, sum#444, isEmpty#445])
+            +- Project [c_custkey#0L, c_name#1, c_address#2, c_phone#4, c_acctbal#5, c_comment#7, l_extendedprice#21, l_discount#22, n_name#49]
+               +- BroadcastHashJoin [c_nationkey#3L], [n_nationkey#48L], Inner, BuildRight, false
+                  :- Project [c_custkey#0L, c_name#1, c_address#2, c_nationkey#3L, c_phone#4, c_acctbal#5, c_comment#7, l_extendedprice#21, l_discount#22]
+                  :  +- SortMergeJoin [o_orderkey#56L], [l_orderkey#16L], Inner
+                  :     :- Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+                  :     :  +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#2913]
+                  :     :     +- Project [c_custkey#0L, c_name#1, c_address#2, c_nationkey#3L, c_phone#4, c_acctbal#5, c_comment#7, o_orderkey#56L]
+                  :     :        +- SortMergeJoin [c_custkey#0L], [o_custkey#57L], Inner
+                  :     :           :- Sort [c_custkey#0L ASC NULLS FIRST], false, 0
+                  :     :           :  +- Exchange hashpartitioning(c_custkey#0L, 200), ENSURE_REQUIREMENTS, [id=#2905]
+                  :     :           :     +- Filter (isnotnull(c_custkey#0L) AND isnotnull(c_nationkey#3L))
+                  :     :           :        +- FileScan parquet [c_custkey#0L,c_name#1,c_address#2,c_nationkey#3L,c_phone#4,c_acctbal#5,c_comment#7] Batched: true, DataFilters: [isnotnull(c_custkey#0L), isnotnull(c_nationkey#3L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_custkey), IsNotNull(c_nationkey)], ReadSchema: struct<c_custkey:bigint,c_name:string,c_address:string,c_nationkey:bigint,c_phone:string,c_acctba...
+                  :     :           +- Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+                  :     :              +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#2906]
+                  :     :                 +- Project [o_orderkey#56L, o_custkey#57L]
+                  :     :                    +- Filter ((((isnotnull(o_orderdate#60) AND (o_orderdate#60 >= 1993-03-01)) AND (o_orderdate#60 < 1993-06-01)) AND isnotnull(o_custkey#57L)) AND isnotnull(o_orderkey#56L))
+                  :     :                       +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_orderdate#60] Batched: true, DataFilters: [isnotnull(o_orderdate#60), (o_orderdate#60 >= 1993-03-01), (o_orderdate#60 < 1993-06-01), isnotn..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_orderdate), GreaterThanOrEqual(o_orderdate,1993-03-01), LessThan(o_orderdate,1993-06..., ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_orderdate:date>
+                  :     +- Sort [l_orderkey#16L ASC NULLS FIRST], false, 0
+                  :        +- Exchange hashpartitioning(l_orderkey#16L, 200), ENSURE_REQUIREMENTS, [id=#2914]
+                  :           +- Project [l_orderkey#16L, l_extendedprice#21, l_discount#22]
+                  :              +- Filter ((isnotnull(l_returnflag#24) AND (l_returnflag#24 = R)) AND isnotnull(l_orderkey#16L))
+                  :                 +- FileScan parquet [l_orderkey#16L,l_extendedprice#21,l_discount#22,l_returnflag#24] Batched: true, DataFilters: [isnotnull(l_returnflag#24), (l_returnflag#24 = R), isnotnull(l_orderkey#16L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_returnflag), EqualTo(l_returnflag,R), IsNotNull(l_orderkey)], ReadSchema: struct<l_orderkey:bigint,l_extendedprice:decimal(11,2),l_discount:decimal(11,2),l_returnflag:string>
+                  +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [id=#2920]
+                     +- Filter isnotnull(n_nationkey#48L)
+                        +- FileScan parquet [n_nationkey#48L,n_name#49] Batched: true, DataFilters: [isnotnull(n_nationkey#48L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/nation.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(n_nationkey)], ReadSchema: struct<n_nationkey:bigint,n_name:string>

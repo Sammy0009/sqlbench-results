@@ -1,0 +1,159 @@
+---
+diagram:
+  title: "GlobalLimit (unknown)"
+  operator: "GlobalLimit"
+  inputs:
+  - title: "LocalLimit (unknown)"
+    operator: "LocalLimit"
+    inputs:
+    - title: "Sort (unknown)"
+      operator: "Sort"
+      inputs:
+      - title: "Projection: s_acctbal#113, s_name#109, n_name#49, p_partkey#74L, p_mfgr#76,\
+          \ s_address#110, s_phone#112, s_comment#114"
+        operator: "projection"
+        inputs:
+        - title: "Inner Join: Some((n_regionkey#50L = r_regionkey#102L))"
+          operator: "join"
+          inputs:
+          - title: "Projection: p_partkey#74L, p_mfgr#76, s_name#109, s_address#110,\
+              \ s_phone#112, s_acctbal#113, s_comment#114, n_name#49, n_regionkey#50L"
+            operator: "projection"
+            inputs:
+            - title: "Inner Join: Some((s_nationkey#111L = n_nationkey#48L))"
+              operator: "join"
+              inputs:
+              - title: "Projection: p_partkey#74L, p_mfgr#76, s_name#109, s_address#110,\
+                  \ s_nationkey#111L, s_phone#112, s_acctbal#113, s_comment#114"
+                operator: "projection"
+                inputs:
+                - title: "Inner Join: Some((s_suppkey#108L = ps_suppkey#93L))"
+                  operator: "join"
+                  inputs:
+                  - title: "Projection: p_partkey#74L, p_mfgr#76, ps_suppkey#93L"
+                    operator: "projection"
+                    inputs:
+                    - title: "Inner Join: Some(((ps_supplycost#95 = min(ps_supplycost)#247)\
+                        \ AND (p_partkey#74L = ps_partkey#248L)))"
+                      operator: "join"
+                      inputs:
+                      - title: "Projection: p_partkey#74L, p_mfgr#76, ps_suppkey#93L,\
+                          \ ps_supplycost#95"
+                        operator: "projection"
+                        inputs:
+                        - title: "Inner Join: Some((p_partkey#74L = ps_partkey#92L))"
+                          operator: "join"
+                          inputs:
+                          - title: "Projection: p_partkey#74L, p_mfgr#76"
+                            operator: "projection"
+                            inputs:
+                            - title: "Filter: (((isnotnull(p_size#79) AND isnotnull(p_type#78))\
+                                \ AND ((p_size#79 = 8) AND EndsWith(p_type#78, BRASS)))\
+                                \ AND isnotnull(p_partkey#74L))"
+                              operator: "filter"
+                              inputs:
+                              - title: "part.parquet"
+                                operator: "scan"
+                                inputs: []
+                          - title: "Projection: ps_partkey#92L, ps_suppkey#93L, ps_supplycost#95"
+                            operator: "projection"
+                            inputs:
+                            - title: "Filter: (isnotnull(ps_partkey#92L) AND (isnotnull(ps_supplycost#95)\
+                                \ AND isnotnull(ps_suppkey#93L)))"
+                              operator: "filter"
+                              inputs:
+                              - title: "partsupp.parquet"
+                                operator: "scan"
+                                inputs: []
+                      - title: "Filter: isnotnull(min(ps_supplycost)#247)"
+                        operator: "filter"
+                        inputs:
+                        - title: "Aggregate (unknown)"
+                          operator: "Aggregate"
+                          inputs:
+                          - title: "Projection: ps_partkey#248L, ps_supplycost#251"
+                            operator: "projection"
+                            inputs:
+                            - title: "Inner Join: Some((n_regionkey#262L = r_regionkey#264L))"
+                              operator: "join"
+                              inputs:
+                              - title: "Projection: ps_partkey#248L, ps_supplycost#251,\
+                                  \ n_regionkey#262L"
+                                operator: "projection"
+                                inputs:
+                                - title: "Inner Join: Some((s_nationkey#256L = n_nationkey#260L))"
+                                  operator: "join"
+                                  inputs:
+                                  - title: "Projection: ps_partkey#248L, ps_supplycost#251,\
+                                      \ s_nationkey#256L"
+                                    operator: "projection"
+                                    inputs:
+                                    - title: "Inner Join: Some((s_suppkey#253L = ps_suppkey#249L))"
+                                      operator: "join"
+                                      inputs:
+                                      - title: "Projection: ps_partkey#248L, ps_suppkey#249L,\
+                                          \ ps_supplycost#251"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Filter: (isnotnull(ps_suppkey#249L)\
+                                            \ AND isnotnull(ps_partkey#248L))"
+                                          operator: "filter"
+                                          inputs:
+                                          - title: "partsupp.parquet"
+                                            operator: "scan"
+                                            inputs: []
+                                      - title: "Projection: s_suppkey#253L, s_nationkey#256L"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Filter: (isnotnull(s_suppkey#253L)\
+                                            \ AND isnotnull(s_nationkey#256L))"
+                                          operator: "filter"
+                                          inputs:
+                                          - title: "supplier.parquet"
+                                            operator: "scan"
+                                            inputs: []
+                                  - title: "Projection: n_nationkey#260L, n_regionkey#262L"
+                                    operator: "projection"
+                                    inputs:
+                                    - title: "Filter: (isnotnull(n_nationkey#260L)\
+                                        \ AND isnotnull(n_regionkey#262L))"
+                                      operator: "filter"
+                                      inputs:
+                                      - title: "nation.parquet"
+                                        operator: "scan"
+                                        inputs: []
+                              - title: "Projection: r_regionkey#264L"
+                                operator: "projection"
+                                inputs:
+                                - title: "Filter: ((isnotnull(r_name#265) AND (r_name#265\
+                                    \ = EUROPE)) AND isnotnull(r_regionkey#264L))"
+                                  operator: "filter"
+                                  inputs:
+                                  - title: "region.parquet"
+                                    operator: "scan"
+                                    inputs: []
+                  - title: "Filter: (isnotnull(s_suppkey#108L) AND isnotnull(s_nationkey#111L))"
+                    operator: "filter"
+                    inputs:
+                    - title: "supplier.parquet"
+                      operator: "scan"
+                      inputs: []
+              - title: "Projection: n_nationkey#48L, n_name#49, n_regionkey#50L"
+                operator: "projection"
+                inputs:
+                - title: "Filter: (isnotnull(n_nationkey#48L) AND isnotnull(n_regionkey#50L))"
+                  operator: "filter"
+                  inputs:
+                  - title: "nation.parquet"
+                    operator: "scan"
+                    inputs: []
+          - title: "Projection: r_regionkey#102L"
+            operator: "projection"
+            inputs:
+            - title: "Filter: ((isnotnull(r_name#103) AND (r_name#103 = EUROPE)) AND\
+                \ isnotnull(r_regionkey#102L))"
+              operator: "filter"
+              inputs:
+              - title: "region.parquet"
+                operator: "scan"
+                inputs: []

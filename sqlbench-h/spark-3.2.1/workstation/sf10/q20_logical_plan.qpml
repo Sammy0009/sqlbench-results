@@ -1,0 +1,96 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Projection: s_name#109, s_address#110"
+    operator: "projection"
+    inputs:
+    - title: "Inner Join: Some((s_nationkey#111L = n_nationkey#48L))"
+      operator: "join"
+      inputs:
+      - title: "Projection: s_name#109, s_address#110, s_nationkey#111L"
+        operator: "projection"
+        inputs:
+        - title: "LeftSemi Join: Some((s_suppkey#108L = ps_suppkey#93L))"
+          operator: "join"
+          inputs:
+          - title: "Projection: s_suppkey#108L, s_name#109, s_address#110, s_nationkey#111L"
+            operator: "projection"
+            inputs:
+            - title: "Filter: isnotnull(s_nationkey#111L)"
+              operator: "filter"
+              inputs:
+              - title: "supplier.parquet"
+                operator: "scan"
+                inputs: []
+          - title: "Projection: ps_suppkey#93L"
+            operator: "projection"
+            inputs:
+            - title: "Inner Join: Some((((cast(cast(ps_availqty#94 as decimal(10,0))\
+                \ as decimal(23,3)) > (0.5 * sum(l_quantity))#759) AND (l_partkey#17L\
+                \ = ps_partkey#92L)) AND (l_suppkey#18L = ps_suppkey#93L)))"
+              operator: "join"
+              inputs:
+              - title: "LeftSemi Join: Some((ps_partkey#92L = p_partkey#74L))"
+                operator: "join"
+                inputs:
+                - title: "Projection: ps_partkey#92L, ps_suppkey#93L, ps_availqty#94"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: ((isnotnull(ps_availqty#94) AND isnotnull(ps_partkey#92L))\
+                      \ AND isnotnull(ps_suppkey#93L))"
+                    operator: "filter"
+                    inputs:
+                    - title: "partsupp.parquet"
+                      operator: "scan"
+                      inputs: []
+                - title: "Projection: p_partkey#74L"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: (isnotnull(p_name#75) AND StartsWith(p_name#75,\
+                      \ brown))"
+                    operator: "filter"
+                    inputs:
+                    - title: "part.parquet"
+                      operator: "scan"
+                      inputs: []
+              - title: "Filter: isnotnull((0.5 * sum(l_quantity))#759)"
+                operator: "filter"
+                inputs:
+                - title: "Aggregate (unknown)"
+                  operator: "Aggregate"
+                  inputs:
+                  - title: "LeftSemi Join: Some((l_partkey#17L = p_partkey#74L))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: l_partkey#17L, l_suppkey#18L, l_quantity#20"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: ((((isnotnull(l_shipdate#26) AND (l_shipdate#26\
+                          \ >= 1996-01-01)) AND (l_shipdate#26 < 1997-01-01)) AND\
+                          \ isnotnull(l_partkey#17L)) AND isnotnull(l_suppkey#18L))"
+                        operator: "filter"
+                        inputs:
+                        - title: "lineitem.parquet"
+                          operator: "scan"
+                          inputs: []
+                    - title: "Projection: p_partkey#74L"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: (isnotnull(p_name#75) AND StartsWith(p_name#75,\
+                          \ brown))"
+                        operator: "filter"
+                        inputs:
+                        - title: "part.parquet"
+                          operator: "scan"
+                          inputs: []
+      - title: "Projection: n_nationkey#48L"
+        operator: "projection"
+        inputs:
+        - title: "Filter: ((isnotnull(n_name#49) AND (n_name#49 = ROMANIA)) AND isnotnull(n_nationkey#48L))"
+          operator: "filter"
+          inputs:
+          - title: "nation.parquet"
+            operator: "scan"
+            inputs: []

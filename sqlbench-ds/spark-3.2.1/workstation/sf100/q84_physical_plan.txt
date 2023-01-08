@@ -1,0 +1,118 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   GpuColumnarToRow false
+   +- GpuTopN(limit=100, orderBy=[c_customer_id#401 ASC NULLS FIRST], output=[customer_id#30980,customername#30981])
+      +- GpuShuffleCoalesce 2147483647
+         +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#518099]
+            +- GpuTopN(limit=100, orderBy=[c_customer_id#401 ASC NULLS FIRST], output=[customer_id#30980,customername#30981,c_customer_id#401])
+               +- GpuProject [c_customer_id#401 AS customer_id#30980, gpuconcat(gpucoalesce(c_last_name#409, ), , , gpucoalesce(c_first_name#408, )) AS customername#30981, c_customer_id#401], true
+                  +- GpuShuffledHashJoin [cd_demo_sk#222], [sr_cdemo_sk#140], Inner, GpuBuildRight, false
+                     :- GpuShuffleCoalesce 2147483647
+                     :  +- GpuCustomShuffleReader coalesced
+                     :     +- ShuffleQueryStage 9
+                     :        +- GpuColumnarExchange gpuhashpartitioning(cd_demo_sk#222, 200), ENSURE_REQUIREMENTS, [id=#517985]
+                     :           +- GpuProject [c_customer_id#401, c_first_name#408, c_last_name#409, cd_demo_sk#222], true
+                     :              +- GpuShuffledHashJoin [hd_income_band_sk#89], [ib_income_band_sk#240], Inner, GpuBuildRight, false
+                     :                 :- GpuShuffleCoalesce 2147483647
+                     :                 :  +- GpuCustomShuffleReader coalesced
+                     :                 :     +- ShuffleQueryStage 8
+                     :                 :        +- GpuColumnarExchange gpuhashpartitioning(hd_income_band_sk#89, 200), ENSURE_REQUIREMENTS, [id=#517841]
+                     :                 :           +- GpuProject [c_customer_id#401, c_first_name#408, c_last_name#409, cd_demo_sk#222, hd_income_band_sk#89], true
+                     :                 :              +- GpuShuffledHashJoin [c_current_addr_sk#404], [ca_address_sk#62], Inner, GpuBuildRight, false
+                     :                 :                 :- GpuShuffleCoalesce 2147483647
+                     :                 :                 :  +- GpuCustomShuffleReader coalesced
+                     :                 :                 :     +- ShuffleQueryStage 7
+                     :                 :                 :        +- GpuColumnarExchange gpuhashpartitioning(c_current_addr_sk#404, 200), ENSURE_REQUIREMENTS, [id=#517655]
+                     :                 :                 :           +- GpuProject [c_customer_id#401, c_current_addr_sk#404, c_first_name#408, c_last_name#409, cd_demo_sk#222, hd_income_band_sk#89], true
+                     :                 :                 :              +- GpuShuffledHashJoin [c_current_hdemo_sk#403], [hd_demo_sk#88], Inner, GpuBuildRight, false
+                     :                 :                 :                 :- GpuShuffleCoalesce 2147483647
+                     :                 :                 :                 :  +- GpuCustomShuffleReader coalesced
+                     :                 :                 :                 :     +- ShuffleQueryStage 6
+                     :                 :                 :                 :        +- GpuColumnarExchange gpuhashpartitioning(c_current_hdemo_sk#403, 200), ENSURE_REQUIREMENTS, [id=#516923]
+                     :                 :                 :                 :           +- GpuProject [c_customer_id#401, c_current_hdemo_sk#403, c_current_addr_sk#404, c_first_name#408, c_last_name#409, cd_demo_sk#222], true
+                     :                 :                 :                 :              +- GpuShuffledHashJoin [c_current_cdemo_sk#402], [cd_demo_sk#222], Inner, GpuBuildRight, false
+                     :                 :                 :                 :                 :- GpuShuffleCoalesce 2147483647
+                     :                 :                 :                 :                 :  +- GpuCustomShuffleReader coalesced
+                     :                 :                 :                 :                 :     +- ShuffleQueryStage 0
+                     :                 :                 :                 :                 :        +- GpuColumnarExchange gpuhashpartitioning(c_current_cdemo_sk#402, 200), ENSURE_REQUIREMENTS, [id=#516320]
+                     :                 :                 :                 :                 :           +- GpuCoalesceBatches targetsize(2147483647)
+                     :                 :                 :                 :                 :              +- GpuFilter ((gpuisnotnull(c_current_cdemo_sk#402) AND gpuisnotnull(c_current_hdemo_sk#403)) AND gpuisnotnull(c_current_addr_sk#404)), true
+                     :                 :                 :                 :                 :                 +- GpuFileGpuScan parquet [c_customer_id#401,c_current_cdemo_sk#402,c_current_hdemo_sk#403,c_current_addr_sk#404,c_first_name#408,c_last_name#409] Batched: true, DataFilters: [isnotnull(c_current_cdemo_sk#402), isnotnull(c_current_hdemo_sk#403), isnotnull(c_current_addr_s..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_current_cdemo_sk), IsNotNull(c_current_hdemo_sk), IsNotNull(c_current_addr_sk)], ReadSchema: struct<c_customer_id:string,c_current_cdemo_sk:int,c_current_hdemo_sk:int,c_current_addr_sk:int,c...
+                     :                 :                 :                 :                 +- GpuCustomShuffleReader coalesced
+                     :                 :                 :                 :                    +- ShuffleQueryStage 1
+                     :                 :                 :                 :                       +- GpuColumnarExchange gpuhashpartitioning(cd_demo_sk#222, 200), ENSURE_REQUIREMENTS, [id=#516348]
+                     :                 :                 :                 :                          +- GpuCoalesceBatches targetsize(2147483647)
+                     :                 :                 :                 :                             +- GpuFilter gpuisnotnull(cd_demo_sk#222), true
+                     :                 :                 :                 :                                +- GpuFileGpuScan parquet [cd_demo_sk#222] Batched: true, DataFilters: [isnotnull(cd_demo_sk#222)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/customer_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cd_demo_sk)], ReadSchema: struct<cd_demo_sk:int>
+                     :                 :                 :                 +- GpuCustomShuffleReader coalesced
+                     :                 :                 :                    +- ShuffleQueryStage 2
+                     :                 :                 :                       +- GpuColumnarExchange gpuhashpartitioning(hd_demo_sk#88, 200), ENSURE_REQUIREMENTS, [id=#516380]
+                     :                 :                 :                          +- GpuCoalesceBatches targetsize(2147483647)
+                     :                 :                 :                             +- GpuFilter (gpuisnotnull(hd_demo_sk#88) AND gpuisnotnull(hd_income_band_sk#89)), true
+                     :                 :                 :                                +- GpuFileGpuScan parquet [hd_demo_sk#88,hd_income_band_sk#89] Batched: true, DataFilters: [isnotnull(hd_demo_sk#88), isnotnull(hd_income_band_sk#89)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/household_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(hd_demo_sk), IsNotNull(hd_income_band_sk)], ReadSchema: struct<hd_demo_sk:int,hd_income_band_sk:int>
+                     :                 :                 +- GpuCustomShuffleReader coalesced
+                     :                 :                    +- ShuffleQueryStage 3
+                     :                 :                       +- GpuColumnarExchange gpuhashpartitioning(ca_address_sk#62, 200), ENSURE_REQUIREMENTS, [id=#516421]
+                     :                 :                          +- GpuProject [ca_address_sk#62], true
+                     :                 :                             +- GpuCoalesceBatches targetsize(2147483647)
+                     :                 :                                +- GpuFilter ((gpuisnotnull(ca_city#68) AND (ca_city#68 = Oak Hill)) AND gpuisnotnull(ca_address_sk#62)), true
+                     :                 :                                   +- GpuFileGpuScan parquet [ca_address_sk#62,ca_city#68] Batched: true, DataFilters: [isnotnull(ca_city#68), (ca_city#68 = Oak Hill), isnotnull(ca_address_sk#62)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/customer_address.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ca_city), EqualTo(ca_city,Oak Hill), IsNotNull(ca_address_sk)], ReadSchema: struct<ca_address_sk:int,ca_city:string>
+                     :                 +- GpuCustomShuffleReader coalesced
+                     :                    +- ShuffleQueryStage 4
+                     :                       +- GpuColumnarExchange gpuhashpartitioning(ib_income_band_sk#240, 200), ENSURE_REQUIREMENTS, [id=#516464]
+                     :                          +- GpuProject [ib_income_band_sk#240], true
+                     :                             +- GpuCoalesceBatches targetsize(2147483647)
+                     :                                +- GpuFilter ((((gpuisnotnull(ib_lower_bound#241) AND gpuisnotnull(ib_upper_bound#242)) AND (ib_lower_bound#241 >= 47241)) AND (ib_upper_bound#242 <= 97241)) AND gpuisnotnull(ib_income_band_sk#240)), true
+                     :                                   +- GpuFileGpuScan parquet [ib_income_band_sk#240,ib_lower_bound#241,ib_upper_bound#242] Batched: true, DataFilters: [isnotnull(ib_lower_bound#241), isnotnull(ib_upper_bound#242), (ib_lower_bound#241 >= 47241), (ib..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/income_band.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ib_lower_bound), IsNotNull(ib_upper_bound), GreaterThanOrEqual(ib_lower_bound,47241), ..., ReadSchema: struct<ib_income_band_sk:int,ib_lower_bound:int,ib_upper_bound:int>
+                     +- GpuCustomShuffleReader coalesced
+                        +- ShuffleQueryStage 5
+                           +- GpuColumnarExchange gpuhashpartitioning(sr_cdemo_sk#140, 200), ENSURE_REQUIREMENTS, [id=#516503]
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter gpuisnotnull(sr_cdemo_sk#140), true
+                                    +- GpuFileGpuScan parquet [sr_cdemo_sk#140] Batched: true, DataFilters: [isnotnull(sr_cdemo_sk#140)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_returns.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(sr_cdemo_sk)], ReadSchema: struct<sr_cdemo_sk:int>
++- == Initial Plan ==
+   TakeOrderedAndProject(limit=100, orderBy=[c_customer_id#401 ASC NULLS FIRST], output=[customer_id#30980,customername#30981])
+   +- Project [c_customer_id#401 AS customer_id#30980, concat(coalesce(c_last_name#409, ), , , coalesce(c_first_name#408, )) AS customername#30981, c_customer_id#401]
+      +- SortMergeJoin [cd_demo_sk#222], [sr_cdemo_sk#140], Inner
+         :- Sort [cd_demo_sk#222 ASC NULLS FIRST], false, 0
+         :  +- Exchange hashpartitioning(cd_demo_sk#222, 200), ENSURE_REQUIREMENTS, [id=#515745]
+         :     +- Project [c_customer_id#401, c_first_name#408, c_last_name#409, cd_demo_sk#222]
+         :        +- SortMergeJoin [hd_income_band_sk#89], [ib_income_band_sk#240], Inner
+         :           :- Sort [hd_income_band_sk#89 ASC NULLS FIRST], false, 0
+         :           :  +- Exchange hashpartitioning(hd_income_band_sk#89, 200), ENSURE_REQUIREMENTS, [id=#515737]
+         :           :     +- Project [c_customer_id#401, c_first_name#408, c_last_name#409, cd_demo_sk#222, hd_income_band_sk#89]
+         :           :        +- SortMergeJoin [c_current_addr_sk#404], [ca_address_sk#62], Inner
+         :           :           :- Sort [c_current_addr_sk#404 ASC NULLS FIRST], false, 0
+         :           :           :  +- Exchange hashpartitioning(c_current_addr_sk#404, 200), ENSURE_REQUIREMENTS, [id=#515729]
+         :           :           :     +- Project [c_customer_id#401, c_current_addr_sk#404, c_first_name#408, c_last_name#409, cd_demo_sk#222, hd_income_band_sk#89]
+         :           :           :        +- SortMergeJoin [c_current_hdemo_sk#403], [hd_demo_sk#88], Inner
+         :           :           :           :- Sort [c_current_hdemo_sk#403 ASC NULLS FIRST], false, 0
+         :           :           :           :  +- Exchange hashpartitioning(c_current_hdemo_sk#403, 200), ENSURE_REQUIREMENTS, [id=#515721]
+         :           :           :           :     +- Project [c_customer_id#401, c_current_hdemo_sk#403, c_current_addr_sk#404, c_first_name#408, c_last_name#409, cd_demo_sk#222]
+         :           :           :           :        +- SortMergeJoin [c_current_cdemo_sk#402], [cd_demo_sk#222], Inner
+         :           :           :           :           :- Sort [c_current_cdemo_sk#402 ASC NULLS FIRST], false, 0
+         :           :           :           :           :  +- Exchange hashpartitioning(c_current_cdemo_sk#402, 200), ENSURE_REQUIREMENTS, [id=#515713]
+         :           :           :           :           :     +- Filter ((isnotnull(c_current_cdemo_sk#402) AND isnotnull(c_current_hdemo_sk#403)) AND isnotnull(c_current_addr_sk#404))
+         :           :           :           :           :        +- FileScan parquet [c_customer_id#401,c_current_cdemo_sk#402,c_current_hdemo_sk#403,c_current_addr_sk#404,c_first_name#408,c_last_name#409] Batched: true, DataFilters: [isnotnull(c_current_cdemo_sk#402), isnotnull(c_current_hdemo_sk#403), isnotnull(c_current_addr_s..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_current_cdemo_sk), IsNotNull(c_current_hdemo_sk), IsNotNull(c_current_addr_sk)], ReadSchema: struct<c_customer_id:string,c_current_cdemo_sk:int,c_current_hdemo_sk:int,c_current_addr_sk:int,c...
+         :           :           :           :           +- Sort [cd_demo_sk#222 ASC NULLS FIRST], false, 0
+         :           :           :           :              +- Exchange hashpartitioning(cd_demo_sk#222, 200), ENSURE_REQUIREMENTS, [id=#515714]
+         :           :           :           :                 +- Filter isnotnull(cd_demo_sk#222)
+         :           :           :           :                    +- FileScan parquet [cd_demo_sk#222] Batched: true, DataFilters: [isnotnull(cd_demo_sk#222)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cd_demo_sk)], ReadSchema: struct<cd_demo_sk:int>
+         :           :           :           +- Sort [hd_demo_sk#88 ASC NULLS FIRST], false, 0
+         :           :           :              +- Exchange hashpartitioning(hd_demo_sk#88, 200), ENSURE_REQUIREMENTS, [id=#515722]
+         :           :           :                 +- Filter (isnotnull(hd_demo_sk#88) AND isnotnull(hd_income_band_sk#89))
+         :           :           :                    +- FileScan parquet [hd_demo_sk#88,hd_income_band_sk#89] Batched: true, DataFilters: [isnotnull(hd_demo_sk#88), isnotnull(hd_income_band_sk#89)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/household_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(hd_demo_sk), IsNotNull(hd_income_band_sk)], ReadSchema: struct<hd_demo_sk:int,hd_income_band_sk:int>
+         :           :           +- Sort [ca_address_sk#62 ASC NULLS FIRST], false, 0
+         :           :              +- Exchange hashpartitioning(ca_address_sk#62, 200), ENSURE_REQUIREMENTS, [id=#515730]
+         :           :                 +- Project [ca_address_sk#62]
+         :           :                    +- Filter ((isnotnull(ca_city#68) AND (ca_city#68 = Oak Hill)) AND isnotnull(ca_address_sk#62))
+         :           :                       +- FileScan parquet [ca_address_sk#62,ca_city#68] Batched: true, DataFilters: [isnotnull(ca_city#68), (ca_city#68 = Oak Hill), isnotnull(ca_address_sk#62)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer_address.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ca_city), EqualTo(ca_city,Oak Hill), IsNotNull(ca_address_sk)], ReadSchema: struct<ca_address_sk:int,ca_city:string>
+         :           +- Sort [ib_income_band_sk#240 ASC NULLS FIRST], false, 0
+         :              +- Exchange hashpartitioning(ib_income_band_sk#240, 200), ENSURE_REQUIREMENTS, [id=#515738]
+         :                 +- Project [ib_income_band_sk#240]
+         :                    +- Filter ((((isnotnull(ib_lower_bound#241) AND isnotnull(ib_upper_bound#242)) AND (ib_lower_bound#241 >= 47241)) AND (ib_upper_bound#242 <= 97241)) AND isnotnull(ib_income_band_sk#240))
+         :                       +- FileScan parquet [ib_income_band_sk#240,ib_lower_bound#241,ib_upper_bound#242] Batched: true, DataFilters: [isnotnull(ib_lower_bound#241), isnotnull(ib_upper_bound#242), (ib_lower_bound#241 >= 47241), (ib..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/income_band.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ib_lower_bound), IsNotNull(ib_upper_bound), GreaterThanOrEqual(ib_lower_bound,47241), ..., ReadSchema: struct<ib_income_band_sk:int,ib_lower_bound:int,ib_upper_bound:int>
+         +- Sort [sr_cdemo_sk#140 ASC NULLS FIRST], false, 0
+            +- Exchange hashpartitioning(sr_cdemo_sk#140, 200), ENSURE_REQUIREMENTS, [id=#515746]
+               +- Filter isnotnull(sr_cdemo_sk#140)
+                  +- FileScan parquet [sr_cdemo_sk#140] Batched: true, DataFilters: [isnotnull(sr_cdemo_sk#140)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_returns.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(sr_cdemo_sk)], ReadSchema: struct<sr_cdemo_sk:int>

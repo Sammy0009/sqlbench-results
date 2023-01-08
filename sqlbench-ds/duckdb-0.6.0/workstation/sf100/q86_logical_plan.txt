@@ -1,0 +1,93 @@
+┌───────────────────────────┐                                                          
+│         PROJECTION        │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│             #0            │                                                          
+│             #1            │                                                          
+│             #2            │                                                          
+│             #3            │                                                          
+│             #4            │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│           TOP_N           │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│          Top 100          │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│(GROUPING(item.i_category) │                                                          
+│ + GROUPING(item.i_class)) │                                                          
+│            DESC           │                                                          
+│           #5 ASC          │                                                          
+│ rank() OVER (PARTITION BY │                                                          
+│(GROUPING(item.i_categ...  │                                                          
+│  GROUPING(item.i_class)), │                                                          
+│ CASE  WHEN ((GROUPING(item│                                                          
+│ .i_class) = 0)) THEN (item│                                                          
+│ .i_category) ELSE NULL END│                                                          
+│   ORDER BY sum(web_sales  │                                                          
+│  .ws_net_paid) DESC) ASC  │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│         PROJECTION        │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│         total_sum         │                                                          
+│         i_category        │                                                          
+│          i_class          │                                                          
+│        lochierarchy       │                                                          
+│     rank_within_parent    │                                                          
+│CASE  WHEN (((GROUPING(item│                                                          
+│  .i_category) + GROUPING  │                                                          
+│(item.i_class)) = 0)) THEN │                                                          
+│ (i_category) ELSE NULL END│                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│           WINDOW          │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│ RANK() OVER (PARTITION BY │                                                          
+│(GROUPING(item.i_categ...  │                                                          
+│  GROUPING(item.i_class)), │                                                          
+│ CASE  WHEN ((GROUPING(item│                                                          
+│   .i_class) = 0)) THEN    │                                                          
+│(i_category) ELSE NULL...  │                                                          
+│    sum(ws_net_paid) DESC  │                                                          
+│        NULLS FIRST)       │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│       HASH_GROUP_BY       │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│             #0            │                                                          
+│             #1            │                                                          
+│          sum(#2)          │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│         PROJECTION        │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│         i_category        │                                                          
+│          i_class          │                                                          
+│        ws_net_paid        │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│         HASH_JOIN         │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│           INNER           │                                                          
+│   ws_item_sk = i_item_sk  ├───────────────────────────────────────────┐              
+│    EC = 14400307.200000   │                                           │              
+│   COST = 28800614.400000  │                                           │              
+└─────────────┬─────────────┘                                           │                                           
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐
+│         HASH_JOIN         │                             │        PARQUET_SCAN       │
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│           INNER           │                             │         i_item_sk         │
+│ws_sold_date_sk = d_date_sk├──────────────┐              │          i_class          │
+│    EC = 14400307.200000   │              │              │         i_category        │
+│   COST = 14400307.200000  │              │              │         EC=202300         │
+└─────────────┬─────────────┘              │              └───────────────────────────┘                             
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐                             
+│        PARQUET_SCAN       ││        PARQUET_SCAN       │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│      ws_sold_date_sk      ││         d_date_sk         │                             
+│         ws_item_sk        ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│        ws_net_paid        ││ Filters: d_month_seq>=1205│                             
+│        EC=72001536        ││  AND d_month_seq<=1216 AND│                             
+│                           ││   d_month_seq IS NOT NULL │                             
+│                           ││          EC=8118          │                             
+└───────────────────────────┘└───────────────────────────┘                                                          
+

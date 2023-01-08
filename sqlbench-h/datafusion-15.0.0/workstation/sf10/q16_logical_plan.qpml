@@ -1,0 +1,36 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: part.p_brand, part.p_type, part.p_size, COUNT(DISTINCT partsupp.ps_suppkey) AS supplier_cnt'
+    style: projection
+    inputs:
+    - title: 'Projection: group_alias_0 AS part.p_brand, group_alias_1 AS part.p_type, group_alias_2 AS part.p_size, COUNT(alias1) AS COUNT(DISTINCT partsupp.ps_suppkey)'
+      style: projection
+      inputs:
+      - title: unknown
+        inputs:
+        - title: unknown
+          inputs:
+          - title: 'Join: partsupp.ps_suppkey = __sq_1.s_suppkey'
+            style: join
+            inputs:
+            - title: 'Join: partsupp.ps_partkey = part.p_partkey'
+              style: join
+              inputs:
+              - title: partsupp
+                style: scan
+              - title: 'Filter: part.p_brand != Utf8("Brand#25") AND part.p_type NOT LIKE Utf8("STANDARD BURNISHED%") AND part.p_size IN ([Int32(34), Int32(7), Int32(40), Int32(3), Int32(26), Int32(35), Int32(4), Int32(17)])'
+                style: filter
+                inputs:
+                - title: part
+                  style: scan
+            - title: unknown
+              inputs:
+              - title: 'Projection: supplier.s_suppkey AS s_suppkey'
+                style: projection
+                inputs:
+                - title: 'Filter: supplier.s_comment LIKE Utf8("%Customer%Complaints%")'
+                  style: filter
+                  inputs:
+                  - title: supplier
+                    style: scan

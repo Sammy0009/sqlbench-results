@@ -1,0 +1,36 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Aggregate (unknown)"
+    operator: "Aggregate"
+    inputs:
+    - title: "Projection: o_orderpriority#61, l_shipmode#30"
+      operator: "projection"
+      inputs:
+      - title: "Inner Join: Some((o_orderkey#56L = l_orderkey#16L))"
+        operator: "join"
+        inputs:
+        - title: "Projection: o_orderkey#56L, o_orderpriority#61"
+          operator: "projection"
+          inputs:
+          - title: "Filter: isnotnull(o_orderkey#56L)"
+            operator: "filter"
+            inputs:
+            - title: "orders.parquet"
+              operator: "scan"
+              inputs: []
+        - title: "Projection: l_orderkey#16L, l_shipmode#30"
+          operator: "projection"
+          inputs:
+          - title: "Filter: ((((isnotnull(l_commitdate#27) AND isnotnull(l_receiptdate#28))\
+              \ AND isnotnull(l_shipdate#26)) AND ((((l_shipmode#30 IN (FOB,AIR) AND\
+              \ (l_commitdate#27 < l_receiptdate#28)) AND (l_shipdate#26 < l_commitdate#27))\
+              \ AND (l_receiptdate#28 >= 1994-01-01)) AND (l_receiptdate#28 < 1995-01-01)))\
+              \ AND isnotnull(l_orderkey#16L))"
+            operator: "filter"
+            inputs:
+            - title: "lineitem.parquet"
+              operator: "scan"
+              inputs: []

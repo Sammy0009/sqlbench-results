@@ -1,0 +1,1129 @@
+---
+diagram:
+  title: "Projection: product_name#20957, store_name#20959, store_zip#20960, b_street_number#20961,\
+    \ b_street_name#20962, b_city#20963, b_zip#20964, c_street_number#20965, c_street_name#20966,\
+    \ c_city#20967, c_zip#20968, syear#20969, cnt#20972L, s11#20949, s21#20950, s31#20951,\
+    \ s12#20952, s22#20953, s32#20954, syear#21082, cnt#21085L"
+  operator: "projection"
+  inputs:
+  - title: "Sort (unknown)"
+    operator: "Sort"
+    inputs:
+    - title: "Projection: product_name#20957, store_name#20959, store_zip#20960, b_street_number#20961,\
+        \ b_street_name#20962, b_city#20963, b_zip#20964, c_street_number#20965, c_street_name#20966,\
+        \ c_city#20967, c_zip#20968, syear#20969, cnt#20972L, s1#20973 AS s11#20949,\
+        \ s2#20974 AS s21#20950, s3#20975 AS s31#20951, s1#21086 AS s12#20952, s2#21087\
+        \ AS s22#20953, s3#21088 AS s32#20954, syear#21082, cnt#21085L, s1#20973,\
+        \ s1#21086"
+      operator: "projection"
+      inputs:
+      - title: "Inner Join: Some(((((item_sk#20958 = item_sk#21071) AND (cnt#21085L\
+          \ <= cnt#20972L)) AND (store_name#20959 = store_name#21072)) AND (store_zip#20960\
+          \ = store_zip#21073)))"
+        operator: "join"
+        inputs:
+        - title: "Aggregate (unknown)"
+          operator: "Aggregate"
+          inputs:
+          - title: "Projection: ss_wholesale_cost#263, ss_list_price#264, ss_coupon_amt#271,\
+              \ d_year#618, d_year#20982, d_year#21010, s_store_name#717, s_zip#737,\
+              \ ca_street_number#64, ca_street_name#65, ca_city#68, ca_zip#71, ca_street_number#21048,\
+              \ ca_street_name#21049, ca_city#21052, ca_zip#21055, i_item_sk#668,\
+              \ i_product_name#689"
+            operator: "projection"
+            inputs:
+            - title: "Inner Join: Some((ss_item_sk#254 = i_item_sk#668))"
+              operator: "join"
+              inputs:
+              - title: "Projection: ss_item_sk#254, ss_wholesale_cost#263, ss_list_price#264,\
+                  \ ss_coupon_amt#271, d_year#618, s_store_name#717, s_zip#737, d_year#20982,\
+                  \ d_year#21010, ca_street_number#64, ca_street_name#65, ca_city#68,\
+                  \ ca_zip#71, ca_street_number#21048, ca_street_name#21049, ca_city#21052,\
+                  \ ca_zip#21055"
+                operator: "projection"
+                inputs:
+                - title: "Inner Join: Some((hd_income_band_sk#21042 = ib_income_band_sk#21059))"
+                  operator: "join"
+                  inputs:
+                  - title: "Projection: ss_item_sk#254, ss_wholesale_cost#263, ss_list_price#264,\
+                      \ ss_coupon_amt#271, d_year#618, s_store_name#717, s_zip#737,\
+                      \ d_year#20982, d_year#21010, hd_income_band_sk#21042, ca_street_number#64,\
+                      \ ca_street_name#65, ca_city#68, ca_zip#71, ca_street_number#21048,\
+                      \ ca_street_name#21049, ca_city#21052, ca_zip#21055"
+                    operator: "projection"
+                    inputs:
+                    - title: "Inner Join: Some((hd_income_band_sk#89 = ib_income_band_sk#240))"
+                      operator: "join"
+                      inputs:
+                      - title: "Projection: ss_item_sk#254, ss_wholesale_cost#263,\
+                          \ ss_list_price#264, ss_coupon_amt#271, d_year#618, s_store_name#717,\
+                          \ s_zip#737, d_year#20982, d_year#21010, hd_income_band_sk#89,\
+                          \ hd_income_band_sk#21042, ca_street_number#64, ca_street_name#65,\
+                          \ ca_city#68, ca_zip#71, ca_street_number#21048, ca_street_name#21049,\
+                          \ ca_city#21052, ca_zip#21055"
+                        operator: "projection"
+                        inputs:
+                        - title: "Inner Join: Some((c_current_addr_sk#404 = ca_address_sk#21046))"
+                          operator: "join"
+                          inputs:
+                          - title: "Projection: ss_item_sk#254, ss_wholesale_cost#263,\
+                              \ ss_list_price#264, ss_coupon_amt#271, d_year#618,\
+                              \ s_store_name#717, s_zip#737, c_current_addr_sk#404,\
+                              \ d_year#20982, d_year#21010, hd_income_band_sk#89,\
+                              \ hd_income_band_sk#21042, ca_street_number#64, ca_street_name#65,\
+                              \ ca_city#68, ca_zip#71"
+                            operator: "projection"
+                            inputs:
+                            - title: "Inner Join: Some((ss_addr_sk#258 = ca_address_sk#62))"
+                              operator: "join"
+                              inputs:
+                              - title: "Projection: ss_item_sk#254, ss_addr_sk#258,\
+                                  \ ss_wholesale_cost#263, ss_list_price#264, ss_coupon_amt#271,\
+                                  \ d_year#618, s_store_name#717, s_zip#737, c_current_addr_sk#404,\
+                                  \ d_year#20982, d_year#21010, hd_income_band_sk#89,\
+                                  \ hd_income_band_sk#21042"
+                                operator: "projection"
+                                inputs:
+                                - title: "Inner Join: Some((c_current_hdemo_sk#403\
+                                    \ = hd_demo_sk#21041))"
+                                  operator: "join"
+                                  inputs:
+                                  - title: "Projection: ss_item_sk#254, ss_addr_sk#258,\
+                                      \ ss_wholesale_cost#263, ss_list_price#264,\
+                                      \ ss_coupon_amt#271, d_year#618, s_store_name#717,\
+                                      \ s_zip#737, c_current_hdemo_sk#403, c_current_addr_sk#404,\
+                                      \ d_year#20982, d_year#21010, hd_income_band_sk#89"
+                                    operator: "projection"
+                                    inputs:
+                                    - title: "Inner Join: Some((ss_hdemo_sk#257 =\
+                                        \ hd_demo_sk#88))"
+                                      operator: "join"
+                                      inputs:
+                                      - title: "Projection: ss_item_sk#254, ss_hdemo_sk#257,\
+                                          \ ss_addr_sk#258, ss_wholesale_cost#263,\
+                                          \ ss_list_price#264, ss_coupon_amt#271,\
+                                          \ d_year#618, s_store_name#717, s_zip#737,\
+                                          \ c_current_hdemo_sk#403, c_current_addr_sk#404,\
+                                          \ d_year#20982, d_year#21010"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Inner Join: Some((ss_promo_sk#260\
+                                            \ = p_promo_sk#98))"
+                                          operator: "join"
+                                          inputs:
+                                          - title: "Projection: ss_item_sk#254, ss_hdemo_sk#257,\
+                                              \ ss_addr_sk#258, ss_promo_sk#260, ss_wholesale_cost#263,\
+                                              \ ss_list_price#264, ss_coupon_amt#271,\
+                                              \ d_year#618, s_store_name#717, s_zip#737,\
+                                              \ c_current_hdemo_sk#403, c_current_addr_sk#404,\
+                                              \ d_year#20982, d_year#21010"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Inner Join: Some(((c_current_cdemo_sk#402\
+                                                \ = cd_demo_sk#21032) AND NOT (cd_marital_status#224\
+                                                \ = cd_marital_status#21034)))"
+                                              operator: "join"
+                                              inputs:
+                                              - title: "Projection: ss_item_sk#254,\
+                                                  \ ss_hdemo_sk#257, ss_addr_sk#258,\
+                                                  \ ss_promo_sk#260, ss_wholesale_cost#263,\
+                                                  \ ss_list_price#264, ss_coupon_amt#271,\
+                                                  \ d_year#618, s_store_name#717,\
+                                                  \ s_zip#737, c_current_cdemo_sk#402,\
+                                                  \ c_current_hdemo_sk#403, c_current_addr_sk#404,\
+                                                  \ d_year#20982, d_year#21010, cd_marital_status#224"
+                                                operator: "projection"
+                                                inputs:
+                                                - title: "Inner Join: Some((ss_cdemo_sk#256\
+                                                    \ = cd_demo_sk#222))"
+                                                  operator: "join"
+                                                  inputs:
+                                                  - title: "Projection: ss_item_sk#254,\
+                                                      \ ss_cdemo_sk#256, ss_hdemo_sk#257,\
+                                                      \ ss_addr_sk#258, ss_promo_sk#260,\
+                                                      \ ss_wholesale_cost#263, ss_list_price#264,\
+                                                      \ ss_coupon_amt#271, d_year#618,\
+                                                      \ s_store_name#717, s_zip#737,\
+                                                      \ c_current_cdemo_sk#402, c_current_hdemo_sk#403,\
+                                                      \ c_current_addr_sk#404, d_year#20982,\
+                                                      \ d_year#21010"
+                                                    operator: "projection"
+                                                    inputs:
+                                                    - title: "Inner Join: Some((c_first_shipto_date_sk#405\
+                                                        \ = d_date_sk#21004))"
+                                                      operator: "join"
+                                                      inputs:
+                                                      - title: "Projection: ss_item_sk#254,\
+                                                          \ ss_cdemo_sk#256, ss_hdemo_sk#257,\
+                                                          \ ss_addr_sk#258, ss_promo_sk#260,\
+                                                          \ ss_wholesale_cost#263,\
+                                                          \ ss_list_price#264, ss_coupon_amt#271,\
+                                                          \ d_year#618, s_store_name#717,\
+                                                          \ s_zip#737, c_current_cdemo_sk#402,\
+                                                          \ c_current_hdemo_sk#403,\
+                                                          \ c_current_addr_sk#404,\
+                                                          \ c_first_shipto_date_sk#405,\
+                                                          \ d_year#20982"
+                                                        operator: "projection"
+                                                        inputs:
+                                                        - title: "Inner Join: Some((c_first_sales_date_sk#406\
+                                                            \ = d_date_sk#20976))"
+                                                          operator: "join"
+                                                          inputs:
+                                                          - title: "Projection: ss_item_sk#254,\
+                                                              \ ss_cdemo_sk#256, ss_hdemo_sk#257,\
+                                                              \ ss_addr_sk#258, ss_promo_sk#260,\
+                                                              \ ss_wholesale_cost#263,\
+                                                              \ ss_list_price#264,\
+                                                              \ ss_coupon_amt#271,\
+                                                              \ d_year#618, s_store_name#717,\
+                                                              \ s_zip#737, c_current_cdemo_sk#402,\
+                                                              \ c_current_hdemo_sk#403,\
+                                                              \ c_current_addr_sk#404,\
+                                                              \ c_first_shipto_date_sk#405,\
+                                                              \ c_first_sales_date_sk#406"
+                                                            operator: "projection"
+                                                            inputs:
+                                                            - title: "Inner Join:\
+                                                                \ Some((ss_customer_sk#255\
+                                                                \ = c_customer_sk#400))"
+                                                              operator: "join"
+                                                              inputs:
+                                                              - title: "Projection:\
+                                                                  \ ss_item_sk#254,\
+                                                                  \ ss_customer_sk#255,\
+                                                                  \ ss_cdemo_sk#256,\
+                                                                  \ ss_hdemo_sk#257,\
+                                                                  \ ss_addr_sk#258,\
+                                                                  \ ss_promo_sk#260,\
+                                                                  \ ss_wholesale_cost#263,\
+                                                                  \ ss_list_price#264,\
+                                                                  \ ss_coupon_amt#271,\
+                                                                  \ d_year#618, s_store_name#717,\
+                                                                  \ s_zip#737"
+                                                                operator: "projection"
+                                                                inputs:
+                                                                - title: "Inner Join:\
+                                                                    \ Some((ss_store_sk#259\
+                                                                    \ = s_store_sk#712))"
+                                                                  operator: "join"
+                                                                  inputs:
+                                                                  - title: "Projection:\
+                                                                      \ ss_item_sk#254,\
+                                                                      \ ss_customer_sk#255,\
+                                                                      \ ss_cdemo_sk#256,\
+                                                                      \ ss_hdemo_sk#257,\
+                                                                      \ ss_addr_sk#258,\
+                                                                      \ ss_store_sk#259,\
+                                                                      \ ss_promo_sk#260,\
+                                                                      \ ss_wholesale_cost#263,\
+                                                                      \ ss_list_price#264,\
+                                                                      \ ss_coupon_amt#271,\
+                                                                      \ d_year#618"
+                                                                    operator: "projection"
+                                                                    inputs:
+                                                                    - title: "Inner\
+                                                                        \ Join: Some((ss_sold_date_sk#252\
+                                                                        \ = d_date_sk#612))"
+                                                                      operator: "join"
+                                                                      inputs:
+                                                                      - title: "Projection:\
+                                                                          \ ss_sold_date_sk#252,\
+                                                                          \ ss_item_sk#254,\
+                                                                          \ ss_customer_sk#255,\
+                                                                          \ ss_cdemo_sk#256,\
+                                                                          \ ss_hdemo_sk#257,\
+                                                                          \ ss_addr_sk#258,\
+                                                                          \ ss_store_sk#259,\
+                                                                          \ ss_promo_sk#260,\
+                                                                          \ ss_wholesale_cost#263,\
+                                                                          \ ss_list_price#264,\
+                                                                          \ ss_coupon_amt#271"
+                                                                        operator: "projection"
+                                                                        inputs:
+                                                                        - title: "Inner\
+                                                                            \ Join:\
+                                                                            \ Some((ss_item_sk#254\
+                                                                            \ = cs_item_sk#559))"
+                                                                          operator: "join"
+                                                                          inputs:
+                                                                          - title: "Projection:\
+                                                                              \ ss_sold_date_sk#252,\
+                                                                              \ ss_item_sk#254,\
+                                                                              \ ss_customer_sk#255,\
+                                                                              \ ss_cdemo_sk#256,\
+                                                                              \ ss_hdemo_sk#257,\
+                                                                              \ ss_addr_sk#258,\
+                                                                              \ ss_store_sk#259,\
+                                                                              \ ss_promo_sk#260,\
+                                                                              \ ss_wholesale_cost#263,\
+                                                                              \ ss_list_price#264,\
+                                                                              \ ss_coupon_amt#271"
+                                                                            operator: "projection"
+                                                                            inputs:
+                                                                            - title: "Inner\
+                                                                                \ Join:\
+                                                                                \ Some(((ss_item_sk#254\
+                                                                                \ =\
+                                                                                \ sr_item_sk#138)\
+                                                                                \ AND\
+                                                                                \ (ss_ticket_number#261L\
+                                                                                \ =\
+                                                                                \ sr_ticket_number#145L)))"
+                                                                              operator: "join"
+                                                                              inputs:
+                                                                              - title: "Projection:\
+                                                                                  \ ss_sold_date_sk#252,\
+                                                                                  \ ss_item_sk#254,\
+                                                                                  \ ss_customer_sk#255,\
+                                                                                  \ ss_cdemo_sk#256,\
+                                                                                  \ ss_hdemo_sk#257,\
+                                                                                  \ ss_addr_sk#258,\
+                                                                                  \ ss_store_sk#259,\
+                                                                                  \ ss_promo_sk#260,\
+                                                                                  \ ss_ticket_number#261L,\
+                                                                                  \ ss_wholesale_cost#263,\
+                                                                                  \ ss_list_price#264,\
+                                                                                  \ ss_coupon_amt#271"
+                                                                                operator: "projection"
+                                                                                inputs:
+                                                                                - title: "Filter:\
+                                                                                    \ (((((isnotnull(ss_item_sk#254)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_ticket_number#261L))\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_sold_date_sk#252))\
+                                                                                    \ AND\
+                                                                                    \ (isnotnull(ss_store_sk#259)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_customer_sk#255)))\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_cdemo_sk#256))\
+                                                                                    \ AND\
+                                                                                    \ ((isnotnull(ss_promo_sk#260)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_hdemo_sk#257))\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_addr_sk#258)))"
+                                                                                  operator: "filter"
+                                                                                  inputs:
+                                                                                  - title: "store_sales.parquet"
+                                                                                    operator: "scan"
+                                                                                    inputs: []
+                                                                              - title: "Projection:\
+                                                                                  \ sr_item_sk#138,\
+                                                                                  \ sr_ticket_number#145L"
+                                                                                operator: "projection"
+                                                                                inputs:
+                                                                                - title: "Filter:\
+                                                                                    \ (isnotnull(sr_item_sk#138)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(sr_ticket_number#145L))"
+                                                                                  operator: "filter"
+                                                                                  inputs:
+                                                                                  - title: "store_returns.parquet"
+                                                                                    operator: "scan"
+                                                                                    inputs: []
+                                                                          - title: "Projection:\
+                                                                              \ cs_item_sk#559"
+                                                                            operator: "projection"
+                                                                            inputs:
+                                                                            - title: "Filter:\
+                                                                                \ (isnotnull(sale#20955)\
+                                                                                \ AND\
+                                                                                \ (cast(sale#20955\
+                                                                                \ as\
+                                                                                \ decimal(21,2))\
+                                                                                \ >\
+                                                                                \ CheckOverflow((2.00\
+                                                                                \ *\
+                                                                                \ promote_precision(refund#20956)),\
+                                                                                \ DecimalType(21,2),\
+                                                                                \ true)))"
+                                                                              operator: "filter"
+                                                                              inputs:
+                                                                              - title: "Aggregate\
+                                                                                  \ (unknown)"
+                                                                                operator: "Aggregate"
+                                                                                inputs:
+                                                                                - title: "Projection:\
+                                                                                    \ cs_item_sk#559,\
+                                                                                    \ cs_ext_list_price#569,\
+                                                                                    \ cr_refunded_cash#369,\
+                                                                                    \ cr_reversed_charge#370,\
+                                                                                    \ cr_store_credit#371"
+                                                                                  operator: "projection"
+                                                                                  inputs:
+                                                                                  - title: "Inner\
+                                                                                      \ Join:\
+                                                                                      \ Some(((cs_item_sk#559\
+                                                                                      \ =\
+                                                                                      \ cr_item_sk#348)\
+                                                                                      \ AND\
+                                                                                      \ (cs_order_number#561L\
+                                                                                      \ =\
+                                                                                      \ cr_order_number#362L)))"
+                                                                                    operator: "join"
+                                                                                    inputs:
+                                                                                    - title: "Projection:\
+                                                                                        \ cs_item_sk#559,\
+                                                                                        \ cs_order_number#561L,\
+                                                                                        \ cs_ext_list_price#569"
+                                                                                      operator: "projection"
+                                                                                      inputs:
+                                                                                      - title: "Filter:\
+                                                                                          \ (isnotnull(cs_item_sk#559)\
+                                                                                          \ AND\
+                                                                                          \ isnotnull(cs_order_number#561L))"
+                                                                                        operator: "filter"
+                                                                                        inputs:
+                                                                                        - title: "catalog_sales.parquet"
+                                                                                          operator: "scan"
+                                                                                          inputs: []
+                                                                                    - title: "Projection:\
+                                                                                        \ cr_item_sk#348,\
+                                                                                        \ cr_order_number#362L,\
+                                                                                        \ cr_refunded_cash#369,\
+                                                                                        \ cr_reversed_charge#370,\
+                                                                                        \ cr_store_credit#371"
+                                                                                      operator: "projection"
+                                                                                      inputs:
+                                                                                      - title: "Filter:\
+                                                                                          \ (isnotnull(cr_item_sk#348)\
+                                                                                          \ AND\
+                                                                                          \ isnotnull(cr_order_number#362L))"
+                                                                                        operator: "filter"
+                                                                                        inputs:
+                                                                                        - title: "catalog_returns.parquet"
+                                                                                          operator: "scan"
+                                                                                          inputs: []
+                                                                      - title: "Projection:\
+                                                                          \ d_date_sk#612,\
+                                                                          \ d_year#618"
+                                                                        operator: "projection"
+                                                                        inputs:
+                                                                        - title: "Filter:\
+                                                                            \ ((isnotnull(d_year#618)\
+                                                                            \ AND\
+                                                                            \ (d_year#618\
+                                                                            \ = 2001))\
+                                                                            \ AND\
+                                                                            \ isnotnull(d_date_sk#612))"
+                                                                          operator: "filter"
+                                                                          inputs:
+                                                                          - title: "date_dim.parquet"
+                                                                            operator: "scan"
+                                                                            inputs: []
+                                                                  - title: "Projection:\
+                                                                      \ s_store_sk#712,\
+                                                                      \ s_store_name#717,\
+                                                                      \ s_zip#737"
+                                                                    operator: "projection"
+                                                                    inputs:
+                                                                    - title: "Filter:\
+                                                                        \ (isnotnull(s_store_sk#712)\
+                                                                        \ AND (isnotnull(s_store_name#717)\
+                                                                        \ AND isnotnull(s_zip#737)))"
+                                                                      operator: "filter"
+                                                                      inputs:
+                                                                      - title: "store.parquet"
+                                                                        operator: "scan"
+                                                                        inputs: []
+                                                              - title: "Projection:\
+                                                                  \ c_customer_sk#400,\
+                                                                  \ c_current_cdemo_sk#402,\
+                                                                  \ c_current_hdemo_sk#403,\
+                                                                  \ c_current_addr_sk#404,\
+                                                                  \ c_first_shipto_date_sk#405,\
+                                                                  \ c_first_sales_date_sk#406"
+                                                                operator: "projection"
+                                                                inputs:
+                                                                - title: "Filter:\
+                                                                    \ ((isnotnull(c_customer_sk#400)\
+                                                                    \ AND ((isnotnull(c_first_sales_date_sk#406)\
+                                                                    \ AND isnotnull(c_first_shipto_date_sk#405))\
+                                                                    \ AND isnotnull(c_current_cdemo_sk#402)))\
+                                                                    \ AND (isnotnull(c_current_hdemo_sk#403)\
+                                                                    \ AND isnotnull(c_current_addr_sk#404)))"
+                                                                  operator: "filter"
+                                                                  inputs:
+                                                                  - title: "customer.parquet"
+                                                                    operator: "scan"
+                                                                    inputs: []
+                                                          - title: "Projection: d_date_sk#20976,\
+                                                              \ d_year#20982"
+                                                            operator: "projection"
+                                                            inputs:
+                                                            - title: "Filter: isnotnull(d_date_sk#20976)"
+                                                              operator: "filter"
+                                                              inputs:
+                                                              - title: "date_dim.parquet"
+                                                                operator: "scan"
+                                                                inputs: []
+                                                      - title: "Projection: d_date_sk#21004,\
+                                                          \ d_year#21010"
+                                                        operator: "projection"
+                                                        inputs:
+                                                        - title: "Filter: isnotnull(d_date_sk#21004)"
+                                                          operator: "filter"
+                                                          inputs:
+                                                          - title: "date_dim.parquet"
+                                                            operator: "scan"
+                                                            inputs: []
+                                                  - title: "Projection: cd_demo_sk#222,\
+                                                      \ cd_marital_status#224"
+                                                    operator: "projection"
+                                                    inputs:
+                                                    - title: "Filter: (isnotnull(cd_demo_sk#222)\
+                                                        \ AND isnotnull(cd_marital_status#224))"
+                                                      operator: "filter"
+                                                      inputs:
+                                                      - title: "customer_demographics.parquet"
+                                                        operator: "scan"
+                                                        inputs: []
+                                              - title: "Projection: cd_demo_sk#21032,\
+                                                  \ cd_marital_status#21034"
+                                                operator: "projection"
+                                                inputs:
+                                                - title: "Filter: (isnotnull(cd_demo_sk#21032)\
+                                                    \ AND isnotnull(cd_marital_status#21034))"
+                                                  operator: "filter"
+                                                  inputs:
+                                                  - title: "customer_demographics.parquet"
+                                                    operator: "scan"
+                                                    inputs: []
+                                          - title: "Projection: p_promo_sk#98"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: isnotnull(p_promo_sk#98)"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "promotion.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                      - title: "Projection: hd_demo_sk#88, hd_income_band_sk#89"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Filter: (isnotnull(hd_demo_sk#88)\
+                                            \ AND isnotnull(hd_income_band_sk#89))"
+                                          operator: "filter"
+                                          inputs:
+                                          - title: "household_demographics.parquet"
+                                            operator: "scan"
+                                            inputs: []
+                                  - title: "Projection: hd_demo_sk#21041, hd_income_band_sk#21042"
+                                    operator: "projection"
+                                    inputs:
+                                    - title: "Filter: (isnotnull(hd_demo_sk#21041)\
+                                        \ AND isnotnull(hd_income_band_sk#21042))"
+                                      operator: "filter"
+                                      inputs:
+                                      - title: "household_demographics.parquet"
+                                        operator: "scan"
+                                        inputs: []
+                              - title: "Projection: ca_address_sk#62, ca_street_number#64,\
+                                  \ ca_street_name#65, ca_city#68, ca_zip#71"
+                                operator: "projection"
+                                inputs:
+                                - title: "Filter: isnotnull(ca_address_sk#62)"
+                                  operator: "filter"
+                                  inputs:
+                                  - title: "customer_address.parquet"
+                                    operator: "scan"
+                                    inputs: []
+                          - title: "Projection: ca_address_sk#21046, ca_street_number#21048,\
+                              \ ca_street_name#21049, ca_city#21052, ca_zip#21055"
+                            operator: "projection"
+                            inputs:
+                            - title: "Filter: isnotnull(ca_address_sk#21046)"
+                              operator: "filter"
+                              inputs:
+                              - title: "customer_address.parquet"
+                                operator: "scan"
+                                inputs: []
+                      - title: "Projection: ib_income_band_sk#240"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: isnotnull(ib_income_band_sk#240)"
+                          operator: "filter"
+                          inputs:
+                          - title: "income_band.parquet"
+                            operator: "scan"
+                            inputs: []
+                  - title: "Projection: ib_income_band_sk#21059"
+                    operator: "projection"
+                    inputs:
+                    - title: "Filter: isnotnull(ib_income_band_sk#21059)"
+                      operator: "filter"
+                      inputs:
+                      - title: "income_band.parquet"
+                        operator: "scan"
+                        inputs: []
+              - title: "Projection: i_item_sk#668, i_product_name#689"
+                operator: "projection"
+                inputs:
+                - title: "Filter: ((isnotnull(i_current_price#673) AND ((((i_color#685\
+                    \ IN (chocolate,lime,sienna,drab,goldenrod,navajo) AND (i_current_price#673\
+                    \ >= 75.00)) AND (i_current_price#673 <= 85.00)) AND (i_current_price#673\
+                    \ >= 76.00)) AND (i_current_price#673 <= 90.00))) AND isnotnull(i_item_sk#668))"
+                  operator: "filter"
+                  inputs:
+                  - title: "item.parquet"
+                    operator: "scan"
+                    inputs: []
+        - title: "Aggregate (unknown)"
+          operator: "Aggregate"
+          inputs:
+          - title: "Projection: ss_wholesale_cost#21121, ss_list_price#21122, ss_coupon_amt#21129,\
+              \ d_year#21220, d_year#21248, d_year#21276, s_store_name#21303, s_zip#21323,\
+              \ ca_street_number#21394, ca_street_name#21395, ca_city#21398, ca_zip#21401,\
+              \ ca_street_number#21407, ca_street_name#21408, ca_city#21411, ca_zip#21414,\
+              \ i_item_sk#21424, i_product_name#21445"
+            operator: "projection"
+            inputs:
+            - title: "Inner Join: Some((ss_item_sk#21112 = i_item_sk#21424))"
+              operator: "join"
+              inputs:
+              - title: "Projection: ss_item_sk#21112, ss_wholesale_cost#21121, ss_list_price#21122,\
+                  \ ss_coupon_amt#21129, d_year#21220, s_store_name#21303, s_zip#21323,\
+                  \ d_year#21248, d_year#21276, ca_street_number#21394, ca_street_name#21395,\
+                  \ ca_city#21398, ca_zip#21401, ca_street_number#21407, ca_street_name#21408,\
+                  \ ca_city#21411, ca_zip#21414"
+                operator: "projection"
+                inputs:
+                - title: "Inner Join: Some((hd_income_band_sk#21388 = ib_income_band_sk#21421))"
+                  operator: "join"
+                  inputs:
+                  - title: "Projection: ss_item_sk#21112, ss_wholesale_cost#21121,\
+                      \ ss_list_price#21122, ss_coupon_amt#21129, d_year#21220, s_store_name#21303,\
+                      \ s_zip#21323, d_year#21248, d_year#21276, hd_income_band_sk#21388,\
+                      \ ca_street_number#21394, ca_street_name#21395, ca_city#21398,\
+                      \ ca_zip#21401, ca_street_number#21407, ca_street_name#21408,\
+                      \ ca_city#21411, ca_zip#21414"
+                    operator: "projection"
+                    inputs:
+                    - title: "Inner Join: Some((hd_income_band_sk#21383 = ib_income_band_sk#21418))"
+                      operator: "join"
+                      inputs:
+                      - title: "Projection: ss_item_sk#21112, ss_wholesale_cost#21121,\
+                          \ ss_list_price#21122, ss_coupon_amt#21129, d_year#21220,\
+                          \ s_store_name#21303, s_zip#21323, d_year#21248, d_year#21276,\
+                          \ hd_income_band_sk#21383, hd_income_band_sk#21388, ca_street_number#21394,\
+                          \ ca_street_name#21395, ca_city#21398, ca_zip#21401, ca_street_number#21407,\
+                          \ ca_street_name#21408, ca_city#21411, ca_zip#21414"
+                        operator: "projection"
+                        inputs:
+                        - title: "Inner Join: Some((c_current_addr_sk#21331 = ca_address_sk#21405))"
+                          operator: "join"
+                          inputs:
+                          - title: "Projection: ss_item_sk#21112, ss_wholesale_cost#21121,\
+                              \ ss_list_price#21122, ss_coupon_amt#21129, d_year#21220,\
+                              \ s_store_name#21303, s_zip#21323, c_current_addr_sk#21331,\
+                              \ d_year#21248, d_year#21276, hd_income_band_sk#21383,\
+                              \ hd_income_band_sk#21388, ca_street_number#21394, ca_street_name#21395,\
+                              \ ca_city#21398, ca_zip#21401"
+                            operator: "projection"
+                            inputs:
+                            - title: "Inner Join: Some((ss_addr_sk#21116 = ca_address_sk#21392))"
+                              operator: "join"
+                              inputs:
+                              - title: "Projection: ss_item_sk#21112, ss_addr_sk#21116,\
+                                  \ ss_wholesale_cost#21121, ss_list_price#21122,\
+                                  \ ss_coupon_amt#21129, d_year#21220, s_store_name#21303,\
+                                  \ s_zip#21323, c_current_addr_sk#21331, d_year#21248,\
+                                  \ d_year#21276, hd_income_band_sk#21383, hd_income_band_sk#21388"
+                                operator: "projection"
+                                inputs:
+                                - title: "Inner Join: Some((c_current_hdemo_sk#21330\
+                                    \ = hd_demo_sk#21387))"
+                                  operator: "join"
+                                  inputs:
+                                  - title: "Projection: ss_item_sk#21112, ss_addr_sk#21116,\
+                                      \ ss_wholesale_cost#21121, ss_list_price#21122,\
+                                      \ ss_coupon_amt#21129, d_year#21220, s_store_name#21303,\
+                                      \ s_zip#21323, c_current_hdemo_sk#21330, c_current_addr_sk#21331,\
+                                      \ d_year#21248, d_year#21276, hd_income_band_sk#21383"
+                                    operator: "projection"
+                                    inputs:
+                                    - title: "Inner Join: Some((ss_hdemo_sk#21115\
+                                        \ = hd_demo_sk#21382))"
+                                      operator: "join"
+                                      inputs:
+                                      - title: "Projection: ss_item_sk#21112, ss_hdemo_sk#21115,\
+                                          \ ss_addr_sk#21116, ss_wholesale_cost#21121,\
+                                          \ ss_list_price#21122, ss_coupon_amt#21129,\
+                                          \ d_year#21220, s_store_name#21303, s_zip#21323,\
+                                          \ c_current_hdemo_sk#21330, c_current_addr_sk#21331,\
+                                          \ d_year#21248, d_year#21276"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Inner Join: Some((ss_promo_sk#21118\
+                                            \ = p_promo_sk#21363))"
+                                          operator: "join"
+                                          inputs:
+                                          - title: "Projection: ss_item_sk#21112,\
+                                              \ ss_hdemo_sk#21115, ss_addr_sk#21116,\
+                                              \ ss_promo_sk#21118, ss_wholesale_cost#21121,\
+                                              \ ss_list_price#21122, ss_coupon_amt#21129,\
+                                              \ d_year#21220, s_store_name#21303,\
+                                              \ s_zip#21323, c_current_hdemo_sk#21330,\
+                                              \ c_current_addr_sk#21331, d_year#21248,\
+                                              \ d_year#21276"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Inner Join: Some(((c_current_cdemo_sk#21329\
+                                                \ = cd_demo_sk#21354) AND NOT (cd_marital_status#21347\
+                                                \ = cd_marital_status#21356)))"
+                                              operator: "join"
+                                              inputs:
+                                              - title: "Projection: ss_item_sk#21112,\
+                                                  \ ss_hdemo_sk#21115, ss_addr_sk#21116,\
+                                                  \ ss_promo_sk#21118, ss_wholesale_cost#21121,\
+                                                  \ ss_list_price#21122, ss_coupon_amt#21129,\
+                                                  \ d_year#21220, s_store_name#21303,\
+                                                  \ s_zip#21323, c_current_cdemo_sk#21329,\
+                                                  \ c_current_hdemo_sk#21330, c_current_addr_sk#21331,\
+                                                  \ d_year#21248, d_year#21276, cd_marital_status#21347"
+                                                operator: "projection"
+                                                inputs:
+                                                - title: "Inner Join: Some((ss_cdemo_sk#21114\
+                                                    \ = cd_demo_sk#21345))"
+                                                  operator: "join"
+                                                  inputs:
+                                                  - title: "Projection: ss_item_sk#21112,\
+                                                      \ ss_cdemo_sk#21114, ss_hdemo_sk#21115,\
+                                                      \ ss_addr_sk#21116, ss_promo_sk#21118,\
+                                                      \ ss_wholesale_cost#21121, ss_list_price#21122,\
+                                                      \ ss_coupon_amt#21129, d_year#21220,\
+                                                      \ s_store_name#21303, s_zip#21323,\
+                                                      \ c_current_cdemo_sk#21329,\
+                                                      \ c_current_hdemo_sk#21330,\
+                                                      \ c_current_addr_sk#21331, d_year#21248,\
+                                                      \ d_year#21276"
+                                                    operator: "projection"
+                                                    inputs:
+                                                    - title: "Inner Join: Some((c_first_shipto_date_sk#21332\
+                                                        \ = d_date_sk#21270))"
+                                                      operator: "join"
+                                                      inputs:
+                                                      - title: "Projection: ss_item_sk#21112,\
+                                                          \ ss_cdemo_sk#21114, ss_hdemo_sk#21115,\
+                                                          \ ss_addr_sk#21116, ss_promo_sk#21118,\
+                                                          \ ss_wholesale_cost#21121,\
+                                                          \ ss_list_price#21122, ss_coupon_amt#21129,\
+                                                          \ d_year#21220, s_store_name#21303,\
+                                                          \ s_zip#21323, c_current_cdemo_sk#21329,\
+                                                          \ c_current_hdemo_sk#21330,\
+                                                          \ c_current_addr_sk#21331,\
+                                                          \ c_first_shipto_date_sk#21332,\
+                                                          \ d_year#21248"
+                                                        operator: "projection"
+                                                        inputs:
+                                                        - title: "Inner Join: Some((c_first_sales_date_sk#21333\
+                                                            \ = d_date_sk#21242))"
+                                                          operator: "join"
+                                                          inputs:
+                                                          - title: "Projection: ss_item_sk#21112,\
+                                                              \ ss_cdemo_sk#21114,\
+                                                              \ ss_hdemo_sk#21115,\
+                                                              \ ss_addr_sk#21116,\
+                                                              \ ss_promo_sk#21118,\
+                                                              \ ss_wholesale_cost#21121,\
+                                                              \ ss_list_price#21122,\
+                                                              \ ss_coupon_amt#21129,\
+                                                              \ d_year#21220, s_store_name#21303,\
+                                                              \ s_zip#21323, c_current_cdemo_sk#21329,\
+                                                              \ c_current_hdemo_sk#21330,\
+                                                              \ c_current_addr_sk#21331,\
+                                                              \ c_first_shipto_date_sk#21332,\
+                                                              \ c_first_sales_date_sk#21333"
+                                                            operator: "projection"
+                                                            inputs:
+                                                            - title: "Inner Join:\
+                                                                \ Some((ss_customer_sk#21113\
+                                                                \ = c_customer_sk#21327))"
+                                                              operator: "join"
+                                                              inputs:
+                                                              - title: "Projection:\
+                                                                  \ ss_item_sk#21112,\
+                                                                  \ ss_customer_sk#21113,\
+                                                                  \ ss_cdemo_sk#21114,\
+                                                                  \ ss_hdemo_sk#21115,\
+                                                                  \ ss_addr_sk#21116,\
+                                                                  \ ss_promo_sk#21118,\
+                                                                  \ ss_wholesale_cost#21121,\
+                                                                  \ ss_list_price#21122,\
+                                                                  \ ss_coupon_amt#21129,\
+                                                                  \ d_year#21220,\
+                                                                  \ s_store_name#21303,\
+                                                                  \ s_zip#21323"
+                                                                operator: "projection"
+                                                                inputs:
+                                                                - title: "Inner Join:\
+                                                                    \ Some((ss_store_sk#21117\
+                                                                    \ = s_store_sk#21298))"
+                                                                  operator: "join"
+                                                                  inputs:
+                                                                  - title: "Projection:\
+                                                                      \ ss_item_sk#21112,\
+                                                                      \ ss_customer_sk#21113,\
+                                                                      \ ss_cdemo_sk#21114,\
+                                                                      \ ss_hdemo_sk#21115,\
+                                                                      \ ss_addr_sk#21116,\
+                                                                      \ ss_store_sk#21117,\
+                                                                      \ ss_promo_sk#21118,\
+                                                                      \ ss_wholesale_cost#21121,\
+                                                                      \ ss_list_price#21122,\
+                                                                      \ ss_coupon_amt#21129,\
+                                                                      \ d_year#21220"
+                                                                    operator: "projection"
+                                                                    inputs:
+                                                                    - title: "Inner\
+                                                                        \ Join: Some((ss_sold_date_sk#21110\
+                                                                        \ = d_date_sk#21214))"
+                                                                      operator: "join"
+                                                                      inputs:
+                                                                      - title: "Projection:\
+                                                                          \ ss_sold_date_sk#21110,\
+                                                                          \ ss_item_sk#21112,\
+                                                                          \ ss_customer_sk#21113,\
+                                                                          \ ss_cdemo_sk#21114,\
+                                                                          \ ss_hdemo_sk#21115,\
+                                                                          \ ss_addr_sk#21116,\
+                                                                          \ ss_store_sk#21117,\
+                                                                          \ ss_promo_sk#21118,\
+                                                                          \ ss_wholesale_cost#21121,\
+                                                                          \ ss_list_price#21122,\
+                                                                          \ ss_coupon_amt#21129"
+                                                                        operator: "projection"
+                                                                        inputs:
+                                                                        - title: "Inner\
+                                                                            \ Join:\
+                                                                            \ Some((ss_item_sk#21112\
+                                                                            \ = cs_item_sk#21168))"
+                                                                          operator: "join"
+                                                                          inputs:
+                                                                          - title: "Projection:\
+                                                                              \ ss_sold_date_sk#21110,\
+                                                                              \ ss_item_sk#21112,\
+                                                                              \ ss_customer_sk#21113,\
+                                                                              \ ss_cdemo_sk#21114,\
+                                                                              \ ss_hdemo_sk#21115,\
+                                                                              \ ss_addr_sk#21116,\
+                                                                              \ ss_store_sk#21117,\
+                                                                              \ ss_promo_sk#21118,\
+                                                                              \ ss_wholesale_cost#21121,\
+                                                                              \ ss_list_price#21122,\
+                                                                              \ ss_coupon_amt#21129"
+                                                                            operator: "projection"
+                                                                            inputs:
+                                                                            - title: "Inner\
+                                                                                \ Join:\
+                                                                                \ Some(((ss_item_sk#21112\
+                                                                                \ =\
+                                                                                \ sr_item_sk#21135)\
+                                                                                \ AND\
+                                                                                \ (ss_ticket_number#21119L\
+                                                                                \ =\
+                                                                                \ sr_ticket_number#21142L)))"
+                                                                              operator: "join"
+                                                                              inputs:
+                                                                              - title: "Projection:\
+                                                                                  \ ss_sold_date_sk#21110,\
+                                                                                  \ ss_item_sk#21112,\
+                                                                                  \ ss_customer_sk#21113,\
+                                                                                  \ ss_cdemo_sk#21114,\
+                                                                                  \ ss_hdemo_sk#21115,\
+                                                                                  \ ss_addr_sk#21116,\
+                                                                                  \ ss_store_sk#21117,\
+                                                                                  \ ss_promo_sk#21118,\
+                                                                                  \ ss_ticket_number#21119L,\
+                                                                                  \ ss_wholesale_cost#21121,\
+                                                                                  \ ss_list_price#21122,\
+                                                                                  \ ss_coupon_amt#21129"
+                                                                                operator: "projection"
+                                                                                inputs:
+                                                                                - title: "Filter:\
+                                                                                    \ (((((isnotnull(ss_item_sk#21112)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_ticket_number#21119L))\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_sold_date_sk#21110))\
+                                                                                    \ AND\
+                                                                                    \ (isnotnull(ss_store_sk#21117)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_customer_sk#21113)))\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_cdemo_sk#21114))\
+                                                                                    \ AND\
+                                                                                    \ ((isnotnull(ss_promo_sk#21118)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_hdemo_sk#21115))\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(ss_addr_sk#21116)))"
+                                                                                  operator: "filter"
+                                                                                  inputs:
+                                                                                  - title: "store_sales.parquet"
+                                                                                    operator: "scan"
+                                                                                    inputs: []
+                                                                              - title: "Projection:\
+                                                                                  \ sr_item_sk#21135,\
+                                                                                  \ sr_ticket_number#21142L"
+                                                                                operator: "projection"
+                                                                                inputs:
+                                                                                - title: "Filter:\
+                                                                                    \ (isnotnull(sr_item_sk#21135)\
+                                                                                    \ AND\
+                                                                                    \ isnotnull(sr_ticket_number#21142L))"
+                                                                                  operator: "filter"
+                                                                                  inputs:
+                                                                                  - title: "store_returns.parquet"
+                                                                                    operator: "scan"
+                                                                                    inputs: []
+                                                                          - title: "Projection:\
+                                                                              \ cs_item_sk#21168"
+                                                                            operator: "projection"
+                                                                            inputs:
+                                                                            - title: "Filter:\
+                                                                                \ (isnotnull(sale#20955)\
+                                                                                \ AND\
+                                                                                \ (cast(sale#20955\
+                                                                                \ as\
+                                                                                \ decimal(21,2))\
+                                                                                \ >\
+                                                                                \ CheckOverflow((2.00\
+                                                                                \ *\
+                                                                                \ promote_precision(refund#20956)),\
+                                                                                \ DecimalType(21,2),\
+                                                                                \ true)))"
+                                                                              operator: "filter"
+                                                                              inputs:
+                                                                              - title: "Aggregate\
+                                                                                  \ (unknown)"
+                                                                                operator: "Aggregate"
+                                                                                inputs:
+                                                                                - title: "Projection:\
+                                                                                    \ cs_item_sk#21168,\
+                                                                                    \ cs_ext_list_price#21178,\
+                                                                                    \ cr_refunded_cash#21210,\
+                                                                                    \ cr_reversed_charge#21211,\
+                                                                                    \ cr_store_credit#21212"
+                                                                                  operator: "projection"
+                                                                                  inputs:
+                                                                                  - title: "Inner\
+                                                                                      \ Join:\
+                                                                                      \ Some(((cs_item_sk#21168\
+                                                                                      \ =\
+                                                                                      \ cr_item_sk#21189)\
+                                                                                      \ AND\
+                                                                                      \ (cs_order_number#21170L\
+                                                                                      \ =\
+                                                                                      \ cr_order_number#21203L)))"
+                                                                                    operator: "join"
+                                                                                    inputs:
+                                                                                    - title: "Projection:\
+                                                                                        \ cs_item_sk#21168,\
+                                                                                        \ cs_order_number#21170L,\
+                                                                                        \ cs_ext_list_price#21178"
+                                                                                      operator: "projection"
+                                                                                      inputs:
+                                                                                      - title: "Filter:\
+                                                                                          \ (isnotnull(cs_item_sk#21168)\
+                                                                                          \ AND\
+                                                                                          \ isnotnull(cs_order_number#21170L))"
+                                                                                        operator: "filter"
+                                                                                        inputs:
+                                                                                        - title: "catalog_sales.parquet"
+                                                                                          operator: "scan"
+                                                                                          inputs: []
+                                                                                    - title: "Projection:\
+                                                                                        \ cr_item_sk#21189,\
+                                                                                        \ cr_order_number#21203L,\
+                                                                                        \ cr_refunded_cash#21210,\
+                                                                                        \ cr_reversed_charge#21211,\
+                                                                                        \ cr_store_credit#21212"
+                                                                                      operator: "projection"
+                                                                                      inputs:
+                                                                                      - title: "Filter:\
+                                                                                          \ (isnotnull(cr_item_sk#21189)\
+                                                                                          \ AND\
+                                                                                          \ isnotnull(cr_order_number#21203L))"
+                                                                                        operator: "filter"
+                                                                                        inputs:
+                                                                                        - title: "catalog_returns.parquet"
+                                                                                          operator: "scan"
+                                                                                          inputs: []
+                                                                      - title: "Projection:\
+                                                                          \ d_date_sk#21214,\
+                                                                          \ d_year#21220"
+                                                                        operator: "projection"
+                                                                        inputs:
+                                                                        - title: "Filter:\
+                                                                            \ ((isnotnull(d_year#21220)\
+                                                                            \ AND\
+                                                                            \ (d_year#21220\
+                                                                            \ = 2002))\
+                                                                            \ AND\
+                                                                            \ isnotnull(d_date_sk#21214))"
+                                                                          operator: "filter"
+                                                                          inputs:
+                                                                          - title: "date_dim.parquet"
+                                                                            operator: "scan"
+                                                                            inputs: []
+                                                                  - title: "Projection:\
+                                                                      \ s_store_sk#21298,\
+                                                                      \ s_store_name#21303,\
+                                                                      \ s_zip#21323"
+                                                                    operator: "projection"
+                                                                    inputs:
+                                                                    - title: "Filter:\
+                                                                        \ (isnotnull(s_store_sk#21298)\
+                                                                        \ AND (isnotnull(s_store_name#21303)\
+                                                                        \ AND isnotnull(s_zip#21323)))"
+                                                                      operator: "filter"
+                                                                      inputs:
+                                                                      - title: "store.parquet"
+                                                                        operator: "scan"
+                                                                        inputs: []
+                                                              - title: "Projection:\
+                                                                  \ c_customer_sk#21327,\
+                                                                  \ c_current_cdemo_sk#21329,\
+                                                                  \ c_current_hdemo_sk#21330,\
+                                                                  \ c_current_addr_sk#21331,\
+                                                                  \ c_first_shipto_date_sk#21332,\
+                                                                  \ c_first_sales_date_sk#21333"
+                                                                operator: "projection"
+                                                                inputs:
+                                                                - title: "Filter:\
+                                                                    \ ((isnotnull(c_customer_sk#21327)\
+                                                                    \ AND ((isnotnull(c_first_sales_date_sk#21333)\
+                                                                    \ AND isnotnull(c_first_shipto_date_sk#21332))\
+                                                                    \ AND isnotnull(c_current_cdemo_sk#21329)))\
+                                                                    \ AND (isnotnull(c_current_hdemo_sk#21330)\
+                                                                    \ AND isnotnull(c_current_addr_sk#21331)))"
+                                                                  operator: "filter"
+                                                                  inputs:
+                                                                  - title: "customer.parquet"
+                                                                    operator: "scan"
+                                                                    inputs: []
+                                                          - title: "Projection: d_date_sk#21242,\
+                                                              \ d_year#21248"
+                                                            operator: "projection"
+                                                            inputs:
+                                                            - title: "Filter: isnotnull(d_date_sk#21242)"
+                                                              operator: "filter"
+                                                              inputs:
+                                                              - title: "date_dim.parquet"
+                                                                operator: "scan"
+                                                                inputs: []
+                                                      - title: "Projection: d_date_sk#21270,\
+                                                          \ d_year#21276"
+                                                        operator: "projection"
+                                                        inputs:
+                                                        - title: "Filter: isnotnull(d_date_sk#21270)"
+                                                          operator: "filter"
+                                                          inputs:
+                                                          - title: "date_dim.parquet"
+                                                            operator: "scan"
+                                                            inputs: []
+                                                  - title: "Projection: cd_demo_sk#21345,\
+                                                      \ cd_marital_status#21347"
+                                                    operator: "projection"
+                                                    inputs:
+                                                    - title: "Filter: (isnotnull(cd_demo_sk#21345)\
+                                                        \ AND isnotnull(cd_marital_status#21347))"
+                                                      operator: "filter"
+                                                      inputs:
+                                                      - title: "customer_demographics.parquet"
+                                                        operator: "scan"
+                                                        inputs: []
+                                              - title: "Projection: cd_demo_sk#21354,\
+                                                  \ cd_marital_status#21356"
+                                                operator: "projection"
+                                                inputs:
+                                                - title: "Filter: (isnotnull(cd_demo_sk#21354)\
+                                                    \ AND isnotnull(cd_marital_status#21356))"
+                                                  operator: "filter"
+                                                  inputs:
+                                                  - title: "customer_demographics.parquet"
+                                                    operator: "scan"
+                                                    inputs: []
+                                          - title: "Projection: p_promo_sk#21363"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: isnotnull(p_promo_sk#21363)"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "promotion.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                      - title: "Projection: hd_demo_sk#21382, hd_income_band_sk#21383"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Filter: (isnotnull(hd_demo_sk#21382)\
+                                            \ AND isnotnull(hd_income_band_sk#21383))"
+                                          operator: "filter"
+                                          inputs:
+                                          - title: "household_demographics.parquet"
+                                            operator: "scan"
+                                            inputs: []
+                                  - title: "Projection: hd_demo_sk#21387, hd_income_band_sk#21388"
+                                    operator: "projection"
+                                    inputs:
+                                    - title: "Filter: (isnotnull(hd_demo_sk#21387)\
+                                        \ AND isnotnull(hd_income_band_sk#21388))"
+                                      operator: "filter"
+                                      inputs:
+                                      - title: "household_demographics.parquet"
+                                        operator: "scan"
+                                        inputs: []
+                              - title: "Projection: ca_address_sk#21392, ca_street_number#21394,\
+                                  \ ca_street_name#21395, ca_city#21398, ca_zip#21401"
+                                operator: "projection"
+                                inputs:
+                                - title: "Filter: isnotnull(ca_address_sk#21392)"
+                                  operator: "filter"
+                                  inputs:
+                                  - title: "customer_address.parquet"
+                                    operator: "scan"
+                                    inputs: []
+                          - title: "Projection: ca_address_sk#21405, ca_street_number#21407,\
+                              \ ca_street_name#21408, ca_city#21411, ca_zip#21414"
+                            operator: "projection"
+                            inputs:
+                            - title: "Filter: isnotnull(ca_address_sk#21405)"
+                              operator: "filter"
+                              inputs:
+                              - title: "customer_address.parquet"
+                                operator: "scan"
+                                inputs: []
+                      - title: "Projection: ib_income_band_sk#21418"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: isnotnull(ib_income_band_sk#21418)"
+                          operator: "filter"
+                          inputs:
+                          - title: "income_band.parquet"
+                            operator: "scan"
+                            inputs: []
+                  - title: "Projection: ib_income_band_sk#21421"
+                    operator: "projection"
+                    inputs:
+                    - title: "Filter: isnotnull(ib_income_band_sk#21421)"
+                      operator: "filter"
+                      inputs:
+                      - title: "income_band.parquet"
+                        operator: "scan"
+                        inputs: []
+              - title: "Projection: i_item_sk#21424, i_product_name#21445"
+                operator: "projection"
+                inputs:
+                - title: "Filter: ((isnotnull(i_current_price#21429) AND ((((i_color#21441\
+                    \ IN (chocolate,lime,sienna,drab,goldenrod,navajo) AND (i_current_price#21429\
+                    \ >= 75.00)) AND (i_current_price#21429 <= 85.00)) AND (i_current_price#21429\
+                    \ >= 76.00)) AND (i_current_price#21429 <= 90.00))) AND isnotnull(i_item_sk#21424))"
+                  operator: "filter"
+                  inputs:
+                  - title: "item.parquet"
+                    operator: "scan"
+                    inputs: []

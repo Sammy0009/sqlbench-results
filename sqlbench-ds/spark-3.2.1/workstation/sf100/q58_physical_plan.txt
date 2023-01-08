@@ -1,0 +1,262 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   GpuColumnarToRow false
+   +- GpuTopN(limit=100, orderBy=[item_id#19037 ASC NULLS FIRST,ss_item_rev#19038 ASC NULLS FIRST], output=[item_id#19037,ss_item_rev#19038,ss_dev#19033,cs_item_rev#19042,cs_dev#19034,ws_item_rev#19046,ws_dev#19035,average#19036])
+      +- GpuShuffleCoalesce 2147483647
+         +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#337269]
+            +- GpuTopN(limit=100, orderBy=[item_id#19037 ASC NULLS FIRST,ss_item_rev#19038 ASC NULLS FIRST], output=[item_id#19037,ss_item_rev#19038,ss_dev#19033,cs_item_rev#19042,cs_dev#19034,ws_item_rev#19046,ws_dev#19035,average#19036])
+               +- GpuRowToColumnar targetsize(2147483647)
+                  +- *(2) Project [item_id#19037, ss_item_rev#19038, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(23,6))) / promote_precision(CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true))), DecimalType(38,17), true)) * 100.00000000000000000), DecimalType(38,13), true) AS ss_dev#19033, cs_item_rev#19042, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(cs_item_rev#19042 as decimal(23,6))) / promote_precision(CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true))), DecimalType(38,17), true)) * 100.00000000000000000), DecimalType(38,13), true) AS cs_dev#19034, ws_item_rev#19046, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(ws_item_rev#19046 as decimal(23,6))) / promote_precision(CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true))), DecimalType(38,17), true)) * 100.00000000000000000), DecimalType(38,13), true) AS ws_dev#19035, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true) AS average#19036]
+                     +- *(2) SortMergeJoin [item_id#19037], [item_id#19045], Inner, ((((((((cast(ss_item_rev#19038 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ws_item_rev#19046)), DecimalType(19,3), true)) AND (cast(ss_item_rev#19038 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ws_item_rev#19046)), DecimalType(20,3), true))) AND (cast(cs_item_rev#19042 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ws_item_rev#19046)), DecimalType(19,3), true))) AND (cast(cs_item_rev#19042 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ws_item_rev#19046)), DecimalType(20,3), true))) AND (cast(ws_item_rev#19046 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ss_item_rev#19038)), DecimalType(19,3), true))) AND (cast(ws_item_rev#19046 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ss_item_rev#19038)), DecimalType(20,3), true))) AND (cast(ws_item_rev#19046 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(cs_item_rev#19042)), DecimalType(19,3), true))) AND (cast(ws_item_rev#19046 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(cs_item_rev#19042)), DecimalType(20,3), true)))
+                        :- GpuColumnarToRow false
+                        :  +- GpuProject [item_id#19037, ss_item_rev#19038, cs_item_rev#19042], true
+                        :     +- GpuRowToColumnar targetsize(2147483647)
+                        :        +- *(1) SortMergeJoin [item_id#19037], [item_id#19041], Inner, ((((cast(ss_item_rev#19038 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(cs_item_rev#19042)), DecimalType(19,3), true)) AND (cast(ss_item_rev#19038 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(cs_item_rev#19042)), DecimalType(20,3), true))) AND (cast(cs_item_rev#19042 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ss_item_rev#19038)), DecimalType(19,3), true))) AND (cast(cs_item_rev#19042 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ss_item_rev#19038)), DecimalType(20,3), true)))
+                        :           :- GpuColumnarToRow false
+                        :           :  +- GpuSort [item_id#19037 ASC NULLS FIRST], false, com.nvidia.spark.rapids.OutOfCoreSort$@59d99269
+                        :           :     +- GpuCoalesceBatches targetsize(2147483647)
+                        :           :        +- GpuFilter gpuisnotnull(ss_item_rev#19038), true
+                        :           :           +- GpuHashAggregate(keys=[i_item_id#669], functions=[gpubasicsum(UnscaledValue(ss_ext_sales_price#267), LongType, false)], output=[item_id#19037, ss_item_rev#19038])
+                        :           :              +- GpuShuffleCoalesce 2147483647
+                        :           :                 +- GpuCustomShuffleReader coalesced
+                        :           :                    +- ShuffleQueryStage 26
+                        :           :                       +- GpuColumnarExchange gpuhashpartitioning(i_item_id#669, 200), ENSURE_REQUIREMENTS, [id=#336274]
+                        :           :                          +- GpuHashAggregate(keys=[i_item_id#669], functions=[partial_gpubasicsum(UnscaledValue(ss_ext_sales_price#267), LongType, false)], output=[i_item_id#669, sum#19329L])
+                        :           :                             +- GpuProject [ss_ext_sales_price#267, i_item_id#669], true
+                        :           :                                +- GpuShuffledHashJoin [ss_item_sk#254], [i_item_sk#668], Inner, GpuBuildRight, false
+                        :           :                                   :- GpuShuffleCoalesce 2147483647
+                        :           :                                   :  +- GpuCustomShuffleReader coalesced
+                        :           :                                   :     +- ShuffleQueryStage 23
+                        :           :                                   :        +- GpuColumnarExchange gpuhashpartitioning(ss_item_sk#254, 200), ENSURE_REQUIREMENTS, [id=#335573]
+                        :           :                                   :           +- GpuProject [ss_item_sk#254, ss_ext_sales_price#267], true
+                        :           :                                   :              +- GpuShuffledHashJoin [ss_sold_date_sk#252], [d_date_sk#612], Inner, GpuBuildRight, false
+                        :           :                                   :                 :- GpuShuffleCoalesce 2147483647
+                        :           :                                   :                 :  +- GpuCustomShuffleReader coalesced
+                        :           :                                   :                 :     +- ShuffleQueryStage 0
+                        :           :                                   :                 :        +- GpuColumnarExchange gpuhashpartitioning(ss_sold_date_sk#252, 200), ENSURE_REQUIREMENTS, [id=#332666]
+                        :           :                                   :                 :           +- GpuCoalesceBatches targetsize(2147483647)
+                        :           :                                   :                 :              +- GpuFilter (gpuisnotnull(ss_sold_date_sk#252) AND gpuisnotnull(ss_item_sk#254)), true
+                        :           :                                   :                 :                 +- GpuFileGpuScan parquet [ss_sold_date_sk#252,ss_item_sk#254,ss_ext_sales_price#267] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#252), isnotnull(ss_item_sk#254)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_item_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_ext_sales_price:decimal(7,2)>
+                        :           :                                   :                 +- GpuCustomShuffleReader coalesced
+                        :           :                                   :                    +- ShuffleQueryStage 18
+                        :           :                                   :                       +- GpuColumnarExchange gpuhashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#333709]
+                        :           :                                   :                          +- GpuProject [d_date_sk#612], true
+                        :           :                                   :                             +- GpuShuffledHashJoin [d_date#614], [d_date#19235], LeftSemi, GpuBuildRight, false
+                        :           :                                   :                                :- GpuShuffleCoalesce 2147483647
+                        :           :                                   :                                :  +- GpuCustomShuffleReader coalesced
+                        :           :                                   :                                :     +- ShuffleQueryStage 1
+                        :           :                                   :                                :        +- GpuColumnarExchange gpuhashpartitioning(d_date#614, 200), ENSURE_REQUIREMENTS, [id=#332694]
+                        :           :                                   :                                :           +- GpuCoalesceBatches targetsize(2147483647)
+                        :           :                                   :                                :              +- GpuFilter gpuisnotnull(d_date_sk#612), true
+                        :           :                                   :                                :                 +- GpuFileGpuScan parquet [d_date_sk#612,d_date#614] Batched: true, DataFilters: [isnotnull(d_date_sk#612)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_date:date>
+                        :           :                                   :                                +- GpuCustomShuffleReader coalesced
+                        :           :                                   :                                   +- ShuffleQueryStage 2
+                        :           :                                   :                                      +- GpuColumnarExchange gpuhashpartitioning(d_date#19235, 200), ENSURE_REQUIREMENTS, [id=#332731]
+                        :           :                                   :                                         +- GpuProject [d_date#19235], true
+                        :           :                                   :                                            +- GpuCoalesceBatches targetsize(2147483647)
+                        :           :                                   :                                               +- GpuFilter (gpuisnotnull(d_week_seq#19237) AND (d_week_seq#19237 = Subquery subquery#19039, [id=#331275])), true
+                        :           :                                   :                                                  :  +- Subquery subquery#19039, [id=#331275]
+                        :           :                                   :                                                  :     +- AdaptiveSparkPlan isFinalPlan=true
+                                                                                                                                 +- == Final Plan ==
+                                                                                                                                    GpuColumnarToRow false
+                                                                                                                                    +- GpuProject [d_week_seq#19153], true
+                                                                                                                                       +- GpuCoalesceBatches targetsize(2147483647)
+                                                                                                                                          +- GpuFilter (gpuisnotnull(d_date#19151) AND (d_date#19151 = 11159)), true
+                                                                                                                                             +- GpuFileGpuScan parquet [d_date#19151,d_week_seq#19153] Batched: true, DataFilters: [isnotnull(d_date#19151), (d_date#19151 = 2000-07-21)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), EqualTo(d_date,2000-07-21)], ReadSchema: struct<d_date:date,d_week_seq:int>
+                                                                                                                                 +- == Initial Plan ==
+                                                                                                                                    Project [d_week_seq#19153]
+                                                                                                                                    +- Filter (isnotnull(d_date#19151) AND (d_date#19151 = 2000-07-21))
+                                                                                                                                       +- FileScan parquet [d_date#19151,d_week_seq#19153] Batched: true, DataFilters: [isnotnull(d_date#19151), (d_date#19151 = 2000-07-21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), EqualTo(d_date,2000-07-21)], ReadSchema: struct<d_date:date,d_week_seq:int>
+                        :           :                                   :                                                  +- GpuFileGpuScan parquet [d_date#19235,d_week_seq#19237] Batched: true, DataFilters: [isnotnull(d_week_seq#19237)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_week_seq)], ReadSchema: struct<d_date:date,d_week_seq:int>
+                        :           :                                   +- GpuCustomShuffleReader coalesced
+                        :           :                                      +- ShuffleQueryStage 3
+                        :           :                                         +- GpuColumnarExchange gpuhashpartitioning(i_item_sk#668, 200), ENSURE_REQUIREMENTS, [id=#332769]
+                        :           :                                            +- GpuCoalesceBatches targetsize(2147483647)
+                        :           :                                               +- GpuFilter (gpuisnotnull(i_item_sk#668) AND gpuisnotnull(i_item_id#669)), true
+                        :           :                                                  +- GpuFileGpuScan parquet [i_item_sk#668,i_item_id#669] Batched: true, DataFilters: [isnotnull(i_item_sk#668), isnotnull(i_item_id#669)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk), IsNotNull(i_item_id)], ReadSchema: struct<i_item_sk:int,i_item_id:string>
+                        :           +- GpuColumnarToRow false
+                        :              +- GpuSort [item_id#19041 ASC NULLS FIRST], false, com.nvidia.spark.rapids.OutOfCoreSort$@59d99269
+                        :                 +- GpuCoalesceBatches targetsize(2147483647)
+                        :                    +- GpuFilter gpuisnotnull(cs_item_rev#19042), true
+                        :                       +- GpuHashAggregate(keys=[i_item_id#19050], functions=[gpubasicsum(UnscaledValue(cs_ext_sales_price#567), LongType, false)], output=[item_id#19041, cs_item_rev#19042])
+                        :                          +- GpuShuffleCoalesce 2147483647
+                        :                             +- GpuCustomShuffleReader coalesced
+                        :                                +- ShuffleQueryStage 27
+                        :                                   +- GpuColumnarExchange gpuhashpartitioning(i_item_id#19050, 200), ENSURE_REQUIREMENTS, [id=#336535]
+                        :                                      +- GpuHashAggregate(keys=[i_item_id#19050], functions=[partial_gpubasicsum(UnscaledValue(cs_ext_sales_price#567), LongType, false)], output=[i_item_id#19050, sum#19331L])
+                        :                                         +- GpuProject [cs_ext_sales_price#567, i_item_id#19050], true
+                        :                                            +- GpuShuffledHashJoin [cs_item_sk#559], [i_item_sk#19049], Inner, GpuBuildRight, false
+                        :                                               :- GpuShuffleCoalesce 2147483647
+                        :                                               :  +- GpuCustomShuffleReader coalesced
+                        :                                               :     +- ShuffleQueryStage 24
+                        :                                               :        +- GpuColumnarExchange gpuhashpartitioning(cs_item_sk#559, 200), ENSURE_REQUIREMENTS, [id=#335643]
+                        :                                               :           +- GpuProject [cs_item_sk#559, cs_ext_sales_price#567], true
+                        :                                               :              +- GpuShuffledHashJoin [cs_sold_date_sk#544], [d_date_sk#19071], Inner, GpuBuildRight, false
+                        :                                               :                 :- GpuShuffleCoalesce 2147483647
+                        :                                               :                 :  +- GpuCustomShuffleReader coalesced
+                        :                                               :                 :     +- ShuffleQueryStage 4
+                        :                                               :                 :        +- GpuColumnarExchange gpuhashpartitioning(cs_sold_date_sk#544, 200), ENSURE_REQUIREMENTS, [id=#332864]
+                        :                                               :                 :           +- GpuCoalesceBatches targetsize(2147483647)
+                        :                                               :                 :              +- GpuFilter (gpuisnotnull(cs_sold_date_sk#544) AND gpuisnotnull(cs_item_sk#559)), true
+                        :                                               :                 :                 +- GpuFileGpuScan parquet [cs_sold_date_sk#544,cs_item_sk#559,cs_ext_sales_price#567] Batched: true, DataFilters: [isnotnull(cs_sold_date_sk#544), isnotnull(cs_item_sk#559)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cs_sold_date_sk), IsNotNull(cs_item_sk)], ReadSchema: struct<cs_sold_date_sk:int,cs_item_sk:int,cs_ext_sales_price:decimal(7,2)>
+                        :                                               :                 +- GpuCustomShuffleReader coalesced
+                        :                                               :                    +- ShuffleQueryStage 20
+                        :                                               :                       +- ReusedExchange [d_date_sk#19071], GpuColumnarExchange gpuhashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#333709]
+                        :                                               +- GpuCustomShuffleReader coalesced
+                        :                                                  +- ShuffleQueryStage 10
+                        :                                                     +- ReusedExchange [i_item_sk#19049, i_item_id#19050], GpuColumnarExchange gpuhashpartitioning(i_item_sk#668, 200), ENSURE_REQUIREMENTS, [id=#332769]
+                        +- GpuColumnarToRow false
+                           +- GpuSort [item_id#19045 ASC NULLS FIRST], false, com.nvidia.spark.rapids.OutOfCoreSort$@59d99269
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter gpuisnotnull(ws_item_rev#19046), true
+                                    +- GpuHashAggregate(keys=[i_item_id#19100], functions=[gpubasicsum(UnscaledValue(ws_ext_sales_price#499), LongType, false)], output=[item_id#19045, ws_item_rev#19046])
+                                       +- GpuShuffleCoalesce 2147483647
+                                          +- GpuCustomShuffleReader coalesced
+                                             +- ShuffleQueryStage 28
+                                                +- GpuColumnarExchange gpuhashpartitioning(i_item_id#19100, 200), ENSURE_REQUIREMENTS, [id=#336874]
+                                                   +- GpuHashAggregate(keys=[i_item_id#19100], functions=[partial_gpubasicsum(UnscaledValue(ws_ext_sales_price#499), LongType, false)], output=[i_item_id#19100, sum#19333L])
+                                                      +- GpuProject [ws_ext_sales_price#499, i_item_id#19100], true
+                                                         +- GpuShuffledHashJoin [ws_item_sk#479], [i_item_sk#19099], Inner, GpuBuildRight, false
+                                                            :- GpuShuffleCoalesce 2147483647
+                                                            :  +- GpuCustomShuffleReader coalesced
+                                                            :     +- ShuffleQueryStage 25
+                                                            :        +- GpuColumnarExchange gpuhashpartitioning(ws_item_sk#479, 200), ENSURE_REQUIREMENTS, [id=#335981]
+                                                            :           +- GpuProject [ws_item_sk#479, ws_ext_sales_price#499], true
+                                                            :              +- GpuShuffledHashJoin [ws_sold_date_sk#476], [d_date_sk#19121], Inner, GpuBuildRight, false
+                                                            :                 :- GpuShuffleCoalesce 2147483647
+                                                            :                 :  +- GpuCustomShuffleReader coalesced
+                                                            :                 :     +- ShuffleQueryStage 11
+                                                            :                 :        +- GpuColumnarExchange gpuhashpartitioning(ws_sold_date_sk#476, 200), ENSURE_REQUIREMENTS, [id=#333074]
+                                                            :                 :           +- GpuCoalesceBatches targetsize(2147483647)
+                                                            :                 :              +- GpuFilter (gpuisnotnull(ws_sold_date_sk#476) AND gpuisnotnull(ws_item_sk#479)), true
+                                                            :                 :                 +- GpuFileGpuScan parquet [ws_sold_date_sk#476,ws_item_sk#479,ws_ext_sales_price#499] Batched: true, DataFilters: [isnotnull(ws_sold_date_sk#476), isnotnull(ws_item_sk#479)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/web_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ws_sold_date_sk), IsNotNull(ws_item_sk)], ReadSchema: struct<ws_sold_date_sk:int,ws_item_sk:int,ws_ext_sales_price:decimal(7,2)>
+                                                            :                 +- GpuCustomShuffleReader coalesced
+                                                            :                    +- ShuffleQueryStage 22
+                                                            :                       +- ReusedExchange [d_date_sk#19121], GpuColumnarExchange gpuhashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#333709]
+                                                            +- GpuCustomShuffleReader coalesced
+                                                               +- ShuffleQueryStage 17
+                                                                  +- ReusedExchange [i_item_sk#19099, i_item_id#19100], GpuColumnarExchange gpuhashpartitioning(i_item_sk#668, 200), ENSURE_REQUIREMENTS, [id=#332769]
++- == Initial Plan ==
+   TakeOrderedAndProject(limit=100, orderBy=[item_id#19037 ASC NULLS FIRST,ss_item_rev#19038 ASC NULLS FIRST], output=[item_id#19037,ss_item_rev#19038,ss_dev#19033,cs_item_rev#19042,cs_dev#19034,ws_item_rev#19046,ws_dev#19035,average#19036])
+   +- Project [item_id#19037, ss_item_rev#19038, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(23,6))) / promote_precision(CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true))), DecimalType(38,17), true)) * 100.00000000000000000), DecimalType(38,13), true) AS ss_dev#19033, cs_item_rev#19042, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(cs_item_rev#19042 as decimal(23,6))) / promote_precision(CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true))), DecimalType(38,17), true)) * 100.00000000000000000), DecimalType(38,13), true) AS cs_dev#19034, ws_item_rev#19046, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(ws_item_rev#19046 as decimal(23,6))) / promote_precision(CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true))), DecimalType(38,17), true)) * 100.00000000000000000), DecimalType(38,13), true) AS ws_dev#19035, CheckOverflow((promote_precision(CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(ss_item_rev#19038 as decimal(18,2))) + promote_precision(cast(cs_item_rev#19042 as decimal(18,2)))), DecimalType(18,2), true) as decimal(19,2))) + promote_precision(cast(ws_item_rev#19046 as decimal(19,2)))), DecimalType(19,2), true)) / 3.00), DecimalType(23,6), true) AS average#19036]
+      +- SortMergeJoin [item_id#19037], [item_id#19045], Inner, ((((((((cast(ss_item_rev#19038 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ws_item_rev#19046)), DecimalType(19,3), true)) AND (cast(ss_item_rev#19038 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ws_item_rev#19046)), DecimalType(20,3), true))) AND (cast(cs_item_rev#19042 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ws_item_rev#19046)), DecimalType(19,3), true))) AND (cast(cs_item_rev#19042 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ws_item_rev#19046)), DecimalType(20,3), true))) AND (cast(ws_item_rev#19046 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ss_item_rev#19038)), DecimalType(19,3), true))) AND (cast(ws_item_rev#19046 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ss_item_rev#19038)), DecimalType(20,3), true))) AND (cast(ws_item_rev#19046 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(cs_item_rev#19042)), DecimalType(19,3), true))) AND (cast(ws_item_rev#19046 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(cs_item_rev#19042)), DecimalType(20,3), true)))
+         :- Project [item_id#19037, ss_item_rev#19038, cs_item_rev#19042]
+         :  +- SortMergeJoin [item_id#19037], [item_id#19041], Inner, ((((cast(ss_item_rev#19038 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(cs_item_rev#19042)), DecimalType(19,3), true)) AND (cast(ss_item_rev#19038 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(cs_item_rev#19042)), DecimalType(20,3), true))) AND (cast(cs_item_rev#19042 as decimal(19,3)) >= CheckOverflow((0.90 * promote_precision(ss_item_rev#19038)), DecimalType(19,3), true))) AND (cast(cs_item_rev#19042 as decimal(20,3)) <= CheckOverflow((1.10 * promote_precision(ss_item_rev#19038)), DecimalType(20,3), true)))
+         :     :- Sort [item_id#19037 ASC NULLS FIRST], false, 0
+         :     :  +- Filter isnotnull(ss_item_rev#19038)
+         :     :     +- HashAggregate(keys=[i_item_id#669], functions=[sum(UnscaledValue(ss_ext_sales_price#267))], output=[item_id#19037, ss_item_rev#19038])
+         :     :        +- Exchange hashpartitioning(i_item_id#669, 200), ENSURE_REQUIREMENTS, [id=#331402]
+         :     :           +- HashAggregate(keys=[i_item_id#669], functions=[partial_sum(UnscaledValue(ss_ext_sales_price#267))], output=[i_item_id#669, sum#19329L])
+         :     :              +- Project [ss_ext_sales_price#267, i_item_id#669]
+         :     :                 +- SortMergeJoin [ss_item_sk#254], [i_item_sk#668], Inner
+         :     :                    :- Sort [ss_item_sk#254 ASC NULLS FIRST], false, 0
+         :     :                    :  +- Exchange hashpartitioning(ss_item_sk#254, 200), ENSURE_REQUIREMENTS, [id=#331394]
+         :     :                    :     +- Project [ss_item_sk#254, ss_ext_sales_price#267]
+         :     :                    :        +- SortMergeJoin [ss_sold_date_sk#252], [d_date_sk#612], Inner
+         :     :                    :           :- Sort [ss_sold_date_sk#252 ASC NULLS FIRST], false, 0
+         :     :                    :           :  +- Exchange hashpartitioning(ss_sold_date_sk#252, 200), ENSURE_REQUIREMENTS, [id=#331386]
+         :     :                    :           :     +- Filter (isnotnull(ss_sold_date_sk#252) AND isnotnull(ss_item_sk#254))
+         :     :                    :           :        +- FileScan parquet [ss_sold_date_sk#252,ss_item_sk#254,ss_ext_sales_price#267] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#252), isnotnull(ss_item_sk#254)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_item_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_ext_sales_price:decimal(7,2)>
+         :     :                    :           +- Sort [d_date_sk#612 ASC NULLS FIRST], false, 0
+         :     :                    :              +- Exchange hashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#331387]
+         :     :                    :                 +- Project [d_date_sk#612]
+         :     :                    :                    +- SortMergeJoin [d_date#614], [d_date#19235], LeftSemi
+         :     :                    :                       :- Sort [d_date#614 ASC NULLS FIRST], false, 0
+         :     :                    :                       :  +- Exchange hashpartitioning(d_date#614, 200), ENSURE_REQUIREMENTS, [id=#331378]
+         :     :                    :                       :     +- Filter isnotnull(d_date_sk#612)
+         :     :                    :                       :        +- FileScan parquet [d_date_sk#612,d_date#614] Batched: true, DataFilters: [isnotnull(d_date_sk#612)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_date:date>
+         :     :                    :                       +- Sort [d_date#19235 ASC NULLS FIRST], false, 0
+         :     :                    :                          +- Exchange hashpartitioning(d_date#19235, 200), ENSURE_REQUIREMENTS, [id=#331379]
+         :     :                    :                             +- Project [d_date#19235]
+         :     :                    :                                +- Filter (isnotnull(d_week_seq#19237) AND (d_week_seq#19237 = Subquery subquery#19039, [id=#331275]))
+         :     :                    :                                   :  +- Subquery subquery#19039, [id=#331275]
+         :     :                    :                                   :     +- AdaptiveSparkPlan isFinalPlan=true
+                                                                              +- == Final Plan ==
+                                                                                 GpuColumnarToRow false
+                                                                                 +- GpuProject [d_week_seq#19153], true
+                                                                                    +- GpuCoalesceBatches targetsize(2147483647)
+                                                                                       +- GpuFilter (gpuisnotnull(d_date#19151) AND (d_date#19151 = 11159)), true
+                                                                                          +- GpuFileGpuScan parquet [d_date#19151,d_week_seq#19153] Batched: true, DataFilters: [isnotnull(d_date#19151), (d_date#19151 = 2000-07-21)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), EqualTo(d_date,2000-07-21)], ReadSchema: struct<d_date:date,d_week_seq:int>
+                                                                              +- == Initial Plan ==
+                                                                                 Project [d_week_seq#19153]
+                                                                                 +- Filter (isnotnull(d_date#19151) AND (d_date#19151 = 2000-07-21))
+                                                                                    +- FileScan parquet [d_date#19151,d_week_seq#19153] Batched: true, DataFilters: [isnotnull(d_date#19151), (d_date#19151 = 2000-07-21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), EqualTo(d_date,2000-07-21)], ReadSchema: struct<d_date:date,d_week_seq:int>
+         :     :                    :                                   +- FileScan parquet [d_date#19235,d_week_seq#19237] Batched: true, DataFilters: [isnotnull(d_week_seq#19237)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_week_seq)], ReadSchema: struct<d_date:date,d_week_seq:int>
+         :     :                    +- Sort [i_item_sk#668 ASC NULLS FIRST], false, 0
+         :     :                       +- Exchange hashpartitioning(i_item_sk#668, 200), ENSURE_REQUIREMENTS, [id=#331395]
+         :     :                          +- Filter (isnotnull(i_item_sk#668) AND isnotnull(i_item_id#669))
+         :     :                             +- FileScan parquet [i_item_sk#668,i_item_id#669] Batched: true, DataFilters: [isnotnull(i_item_sk#668), isnotnull(i_item_id#669)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk), IsNotNull(i_item_id)], ReadSchema: struct<i_item_sk:int,i_item_id:string>
+         :     +- Sort [item_id#19041 ASC NULLS FIRST], false, 0
+         :        +- Filter isnotnull(cs_item_rev#19042)
+         :           +- HashAggregate(keys=[i_item_id#19050], functions=[sum(UnscaledValue(cs_ext_sales_price#567))], output=[item_id#19041, cs_item_rev#19042])
+         :              +- Exchange hashpartitioning(i_item_id#19050, 200), ENSURE_REQUIREMENTS, [id=#331430]
+         :                 +- HashAggregate(keys=[i_item_id#19050], functions=[partial_sum(UnscaledValue(cs_ext_sales_price#567))], output=[i_item_id#19050, sum#19331L])
+         :                    +- Project [cs_ext_sales_price#567, i_item_id#19050]
+         :                       +- SortMergeJoin [cs_item_sk#559], [i_item_sk#19049], Inner
+         :                          :- Sort [cs_item_sk#559 ASC NULLS FIRST], false, 0
+         :                          :  +- Exchange hashpartitioning(cs_item_sk#559, 200), ENSURE_REQUIREMENTS, [id=#331422]
+         :                          :     +- Project [cs_item_sk#559, cs_ext_sales_price#567]
+         :                          :        +- SortMergeJoin [cs_sold_date_sk#544], [d_date_sk#19071], Inner
+         :                          :           :- Sort [cs_sold_date_sk#544 ASC NULLS FIRST], false, 0
+         :                          :           :  +- Exchange hashpartitioning(cs_sold_date_sk#544, 200), ENSURE_REQUIREMENTS, [id=#331414]
+         :                          :           :     +- Filter (isnotnull(cs_sold_date_sk#544) AND isnotnull(cs_item_sk#559))
+         :                          :           :        +- FileScan parquet [cs_sold_date_sk#544,cs_item_sk#559,cs_ext_sales_price#567] Batched: true, DataFilters: [isnotnull(cs_sold_date_sk#544), isnotnull(cs_item_sk#559)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cs_sold_date_sk), IsNotNull(cs_item_sk)], ReadSchema: struct<cs_sold_date_sk:int,cs_item_sk:int,cs_ext_sales_price:decimal(7,2)>
+         :                          :           +- Sort [d_date_sk#19071 ASC NULLS FIRST], false, 0
+         :                          :              +- Exchange hashpartitioning(d_date_sk#19071, 200), ENSURE_REQUIREMENTS, [id=#331415]
+         :                          :                 +- Project [d_date_sk#19071]
+         :                          :                    +- SortMergeJoin [d_date#19073], [d_date#19263], LeftSemi
+         :                          :                       :- Sort [d_date#19073 ASC NULLS FIRST], false, 0
+         :                          :                       :  +- Exchange hashpartitioning(d_date#19073, 200), ENSURE_REQUIREMENTS, [id=#331406]
+         :                          :                       :     +- Filter isnotnull(d_date_sk#19071)
+         :                          :                       :        +- FileScan parquet [d_date_sk#19071,d_date#19073] Batched: true, DataFilters: [isnotnull(d_date_sk#19071)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_date:date>
+         :                          :                       +- Sort [d_date#19263 ASC NULLS FIRST], false, 0
+         :                          :                          +- Exchange hashpartitioning(d_date#19263, 200), ENSURE_REQUIREMENTS, [id=#331407]
+         :                          :                             +- Project [d_date#19263]
+         :                          :                                +- Filter (isnotnull(d_week_seq#19265) AND (d_week_seq#19265 = Subquery subquery#19043, [id=#331290]))
+         :                          :                                   :  +- Subquery subquery#19043, [id=#331290]
+         :                          :                                   :     +- AdaptiveSparkPlan isFinalPlan=false
+         :                          :                                   :        +- Project [d_week_seq#19181]
+         :                          :                                   :           +- Filter (isnotnull(d_date#19179) AND (d_date#19179 = 2000-07-21))
+         :                          :                                   :              +- FileScan parquet [d_date#19179,d_week_seq#19181] Batched: true, DataFilters: [isnotnull(d_date#19179), (d_date#19179 = 2000-07-21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), EqualTo(d_date,2000-07-21)], ReadSchema: struct<d_date:date,d_week_seq:int>
+         :                          :                                   +- FileScan parquet [d_date#19263,d_week_seq#19265] Batched: true, DataFilters: [isnotnull(d_week_seq#19265)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_week_seq)], ReadSchema: struct<d_date:date,d_week_seq:int>
+         :                          +- Sort [i_item_sk#19049 ASC NULLS FIRST], false, 0
+         :                             +- Exchange hashpartitioning(i_item_sk#19049, 200), ENSURE_REQUIREMENTS, [id=#331423]
+         :                                +- Filter (isnotnull(i_item_sk#19049) AND isnotnull(i_item_id#19050))
+         :                                   +- FileScan parquet [i_item_sk#19049,i_item_id#19050] Batched: true, DataFilters: [isnotnull(i_item_sk#19049), isnotnull(i_item_id#19050)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk), IsNotNull(i_item_id)], ReadSchema: struct<i_item_sk:int,i_item_id:string>
+         +- Sort [item_id#19045 ASC NULLS FIRST], false, 0
+            +- Filter isnotnull(ws_item_rev#19046)
+               +- HashAggregate(keys=[i_item_id#19100], functions=[sum(UnscaledValue(ws_ext_sales_price#499))], output=[item_id#19045, ws_item_rev#19046])
+                  +- Exchange hashpartitioning(i_item_id#19100, 200), ENSURE_REQUIREMENTS, [id=#331464]
+                     +- HashAggregate(keys=[i_item_id#19100], functions=[partial_sum(UnscaledValue(ws_ext_sales_price#499))], output=[i_item_id#19100, sum#19333L])
+                        +- Project [ws_ext_sales_price#499, i_item_id#19100]
+                           +- SortMergeJoin [ws_item_sk#479], [i_item_sk#19099], Inner
+                              :- Sort [ws_item_sk#479 ASC NULLS FIRST], false, 0
+                              :  +- Exchange hashpartitioning(ws_item_sk#479, 200), ENSURE_REQUIREMENTS, [id=#331456]
+                              :     +- Project [ws_item_sk#479, ws_ext_sales_price#499]
+                              :        +- SortMergeJoin [ws_sold_date_sk#476], [d_date_sk#19121], Inner
+                              :           :- Sort [ws_sold_date_sk#476 ASC NULLS FIRST], false, 0
+                              :           :  +- Exchange hashpartitioning(ws_sold_date_sk#476, 200), ENSURE_REQUIREMENTS, [id=#331448]
+                              :           :     +- Filter (isnotnull(ws_sold_date_sk#476) AND isnotnull(ws_item_sk#479))
+                              :           :        +- FileScan parquet [ws_sold_date_sk#476,ws_item_sk#479,ws_ext_sales_price#499] Batched: true, DataFilters: [isnotnull(ws_sold_date_sk#476), isnotnull(ws_item_sk#479)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/web_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ws_sold_date_sk), IsNotNull(ws_item_sk)], ReadSchema: struct<ws_sold_date_sk:int,ws_item_sk:int,ws_ext_sales_price:decimal(7,2)>
+                              :           +- Sort [d_date_sk#19121 ASC NULLS FIRST], false, 0
+                              :              +- Exchange hashpartitioning(d_date_sk#19121, 200), ENSURE_REQUIREMENTS, [id=#331449]
+                              :                 +- Project [d_date_sk#19121]
+                              :                    +- SortMergeJoin [d_date#19123], [d_date#19291], LeftSemi
+                              :                       :- Sort [d_date#19123 ASC NULLS FIRST], false, 0
+                              :                       :  +- Exchange hashpartitioning(d_date#19123, 200), ENSURE_REQUIREMENTS, [id=#331440]
+                              :                       :     +- Filter isnotnull(d_date_sk#19121)
+                              :                       :        +- FileScan parquet [d_date_sk#19121,d_date#19123] Batched: true, DataFilters: [isnotnull(d_date_sk#19121)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_date:date>
+                              :                       +- Sort [d_date#19291 ASC NULLS FIRST], false, 0
+                              :                          +- Exchange hashpartitioning(d_date#19291, 200), ENSURE_REQUIREMENTS, [id=#331441]
+                              :                             +- Project [d_date#19291]
+                              :                                +- Filter (isnotnull(d_week_seq#19293) AND (d_week_seq#19293 = Subquery subquery#19047, [id=#331305]))
+                              :                                   :  +- Subquery subquery#19047, [id=#331305]
+                              :                                   :     +- AdaptiveSparkPlan isFinalPlan=false
+                              :                                   :        +- Project [d_week_seq#19209]
+                              :                                   :           +- Filter (isnotnull(d_date#19207) AND (d_date#19207 = 2000-07-21))
+                              :                                   :              +- FileScan parquet [d_date#19207,d_week_seq#19209] Batched: true, DataFilters: [isnotnull(d_date#19207), (d_date#19207 = 2000-07-21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), EqualTo(d_date,2000-07-21)], ReadSchema: struct<d_date:date,d_week_seq:int>
+                              :                                   +- FileScan parquet [d_date#19291,d_week_seq#19293] Batched: true, DataFilters: [isnotnull(d_week_seq#19293)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_week_seq)], ReadSchema: struct<d_date:date,d_week_seq:int>
+                              +- Sort [i_item_sk#19099 ASC NULLS FIRST], false, 0
+                                 +- Exchange hashpartitioning(i_item_sk#19099, 200), ENSURE_REQUIREMENTS, [id=#331457]
+                                    +- Filter (isnotnull(i_item_sk#19099) AND isnotnull(i_item_id#19100))
+                                       +- FileScan parquet [i_item_sk#19099,i_item_id#19100] Batched: true, DataFilters: [isnotnull(i_item_sk#19099), isnotnull(i_item_id#19100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk), IsNotNull(i_item_id)], ReadSchema: struct<i_item_sk:int,i_item_id:string>

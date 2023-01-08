@@ -1,2 +1,1 @@
-# sqlbench-results
-SQLBench results
+# SQLBench Results

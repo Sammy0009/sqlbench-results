@@ -1,0 +1,36 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: COUNT(UInt8(1))'
+      style: projection
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Join: store_sales.ss_store_sk = store.s_store_sk'
+          style: join
+          inputs:
+          - title: 'Join: store_sales.ss_sold_time_sk = time_dim.t_time_sk'
+            style: join
+            inputs:
+            - title: 'Join: store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk'
+              style: join
+              inputs:
+              - title: store_sales
+                style: scan
+              - title: 'Filter: household_demographics.hd_dep_count = Int32(5)'
+                style: filter
+                inputs:
+                - title: household_demographics
+                  style: scan
+            - title: 'Filter: time_dim.t_hour = Int32(8) AND time_dim.t_minute >= Int32(30)'
+              style: filter
+              inputs:
+              - title: time_dim
+                style: scan
+          - title: 'Filter: store.s_store_name = Utf8("ese")'
+            style: filter
+            inputs:
+            - title: store
+              style: scan

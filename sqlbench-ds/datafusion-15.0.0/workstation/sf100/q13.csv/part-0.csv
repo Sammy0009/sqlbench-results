@@ -1,0 +1,2 @@
+AVG(store_sales.ss_quantity),AVG(store_sales.ss_ext_sales_price),AVG(store_sales.ss_ext_wholesale_cost),SUM(store_sales.ss_ext_wholesale_cost)
+33.29624478442281,2545.059443,2328.319457,1674061.69

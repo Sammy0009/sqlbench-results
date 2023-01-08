@@ -1,0 +1,17 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   *(2) HashAggregate(keys=[], functions=[sum(CheckOverflow((promote_precision(l_extendedprice#21) * promote_precision(l_discount#22)), DecimalType(23,4), true))], output=[revenue#331])
+   +- ShuffleQueryStage 0
+      +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#1638]
+         +- *(1) HashAggregate(keys=[], functions=[partial_sum(CheckOverflow((promote_precision(l_extendedprice#21) * promote_precision(l_discount#22)), DecimalType(23,4), true))], output=[sum#336, isEmpty#337])
+            +- *(1) Project [l_extendedprice#21, l_discount#22]
+               +- *(1) Filter (((((((isnotnull(l_shipdate#26) AND isnotnull(l_discount#22)) AND isnotnull(l_quantity#20)) AND (l_shipdate#26 >= 1997-01-01)) AND (l_shipdate#26 < 1998-01-01)) AND (l_discount#22 >= 0.06)) AND (l_discount#22 <= 0.08)) AND (l_quantity#20 < 25.00))
+                  +- *(1) ColumnarToRow
+                     +- FileScan parquet [l_quantity#20,l_extendedprice#21,l_discount#22,l_shipdate#26] Batched: true, DataFilters: [isnotnull(l_shipdate#26), isnotnull(l_discount#22), isnotnull(l_quantity#20), (l_shipdate#26 >= ..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_shipdate), IsNotNull(l_discount), IsNotNull(l_quantity), GreaterThanOrEqual(l_shipda..., ReadSchema: struct<l_quantity:decimal(11,2),l_extendedprice:decimal(11,2),l_discount:decimal(11,2),l_shipdate...
++- == Initial Plan ==
+   HashAggregate(keys=[], functions=[sum(CheckOverflow((promote_precision(l_extendedprice#21) * promote_precision(l_discount#22)), DecimalType(23,4), true))], output=[revenue#331])
+   +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#1617]
+      +- HashAggregate(keys=[], functions=[partial_sum(CheckOverflow((promote_precision(l_extendedprice#21) * promote_precision(l_discount#22)), DecimalType(23,4), true))], output=[sum#336, isEmpty#337])
+         +- Project [l_extendedprice#21, l_discount#22]
+            +- Filter (((((((isnotnull(l_shipdate#26) AND isnotnull(l_discount#22)) AND isnotnull(l_quantity#20)) AND (l_shipdate#26 >= 1997-01-01)) AND (l_shipdate#26 < 1998-01-01)) AND (l_discount#22 >= 0.06)) AND (l_discount#22 <= 0.08)) AND (l_quantity#20 < 25.00))
+               +- FileScan parquet [l_quantity#20,l_extendedprice#21,l_discount#22,l_shipdate#26] Batched: true, DataFilters: [isnotnull(l_shipdate#26), isnotnull(l_discount#22), isnotnull(l_quantity#20), (l_shipdate#26 >= ..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_shipdate), IsNotNull(l_discount), IsNotNull(l_quantity), GreaterThanOrEqual(l_shipda..., ReadSchema: struct<l_quantity:decimal(11,2),l_extendedprice:decimal(11,2),l_discount:decimal(11,2),l_shipdate...

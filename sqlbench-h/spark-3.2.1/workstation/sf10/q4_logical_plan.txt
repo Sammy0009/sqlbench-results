@@ -1,0 +1,10 @@
+Sort [o_orderpriority#61 ASC NULLS FIRST], true
++- Aggregate [o_orderpriority#61], [o_orderpriority#61, count(1) AS order_count#304L]
+   +- Project [o_orderpriority#61]
+      +- Join LeftSemi, (l_orderkey#16L = o_orderkey#56L)
+         :- Project [o_orderkey#56L, o_orderpriority#61]
+         :  +- Filter ((isnotnull(o_orderdate#60) AND (o_orderdate#60 >= 1996-02-01)) AND (o_orderdate#60 < 1996-05-01))
+         :     +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet
+         +- Project [l_orderkey#16L]
+            +- Filter ((isnotnull(l_commitdate#27) AND isnotnull(l_receiptdate#28)) AND (l_commitdate#27 < l_receiptdate#28))
+               +- Relation [l_orderkey#16L,l_partkey#17L,l_suppkey#18L,l_linenumber#19,l_quantity#20,l_extendedprice#21,l_discount#22,l_tax#23,l_returnflag#24,l_linestatus#25,l_shipdate#26,l_commitdate#27,l_receiptdate#28,l_shipinstruct#29,l_shipmode#30,l_comment#31] parquet

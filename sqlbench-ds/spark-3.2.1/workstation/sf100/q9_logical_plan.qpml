@@ -1,0 +1,18 @@
+---
+diagram:
+  title: "Projection: CASE WHEN (scalar-subquery#4266 [] > 320784) THEN scalar-subquery#4267\
+    \ [] ELSE scalar-subquery#4268 [] END AS bucket1#4269, CASE WHEN (scalar-subquery#4270\
+    \ [] > 498796) THEN scalar-subquery#4271 [] ELSE scalar-subquery#4272 [] END AS\
+    \ bucket2#4273, CASE WHEN (scalar-subquery#4274 [] > 1637521) THEN scalar-subquery#4275\
+    \ [] ELSE scalar-subquery#4276 [] END AS bucket3#4277, CASE WHEN (scalar-subquery#4278\
+    \ [] > 1340218) THEN scalar-subquery#4279 [] ELSE scalar-subquery#4280 [] END\
+    \ AS bucket4#4281, CASE WHEN (scalar-subquery#4282 [] > 2730070) THEN scalar-subquery#4283\
+    \ [] ELSE scalar-subquery#4284 [] END AS bucket5#4285"
+  operator: "projection"
+  inputs:
+  - title: "Filter: (isnotnull(r_reason_sk#246) AND (r_reason_sk#246 = 1))"
+    operator: "filter"
+    inputs:
+    - title: "reason.parquet"
+      operator: "scan"
+      inputs: []

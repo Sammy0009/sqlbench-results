@@ -1,0 +1,104 @@
+┌───────────────────────────┐                                                                                       
+│           TOP_N           │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│          Top 100          │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│       y.item_sk ASC       │                                                                                       
+│        y.d_date ASC       │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│           FILTER          │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│     (web_cumulative >     │                                                                                       
+│      store_cumulative)    │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│           WINDOW          │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│    max(web_sales) OVER    │                                                                                       
+│(PARTITION BY item_sk ...  │                                                                                       
+│ d_date ASC NULLS FIRS...  │                                                                                       
+│ BETWEEN UNBOUNDED PRE...  │                                                                                       
+│      AND CURRENT ROW)     │                                                                                       
+│   max(store_sales) OVER   │                                                                                       
+│(PARTITION BY item_sk ...  │                                                                                       
+│ d_date ASC NULLS FIRS...  │                                                                                       
+│ BETWEEN UNBOUNDED PRE...  │                                                                                       
+│      AND CURRENT ROW)     │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│         PROJECTION        │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│          item_sk          │                                                                                       
+│           d_date          │                                                                                       
+│         web_sales         │                                                                                       
+│        store_sales        │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│         HASH_JOIN         │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│            FULL           │                                                                                       
+│     item_sk = item_sk     ├───────────────────────────────────────────┐                                           
+│      d_date = d_date      │                                           │                                           
+│       EC = 0.000000       │                                           │                                           
+│      COST = 0.000000      │                                           │                                           
+└─────────────┬─────────────┘                                           │                                                                        
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐                             
+│         PROJECTION        │                             │         PROJECTION        │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│          item_sk          │                             │          item_sk          │                             
+│           d_date          │                             │           d_date          │                             
+│         cume_sales        │                             │         cume_sales        │                             
+└─────────────┬─────────────┘                             └─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐                             
+│           WINDOW          │                             │           WINDOW          │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│  sum(sum(ws_sales_price)) │                             │  sum(sum(ss_sales_price)) │                             
+│ OVER (PARTITION BY ws...  │                             │ OVER (PARTITION BY ss...  │                             
+│  ORDER BY d_date ASC NULLS│                             │  ORDER BY d_date ASC NULLS│                             
+│     FIRST ROWS BETWEEN    │                             │     FIRST ROWS BETWEEN    │                             
+│ UNBOUNDED PRECEDING A...  │                             │ UNBOUNDED PRECEDING A...  │                             
+│             )             │                             │             )             │                             
+└─────────────┬─────────────┘                             └─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐                             
+│       HASH_GROUP_BY       │                             │       HASH_GROUP_BY       │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│             #0            │                             │             #0            │                             
+│             #1            │                             │             #1            │                             
+│          sum(#2)          │                             │          sum(#2)          │                             
+└─────────────┬─────────────┘                             └─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐                             
+│         PROJECTION        │                             │         PROJECTION        │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│         ws_item_sk        │                             │         ss_item_sk        │                             
+│           d_date          │                             │           d_date          │                             
+│       ws_sales_price      │                             │       ss_sales_price      │                             
+└─────────────┬─────────────┘                             └─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐                             
+│         HASH_JOIN         │                             │         HASH_JOIN         │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│           INNER           │                             │           INNER           │                             
+│ws_sold_date_sk = d_date_sk├──────────────┐              │ss_sold_date_sk = d_date_sk├──────────────┐              
+│    EC = 14400307.200000   │              │              │    EC = 57599428.800000   │              │              
+│   COST = 14400307.200000  │              │              │   COST = 57599428.800000  │              │              
+└─────────────┬─────────────┘              │              └─────────────┬─────────────┘              │                                           
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+│           FILTER          ││        PARQUET_SCAN       ││           FILTER          ││        PARQUET_SCAN       │
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│  (ws_item_sk IS NOT NULL) ││         d_date_sk         ││  (ss_item_sk IS NOT NULL) ││         d_date_sk         │
+│                           ││           d_date          ││                           ││           d_date          │
+│                           ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││                           ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│                           ││ Filters: d_month_seq>=1212││                           ││ Filters: d_month_seq>=1212│
+│                           ││  AND d_month_seq<=1223 AND││                           ││  AND d_month_seq<=1223 AND│
+│                           ││   d_month_seq IS NOT NULL ││                           ││   d_month_seq IS NOT NULL │
+│                           ││          EC=8118          ││                           ││          EC=8118          │
+└─────────────┬─────────────┘└───────────────────────────┘└─────────────┬─────────────┘└───────────────────────────┘                             
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐                             
+│        PARQUET_SCAN       │                             │        PARQUET_SCAN       │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│      ws_sold_date_sk      │                             │      ss_sold_date_sk      │                             
+│         ws_item_sk        │                             │         ss_item_sk        │                             
+│       ws_sales_price      │                             │       ss_sales_price      │                             
+│        EC=72001536        │                             │        EC=287997144       │                             
+└───────────────────────────┘                             └───────────────────────────┘                                                          
+

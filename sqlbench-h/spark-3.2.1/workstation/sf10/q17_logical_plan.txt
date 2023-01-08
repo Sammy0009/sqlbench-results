@@ -1,0 +1,16 @@
+Aggregate [CheckOverflow((promote_precision(sum(l_extendedprice#21)) / 7.00), DecimalType(26,6), true) AS avg_yearly#634]
++- Project [l_extendedprice#21]
+   +- Join Inner, ((cast(l_quantity#20 as decimal(17,7)) < (0.2 * avg(l_quantity))#637) AND (l_partkey#639L = p_partkey#74L))
+      :- Project [l_quantity#20, l_extendedprice#21, p_partkey#74L]
+      :  +- Join Inner, (p_partkey#74L = l_partkey#17L)
+      :     :- Project [l_partkey#17L, l_quantity#20, l_extendedprice#21]
+      :     :  +- Filter (isnotnull(l_partkey#17L) AND isnotnull(l_quantity#20))
+      :     :     +- Relation [l_orderkey#16L,l_partkey#17L,l_suppkey#18L,l_linenumber#19,l_quantity#20,l_extendedprice#21,l_discount#22,l_tax#23,l_returnflag#24,l_linestatus#25,l_shipdate#26,l_commitdate#27,l_receiptdate#28,l_shipinstruct#29,l_shipmode#30,l_comment#31] parquet
+      :     +- Project [p_partkey#74L]
+      :        +- Filter (((isnotnull(p_brand#77) AND isnotnull(p_container#80)) AND ((p_brand#77 = Brand#51) AND (p_container#80 = JUMBO BAG))) AND isnotnull(p_partkey#74L))
+      :           +- Relation [p_partkey#74L,p_name#75,p_mfgr#76,p_brand#77,p_type#78,p_size#79,p_container#80,p_retailprice#81,p_comment#82] parquet
+      +- Filter isnotnull((0.2 * avg(l_quantity))#637)
+         +- Aggregate [l_partkey#639L], [CheckOverflow((0.200000 * promote_precision(cast((avg(UnscaledValue(l_quantity#642)) / 100.0) as decimal(15,6)))), DecimalType(17,7), true) AS (0.2 * avg(l_quantity))#637, l_partkey#639L]
+            +- Project [l_partkey#639L, l_quantity#642]
+               +- Filter isnotnull(l_partkey#639L)
+                  +- Relation [l_orderkey#638L,l_partkey#639L,l_suppkey#640L,l_linenumber#641,l_quantity#642,l_extendedprice#643,l_discount#644,l_tax#645,l_returnflag#646,l_linestatus#647,l_shipdate#648,l_commitdate#649,l_receiptdate#650,l_shipinstruct#651,l_shipmode#652,l_comment#653] parquet

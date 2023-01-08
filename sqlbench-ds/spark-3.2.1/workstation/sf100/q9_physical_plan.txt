@@ -1,0 +1,611 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   GpuColumnarToRow false
+   +- GpuProject [CASE WHEN (Subquery subquery#4266, [id=#37023] > 320784) THEN Subquery subquery#4267, [id=#37054] ELSE Subquery subquery#4268, [id=#37085] END AS bucket1#4269, CASE WHEN (Subquery subquery#4270, [id=#37116] > 498796) THEN Subquery subquery#4271, [id=#37147] ELSE Subquery subquery#4272, [id=#37178] END AS bucket2#4273, CASE WHEN (Subquery subquery#4274, [id=#37209] > 1637521) THEN Subquery subquery#4275, [id=#37240] ELSE Subquery subquery#4276, [id=#37271] END AS bucket3#4277, CASE WHEN (Subquery subquery#4278, [id=#37302] > 1340218) THEN Subquery subquery#4279, [id=#37333] ELSE Subquery subquery#4280, [id=#37364] END AS bucket4#4281, CASE WHEN (Subquery subquery#4282, [id=#37395] > 2730070) THEN Subquery subquery#4283, [id=#37426] ELSE Subquery subquery#4284, [id=#37457] END AS bucket5#4285], true
+      :  :- Subquery subquery#4266, [id=#37023]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               GpuColumnarToRow false
+               +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4287L])
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38029]
+                           +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4644L])
+                              +- GpuProject true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#262) AND (ss_quantity#262 >= 1)) AND (ss_quantity#262 <= 20)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#262] Batched: true, DataFilters: [isnotnull(ss_quantity#262), (ss_quantity#262 >= 1), (ss_quantity#262 <= 20)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4287L])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37003]
+                  +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4644L])
+                     +- Project
+                        +- Filter ((isnotnull(ss_quantity#262) AND (ss_quantity#262 >= 1)) AND (ss_quantity#262 <= 20))
+                           +- FileScan parquet [ss_quantity#262] Batched: true, DataFilters: [isnotnull(ss_quantity#262), (ss_quantity#262 >= 1), (ss_quantity#262 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
+      :  :- Subquery subquery#4267, [id=#37054]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4330))], output=[avg(ss_ext_discount_amt)#4289])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37861]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4330), DoubleType)], output=[sum#4649, count#4650L])
+                              +- GpuProject [ss_ext_discount_amt#4330], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4326) AND (ss_quantity#4326 >= 1)) AND (ss_quantity#4326 <= 20)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4326,ss_ext_discount_amt#4330] Batched: true, DataFilters: [isnotnull(ss_quantity#4326), (ss_quantity#4326 >= 1), (ss_quantity#4326 <= 20)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4330))], output=[avg(ss_ext_discount_amt)#4289])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37034]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4330))], output=[sum#4649, count#4650L])
+                     +- Project [ss_ext_discount_amt#4330]
+                        +- Filter ((isnotnull(ss_quantity#4326) AND (ss_quantity#4326 >= 1)) AND (ss_quantity#4326 <= 20))
+                           +- FileScan parquet [ss_quantity#4326,ss_ext_discount_amt#4330] Batched: true, DataFilters: [isnotnull(ss_quantity#4326), (ss_quantity#4326 >= 1), (ss_quantity#4326 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+      :  :- Subquery subquery#4268, [id=#37085]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4361))], output=[avg(ss_net_profit)#4291])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37926]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4361), DoubleType)], output=[sum#4655, count#4656L])
+                              +- GpuProject [ss_net_profit#4361], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4349) AND (ss_quantity#4349 >= 1)) AND (ss_quantity#4349 <= 20)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4349,ss_net_profit#4361] Batched: true, DataFilters: [isnotnull(ss_quantity#4349), (ss_quantity#4349 >= 1), (ss_quantity#4349 <= 20)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4361))], output=[avg(ss_net_profit)#4291])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37065]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4361))], output=[sum#4655, count#4656L])
+                     +- Project [ss_net_profit#4361]
+                        +- Filter ((isnotnull(ss_quantity#4349) AND (ss_quantity#4349 >= 1)) AND (ss_quantity#4349 <= 20))
+                           +- FileScan parquet [ss_quantity#4349,ss_net_profit#4361] Batched: true, DataFilters: [isnotnull(ss_quantity#4349), (ss_quantity#4349 >= 1), (ss_quantity#4349 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+      :  :- Subquery subquery#4270, [id=#37116]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               GpuColumnarToRow false
+               +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4293L])
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37802]
+                           +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4660L])
+                              +- GpuProject true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4372) AND (ss_quantity#4372 >= 21)) AND (ss_quantity#4372 <= 40)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4372] Batched: true, DataFilters: [isnotnull(ss_quantity#4372), (ss_quantity#4372 >= 21), (ss_quantity#4372 <= 40)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4293L])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37096]
+                  +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4660L])
+                     +- Project
+                        +- Filter ((isnotnull(ss_quantity#4372) AND (ss_quantity#4372 >= 21)) AND (ss_quantity#4372 <= 40))
+                           +- FileScan parquet [ss_quantity#4372] Batched: true, DataFilters: [isnotnull(ss_quantity#4372), (ss_quantity#4372 >= 21), (ss_quantity#4372 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
+      :  :- Subquery subquery#4271, [id=#37147]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4399))], output=[avg(ss_ext_discount_amt)#4295])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37868]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4399), DoubleType)], output=[sum#4665, count#4666L])
+                              +- GpuProject [ss_ext_discount_amt#4399], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4395) AND (ss_quantity#4395 >= 21)) AND (ss_quantity#4395 <= 40)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4395,ss_ext_discount_amt#4399] Batched: true, DataFilters: [isnotnull(ss_quantity#4395), (ss_quantity#4395 >= 21), (ss_quantity#4395 <= 40)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4399))], output=[avg(ss_ext_discount_amt)#4295])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37127]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4399))], output=[sum#4665, count#4666L])
+                     +- Project [ss_ext_discount_amt#4399]
+                        +- Filter ((isnotnull(ss_quantity#4395) AND (ss_quantity#4395 >= 21)) AND (ss_quantity#4395 <= 40))
+                           +- FileScan parquet [ss_quantity#4395,ss_ext_discount_amt#4399] Batched: true, DataFilters: [isnotnull(ss_quantity#4395), (ss_quantity#4395 >= 21), (ss_quantity#4395 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+      :  :- Subquery subquery#4272, [id=#37178]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4430))], output=[avg(ss_net_profit)#4297])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37864]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4430), DoubleType)], output=[sum#4671, count#4672L])
+                              +- GpuProject [ss_net_profit#4430], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4418) AND (ss_quantity#4418 >= 21)) AND (ss_quantity#4418 <= 40)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4418,ss_net_profit#4430] Batched: true, DataFilters: [isnotnull(ss_quantity#4418), (ss_quantity#4418 >= 21), (ss_quantity#4418 <= 40)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4430))], output=[avg(ss_net_profit)#4297])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37158]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4430))], output=[sum#4671, count#4672L])
+                     +- Project [ss_net_profit#4430]
+                        +- Filter ((isnotnull(ss_quantity#4418) AND (ss_quantity#4418 >= 21)) AND (ss_quantity#4418 <= 40))
+                           +- FileScan parquet [ss_quantity#4418,ss_net_profit#4430] Batched: true, DataFilters: [isnotnull(ss_quantity#4418), (ss_quantity#4418 >= 21), (ss_quantity#4418 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+      :  :- Subquery subquery#4274, [id=#37209]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               GpuColumnarToRow false
+               +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4299L])
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37836]
+                           +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4676L])
+                              +- GpuProject true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4441) AND (ss_quantity#4441 >= 41)) AND (ss_quantity#4441 <= 60)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4441] Batched: true, DataFilters: [isnotnull(ss_quantity#4441), (ss_quantity#4441 >= 41), (ss_quantity#4441 <= 60)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4299L])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37189]
+                  +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4676L])
+                     +- Project
+                        +- Filter ((isnotnull(ss_quantity#4441) AND (ss_quantity#4441 >= 41)) AND (ss_quantity#4441 <= 60))
+                           +- FileScan parquet [ss_quantity#4441] Batched: true, DataFilters: [isnotnull(ss_quantity#4441), (ss_quantity#4441 >= 41), (ss_quantity#4441 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
+      :  :- Subquery subquery#4275, [id=#37240]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4468))], output=[avg(ss_ext_discount_amt)#4301])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37972]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4468), DoubleType)], output=[sum#4681, count#4682L])
+                              +- GpuProject [ss_ext_discount_amt#4468], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4464) AND (ss_quantity#4464 >= 41)) AND (ss_quantity#4464 <= 60)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4464,ss_ext_discount_amt#4468] Batched: true, DataFilters: [isnotnull(ss_quantity#4464), (ss_quantity#4464 >= 41), (ss_quantity#4464 <= 60)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4468))], output=[avg(ss_ext_discount_amt)#4301])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37220]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4468))], output=[sum#4681, count#4682L])
+                     +- Project [ss_ext_discount_amt#4468]
+                        +- Filter ((isnotnull(ss_quantity#4464) AND (ss_quantity#4464 >= 41)) AND (ss_quantity#4464 <= 60))
+                           +- FileScan parquet [ss_quantity#4464,ss_ext_discount_amt#4468] Batched: true, DataFilters: [isnotnull(ss_quantity#4464), (ss_quantity#4464 >= 41), (ss_quantity#4464 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+      :  :- Subquery subquery#4276, [id=#37271]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4499))], output=[avg(ss_net_profit)#4303])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38061]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4499), DoubleType)], output=[sum#4687, count#4688L])
+                              +- GpuProject [ss_net_profit#4499], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4487) AND (ss_quantity#4487 >= 41)) AND (ss_quantity#4487 <= 60)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4487,ss_net_profit#4499] Batched: true, DataFilters: [isnotnull(ss_quantity#4487), (ss_quantity#4487 >= 41), (ss_quantity#4487 <= 60)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4499))], output=[avg(ss_net_profit)#4303])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37251]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4499))], output=[sum#4687, count#4688L])
+                     +- Project [ss_net_profit#4499]
+                        +- Filter ((isnotnull(ss_quantity#4487) AND (ss_quantity#4487 >= 41)) AND (ss_quantity#4487 <= 60))
+                           +- FileScan parquet [ss_quantity#4487,ss_net_profit#4499] Batched: true, DataFilters: [isnotnull(ss_quantity#4487), (ss_quantity#4487 >= 41), (ss_quantity#4487 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+      :  :- Subquery subquery#4278, [id=#37302]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               GpuColumnarToRow false
+               +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4305L])
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38271]
+                           +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4692L])
+                              +- GpuProject true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4510) AND (ss_quantity#4510 >= 61)) AND (ss_quantity#4510 <= 80)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4510] Batched: true, DataFilters: [isnotnull(ss_quantity#4510), (ss_quantity#4510 >= 61), (ss_quantity#4510 <= 80)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4305L])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37282]
+                  +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4692L])
+                     +- Project
+                        +- Filter ((isnotnull(ss_quantity#4510) AND (ss_quantity#4510 >= 61)) AND (ss_quantity#4510 <= 80))
+                           +- FileScan parquet [ss_quantity#4510] Batched: true, DataFilters: [isnotnull(ss_quantity#4510), (ss_quantity#4510 >= 61), (ss_quantity#4510 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
+      :  :- Subquery subquery#4279, [id=#37333]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4537))], output=[avg(ss_ext_discount_amt)#4307])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38216]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4537), DoubleType)], output=[sum#4697, count#4698L])
+                              +- GpuProject [ss_ext_discount_amt#4537], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4533) AND (ss_quantity#4533 >= 61)) AND (ss_quantity#4533 <= 80)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4533,ss_ext_discount_amt#4537] Batched: true, DataFilters: [isnotnull(ss_quantity#4533), (ss_quantity#4533 >= 61), (ss_quantity#4533 <= 80)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4537))], output=[avg(ss_ext_discount_amt)#4307])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37313]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4537))], output=[sum#4697, count#4698L])
+                     +- Project [ss_ext_discount_amt#4537]
+                        +- Filter ((isnotnull(ss_quantity#4533) AND (ss_quantity#4533 >= 61)) AND (ss_quantity#4533 <= 80))
+                           +- FileScan parquet [ss_quantity#4533,ss_ext_discount_amt#4537] Batched: true, DataFilters: [isnotnull(ss_quantity#4533), (ss_quantity#4533 >= 61), (ss_quantity#4533 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+      :  :- Subquery subquery#4280, [id=#37364]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4568))], output=[avg(ss_net_profit)#4309])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38244]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4568), DoubleType)], output=[sum#4703, count#4704L])
+                              +- GpuProject [ss_net_profit#4568], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4556) AND (ss_quantity#4556 >= 61)) AND (ss_quantity#4556 <= 80)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4556,ss_net_profit#4568] Batched: true, DataFilters: [isnotnull(ss_quantity#4556), (ss_quantity#4556 >= 61), (ss_quantity#4556 <= 80)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4568))], output=[avg(ss_net_profit)#4309])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37344]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4568))], output=[sum#4703, count#4704L])
+                     +- Project [ss_net_profit#4568]
+                        +- Filter ((isnotnull(ss_quantity#4556) AND (ss_quantity#4556 >= 61)) AND (ss_quantity#4556 <= 80))
+                           +- FileScan parquet [ss_quantity#4556,ss_net_profit#4568] Batched: true, DataFilters: [isnotnull(ss_quantity#4556), (ss_quantity#4556 >= 61), (ss_quantity#4556 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+      :  :- Subquery subquery#4282, [id=#37395]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               GpuColumnarToRow false
+               +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4311L])
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38083]
+                           +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4708L])
+                              +- GpuProject true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4579) AND (ss_quantity#4579 >= 81)) AND (ss_quantity#4579 <= 100)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4579] Batched: true, DataFilters: [isnotnull(ss_quantity#4579), (ss_quantity#4579 >= 81), (ss_quantity#4579 <= 100)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4311L])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37375]
+                  +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4708L])
+                     +- Project
+                        +- Filter ((isnotnull(ss_quantity#4579) AND (ss_quantity#4579 >= 81)) AND (ss_quantity#4579 <= 100))
+                           +- FileScan parquet [ss_quantity#4579] Batched: true, DataFilters: [isnotnull(ss_quantity#4579), (ss_quantity#4579 >= 81), (ss_quantity#4579 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
+      :  :- Subquery subquery#4283, [id=#37426]
+      :  :  +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4606))], output=[avg(ss_ext_discount_amt)#4313])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38248]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4606), DoubleType)], output=[sum#4713, count#4714L])
+                              +- GpuProject [ss_ext_discount_amt#4606], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4602) AND (ss_quantity#4602 >= 81)) AND (ss_quantity#4602 <= 100)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4602,ss_ext_discount_amt#4606] Batched: true, DataFilters: [isnotnull(ss_quantity#4602), (ss_quantity#4602 >= 81), (ss_quantity#4602 <= 100)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4606))], output=[avg(ss_ext_discount_amt)#4313])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37406]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4606))], output=[sum#4713, count#4714L])
+                     +- Project [ss_ext_discount_amt#4606]
+                        +- Filter ((isnotnull(ss_quantity#4602) AND (ss_quantity#4602 >= 81)) AND (ss_quantity#4602 <= 100))
+                           +- FileScan parquet [ss_quantity#4602,ss_ext_discount_amt#4606] Batched: true, DataFilters: [isnotnull(ss_quantity#4602), (ss_quantity#4602 >= 81), (ss_quantity#4602 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+      :  +- Subquery subquery#4284, [id=#37457]
+      :     +- AdaptiveSparkPlan isFinalPlan=true
+            +- == Final Plan ==
+               *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4637))], output=[avg(ss_net_profit)#4315])
+               +- GpuColumnarToRow false
+                  +- GpuShuffleCoalesce 2147483647
+                     +- ShuffleQueryStage 0
+                        +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38280]
+                           +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4637), DoubleType)], output=[sum#4719, count#4720L])
+                              +- GpuProject [ss_net_profit#4637], true
+                                 +- GpuCoalesceBatches targetsize(2147483647)
+                                    +- GpuFilter ((gpuisnotnull(ss_quantity#4625) AND (ss_quantity#4625 >= 81)) AND (ss_quantity#4625 <= 100)), true
+                                       +- GpuFileGpuScan parquet [ss_quantity#4625,ss_net_profit#4637] Batched: true, DataFilters: [isnotnull(ss_quantity#4625), (ss_quantity#4625 >= 81), (ss_quantity#4625 <= 100)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+            +- == Initial Plan ==
+               HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4637))], output=[avg(ss_net_profit)#4315])
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37437]
+                  +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4637))], output=[sum#4719, count#4720L])
+                     +- Project [ss_net_profit#4637]
+                        +- Filter ((isnotnull(ss_quantity#4625) AND (ss_quantity#4625 >= 81)) AND (ss_quantity#4625 <= 100))
+                           +- FileScan parquet [ss_quantity#4625,ss_net_profit#4637] Batched: true, DataFilters: [isnotnull(ss_quantity#4625), (ss_quantity#4625 >= 81), (ss_quantity#4625 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+      +- GpuCoalesceBatches targetsize(2147483647)
+         +- GpuFilter (gpuisnotnull(r_reason_sk#246) AND (r_reason_sk#246 = 1)), true
+            +- GpuFileGpuScan parquet [r_reason_sk#246] Batched: true, DataFilters: [isnotnull(r_reason_sk#246), (r_reason_sk#246 = 1)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/reason.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_reason_sk), EqualTo(r_reason_sk,1)], ReadSchema: struct<r_reason_sk:int>
++- == Initial Plan ==
+   Project [CASE WHEN (Subquery subquery#4266, [id=#37023] > 320784) THEN Subquery subquery#4267, [id=#37054] ELSE Subquery subquery#4268, [id=#37085] END AS bucket1#4269, CASE WHEN (Subquery subquery#4270, [id=#37116] > 498796) THEN Subquery subquery#4271, [id=#37147] ELSE Subquery subquery#4272, [id=#37178] END AS bucket2#4273, CASE WHEN (Subquery subquery#4274, [id=#37209] > 1637521) THEN Subquery subquery#4275, [id=#37240] ELSE Subquery subquery#4276, [id=#37271] END AS bucket3#4277, CASE WHEN (Subquery subquery#4278, [id=#37302] > 1340218) THEN Subquery subquery#4279, [id=#37333] ELSE Subquery subquery#4280, [id=#37364] END AS bucket4#4281, CASE WHEN (Subquery subquery#4282, [id=#37395] > 2730070) THEN Subquery subquery#4283, [id=#37426] ELSE Subquery subquery#4284, [id=#37457] END AS bucket5#4285]
+   :  :- Subquery subquery#4266, [id=#37023]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            GpuColumnarToRow false
+            +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4287L])
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38029]
+                        +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4644L])
+                           +- GpuProject true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#262) AND (ss_quantity#262 >= 1)) AND (ss_quantity#262 <= 20)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#262] Batched: true, DataFilters: [isnotnull(ss_quantity#262), (ss_quantity#262 >= 1), (ss_quantity#262 <= 20)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4287L])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37003]
+               +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4644L])
+                  +- Project
+                     +- Filter ((isnotnull(ss_quantity#262) AND (ss_quantity#262 >= 1)) AND (ss_quantity#262 <= 20))
+                        +- FileScan parquet [ss_quantity#262] Batched: true, DataFilters: [isnotnull(ss_quantity#262), (ss_quantity#262 >= 1), (ss_quantity#262 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
+   :  :- Subquery subquery#4267, [id=#37054]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4330))], output=[avg(ss_ext_discount_amt)#4289])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37861]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4330), DoubleType)], output=[sum#4649, count#4650L])
+                           +- GpuProject [ss_ext_discount_amt#4330], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4326) AND (ss_quantity#4326 >= 1)) AND (ss_quantity#4326 <= 20)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4326,ss_ext_discount_amt#4330] Batched: true, DataFilters: [isnotnull(ss_quantity#4326), (ss_quantity#4326 >= 1), (ss_quantity#4326 <= 20)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4330))], output=[avg(ss_ext_discount_amt)#4289])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37034]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4330))], output=[sum#4649, count#4650L])
+                  +- Project [ss_ext_discount_amt#4330]
+                     +- Filter ((isnotnull(ss_quantity#4326) AND (ss_quantity#4326 >= 1)) AND (ss_quantity#4326 <= 20))
+                        +- FileScan parquet [ss_quantity#4326,ss_ext_discount_amt#4330] Batched: true, DataFilters: [isnotnull(ss_quantity#4326), (ss_quantity#4326 >= 1), (ss_quantity#4326 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+   :  :- Subquery subquery#4268, [id=#37085]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4361))], output=[avg(ss_net_profit)#4291])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37926]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4361), DoubleType)], output=[sum#4655, count#4656L])
+                           +- GpuProject [ss_net_profit#4361], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4349) AND (ss_quantity#4349 >= 1)) AND (ss_quantity#4349 <= 20)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4349,ss_net_profit#4361] Batched: true, DataFilters: [isnotnull(ss_quantity#4349), (ss_quantity#4349 >= 1), (ss_quantity#4349 <= 20)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4361))], output=[avg(ss_net_profit)#4291])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37065]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4361))], output=[sum#4655, count#4656L])
+                  +- Project [ss_net_profit#4361]
+                     +- Filter ((isnotnull(ss_quantity#4349) AND (ss_quantity#4349 >= 1)) AND (ss_quantity#4349 <= 20))
+                        +- FileScan parquet [ss_quantity#4349,ss_net_profit#4361] Batched: true, DataFilters: [isnotnull(ss_quantity#4349), (ss_quantity#4349 >= 1), (ss_quantity#4349 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+   :  :- Subquery subquery#4270, [id=#37116]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            GpuColumnarToRow false
+            +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4293L])
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37802]
+                        +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4660L])
+                           +- GpuProject true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4372) AND (ss_quantity#4372 >= 21)) AND (ss_quantity#4372 <= 40)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4372] Batched: true, DataFilters: [isnotnull(ss_quantity#4372), (ss_quantity#4372 >= 21), (ss_quantity#4372 <= 40)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4293L])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37096]
+               +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4660L])
+                  +- Project
+                     +- Filter ((isnotnull(ss_quantity#4372) AND (ss_quantity#4372 >= 21)) AND (ss_quantity#4372 <= 40))
+                        +- FileScan parquet [ss_quantity#4372] Batched: true, DataFilters: [isnotnull(ss_quantity#4372), (ss_quantity#4372 >= 21), (ss_quantity#4372 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
+   :  :- Subquery subquery#4271, [id=#37147]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4399))], output=[avg(ss_ext_discount_amt)#4295])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37868]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4399), DoubleType)], output=[sum#4665, count#4666L])
+                           +- GpuProject [ss_ext_discount_amt#4399], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4395) AND (ss_quantity#4395 >= 21)) AND (ss_quantity#4395 <= 40)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4395,ss_ext_discount_amt#4399] Batched: true, DataFilters: [isnotnull(ss_quantity#4395), (ss_quantity#4395 >= 21), (ss_quantity#4395 <= 40)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4399))], output=[avg(ss_ext_discount_amt)#4295])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37127]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4399))], output=[sum#4665, count#4666L])
+                  +- Project [ss_ext_discount_amt#4399]
+                     +- Filter ((isnotnull(ss_quantity#4395) AND (ss_quantity#4395 >= 21)) AND (ss_quantity#4395 <= 40))
+                        +- FileScan parquet [ss_quantity#4395,ss_ext_discount_amt#4399] Batched: true, DataFilters: [isnotnull(ss_quantity#4395), (ss_quantity#4395 >= 21), (ss_quantity#4395 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+   :  :- Subquery subquery#4272, [id=#37178]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4430))], output=[avg(ss_net_profit)#4297])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37864]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4430), DoubleType)], output=[sum#4671, count#4672L])
+                           +- GpuProject [ss_net_profit#4430], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4418) AND (ss_quantity#4418 >= 21)) AND (ss_quantity#4418 <= 40)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4418,ss_net_profit#4430] Batched: true, DataFilters: [isnotnull(ss_quantity#4418), (ss_quantity#4418 >= 21), (ss_quantity#4418 <= 40)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4430))], output=[avg(ss_net_profit)#4297])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37158]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4430))], output=[sum#4671, count#4672L])
+                  +- Project [ss_net_profit#4430]
+                     +- Filter ((isnotnull(ss_quantity#4418) AND (ss_quantity#4418 >= 21)) AND (ss_quantity#4418 <= 40))
+                        +- FileScan parquet [ss_quantity#4418,ss_net_profit#4430] Batched: true, DataFilters: [isnotnull(ss_quantity#4418), (ss_quantity#4418 >= 21), (ss_quantity#4418 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+   :  :- Subquery subquery#4274, [id=#37209]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            GpuColumnarToRow false
+            +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4299L])
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37836]
+                        +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4676L])
+                           +- GpuProject true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4441) AND (ss_quantity#4441 >= 41)) AND (ss_quantity#4441 <= 60)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4441] Batched: true, DataFilters: [isnotnull(ss_quantity#4441), (ss_quantity#4441 >= 41), (ss_quantity#4441 <= 60)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4299L])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37189]
+               +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4676L])
+                  +- Project
+                     +- Filter ((isnotnull(ss_quantity#4441) AND (ss_quantity#4441 >= 41)) AND (ss_quantity#4441 <= 60))
+                        +- FileScan parquet [ss_quantity#4441] Batched: true, DataFilters: [isnotnull(ss_quantity#4441), (ss_quantity#4441 >= 41), (ss_quantity#4441 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
+   :  :- Subquery subquery#4275, [id=#37240]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4468))], output=[avg(ss_ext_discount_amt)#4301])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#37972]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4468), DoubleType)], output=[sum#4681, count#4682L])
+                           +- GpuProject [ss_ext_discount_amt#4468], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4464) AND (ss_quantity#4464 >= 41)) AND (ss_quantity#4464 <= 60)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4464,ss_ext_discount_amt#4468] Batched: true, DataFilters: [isnotnull(ss_quantity#4464), (ss_quantity#4464 >= 41), (ss_quantity#4464 <= 60)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4468))], output=[avg(ss_ext_discount_amt)#4301])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37220]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4468))], output=[sum#4681, count#4682L])
+                  +- Project [ss_ext_discount_amt#4468]
+                     +- Filter ((isnotnull(ss_quantity#4464) AND (ss_quantity#4464 >= 41)) AND (ss_quantity#4464 <= 60))
+                        +- FileScan parquet [ss_quantity#4464,ss_ext_discount_amt#4468] Batched: true, DataFilters: [isnotnull(ss_quantity#4464), (ss_quantity#4464 >= 41), (ss_quantity#4464 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+   :  :- Subquery subquery#4276, [id=#37271]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4499))], output=[avg(ss_net_profit)#4303])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38061]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4499), DoubleType)], output=[sum#4687, count#4688L])
+                           +- GpuProject [ss_net_profit#4499], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4487) AND (ss_quantity#4487 >= 41)) AND (ss_quantity#4487 <= 60)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4487,ss_net_profit#4499] Batched: true, DataFilters: [isnotnull(ss_quantity#4487), (ss_quantity#4487 >= 41), (ss_quantity#4487 <= 60)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4499))], output=[avg(ss_net_profit)#4303])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37251]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4499))], output=[sum#4687, count#4688L])
+                  +- Project [ss_net_profit#4499]
+                     +- Filter ((isnotnull(ss_quantity#4487) AND (ss_quantity#4487 >= 41)) AND (ss_quantity#4487 <= 60))
+                        +- FileScan parquet [ss_quantity#4487,ss_net_profit#4499] Batched: true, DataFilters: [isnotnull(ss_quantity#4487), (ss_quantity#4487 >= 41), (ss_quantity#4487 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+   :  :- Subquery subquery#4278, [id=#37302]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            GpuColumnarToRow false
+            +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4305L])
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38271]
+                        +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4692L])
+                           +- GpuProject true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4510) AND (ss_quantity#4510 >= 61)) AND (ss_quantity#4510 <= 80)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4510] Batched: true, DataFilters: [isnotnull(ss_quantity#4510), (ss_quantity#4510 >= 61), (ss_quantity#4510 <= 80)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4305L])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37282]
+               +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4692L])
+                  +- Project
+                     +- Filter ((isnotnull(ss_quantity#4510) AND (ss_quantity#4510 >= 61)) AND (ss_quantity#4510 <= 80))
+                        +- FileScan parquet [ss_quantity#4510] Batched: true, DataFilters: [isnotnull(ss_quantity#4510), (ss_quantity#4510 >= 61), (ss_quantity#4510 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
+   :  :- Subquery subquery#4279, [id=#37333]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4537))], output=[avg(ss_ext_discount_amt)#4307])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38216]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4537), DoubleType)], output=[sum#4697, count#4698L])
+                           +- GpuProject [ss_ext_discount_amt#4537], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4533) AND (ss_quantity#4533 >= 61)) AND (ss_quantity#4533 <= 80)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4533,ss_ext_discount_amt#4537] Batched: true, DataFilters: [isnotnull(ss_quantity#4533), (ss_quantity#4533 >= 61), (ss_quantity#4533 <= 80)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4537))], output=[avg(ss_ext_discount_amt)#4307])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37313]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4537))], output=[sum#4697, count#4698L])
+                  +- Project [ss_ext_discount_amt#4537]
+                     +- Filter ((isnotnull(ss_quantity#4533) AND (ss_quantity#4533 >= 61)) AND (ss_quantity#4533 <= 80))
+                        +- FileScan parquet [ss_quantity#4533,ss_ext_discount_amt#4537] Batched: true, DataFilters: [isnotnull(ss_quantity#4533), (ss_quantity#4533 >= 61), (ss_quantity#4533 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+   :  :- Subquery subquery#4280, [id=#37364]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4568))], output=[avg(ss_net_profit)#4309])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38244]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4568), DoubleType)], output=[sum#4703, count#4704L])
+                           +- GpuProject [ss_net_profit#4568], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4556) AND (ss_quantity#4556 >= 61)) AND (ss_quantity#4556 <= 80)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4556,ss_net_profit#4568] Batched: true, DataFilters: [isnotnull(ss_quantity#4556), (ss_quantity#4556 >= 61), (ss_quantity#4556 <= 80)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4568))], output=[avg(ss_net_profit)#4309])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37344]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4568))], output=[sum#4703, count#4704L])
+                  +- Project [ss_net_profit#4568]
+                     +- Filter ((isnotnull(ss_quantity#4556) AND (ss_quantity#4556 >= 61)) AND (ss_quantity#4556 <= 80))
+                        +- FileScan parquet [ss_quantity#4556,ss_net_profit#4568] Batched: true, DataFilters: [isnotnull(ss_quantity#4556), (ss_quantity#4556 >= 61), (ss_quantity#4556 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+   :  :- Subquery subquery#4282, [id=#37395]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            GpuColumnarToRow false
+            +- GpuHashAggregate(keys=[], functions=[gpucount(1, false)], output=[count(1)#4311L])
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38083]
+                        +- GpuHashAggregate(keys=[], functions=[partial_gpucount(1, false)], output=[count#4708L])
+                           +- GpuProject true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4579) AND (ss_quantity#4579 >= 81)) AND (ss_quantity#4579 <= 100)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4579] Batched: true, DataFilters: [isnotnull(ss_quantity#4579), (ss_quantity#4579 >= 81), (ss_quantity#4579 <= 100)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[count(1)], output=[count(1)#4311L])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37375]
+               +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#4708L])
+                  +- Project
+                     +- Filter ((isnotnull(ss_quantity#4579) AND (ss_quantity#4579 >= 81)) AND (ss_quantity#4579 <= 100))
+                        +- FileScan parquet [ss_quantity#4579] Batched: true, DataFilters: [isnotnull(ss_quantity#4579), (ss_quantity#4579 >= 81), (ss_quantity#4579 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
+   :  :- Subquery subquery#4283, [id=#37426]
+   :  :  +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4606))], output=[avg(ss_ext_discount_amt)#4313])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38248]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4606), DoubleType)], output=[sum#4713, count#4714L])
+                           +- GpuProject [ss_ext_discount_amt#4606], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4602) AND (ss_quantity#4602 >= 81)) AND (ss_quantity#4602 <= 100)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4602,ss_ext_discount_amt#4606] Batched: true, DataFilters: [isnotnull(ss_quantity#4602), (ss_quantity#4602 >= 81), (ss_quantity#4602 <= 100)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#4606))], output=[avg(ss_ext_discount_amt)#4313])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37406]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#4606))], output=[sum#4713, count#4714L])
+                  +- Project [ss_ext_discount_amt#4606]
+                     +- Filter ((isnotnull(ss_quantity#4602) AND (ss_quantity#4602 >= 81)) AND (ss_quantity#4602 <= 100))
+                        +- FileScan parquet [ss_quantity#4602,ss_ext_discount_amt#4606] Batched: true, DataFilters: [isnotnull(ss_quantity#4602), (ss_quantity#4602 >= 81), (ss_quantity#4602 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
+   :  +- Subquery subquery#4284, [id=#37457]
+   :     +- AdaptiveSparkPlan isFinalPlan=true
+         +- == Final Plan ==
+            *(1) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4637))], output=[avg(ss_net_profit)#4315])
+            +- GpuColumnarToRow false
+               +- GpuShuffleCoalesce 2147483647
+                  +- ShuffleQueryStage 0
+                     +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#38280]
+                        +- GpuHashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4637), DoubleType)], output=[sum#4719, count#4720L])
+                           +- GpuProject [ss_net_profit#4637], true
+                              +- GpuCoalesceBatches targetsize(2147483647)
+                                 +- GpuFilter ((gpuisnotnull(ss_quantity#4625) AND (ss_quantity#4625 >= 81)) AND (ss_quantity#4625 <= 100)), true
+                                    +- GpuFileGpuScan parquet [ss_quantity#4625,ss_net_profit#4637] Batched: true, DataFilters: [isnotnull(ss_quantity#4625), (ss_quantity#4625 >= 81), (ss_quantity#4625 <= 100)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+         +- == Initial Plan ==
+            HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#4637))], output=[avg(ss_net_profit)#4315])
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#37437]
+               +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#4637))], output=[sum#4719, count#4720L])
+                  +- Project [ss_net_profit#4637]
+                     +- Filter ((isnotnull(ss_quantity#4625) AND (ss_quantity#4625 >= 81)) AND (ss_quantity#4625 <= 100))
+                        +- FileScan parquet [ss_quantity#4625,ss_net_profit#4637] Batched: true, DataFilters: [isnotnull(ss_quantity#4625), (ss_quantity#4625 >= 81), (ss_quantity#4625 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
+   +- Filter (isnotnull(r_reason_sk#246) AND (r_reason_sk#246 = 1))
+      +- FileScan parquet [r_reason_sk#246] Batched: true, DataFilters: [isnotnull(r_reason_sk#246), (r_reason_sk#246 = 1)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/reason.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_reason_sk), EqualTo(r_reason_sk,1)], ReadSchema: struct<r_reason_sk:int>

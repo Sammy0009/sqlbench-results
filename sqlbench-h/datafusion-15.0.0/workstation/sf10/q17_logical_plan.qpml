@@ -1,0 +1,31 @@
+diagram:
+  title: 'Projection: CAST(SUM(lineitem.l_extendedprice) AS Float64) / Float64(7) AS avg_yearly'
+  style: projection
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Filter: CAST(lineitem.l_quantity AS Decimal128(30, 15)) < CAST(__sq_1.__value AS Decimal128(30, 15))'
+      style: filter
+      inputs:
+      - title: 'Join: part.p_partkey = __sq_1.l_partkey AND lineitem.l_partkey = __sq_1.l_partkey'
+        style: join
+        inputs:
+        - title: 'Join: lineitem.l_partkey = part.p_partkey'
+          style: join
+          inputs:
+          - title: lineitem
+            style: scan
+          - title: 'Filter: part.p_brand = Utf8("Brand#51") AND part.p_container = Utf8("JUMBO BAG")'
+            style: filter
+            inputs:
+            - title: part
+              style: scan
+        - title: unknown
+          inputs:
+          - title: 'Projection: lineitem.l_partkey, Float64(0.2) * CAST(AVG(lineitem.l_quantity) AS Float64) AS __value'
+            style: projection
+            inputs:
+            - title: unknown
+              inputs:
+              - title: lineitem
+                style: scan

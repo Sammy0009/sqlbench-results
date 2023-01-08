@@ -1,0 +1,101 @@
+c_last_name,c_first_name,ca_city,bought_city,ss_ticket_number,extended_price,extended_tax,list_price
+null,null,Cedar Grove,Belmont,31190,13820.61,894.62,30351.86
+null,null,Edgewood,Wildwood,67283,12502.01,867.86,34965.26
+null,Ted,Lakewood,Green Acres,78101,15559.05,870.09,25352.52
+null,Meredith,Forest Hills,Edgewood,111820,37744.85,1141.13,77727.85
+null,Herman,Sulphur Springs,Lincoln,147126,21148.87,952.51,36553.85
+null,null,Deerfield,Riverview,329844,29000.84,1447.84,61731.16
+null,William,Pine Grove,Five Points,350188,8171.88,370.80,16225.58
+null,Corey,Dallas,Providence,364141,25082.11,1432.08,40676.35
+null,Lisa,Red Hill,Plainview,388575,18476.40,490.25,60459.47
+null,Lisa,Riverdale,Parkwood,390308,38475.39,2126.08,67064.29
+null,null,Shiloh,Harmony,424541,17191.21,687.11,32113.54
+null,null,Red Hill,Wildwood,463272,26582.76,1108.41,47769.80
+null,null,Riverdale,Oakwood,465192,28623.97,1063.01,51348.23
+null,Lynette,Shady Grove,Hillcrest,577528,27444.09,724.53,51760.09
+null,null,Wilson,Jackson,578944,21594.98,1226.00,38873.16
+null,Ted,Five Points,Fowler,701166,18218.99,670.99,22521.07
+null,Carmela,Marion,Valley View,744222,25300.32,1432.00,42570.98
+null,Lillian,Oakwood,Pleasant Hill,752691,35646.93,1949.26,58372.00
+null,Kevin,Valley View,Red Hill,832460,19539.31,863.47,39831.30
+null,Ebony,Maple Grove,Buena Vista,838383,9884.06,500.02,20323.91
+null,Alicia,Mount Zion,Woodlawn,883982,28451.29,1301.88,56914.92
+null,Charles,Riverside,Union,920164,17308.38,790.66,32577.30
+null,null,Clifton,Florence,928041,23082.91,1239.40,54975.09
+null,null,Highland,Deerfield,1005524,6879.86,338.26,11953.27
+null,null,Union City,Glenville,1141458,22610.26,1393.89,40170.84
+null,null,Clifton,Deerfield,1240328,8125.53,276.02,32834.68
+null,null,Hillcrest,Waterloo,1281302,15717.86,624.83,31879.32
+null,null,Springfield,Hillcrest,1307952,23396.70,612.11,47260.22
+null,null,Newport,Deerfield,1344104,12827.50,301.58,17971.67
+null,null,Bunker Hill,Deerfield,1422286,5146.69,187.57,18552.10
+null,null,Greenfield,Summit,1447879,12894.24,348.14,32452.64
+null,null,White Oak,Concord,1619715,25265.91,1123.60,45424.83
+null,null,Oak Ridge,Riverview,1743622,27031.44,1647.21,66078.69
+null,Thomas,Riverside,Valley View,1838932,20968.02,863.68,34190.17
+null,null,Red Hill,New Hope,1851217,35128.13,1557.95,52184.00
+null,Jennifer,Lakewood,Woodville,1899227,31775.49,1824.56,65562.94
+null,null,Belmont,Union Hill,1951384,24617.63,921.26,46803.94
+null,null,Clifton,Springfield,1969713,38790.38,1010.42,63386.24
+null,null,Wolf Creek,Lincoln,1994869,26900.50,978.30,43449.87
+null,null,Macedonia,Springfield,2072383,10128.71,533.25,23725.26
+null,Annette,Friendship,Clifford,2118936,13736.53,480.54,41476.62
+null,null,Enterprise,Fayetteville,2131943,29598.66,1112.63,63968.74
+null,null,Lakeview,New Hope,2138197,15972.49,578.00,47936.40
+null,Dale,Roy,Union Hill,2138837,16580.81,522.58,31488.39
+null,null,Deerfield,Riverview,2201041,19807.51,813.57,35464.65
+null,Greg,Wilson,Lakeside,2426725,23259.15,1165.26,51904.68
+null,Tommy,Newport,Providence,2426742,27946.84,1026.76,47129.28
+null,Elizabeth,Stringtown,Farmington,2429288,18027.67,676.69,33514.51
+null,Samantha,Macedonia,Riverdale,2429755,30847.17,756.33,56747.83
+null,null,Clinton,Springfield,2431532,11293.96,386.25,23378.58
+null,null,Proctor,Newtown,2482700,32255.17,1677.69,58848.87
+null,Melanie,Proctor,Bunker Hill,2491117,7360.67,384.13,14747.04
+null,null,Greenfield,Plainview,2526455,23502.82,535.91,55550.78
+null,null,Greenville,Newtown,2549637,3962.62,281.38,11306.45
+null,Steve,Ashland,Pine Grove,2603990,37023.08,988.88,56755.54
+null,Anita,Harmony,Hillcrest,2652722,41926.52,1933.33,54517.71
+null,null,Ashland,Forest Hills,2718707,19128.25,1236.91,45191.52
+null,null,Greenville,Riverview,2748162,16137.05,699.54,33186.46
+null,Tammy,Pleasant Grove,Sheffield,2777760,18819.13,777.77,35734.54
+null,null,Buena Vista,Milo,2874146,21702.64,812.99,34465.53
+null,null,Arlington,Oakland,2913993,12510.90,374.43,33777.55
+null,Kenneth,Maple Grove,Gum Springs,2948102,7861.99,453.72,15016.08
+null,Barbara,Friendship,Pleasant Grove,2952394,6567.87,308.35,19103.16
+null,Louis,Clinton,Ellisville,2966734,23010.75,1232.79,62230.64
+null,null,Leland,Hopewell,3008148,19373.70,908.95,36205.62
+null,null,Hillcrest,Macedonia,3012529,32603.67,1425.88,58199.41
+null,Tommy,Oakland,Riverdale,3024654,28199.26,1490.91,49224.63
+null,Matilda,Brookville,Frankfort,3033351,11210.66,295.06,30273.95
+null,null,Arlington,Buena Vista,3046328,25930.13,548.31,59380.56
+null,Susan,Fairfield,Pleasant Valley,3079942,40194.71,1503.13,61991.83
+null,null,Franklin,Glenwood,3116120,35325.62,1135.72,50959.16
+null,Gloria,Oakwood,Forest Hills,3175950,21097.39,1032.24,28245.28
+null,Matthew,Rogers,Pleasant Grove,3176498,13304.64,494.77,25355.13
+null,null,Silver Creek,Riverside,3220327,13746.46,305.89,34764.50
+null,Dennis,Ashland,Five Points,3262071,12576.27,737.16,27481.17
+null,Michael,Greenfield,Clinton,3288980,29641.68,1356.06,57991.36
+null,null,Lincoln,Westfield,3343131,25115.93,686.18,52462.70
+null,null,Georgetown,Riverside,3399337,37883.40,1629.01,67088.57
+null,null,Springdale,Pierce,3442665,34153.28,1261.72,53517.08
+null,null,Riverside,Clifton,3499021,25941.76,759.13,35366.73
+null,null,Florence,Oak Hill,3523489,14605.18,360.70,41072.06
+null,null,Argyle,Liberty,3671049,27684.07,1731.43,44758.75
+null,null,Shiloh,Mount Pleasant,3765487,18420.76,410.78,39095.97
+null,Quinn,Brownsville,Hopewell,3788086,21553.78,1212.42,40632.10
+null,Todd,Pleasant Valley,Ellsworth,3816169,23881.29,1180.00,32745.37
+null,null,Belmont,Buena Vista,3832607,16812.28,655.29,37318.85
+null,Jaclyn,Belmont,Marion,3972365,16249.28,700.79,34968.48
+null,null,Oakland,Pine Grove,4031165,34879.78,1111.64,71495.30
+null,null,Proctor,Wildwood,4036815,38996.02,2042.65,70605.84
+null,null,Providence,Summit,4040267,11990.03,378.81,34641.64
+null,Essie,Kingston,Union Hill,4058219,34019.86,1587.87,55889.61
+null,Wayne,Kingston,Hamilton,4101838,5052.28,168.04,19027.55
+null,Ruth,Buena Vista,Collinsville,4113205,22219.06,694.87,50561.57
+null,John,Clifton,Valley View,4173969,24409.54,1356.95,40870.77
+null,null,Summit,Sumner,4178588,6730.82,273.41,13011.16
+null,Douglas,Marion,Lakewood,4199874,33742.64,813.70,65054.20
+null,null,Midway,Newport,4219038,42543.91,2357.46,76197.98
+null,Jerry,Pine Grove,Woodlawn,4226810,20782.68,957.68,40054.91
+null,null,Oak Ridge,Edgewood,4279877,18647.88,651.02,30281.71
+null,Linda,Highland,Sulphur Springs,4287705,17201.28,753.32,54138.53

@@ -1,0 +1,101 @@
+substr(w_warehouse_name, 1, 20),sm_type,cc_name,30 days,31-60 days,61-90 days,91-120 days,>120 days
+null,EXPRESS,California,8181,8603,8527,0,0
+null,EXPRESS,California_1,8207,8644,8557,0,0
+null,EXPRESS,Hawaii/Alaska,8166,8334,8295,0,0
+null,EXPRESS,Hawaii/Alaska_1,8189,8480,8459,0,0
+null,EXPRESS,Mid Atlantic,8239,8354,8503,0,0
+null,EXPRESS,Mid Atlantic_1,8296,8600,8642,0,0
+null,EXPRESS,Mid Atlantic_2,8290,8443,8420,0,0
+null,EXPRESS,NY Metro,8104,8602,8549,0,0
+null,EXPRESS,NY Metro_1,8277,8376,8428,0,0
+null,EXPRESS,NY Metro_2,8226,8583,8434,0,0
+null,EXPRESS,North Midwest,8214,8495,8506,0,0
+null,EXPRESS,North Midwest_1,8313,8275,8591,0,0
+null,EXPRESS,North Midwest_2,8238,8689,8489,0,0
+null,EXPRESS,Pacific Northwest,8320,8446,8332,0,0
+null,EXPRESS,Pacific Northwest_1,8254,8391,8418,0,0
+null,LIBRARY,California,6135,6362,6394,0,0
+null,LIBRARY,California_1,6154,6296,6283,0,0
+null,LIBRARY,Hawaii/Alaska,6091,6270,6476,0,0
+null,LIBRARY,Hawaii/Alaska_1,6250,6353,6427,0,0
+null,LIBRARY,Mid Atlantic,6087,6415,6495,0,0
+null,LIBRARY,Mid Atlantic_1,6197,6592,6313,0,0
+null,LIBRARY,Mid Atlantic_2,6135,6295,6544,0,0
+null,LIBRARY,NY Metro,6222,6350,6359,0,0
+null,LIBRARY,NY Metro_1,6192,6287,6425,0,0
+null,LIBRARY,NY Metro_2,6201,6369,6330,0,0
+null,LIBRARY,North Midwest,6282,6273,6381,0,0
+null,LIBRARY,North Midwest_1,6005,6455,6377,0,0
+null,LIBRARY,North Midwest_2,6137,6454,6360,0,0
+null,LIBRARY,Pacific Northwest,6083,6360,6394,0,0
+null,LIBRARY,Pacific Northwest_1,6150,6243,6287,0,0
+null,NEXT DAY,California,8153,8602,8406,0,0
+null,NEXT DAY,California_1,8323,8458,8480,0,0
+null,NEXT DAY,Hawaii/Alaska,8219,8508,8386,0,0
+null,NEXT DAY,Hawaii/Alaska_1,8373,8485,8485,0,0
+null,NEXT DAY,Mid Atlantic,8063,8463,8600,0,0
+null,NEXT DAY,Mid Atlantic_1,8346,8464,8538,0,0
+null,NEXT DAY,Mid Atlantic_2,8321,8638,8613,0,0
+null,NEXT DAY,NY Metro,8260,8309,8512,0,0
+null,NEXT DAY,NY Metro_1,8212,8525,8457,0,0
+null,NEXT DAY,NY Metro_2,8168,8329,8537,0,0
+null,NEXT DAY,North Midwest,8240,8582,8487,0,0
+null,NEXT DAY,North Midwest_1,8120,8546,8639,0,0
+null,NEXT DAY,North Midwest_2,8135,8491,8441,0,0
+null,NEXT DAY,Pacific Northwest,8193,8469,8512,0,0
+null,NEXT DAY,Pacific Northwest_1,8114,8660,8471,0,0
+null,OVERNIGHT,California,6129,6293,6350,0,0
+null,OVERNIGHT,California_1,6038,6285,6348,0,0
+null,OVERNIGHT,Hawaii/Alaska,6048,6463,6334,0,0
+null,OVERNIGHT,Hawaii/Alaska_1,6190,6327,6376,0,0
+null,OVERNIGHT,Mid Atlantic,6131,6358,6262,0,0
+null,OVERNIGHT,Mid Atlantic_1,6139,6376,6441,0,0
+null,OVERNIGHT,Mid Atlantic_2,6270,6471,6461,0,0
+null,OVERNIGHT,NY Metro,6220,6282,6356,0,0
+null,OVERNIGHT,NY Metro_1,6195,6301,6387,0,0
+null,OVERNIGHT,NY Metro_2,6159,6223,6302,0,0
+null,OVERNIGHT,North Midwest,6314,6369,6474,0,0
+null,OVERNIGHT,North Midwest_1,6247,6434,6324,0,0
+null,OVERNIGHT,North Midwest_2,6113,6378,6301,0,0
+null,OVERNIGHT,Pacific Northwest,6106,6339,6373,0,0
+null,OVERNIGHT,Pacific Northwest_1,6251,6321,6297,0,0
+null,REGULAR,California,6090,6338,6321,0,0
+null,REGULAR,California_1,6216,6399,6425,0,0
+null,REGULAR,Hawaii/Alaska,6045,6475,6321,0,0
+null,REGULAR,Hawaii/Alaska_1,6355,6312,6447,0,0
+null,REGULAR,Mid Atlantic,6183,6371,6407,0,0
+null,REGULAR,Mid Atlantic_1,6058,6364,6337,0,0
+null,REGULAR,Mid Atlantic_2,6186,6528,6580,0,0
+null,REGULAR,NY Metro,6011,6403,6432,0,0
+null,REGULAR,NY Metro_1,6081,6365,6429,0,0
+null,REGULAR,NY Metro_2,6038,6280,6393,0,0
+null,REGULAR,North Midwest,6274,6344,6432,0,0
+null,REGULAR,North Midwest_1,6258,6416,6400,0,0
+null,REGULAR,North Midwest_2,6213,6380,6323,0,0
+null,REGULAR,Pacific Northwest,6221,6353,6327,0,0
+null,REGULAR,Pacific Northwest_1,6174,6428,6273,0,0
+null,TWO DAY,California,6121,6223,6418,0,0
+null,TWO DAY,California_1,6237,6269,6351,0,0
+null,TWO DAY,Hawaii/Alaska,6124,6461,6314,0,0
+null,TWO DAY,Hawaii/Alaska_1,6198,6419,6400,0,0
+null,TWO DAY,Mid Atlantic,6193,6404,6359,0,0
+null,TWO DAY,Mid Atlantic_1,6098,6369,6341,0,0
+null,TWO DAY,Mid Atlantic_2,6179,6231,6323,0,0
+null,TWO DAY,NY Metro,6230,6405,6274,0,0
+null,TWO DAY,NY Metro_1,6302,6378,6347,0,0
+null,TWO DAY,NY Metro_2,6170,6174,6417,0,0
+null,TWO DAY,North Midwest,6109,6355,6324,0,0
+null,TWO DAY,North Midwest_1,6187,6299,6471,0,0
+null,TWO DAY,North Midwest_2,6153,6458,6339,0,0
+null,TWO DAY,Pacific Northwest,6223,6425,6361,0,0
+null,TWO DAY,Pacific Northwest_1,6119,6464,6168,0,0
+Bad cards must make.,EXPRESS,California,8121,8486,8283,0,0
+Bad cards must make.,EXPRESS,California_1,8197,8607,8410,0,0
+Bad cards must make.,EXPRESS,Hawaii/Alaska,8330,8543,8627,0,0
+Bad cards must make.,EXPRESS,Hawaii/Alaska_1,8146,8779,8401,0,0
+Bad cards must make.,EXPRESS,Mid Atlantic,8064,8624,8481,0,0
+Bad cards must make.,EXPRESS,Mid Atlantic_1,8243,8585,8459,0,0
+Bad cards must make.,EXPRESS,Mid Atlantic_2,8275,8636,8449,0,0
+Bad cards must make.,EXPRESS,NY Metro,8281,8644,8518,0,0
+Bad cards must make.,EXPRESS,NY Metro_1,8282,8517,8568,0,0
+Bad cards must make.,EXPRESS,NY Metro_2,8102,8513,8505,0,0

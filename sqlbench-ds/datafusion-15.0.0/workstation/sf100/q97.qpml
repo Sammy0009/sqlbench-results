@@ -1,0 +1,48 @@
+diagram:
+  title: 'Projection: SUM(CASE WHEN ssci.customer_sk IS NOT NULL AND csci.customer_sk IS NULL THEN Int64(1) ELSE Int64(0) END) AS store_only, SUM(CASE WHEN ssci.customer_sk IS NULL AND csci.customer_sk IS NOT NULL THEN Int64(1) ELSE Int64(0) END) AS catalog_only, SUM(CASE WHEN ssci.customer_sk IS NOT NULL AND csci.customer_sk IS NOT NULL THEN Int64(1) ELSE Int64(0) END) AS store_and_catalog'
+  style: projection
+  inputs:
+  - title: unknown
+    inputs:
+    - title: unknown
+      inputs:
+      - title: 'Projection: csci.customer_sk IS NOT NULL AS csci.customer_sk IS NOT NULLcsci.customer_sk, ssci.customer_sk IS NOT NULL AS ssci.customer_sk IS NOT NULLssci.customer_sk, ssci.customer_sk, csci.customer_sk'
+        style: projection
+        inputs:
+        - title: 'Join: ssci.customer_sk = csci.customer_sk AND ssci.item_sk = csci.item_sk'
+          style: join
+          inputs:
+          - title: unknown
+            inputs:
+            - title: 'Projection: store_sales.ss_customer_sk AS customer_sk, store_sales.ss_item_sk AS item_sk'
+              style: projection
+              inputs:
+              - title: unknown
+                inputs:
+                - title: 'Join: store_sales.ss_sold_date_sk = date_dim.d_date_sk'
+                  style: join
+                  inputs:
+                  - title: store_sales
+                    style: scan
+                  - title: 'Filter: date_dim.d_month_seq >= Int32(1219) AND date_dim.d_month_seq <= Int32(1230)'
+                    style: filter
+                    inputs:
+                    - title: date_dim
+                      style: scan
+          - title: unknown
+            inputs:
+            - title: 'Projection: catalog_sales.cs_bill_customer_sk AS customer_sk, catalog_sales.cs_item_sk AS item_sk'
+              style: projection
+              inputs:
+              - title: unknown
+                inputs:
+                - title: 'Join: catalog_sales.cs_sold_date_sk = date_dim.d_date_sk'
+                  style: join
+                  inputs:
+                  - title: catalog_sales
+                    style: scan
+                  - title: 'Filter: date_dim.d_month_seq >= Int32(1219) AND date_dim.d_month_seq <= Int32(1230)'
+                    style: filter
+                    inputs:
+                    - title: date_dim
+                      style: scan

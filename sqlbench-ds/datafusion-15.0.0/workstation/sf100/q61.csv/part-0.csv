@@ -1,0 +1,2 @@
+promotions,total,promotional_sales.promotions / all_sales.total * Int64(100)
+168625752.29,330647217.02,50.9900

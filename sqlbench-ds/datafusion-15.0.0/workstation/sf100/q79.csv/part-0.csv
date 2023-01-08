@@ -1,0 +1,101 @@
+c_last_name,c_first_name,"substr(ms.s_city,Int64(1),Int64(30))",ss_ticket_number,amt,profit
+Aaron,Agnes,Fairview,8962633,16.46,-10177.77
+Aaron,Agnes,Pleasant Grove,5462537,1711.61,-13148.76
+Aaron,Alice,Bethel,23720260,1979.47,-8857.64
+Aaron,Alice,Mount Pleasant,397609,0.00,-2919.16
+Aaron,Alice,Pleasant Valley,3099046,0.86,-1687.72
+Aaron,Alicia,Mount Pleasant,321505,1033.41,-1913.40
+Aaron,Amanda,Pleasant Grove,22309686,3287.46,-8184.22
+Aaron,Ann,Pleasant Grove,13760456,3431.90,-10153.40
+Aaron,Barbara,Oakland,8860527,6497.47,-8602.75
+Aaron,Barbara,Salem,1423159,4364.05,1242.84
+Aaron,Bethany,Mount Pleasant,1875009,135.34,2410.13
+Aaron,Bradley,Midway,16856584,363.34,-7032.30
+Aaron,Carla,Union,8646384,0.00,-1565.23
+Aaron,Charles,Liberty,8760223,3835.70,-14258.85
+Aaron,Charles,Mount Pleasant,2068502,9951.49,-14862.11
+Aaron,Charlie,Five Points,5030223,974.94,-10052.26
+Aaron,Charlie,Pleasant Grove,6172572,7033.30,-8120.94
+Aaron,Charlotte,Centerville,761854,617.85,-18092.67
+Aaron,Christian,Salem,15132200,2063.69,-8284.70
+Aaron,Christina,Bethel,7487690,3541.89,-10162.98
+Aaron,Christina,Riverside,12791512,101.68,-4911.02
+Aaron,Christopher,Five Points,22358858,716.32,-10806.72
+Aaron,Christopher,Mount Pleasant,5447167,2597.46,-10561.31
+Aaron,Christopher,Salem,12855506,3809.90,-17312.97
+Aaron,Christopher,Union,13081306,1065.74,-5722.28
+Aaron,Cody,Liberty,20810141,2247.27,-18158.91
+Aaron,Cornelia,Bethel,22771615,194.81,-2238.05
+Aaron,Cornelia,Centerville,7572618,0.00,-5855.35
+Aaron,Cristina,Oakland,16699655,3336.95,-3150.17
+Aaron,Crystal,Fairview,21616169,2025.73,-13426.84
+Aaron,Cynthia,Liberty,2324050,2193.09,-19299.78
+Aaron,Cynthia,Midway,2269279,1611.49,-19312.19
+Aaron,Danielle,Pleasant Valley,14728843,19.17,-3319.10
+Aaron,Darlene,Riverside,14157599,835.05,-10861.07
+Aaron,Dorothy,Shady Grove,23381147,913.50,-7958.15
+Aaron,Edison,Pleasant Grove,7967532,0.00,219.54
+Aaron,Edward,Fairview,23219636,368.75,1673.80
+Aaron,Edward,Midway,13617528,1840.53,-19248.96
+Aaron,Ernest,New Hope,10298085,2599.46,-6066.76
+Aaron,Evelyn,Fairview,22422534,4378.49,-13611.66
+Aaron,Francesca,Fairview,17384058,194.79,-16208.13
+Aaron,Francesca,Mount Pleasant,20004733,162.67,-12160.67
+Aaron,Francis,Fairview,11023148,3490.84,-16922.19
+Aaron,Harold,Centerville,10909673,1262.34,-7055.00
+Aaron,Hazel,Pleasant Grove,15935370,0.00,-1747.82
+Aaron,Heather,Fairview,13042749,234.79,-2794.57
+Aaron,Helene,Fairview,13718642,0.00,-7405.52
+Aaron,Helene,Mount Pleasant,20117068,1983.26,-4388.41
+Aaron,Jana,Pleasant Hill,23868209,5416.41,-11202.01
+Aaron,Jason,Greenwood,7147508,248.46,-5340.16
+Aaron,Jeremy,Five Points,12747438,2543.84,-12808.65
+Aaron,John,Fairview,18374523,973.85,-18901.38
+Aaron,John,Riverside,19413951,2054.99,-12271.61
+Aaron,Jon,Bethel,11619177,736.95,-2969.98
+Aaron,Joseph,Bethel,15900938,1768.14,-14414.81
+Aaron,Joseph,Fairview,21284158,45.12,-11859.95
+Aaron,Judith,Liberty,238210,1652.57,-6480.55
+Aaron,Judy,Bethel,18672795,702.71,-11640.42
+Aaron,Judy,Centerville,14332016,1705.44,-10540.22
+Aaron,Julie,Greenwood,17386265,3253.83,-26633.64
+Aaron,Julie,Oakland,19497828,0.00,-892.02
+Aaron,Karen,Five Points,18526744,1204.88,-9915.30
+Aaron,Karen,New Hope,20100480,1184.27,-17472.49
+Aaron,Kate,Midway,13940791,1295.82,-15398.24
+Aaron,Katherine,Riverside,19203882,4965.34,-11675.54
+Aaron,Kimberly,Bethel,14338908,1703.21,-6019.05
+Aaron,Larry,Centerville,20582274,1242.57,-4217.72
+Aaron,Larry,Midway,16768830,2090.07,-8877.03
+Aaron,Larry,Midway,16768830,67.37,-840.87
+Aaron,Larry,Pleasant Grove,14394262,478.73,-8021.67
+Aaron,Laurie,Mount Pleasant,8006674,0.00,-9511.87
+Aaron,Laurie,Oakland,20016334,282.00,-11634.09
+Aaron,Leona,Fairview,590224,3800.70,-12506.41
+Aaron,Loretta,Fairview,7732911,2831.73,-10207.80
+Aaron,Lorraine,Midway,10864533,1610.88,-6452.92
+Aaron,Lucinda,Shady Grove,14884311,1179.36,-8815.85
+Aaron,Lynda,Fairview,14066327,0.00,-4435.36
+Aaron,Margaret,Centerville,34719,1210.28,-15624.30
+Aaron,Margaret,Fairview,22829652,5216.16,-11662.11
+Aaron,Margaret,Mount Pleasant,7824170,2308.41,-14004.94
+Aaron,Maryann,Greenwood,22204662,0.00,-8229.56
+Aaron,Michael,Mount Pleasant,6745725,1915.44,-7572.94
+Aaron,Michael,Pleasant Grove,9046554,0.00,-9325.78
+Aaron,Mike,Oakland,4132592,2548.91,-2825.71
+Aaron,Mildred,Fairview,22893769,2426.32,-7497.28
+Aaron,Mildred,Riverside,15138232,10.77,-13887.72
+Aaron,Natalie,New Hope,15255646,1027.14,-7282.15
+Aaron,Oliva,Oakland,486011,0.00,-6411.65
+Aaron,Pablo,New Hope,907595,1823.54,-16707.71
+Aaron,Pauline,Pleasant Grove,22494299,369.94,-5706.44
+Aaron,Rebecca,Mount Pleasant,17392515,455.61,-10917.24
+Aaron,Rebecca,Oakland,1893501,882.62,-6337.93
+Aaron,Robert,Fairview,2113953,417.15,-11985.94
+Aaron,Robert,Fairview,11969266,329.90,946.54
+Aaron,Robert,Five Points,3550764,1155.51,-2072.14
+Aaron,Roger,Liberty,6745553,12404.74,-11554.78
+Aaron,Ronald,Liberty,13485711,250.33,-12535.87
+Aaron,Rose,Fairview,19822733,0.00,-14680.53
+Aaron,Rose,Greenwood,6633580,0.00,3205.33
+Aaron,Rosetta,Salem,13297716,3755.87,-6496.55

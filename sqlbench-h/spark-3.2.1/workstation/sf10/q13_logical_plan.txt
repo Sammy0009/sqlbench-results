@@ -1,0 +1,10 @@
+Sort [custdist#550L DESC NULLS LAST, c_count#555L DESC NULLS LAST], true
++- Aggregate [c_count#555L], [c_count#555L, count(1) AS custdist#550L]
+   +- Aggregate [c_custkey#0L], [count(o_orderkey#56L) AS c_count#555L]
+      +- Project [c_custkey#0L, o_orderkey#56L]
+         +- Join LeftOuter, (c_custkey#0L = o_custkey#57L)
+            :- Project [c_custkey#0L]
+            :  +- Relation [c_custkey#0L,c_name#1,c_address#2,c_nationkey#3L,c_phone#4,c_acctbal#5,c_mktsegment#6,c_comment#7] parquet
+            +- Project [o_orderkey#56L, o_custkey#57L]
+               +- Filter ((isnotnull(o_comment#64) AND NOT o_comment#64 LIKE %special%requests%) AND isnotnull(o_custkey#57L))
+                  +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet

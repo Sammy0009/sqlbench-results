@@ -1,0 +1,40 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: custsale.cntrycode, COUNT(UInt8(1)) AS numcust, SUM(custsale.c_acctbal) AS totacctbal'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Projection: substr(customer.c_phone, Int64(1), Int64(2)) AS cntrycode, customer.c_acctbal'
+          style: projection
+          inputs:
+          - title: 'Filter: CAST(customer.c_acctbal AS Decimal128(15, 6)) > __sq_1.__value'
+            style: filter
+            inputs:
+            - title: unknown
+              inputs:
+              - title: 'Join: customer.c_custkey = orders.o_custkey'
+                style: join
+                inputs:
+                - title: 'Filter: substr(customer.c_phone, Int64(1), Int64(2)) IN ([Utf8("29"), Utf8("22"), Utf8("27"), Utf8("10"), Utf8("18"), Utf8("24"), Utf8("30")])'
+                  style: filter
+                  inputs:
+                  - title: customer
+                    style: scan
+                - title: orders
+                  style: scan
+              - title: unknown
+                inputs:
+                - title: 'Projection: AVG(customer.c_acctbal) AS __value'
+                  style: projection
+                  inputs:
+                  - title: unknown
+                    inputs:
+                    - title: 'Filter: customer.c_acctbal > Decimal128(Some(0),11,2) AND substr(customer.c_phone, Int64(1), Int64(2)) IN ([Utf8("29"), Utf8("22"), Utf8("27"), Utf8("10"), Utf8("18"), Utf8("24"), Utf8("30")])'
+                      style: filter
+                      inputs:
+                      - title: customer
+                        style: scan

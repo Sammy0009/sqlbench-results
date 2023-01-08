@@ -1,0 +1,86 @@
+┌───────────────────────────┐                             
+│    UNGROUPED_AGGREGATE    │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│          sum(#0)          │                             
+└─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             
+│         PROJECTION        │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│ (l_extendedprice * (1.00 -│                             
+│        l_discount))       │                             
+└─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             
+│         PROJECTION        │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│             #2            │                             
+│             #3            │                             
+└─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             
+│           FILTER          │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│(((l_quantity >= 8.00) AND │                             
+│(l_quantity <= 18.00) AND (│                             
+│(p_size >= 1) AND (p_size <│                             
+│= 5)) AND (p_brand = 'Brand│                             
+│ #41') AND ((p_container = │                             
+│'SM CASE') OR (p_conta...  │                             
+│ 'SM BOX') OR (p_container │                             
+│      = 'SM PACK') OR      │                             
+│(p_container = 'SM PKG...  │                             
+│ (l_quantity >= 12.00) AND │                             
+│(l_quantity <= 22.00) ...  │                             
+│ >= 1) AND (p_size <= 10)) │                             
+│ AND (p_brand = 'Brand#44')│                             
+│ AND ((p_container = '...  │                             
+│ ') OR (p_container = 'MED │                             
+│ BOX') OR (p_container...  │                             
+│  PKG') OR (p_container =  │                             
+│'MED PACK'))) OR ((l_q...  │                             
+│ >= 25.00) AND (l_quantity │                             
+│<= 35.00) AND ((p_size >= 1│                             
+│ ) AND (p_size <= 15)) AND │                             
+│(p_brand = 'Brand#34')...  │                             
+│ (p_container = 'LG CASE') │                             
+│ OR (p_container = 'LG...  │                             
+│ OR (p_container = 'LG...  │                             
+│) OR (p_container = 'LG PKG│                             
+│           '))))           │                             
+└─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             
+│         HASH_JOIN         │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│           INNER           │                             
+│   l_partkey = p_partkey   ├──────────────┐              
+│    EC = 11991028.000000   │              │              
+│   COST = 11991028.000000  │              │              
+└─────────────┬─────────────┘              │                                           
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+│         PROJECTION        ││        PARQUET_SCAN       │
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│             #0            ││         p_partkey         │
+│             #1            ││          p_brand          │
+│             #2            ││           p_size          │
+│             #3            ││        p_container        │
+│                           ││         EC=1999968        │
+└─────────────┬─────────────┘└───────────────────────────┘                             
+┌─────────────┴─────────────┐                             
+│           FILTER          │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│ ((l_shipmode = 'AIR') OR  │                             
+│ (l_shipmode = 'AIR REG')) │                             
+└─────────────┬─────────────┘                                                          
+┌─────────────┴─────────────┐                             
+│        PARQUET_SCAN       │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│         l_partkey         │                             
+│         l_quantity        │                             
+│      l_extendedprice      │                             
+│         l_discount        │                             
+│         l_shipmode        │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│  Filters: l_shipinstruct  │                             
+│   =DELIVER IN PERSON AND  │                             
+│ l_shipinstruct IS NOT NULL│                             
+│        EC=59955144        │                             
+└───────────────────────────┘                                                          
+

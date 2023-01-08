@@ -1,0 +1,56 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   *(5) HashAggregate(keys=[], functions=[sum(l_extendedprice#21)], output=[avg_yearly#634])
+   +- ShuffleQueryStage 4
+      +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#5277]
+         +- *(4) HashAggregate(keys=[], functions=[partial_sum(l_extendedprice#21)], output=[sum#658, isEmpty#659])
+            +- *(4) Project [l_extendedprice#21]
+               +- *(4) BroadcastHashJoin [p_partkey#74L], [l_partkey#639L], Inner, BuildLeft, (cast(l_quantity#20 as decimal(17,7)) < (0.2 * avg(l_quantity))#637), false
+                  :- BroadcastQueryStage 3
+                  :  +- BroadcastExchange HashedRelationBroadcastMode(List(input[2, bigint, true]),false), [id=#5208]
+                  :     +- AQEShuffleRead local
+                  :        +- ShuffleQueryStage 2
+                  :           +- Exchange hashpartitioning(p_partkey#74L, 200), ENSURE_REQUIREMENTS, [id=#5152]
+                  :              +- *(3) Project [l_quantity#20, l_extendedprice#21, p_partkey#74L]
+                  :                 +- *(3) BroadcastHashJoin [l_partkey#17L], [p_partkey#74L], Inner, BuildRight, false
+                  :                    :- *(3) Filter (isnotnull(l_partkey#17L) AND isnotnull(l_quantity#20))
+                  :                    :  +- *(3) ColumnarToRow
+                  :                    :     +- FileScan parquet [l_partkey#17L,l_quantity#20,l_extendedprice#21] Batched: true, DataFilters: [isnotnull(l_partkey#17L), isnotnull(l_quantity#20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_partkey), IsNotNull(l_quantity)], ReadSchema: struct<l_partkey:bigint,l_quantity:decimal(11,2),l_extendedprice:decimal(11,2)>
+                  :                    +- BroadcastQueryStage 0
+                  :                       +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, true]),false), [id=#5033]
+                  :                          +- *(1) Project [p_partkey#74L]
+                  :                             +- *(1) Filter ((((isnotnull(p_brand#77) AND isnotnull(p_container#80)) AND (p_brand#77 = Brand#51)) AND (p_container#80 = JUMBO BAG)) AND isnotnull(p_partkey#74L))
+                  :                                +- *(1) ColumnarToRow
+                  :                                   +- FileScan parquet [p_partkey#74L,p_brand#77,p_container#80] Batched: true, DataFilters: [isnotnull(p_brand#77), isnotnull(p_container#80), (p_brand#77 = Brand#51), (p_container#80 = JUM..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/part.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(p_brand), IsNotNull(p_container), EqualTo(p_brand,Brand#51), EqualTo(p_container,JUMBO..., ReadSchema: struct<p_partkey:bigint,p_brand:string,p_container:string>
+                  +- *(4) Filter isnotnull((0.2 * avg(l_quantity))#637)
+                     +- *(4) HashAggregate(keys=[l_partkey#639L], functions=[avg(UnscaledValue(l_quantity#642))], output=[(0.2 * avg(l_quantity))#637, l_partkey#639L])
+                        +- AQEShuffleRead coalesced
+                           +- ShuffleQueryStage 1
+                              +- Exchange hashpartitioning(l_partkey#639L, 200), ENSURE_REQUIREMENTS, [id=#5056]
+                                 +- *(2) HashAggregate(keys=[l_partkey#639L], functions=[partial_avg(UnscaledValue(l_quantity#642))], output=[l_partkey#639L, sum#662, count#663L])
+                                    +- *(2) Filter isnotnull(l_partkey#639L)
+                                       +- *(2) ColumnarToRow
+                                          +- FileScan parquet [l_partkey#639L,l_quantity#642] Batched: true, DataFilters: [isnotnull(l_partkey#639L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_partkey)], ReadSchema: struct<l_partkey:bigint,l_quantity:decimal(11,2)>
++- == Initial Plan ==
+   HashAggregate(keys=[], functions=[sum(l_extendedprice#21)], output=[avg_yearly#634])
+   +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#4985]
+      +- HashAggregate(keys=[], functions=[partial_sum(l_extendedprice#21)], output=[sum#658, isEmpty#659])
+         +- Project [l_extendedprice#21]
+            +- SortMergeJoin [p_partkey#74L], [l_partkey#639L], Inner, (cast(l_quantity#20 as decimal(17,7)) < (0.2 * avg(l_quantity))#637)
+               :- Sort [p_partkey#74L ASC NULLS FIRST], false, 0
+               :  +- Exchange hashpartitioning(p_partkey#74L, 200), ENSURE_REQUIREMENTS, [id=#4978]
+               :     +- Project [l_quantity#20, l_extendedprice#21, p_partkey#74L]
+               :        +- BroadcastHashJoin [l_partkey#17L], [p_partkey#74L], Inner, BuildRight, false
+               :           :- Filter (isnotnull(l_partkey#17L) AND isnotnull(l_quantity#20))
+               :           :  +- FileScan parquet [l_partkey#17L,l_quantity#20,l_extendedprice#21] Batched: true, DataFilters: [isnotnull(l_partkey#17L), isnotnull(l_quantity#20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_partkey), IsNotNull(l_quantity)], ReadSchema: struct<l_partkey:bigint,l_quantity:decimal(11,2),l_extendedprice:decimal(11,2)>
+               :           +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, true]),false), [id=#4970]
+               :              +- Project [p_partkey#74L]
+               :                 +- Filter ((((isnotnull(p_brand#77) AND isnotnull(p_container#80)) AND (p_brand#77 = Brand#51)) AND (p_container#80 = JUMBO BAG)) AND isnotnull(p_partkey#74L))
+               :                    +- FileScan parquet [p_partkey#74L,p_brand#77,p_container#80] Batched: true, DataFilters: [isnotnull(p_brand#77), isnotnull(p_container#80), (p_brand#77 = Brand#51), (p_container#80 = JUM..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/part.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(p_brand), IsNotNull(p_container), EqualTo(p_brand,Brand#51), EqualTo(p_container,JUMBO..., ReadSchema: struct<p_partkey:bigint,p_brand:string,p_container:string>
+               +- Sort [l_partkey#639L ASC NULLS FIRST], false, 0
+                  +- Filter isnotnull((0.2 * avg(l_quantity))#637)
+                     +- HashAggregate(keys=[l_partkey#639L], functions=[avg(UnscaledValue(l_quantity#642))], output=[(0.2 * avg(l_quantity))#637, l_partkey#639L])
+                        +- Exchange hashpartitioning(l_partkey#639L, 200), ENSURE_REQUIREMENTS, [id=#4973]
+                           +- HashAggregate(keys=[l_partkey#639L], functions=[partial_avg(UnscaledValue(l_quantity#642))], output=[l_partkey#639L, sum#662, count#663L])
+                              +- Filter isnotnull(l_partkey#639L)
+                                 +- FileScan parquet [l_partkey#639L,l_quantity#642] Batched: true, DataFilters: [isnotnull(l_partkey#639L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf10-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_partkey)], ReadSchema: struct<l_partkey:bigint,l_quantity:decimal(11,2)>

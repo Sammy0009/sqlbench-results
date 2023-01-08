@@ -1,0 +1,14 @@
+Sort [supplier_cnt#598L DESC NULLS LAST, p_brand#77 ASC NULLS FIRST, p_type#78 ASC NULLS FIRST, p_size#79 ASC NULLS FIRST], true
++- Aggregate [p_brand#77, p_type#78, p_size#79], [p_brand#77, p_type#78, p_size#79, count(distinct ps_suppkey#93L) AS supplier_cnt#598L]
+   +- Project [ps_suppkey#93L, p_brand#77, p_type#78, p_size#79]
+      +- Join Inner, (p_partkey#74L = ps_partkey#92L)
+         :- Join LeftAnti, ((ps_suppkey#93L = s_suppkey#108L) OR isnull((ps_suppkey#93L = s_suppkey#108L)))
+         :  :- Project [ps_partkey#92L, ps_suppkey#93L]
+         :  :  +- Filter isnotnull(ps_partkey#92L)
+         :  :     +- Relation [ps_partkey#92L,ps_suppkey#93L,ps_availqty#94,ps_supplycost#95,ps_comment#96] parquet
+         :  +- Project [s_suppkey#108L]
+         :     +- Filter (isnotnull(s_comment#114) AND s_comment#114 LIKE %Customer%Complaints%)
+         :        +- Relation [s_suppkey#108L,s_name#109,s_address#110,s_nationkey#111L,s_phone#112,s_acctbal#113,s_comment#114] parquet
+         +- Project [p_partkey#74L, p_brand#77, p_type#78, p_size#79]
+            +- Filter (((isnotnull(p_brand#77) AND isnotnull(p_type#78)) AND ((NOT (p_brand#77 = Brand#25) AND NOT StartsWith(p_type#78, STANDARD BURNISHED)) AND p_size#79 IN (34,7,40,3,26,35,4,17))) AND isnotnull(p_partkey#74L))
+               +- Relation [p_partkey#74L,p_name#75,p_mfgr#76,p_brand#77,p_type#78,p_size#79,p_container#80,p_retailprice#81,p_comment#82] parquet

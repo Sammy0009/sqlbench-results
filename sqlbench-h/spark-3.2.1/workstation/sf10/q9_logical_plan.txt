@@ -1,0 +1,30 @@
+Sort [nation#408 ASC NULLS FIRST, o_year#409 DESC NULLS LAST], true
++- Aggregate [nation#408, o_year#409], [nation#408, o_year#409, sum(amount#410) AS sum_profit#411]
+   +- Project [n_name#49 AS nation#408, year(o_orderdate#60) AS o_year#409, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(cast(l_extendedprice#21 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#22 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true) as decimal(25,4))) - promote_precision(cast(CheckOverflow((promote_precision(ps_supplycost#95) * promote_precision(l_quantity#20)), DecimalType(23,4), true) as decimal(25,4)))), DecimalType(25,4), true) AS amount#410]
+      +- Join Inner, (s_nationkey#111L = n_nationkey#48L)
+         :- Project [l_quantity#20, l_extendedprice#21, l_discount#22, s_nationkey#111L, ps_supplycost#95, o_orderdate#60]
+         :  +- Join Inner, (o_orderkey#56L = l_orderkey#16L)
+         :     :- Project [l_orderkey#16L, l_quantity#20, l_extendedprice#21, l_discount#22, s_nationkey#111L, ps_supplycost#95]
+         :     :  +- Join Inner, ((ps_suppkey#93L = l_suppkey#18L) AND (ps_partkey#92L = l_partkey#17L))
+         :     :     :- Project [l_orderkey#16L, l_partkey#17L, l_suppkey#18L, l_quantity#20, l_extendedprice#21, l_discount#22, s_nationkey#111L]
+         :     :     :  +- Join Inner, (s_suppkey#108L = l_suppkey#18L)
+         :     :     :     :- Project [l_orderkey#16L, l_partkey#17L, l_suppkey#18L, l_quantity#20, l_extendedprice#21, l_discount#22]
+         :     :     :     :  +- Join Inner, (p_partkey#74L = l_partkey#17L)
+         :     :     :     :     :- Project [p_partkey#74L]
+         :     :     :     :     :  +- Filter ((isnotnull(p_name#75) AND Contains(p_name#75, dark)) AND isnotnull(p_partkey#74L))
+         :     :     :     :     :     +- Relation [p_partkey#74L,p_name#75,p_mfgr#76,p_brand#77,p_type#78,p_size#79,p_container#80,p_retailprice#81,p_comment#82] parquet
+         :     :     :     :     +- Project [l_orderkey#16L, l_partkey#17L, l_suppkey#18L, l_quantity#20, l_extendedprice#21, l_discount#22]
+         :     :     :     :        +- Filter ((isnotnull(l_partkey#17L) AND isnotnull(l_suppkey#18L)) AND isnotnull(l_orderkey#16L))
+         :     :     :     :           +- Relation [l_orderkey#16L,l_partkey#17L,l_suppkey#18L,l_linenumber#19,l_quantity#20,l_extendedprice#21,l_discount#22,l_tax#23,l_returnflag#24,l_linestatus#25,l_shipdate#26,l_commitdate#27,l_receiptdate#28,l_shipinstruct#29,l_shipmode#30,l_comment#31] parquet
+         :     :     :     +- Project [s_suppkey#108L, s_nationkey#111L]
+         :     :     :        +- Filter (isnotnull(s_suppkey#108L) AND isnotnull(s_nationkey#111L))
+         :     :     :           +- Relation [s_suppkey#108L,s_name#109,s_address#110,s_nationkey#111L,s_phone#112,s_acctbal#113,s_comment#114] parquet
+         :     :     +- Project [ps_partkey#92L, ps_suppkey#93L, ps_supplycost#95]
+         :     :        +- Filter (isnotnull(ps_suppkey#93L) AND isnotnull(ps_partkey#92L))
+         :     :           +- Relation [ps_partkey#92L,ps_suppkey#93L,ps_availqty#94,ps_supplycost#95,ps_comment#96] parquet
+         :     +- Project [o_orderkey#56L, o_orderdate#60]
+         :        +- Filter isnotnull(o_orderkey#56L)
+         :           +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet
+         +- Project [n_nationkey#48L, n_name#49]
+            +- Filter isnotnull(n_nationkey#48L)
+               +- Relation [n_nationkey#48L,n_name#49,n_regionkey#50L,n_comment#51] parquet

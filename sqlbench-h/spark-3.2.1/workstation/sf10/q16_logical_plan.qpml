@@ -1,0 +1,47 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Aggregate (unknown)"
+    operator: "Aggregate"
+    inputs:
+    - title: "Projection: ps_suppkey#93L, p_brand#77, p_type#78, p_size#79"
+      operator: "projection"
+      inputs:
+      - title: "Inner Join: Some((p_partkey#74L = ps_partkey#92L))"
+        operator: "join"
+        inputs:
+        - title: "LeftAnti Join: Some(((ps_suppkey#93L = s_suppkey#108L) OR isnull((ps_suppkey#93L\
+            \ = s_suppkey#108L))))"
+          operator: "join"
+          inputs:
+          - title: "Projection: ps_partkey#92L, ps_suppkey#93L"
+            operator: "projection"
+            inputs:
+            - title: "Filter: isnotnull(ps_partkey#92L)"
+              operator: "filter"
+              inputs:
+              - title: "partsupp.parquet"
+                operator: "scan"
+                inputs: []
+          - title: "Projection: s_suppkey#108L"
+            operator: "projection"
+            inputs:
+            - title: "Filter: (isnotnull(s_comment#114) AND s_comment#114 LIKE %Customer%Complaints%)"
+              operator: "filter"
+              inputs:
+              - title: "supplier.parquet"
+                operator: "scan"
+                inputs: []
+        - title: "Projection: p_partkey#74L, p_brand#77, p_type#78, p_size#79"
+          operator: "projection"
+          inputs:
+          - title: "Filter: (((isnotnull(p_brand#77) AND isnotnull(p_type#78)) AND\
+              \ ((NOT (p_brand#77 = Brand#25) AND NOT StartsWith(p_type#78, STANDARD\
+              \ BURNISHED)) AND p_size#79 IN (34,7,40,3,26,35,4,17))) AND isnotnull(p_partkey#74L))"
+            operator: "filter"
+            inputs:
+            - title: "part.parquet"
+              operator: "scan"
+              inputs: []

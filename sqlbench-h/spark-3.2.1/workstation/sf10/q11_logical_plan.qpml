@@ -1,0 +1,53 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Filter: (isnotnull(value#457) AND (cast(value#457 as decimal(38,7)) >\
+      \ scalar-subquery#458 []))"
+    operator: "filter"
+    inputs:
+    - title: "Aggregate (unknown)"
+      operator: "Aggregate"
+      inputs:
+      - title: "Projection: ps_partkey#92L, ps_availqty#94, ps_supplycost#95"
+        operator: "projection"
+        inputs:
+        - title: "Inner Join: Some((s_nationkey#111L = n_nationkey#48L))"
+          operator: "join"
+          inputs:
+          - title: "Projection: ps_partkey#92L, ps_availqty#94, ps_supplycost#95,\
+              \ s_nationkey#111L"
+            operator: "projection"
+            inputs:
+            - title: "Inner Join: Some((ps_suppkey#93L = s_suppkey#108L))"
+              operator: "join"
+              inputs:
+              - title: "Projection: ps_partkey#92L, ps_suppkey#93L, ps_availqty#94,\
+                  \ ps_supplycost#95"
+                operator: "projection"
+                inputs:
+                - title: "Filter: isnotnull(ps_suppkey#93L)"
+                  operator: "filter"
+                  inputs:
+                  - title: "partsupp.parquet"
+                    operator: "scan"
+                    inputs: []
+              - title: "Projection: s_suppkey#108L, s_nationkey#111L"
+                operator: "projection"
+                inputs:
+                - title: "Filter: (isnotnull(s_suppkey#108L) AND isnotnull(s_nationkey#111L))"
+                  operator: "filter"
+                  inputs:
+                  - title: "supplier.parquet"
+                    operator: "scan"
+                    inputs: []
+          - title: "Projection: n_nationkey#48L"
+            operator: "projection"
+            inputs:
+            - title: "Filter: ((isnotnull(n_name#49) AND (n_name#49 = PERU)) AND isnotnull(n_nationkey#48L))"
+              operator: "filter"
+              inputs:
+              - title: "nation.parquet"
+                operator: "scan"
+                inputs: []

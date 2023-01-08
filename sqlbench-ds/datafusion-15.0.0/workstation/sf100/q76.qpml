@@ -1,0 +1,68 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: foo.channel, foo.col_name, foo.d_year, foo.d_qoy, foo.i_category, COUNT(UInt8(1)) AS sales_cnt, SUM(foo.ext_sales_price) AS sales_amt'
+      style: projection
+      inputs:
+      - title: unknown
+        inputs:
+        - title: unknown
+          inputs:
+          - title: unknown
+            inputs:
+            - title: 'Projection: Utf8("store") AS channel, Utf8("ss_customer_sk") AS col_name, date_dim.d_year, date_dim.d_qoy, item.i_category, store_sales.ss_ext_sales_price AS ext_sales_price'
+              style: projection
+              inputs:
+              - title: 'Join: store_sales.ss_sold_date_sk = date_dim.d_date_sk'
+                style: join
+                inputs:
+                - title: 'Join: store_sales.ss_item_sk = item.i_item_sk'
+                  style: join
+                  inputs:
+                  - title: 'Filter: store_sales.ss_customer_sk IS NULL'
+                    style: filter
+                    inputs:
+                    - title: store_sales
+                      style: scan
+                  - title: item
+                    style: scan
+                - title: date_dim
+                  style: scan
+            - title: 'Projection: Utf8("web") AS channel, Utf8("ws_ship_addr_sk") AS col_name, date_dim.d_year, date_dim.d_qoy, item.i_category, web_sales.ws_ext_sales_price AS ext_sales_price'
+              style: projection
+              inputs:
+              - title: 'Join: web_sales.ws_sold_date_sk = date_dim.d_date_sk'
+                style: join
+                inputs:
+                - title: 'Join: web_sales.ws_item_sk = item.i_item_sk'
+                  style: join
+                  inputs:
+                  - title: 'Filter: web_sales.ws_ship_addr_sk IS NULL'
+                    style: filter
+                    inputs:
+                    - title: web_sales
+                      style: scan
+                  - title: item
+                    style: scan
+                - title: date_dim
+                  style: scan
+            - title: 'Projection: Utf8("catalog") AS channel, Utf8("cs_bill_addr_sk") AS col_name, date_dim.d_year, date_dim.d_qoy, item.i_category, catalog_sales.cs_ext_sales_price AS ext_sales_price'
+              style: projection
+              inputs:
+              - title: 'Join: catalog_sales.cs_sold_date_sk = date_dim.d_date_sk'
+                style: join
+                inputs:
+                - title: 'Join: catalog_sales.cs_item_sk = item.i_item_sk'
+                  style: join
+                  inputs:
+                  - title: 'Filter: catalog_sales.cs_bill_addr_sk IS NULL'
+                    style: filter
+                    inputs:
+                    - title: catalog_sales
+                      style: scan
+                  - title: item
+                    style: scan
+                - title: date_dim
+                  style: scan

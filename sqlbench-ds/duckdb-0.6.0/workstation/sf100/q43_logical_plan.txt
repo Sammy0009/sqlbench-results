@@ -1,0 +1,104 @@
+┌───────────────────────────┐                                                          
+│           TOP_N           │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│          Top 100          │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│   store.s_store_name ASC  │                                                          
+│    store.s_store_id ASC   │                                                          
+│ sum(CASE  WHEN ((date_dim │                                                          
+│.d_day_name = 'Sunday'...  │                                                          
+│        (store_sales       │                                                          
+│.ss_sales_price) ELSE ...  │                                                          
+│ sum(CASE  WHEN ((date_dim │                                                          
+│.d_day_name = 'Monday'...  │                                                          
+│        (store_sales       │                                                          
+│.ss_sales_price) ELSE ...  │                                                          
+│ sum(CASE  WHEN ((date_dim │                                                          
+│ .d_day_name = 'Tuesday')) │                                                          
+│      THEN (store_sales    │                                                          
+│.ss_sales_price) ELSE ...  │                                                          
+│ sum(CASE  WHEN ((date_dim │                                                          
+│.d_day_name = 'Wednesday'))│                                                          
+│      THEN (store_sales    │                                                          
+│.ss_sales_price) ELSE ...  │                                                          
+│ sum(CASE  WHEN ((date_dim │                                                          
+│ .d_day_name = 'Thursday'))│                                                          
+│      THEN (store_sales    │                                                          
+│.ss_sales_price) ELSE ...  │                                                          
+│ sum(CASE  WHEN ((date_dim │                                                          
+│.d_day_name = 'Friday'...  │                                                          
+│        (store_sales       │                                                          
+│.ss_sales_price) ELSE ...  │                                                          
+│ sum(CASE  WHEN ((date_dim │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│       HASH_GROUP_BY       │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│             #0            │                                                          
+│             #1            │                                                          
+│          sum(#2)          │                                                          
+│          sum(#3)          │                                                          
+│          sum(#4)          │                                                          
+│          sum(#5)          │                                                          
+│          sum(#6)          │                                                          
+│          sum(#7)          │                                                          
+│          sum(#8)          │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│         PROJECTION        │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│        s_store_name       │                                                          
+│         s_store_id        │                                                          
+│ CASE  WHEN ((d_day_name = │                                                          
+│      'Sunday')) THEN      │                                                          
+│(ss_sales_price) ELSE ...  │                                                          
+│ CASE  WHEN ((d_day_name = │                                                          
+│      'Monday')) THEN      │                                                          
+│(ss_sales_price) ELSE ...  │                                                          
+│ CASE  WHEN ((d_day_name = │                                                          
+│     'Tuesday')) THEN      │                                                          
+│(ss_sales_price) ELSE ...  │                                                          
+│ CASE  WHEN ((d_day_name = │                                                          
+│    'Wednesday')) THEN     │                                                          
+│(ss_sales_price) ELSE ...  │                                                          
+│ CASE  WHEN ((d_day_name = │                                                          
+│     'Thursday')) THEN     │                                                          
+│(ss_sales_price) ELSE ...  │                                                          
+│ CASE  WHEN ((d_day_name = │                                                          
+│      'Friday')) THEN      │                                                          
+│(ss_sales_price) ELSE ...  │                                                          
+│ CASE  WHEN ((d_day_name = │                                                          
+│     'Saturday')) THEN     │                                                          
+│(ss_sales_price) ELSE ...  │                                                          
+└─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐                                                          
+│         HASH_JOIN         │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│           INNER           │                                                          
+│ss_sold_date_sk = d_date_sk├───────────────────────────────────────────┐              
+│    EC = 11462572.895522   │                                           │              
+│   COST = 68775437.373134  │                                           │              
+└─────────────┬─────────────┘                                           │                                           
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐
+│         HASH_JOIN         │                             │        PARQUET_SCAN       │
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│           INNER           │                             │         d_date_sk         │
+│  ss_store_sk = s_store_sk │                             │         d_day_name        │
+│    EC = 57312864.477612   ├──────────────┐              │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│   COST = 57312864.477612  │              │              │  Filters: d_year=2000 AND │
+│                           │              │              │     d_year IS NOT NULL    │
+│                           │              │              │          EC=8118          │
+└─────────────┬─────────────┘              │              └───────────────────────────┘                             
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐                             
+│        PARQUET_SCAN       ││        PARQUET_SCAN       │                             
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│      ss_sold_date_sk      ││         s_store_sk        │                             
+│        ss_store_sk        ││         s_store_id        │                             
+│       ss_sales_price      ││        s_store_name       │                             
+│        EC=287997144       ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+│                           ││Filters: s_gmt_offset=-5.00│                             
+│                           ││   AND s_gmt_offset IS NOT │                             
+│                           ││            NULL           │                             
+│                           ││           EC=80           │                             
+└───────────────────────────┘└───────────────────────────┘                                                          
+

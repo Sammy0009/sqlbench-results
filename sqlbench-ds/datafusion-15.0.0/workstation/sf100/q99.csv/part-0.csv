@@ -1,0 +1,101 @@
+"substr(warehouse.w_warehouse_name,Int64(1),Int64(20))",sm_type,cc_name,30 days,31-60 days,61-90 days,91-120 days,>120 days
+Bad cards must make.,EXPRESS,California,8121,8486,8283,0,0
+Bad cards must make.,EXPRESS,California_1,8197,8607,8410,0,0
+Bad cards must make.,EXPRESS,Hawaii/Alaska,8330,8543,8627,0,0
+Bad cards must make.,EXPRESS,Hawaii/Alaska_1,8146,8779,8401,0,0
+Bad cards must make.,EXPRESS,Mid Atlantic,8064,8624,8481,0,0
+Bad cards must make.,EXPRESS,Mid Atlantic_1,8243,8585,8459,0,0
+Bad cards must make.,EXPRESS,Mid Atlantic_2,8275,8636,8449,0,0
+Bad cards must make.,EXPRESS,NY Metro,8281,8644,8518,0,0
+Bad cards must make.,EXPRESS,NY Metro_1,8282,8517,8568,0,0
+Bad cards must make.,EXPRESS,NY Metro_2,8102,8513,8505,0,0
+Bad cards must make.,EXPRESS,North Midwest,8062,8599,8389,0,0
+Bad cards must make.,EXPRESS,North Midwest_1,8246,8460,8554,0,0
+Bad cards must make.,EXPRESS,North Midwest_2,8252,8522,8618,0,0
+Bad cards must make.,EXPRESS,Pacific Northwest,8381,8411,8791,0,0
+Bad cards must make.,EXPRESS,Pacific Northwest_1,8141,8517,8407,0,0
+Bad cards must make.,LIBRARY,California,6253,6326,6363,0,0
+Bad cards must make.,LIBRARY,California_1,6242,6239,6430,0,0
+Bad cards must make.,LIBRARY,Hawaii/Alaska,6117,6409,6505,0,0
+Bad cards must make.,LIBRARY,Hawaii/Alaska_1,6107,6483,6547,0,0
+Bad cards must make.,LIBRARY,Mid Atlantic,5970,6296,6399,0,0
+Bad cards must make.,LIBRARY,Mid Atlantic_1,6261,6381,6503,0,0
+Bad cards must make.,LIBRARY,Mid Atlantic_2,6182,6432,6410,0,0
+Bad cards must make.,LIBRARY,NY Metro,6036,6374,6404,0,0
+Bad cards must make.,LIBRARY,NY Metro_1,6223,6394,6343,0,0
+Bad cards must make.,LIBRARY,NY Metro_2,6131,6443,6380,0,0
+Bad cards must make.,LIBRARY,North Midwest,6043,6281,6236,0,0
+Bad cards must make.,LIBRARY,North Midwest_1,6129,6326,6266,0,0
+Bad cards must make.,LIBRARY,North Midwest_2,6201,6292,6436,0,0
+Bad cards must make.,LIBRARY,Pacific Northwest,6250,6415,6387,0,0
+Bad cards must make.,LIBRARY,Pacific Northwest_1,6050,6378,6339,0,0
+Bad cards must make.,NEXT DAY,California,8310,8377,8386,0,0
+Bad cards must make.,NEXT DAY,California_1,8214,8681,8389,0,0
+Bad cards must make.,NEXT DAY,Hawaii/Alaska,8340,8427,8384,0,0
+Bad cards must make.,NEXT DAY,Hawaii/Alaska_1,8192,8558,8513,0,0
+Bad cards must make.,NEXT DAY,Mid Atlantic,8204,8424,8479,0,0
+Bad cards must make.,NEXT DAY,Mid Atlantic_1,8195,8536,8635,0,0
+Bad cards must make.,NEXT DAY,Mid Atlantic_2,8207,8420,8457,0,0
+Bad cards must make.,NEXT DAY,NY Metro,8172,8384,8371,0,0
+Bad cards must make.,NEXT DAY,NY Metro_1,8218,8245,8535,0,0
+Bad cards must make.,NEXT DAY,NY Metro_2,8209,8380,8627,0,0
+Bad cards must make.,NEXT DAY,North Midwest,8121,8702,8613,0,0
+Bad cards must make.,NEXT DAY,North Midwest_1,8209,8432,8477,0,0
+Bad cards must make.,NEXT DAY,North Midwest_2,8240,8669,8537,0,0
+Bad cards must make.,NEXT DAY,Pacific Northwest,8402,8322,8554,0,0
+Bad cards must make.,NEXT DAY,Pacific Northwest_1,8175,8528,8472,0,0
+Bad cards must make.,OVERNIGHT,California,6288,6334,6320,0,0
+Bad cards must make.,OVERNIGHT,California_1,6240,6399,6440,0,0
+Bad cards must make.,OVERNIGHT,Hawaii/Alaska,6268,6419,6380,0,0
+Bad cards must make.,OVERNIGHT,Hawaii/Alaska_1,6274,6398,6390,0,0
+Bad cards must make.,OVERNIGHT,Mid Atlantic,6234,6434,6407,0,0
+Bad cards must make.,OVERNIGHT,Mid Atlantic_1,6242,6369,6396,0,0
+Bad cards must make.,OVERNIGHT,Mid Atlantic_2,6175,6273,6405,0,0
+Bad cards must make.,OVERNIGHT,NY Metro,6212,6370,6404,0,0
+Bad cards must make.,OVERNIGHT,NY Metro_1,6187,6511,6403,0,0
+Bad cards must make.,OVERNIGHT,NY Metro_2,6220,6331,6460,0,0
+Bad cards must make.,OVERNIGHT,North Midwest,6177,6522,6432,0,0
+Bad cards must make.,OVERNIGHT,North Midwest_1,6222,6433,6438,0,0
+Bad cards must make.,OVERNIGHT,North Midwest_2,6203,6382,6352,0,0
+Bad cards must make.,OVERNIGHT,Pacific Northwest,6146,6214,6419,0,0
+Bad cards must make.,OVERNIGHT,Pacific Northwest_1,6125,6380,6351,0,0
+Bad cards must make.,REGULAR,California,6019,6283,6287,0,0
+Bad cards must make.,REGULAR,California_1,6275,6078,6324,0,0
+Bad cards must make.,REGULAR,Hawaii/Alaska,6128,6520,6267,0,0
+Bad cards must make.,REGULAR,Hawaii/Alaska_1,6246,6351,6326,0,0
+Bad cards must make.,REGULAR,Mid Atlantic,6121,6396,6358,0,0
+Bad cards must make.,REGULAR,Mid Atlantic_1,6137,6352,6300,0,0
+Bad cards must make.,REGULAR,Mid Atlantic_2,6180,6403,6440,0,0
+Bad cards must make.,REGULAR,NY Metro,6085,6260,6432,0,0
+Bad cards must make.,REGULAR,NY Metro_1,6146,6451,6485,0,0
+Bad cards must make.,REGULAR,NY Metro_2,6195,6435,6289,0,0
+Bad cards must make.,REGULAR,North Midwest,6136,6403,6310,0,0
+Bad cards must make.,REGULAR,North Midwest_1,6275,6269,6385,0,0
+Bad cards must make.,REGULAR,North Midwest_2,6216,6414,6357,0,0
+Bad cards must make.,REGULAR,Pacific Northwest,6199,6422,6329,0,0
+Bad cards must make.,REGULAR,Pacific Northwest_1,6037,6272,6189,0,0
+Bad cards must make.,TWO DAY,California,6179,6321,6354,0,0
+Bad cards must make.,TWO DAY,California_1,6191,6526,6303,0,0
+Bad cards must make.,TWO DAY,Hawaii/Alaska,6257,6501,6324,0,0
+Bad cards must make.,TWO DAY,Hawaii/Alaska_1,6121,6437,6423,0,0
+Bad cards must make.,TWO DAY,Mid Atlantic,6089,6413,6353,0,0
+Bad cards must make.,TWO DAY,Mid Atlantic_1,6132,6424,6543,0,0
+Bad cards must make.,TWO DAY,Mid Atlantic_2,6234,6303,6474,0,0
+Bad cards must make.,TWO DAY,NY Metro,6203,6270,6469,0,0
+Bad cards must make.,TWO DAY,NY Metro_1,6276,6335,6481,0,0
+Bad cards must make.,TWO DAY,NY Metro_2,6122,6451,6317,0,0
+Bad cards must make.,TWO DAY,North Midwest,6124,6405,6412,0,0
+Bad cards must make.,TWO DAY,North Midwest_1,6086,6214,6305,0,0
+Bad cards must make.,TWO DAY,North Midwest_2,6257,6383,6419,0,0
+Bad cards must make.,TWO DAY,Pacific Northwest,6181,6280,6392,0,0
+Bad cards must make.,TWO DAY,Pacific Northwest_1,6198,6316,6361,0,0
+Conventional childr,EXPRESS,California,8121,8355,8552,0,0
+Conventional childr,EXPRESS,California_1,8249,8514,8550,0,0
+Conventional childr,EXPRESS,Hawaii/Alaska,8375,8476,8544,0,0
+Conventional childr,EXPRESS,Hawaii/Alaska_1,8347,8511,8438,0,0
+Conventional childr,EXPRESS,Mid Atlantic,8024,8502,8591,0,0
+Conventional childr,EXPRESS,Mid Atlantic_1,8156,8590,8537,0,0
+Conventional childr,EXPRESS,Mid Atlantic_2,8207,8564,8476,0,0
+Conventional childr,EXPRESS,NY Metro,8238,8477,8441,0,0
+Conventional childr,EXPRESS,NY Metro_1,8243,8654,8450,0,0
+Conventional childr,EXPRESS,NY Metro_2,8203,8466,8421,0,0

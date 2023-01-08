@@ -1,0 +1,129 @@
+┌───────────────────────────┐                                                                                       
+│           TOP_N           │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│          Top 100          │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│   i1.i_product_name ASC   │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│       HASH_GROUP_BY       │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│             #0            │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│         PROJECTION        │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│     i1.i_product_name     │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│         PROJECTION        │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│             #1            │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│           FILTER          │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│       (SUBQUERY > 0)      │                                                                                       
+└─────────────┬─────────────┘                                                                                                                    
+┌─────────────┴─────────────┐                                                                                       
+│         DELIM_JOIN        │                                                                                       
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       
+│           SINGLE          │                                                                                       
+│ i_manufact IS NOT DISTINCT├──────────────┐                                                                        
+│       FROM i_manufact     │              │                                                                        
+│       EC = 0.000000       │              │                                                                        
+│      COST = 0.000000      │              │                                                                        
+└─────────────┬─────────────┘              │                                                                                                     
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐                                                          
+│        PARQUET_SCAN       ││         HASH_JOIN         │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│         i_manufact        ││           SINGLE          │                                                          
+│       i_product_name      ││ i_manufact IS NOT DISTINCT│                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││       FROM i_manufact     ├──────────────┐                                           
+│Filters: i_manufact_id>=762││       EC = 0.000000       │              │                                           
+│ AND i_manufact_id<=802 AND││      COST = 0.000000      │              │                                           
+│  i_manufact_id IS NOT NULL││                           │              │                                           
+│         EC=202300         ││                           │              │                                           
+└───────────────────────────┘└─────────────┬─────────────┘              │                                                                        
+                             ┌─────────────┴─────────────┐┌─────────────┴─────────────┐                             
+                             │      COLUMN_DATA_SCAN     ││         PROJECTION        │                             
+                             │                           ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+                             │                           ││  CASE  WHEN ((item_cnt IS │                             
+                             │                           ││ NULL)) THEN (0) ELSE ...  │                             
+                             │                           ││             END           │                             
+                             │                           ││         i_manufact        │                             
+                             └───────────────────────────┘└─────────────┬─────────────┘                                                          
+                                                          ┌─────────────┴─────────────┐                             
+                                                          │         HASH_JOIN         │                             
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+                                                          │           RIGHT           │                             
+                                                          │  #0 IS NOT DISTINCT FROM  ├──────────────┐              
+                                                          │         i_manufact        │              │              
+                                                          │       EC = 0.000000       │              │              
+                                                          │      COST = 0.000000      │              │              
+                                                          └─────────────┬─────────────┘              │                                           
+                                                          ┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+                                                          │       HASH_GROUP_BY       ││         DELIM_SCAN        │
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││                           │
+                                                          │             #0            ││                           │
+                                                          │        count_star()       ││                           │
+                                                          └─────────────┬─────────────┘└───────────────────────────┘                             
+                                                          ┌─────────────┴─────────────┐                             
+                                                          │         PROJECTION        │                             
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+                                                          │         i_manufact        │                             
+                                                          └─────────────┬─────────────┘                                                          
+                                                          ┌─────────────┴─────────────┐                             
+                                                          │           FILTER          │                             
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+                                                          │  (i_manufact IS NOT NULL) │                             
+                                                          └─────────────┬─────────────┘                                                          
+                                                          ┌─────────────┴─────────────┐                             
+                                                          │         PROJECTION        │                             
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+                                                          │             #1            │                             
+                                                          └─────────────┬─────────────┘                                                          
+                                                          ┌─────────────┴─────────────┐                             
+                                                          │           FILTER          │                             
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+                                                          │ ((((i_category = 'Women') │                             
+                                                          │ AND ((i_color = 'blus...  │                             
+                                                          │ (i_color = 'brown')) AND (│                             
+                                                          │  (i_units = 'Bundle') OR  │                             
+                                                          │(i_units = 'Unknown'))...  │                             
+                                                          │(i_size = 'extra large...  │                             
+                                                          │ (i_size = 'petite'))) OR (│                             
+                                                          │(i_category = 'Women')...  │                             
+                                                          │   (i_color = 'drab') OR   │                             
+                                                          │(i_color = 'purple')) AND (│                             
+                                                          │(i_units = 'Case') OR ...  │                             
+                                                          │  'Tbl')) AND ((i_size =   │                             
+                                                          │'large') OR (i_size = ...  │                             
+                                                          │)) OR ((i_category = 'Men')│                             
+                                                          │ AND ((i_color = 'sky') OR │                             
+                                                          │ (i_color = 'linen')) AND (│                             
+                                                          │  (i_units = 'Pound') OR   │                             
+                                                          │(i_units = 'Cup')) AND...  │                             
+                                                          │   = 'N/A') OR (i_size =   │                             
+                                                          │'medium'))) OR ((i_cat...  │                             
+                                                          │  'Men') AND ((i_color =   │                             
+                                                          │'lavender') OR (i_colo...  │                             
+                                                          │)) AND ((i_units = 'Carton'│                             
+                                                          │ ) OR (i_units = 'Dozen')) │                             
+                                                          │ AND ((i_size = 'extra...  │                             
+                                                          │) OR (i_size = 'petite'))))│                             
+                                                          │ OR (((i_category = 'Women'│                             
+                                                          │ ) AND ((i_color = 'puff') │                             
+                                                          │ OR (i_color = 'violet...  │                             
+                                                          └─────────────┬─────────────┘                                                          
+                                                          ┌─────────────┴─────────────┐                             
+                                                          │        PARQUET_SCAN       │                             
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             
+                                                          │         i_category        │                             
+                                                          │         i_manufact        │                             
+                                                          │           i_size          │                             
+                                                          │          i_color          │                             
+                                                          │          i_units          │                             
+                                                          │         EC=202300         │                             
+                                                          └───────────────────────────┘                                                          
+

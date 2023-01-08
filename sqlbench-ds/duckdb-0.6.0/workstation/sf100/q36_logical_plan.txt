@@ -1,0 +1,122 @@
+┌───────────────────────────┐                                                                                                                    
+│         PROJECTION        │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│             #0            │                                                                                                                    
+│             #1            │                                                                                                                    
+│             #2            │                                                                                                                    
+│             #3            │                                                                                                                    
+│             #4            │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│           TOP_N           │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│          Top 100          │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│(GROUPING(item.i_category) │                                                                                                                    
+│ + GROUPING(item.i_class)) │                                                                                                                    
+│            DESC           │                                                                                                                    
+│           #5 ASC          │                                                                                                                    
+│ rank() OVER (PARTITION BY │                                                                                                                    
+│(GROUPING(item.i_categ...  │                                                                                                                    
+│  GROUPING(item.i_class)), │                                                                                                                    
+│ CASE  WHEN ((GROUPING(item│                                                                                                                    
+│ .i_class) = 0)) THEN (item│                                                                                                                    
+│ .i_category) ELSE NULL END│                                                                                                                    
+│  ORDER BY (sum(store_sales│                                                                                                                    
+│   .ss_net_profit) / sum   │                                                                                                                    
+│(store_sales.ss_ext_sa...  │                                                                                                                    
+│             ASC           │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│         PROJECTION        │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│        gross_margin       │                                                                                                                    
+│         i_category        │                                                                                                                    
+│          i_class          │                                                                                                                    
+│        lochierarchy       │                                                                                                                    
+│     rank_within_parent    │                                                                                                                    
+│CASE  WHEN (((GROUPING(item│                                                                                                                    
+│  .i_category) + GROUPING  │                                                                                                                    
+│(item.i_class)) = 0)) THEN │                                                                                                                    
+│ (i_category) ELSE NULL END│                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│           WINDOW          │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│ RANK() OVER (PARTITION BY │                                                                                                                    
+│(GROUPING(item.i_categ...  │                                                                                                                    
+│  GROUPING(item.i_class)), │                                                                                                                    
+│ CASE  WHEN ((GROUPING(item│                                                                                                                    
+│   .i_class) = 0)) THEN    │                                                                                                                    
+│(i_category) ELSE NULL...  │                                                                                                                    
+│  (CAST(sum(ss_net_profit) │                                                                                                                    
+│    AS DOUBLE) / CAST(sum  │                                                                                                                    
+│(ss_ext_sales_price) A...  │                                                                                                                    
+│      ASC NULLS FIRST)     │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│       HASH_GROUP_BY       │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│             #0            │                                                                                                                    
+│             #1            │                                                                                                                    
+│          sum(#2)          │                                                                                                                    
+│          sum(#3)          │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│         PROJECTION        │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│         i_category        │                                                                                                                    
+│          i_class          │                                                                                                                    
+│       ss_net_profit       │                                                                                                                    
+│     ss_ext_sales_price    │                                                                                                                    
+└─────────────┬─────────────┘                                                                                                                                                 
+┌─────────────┴─────────────┐                                                                                                                    
+│         HASH_JOIN         │                                                                                                                    
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                                                    
+│           INNER           │                                                                                                                    
+│   ss_item_sk = i_item_sk  ├─────────────────────────────────────────────────────────────────────────────────────────────────────┐              
+│    EC = 57599428.800000   │                                                                                                     │              
+│  COST = 172798286.400000  │                                                                                                     │              
+└─────────────┬─────────────┘                                                                                                     │                                           
+┌─────────────┴─────────────┐                                                                                       ┌─────────────┴─────────────┐
+│         HASH_JOIN         │                                                                                       │        PARQUET_SCAN       │
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                                                       │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+│           INNER           │                                                                                       │         i_item_sk         │
+│  ss_store_sk = s_store_sk ├───────────────────────────────────────────┐                                           │          i_class          │
+│    EC = 57599428.800000   │                                           │                                           │         i_category        │
+│  COST = 115198857.600000  │                                           │                                           │         EC=202300         │
+└─────────────┬─────────────┘                                           │                                           └───────────────────────────┘                             
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐                                                          
+│         HASH_JOIN         │                             │         PROJECTION        │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                             │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│           INNER           │                             │             #0            │                                                          
+│ss_sold_date_sk = d_date_sk├──────────────┐              │                           │                                                          
+│    EC = 57599428.800000   │              │              │                           │                                                          
+│   COST = 57599428.800000  │              │              │                           │                                                          
+└─────────────┬─────────────┘              │              └─────────────┬─────────────┘                                                                                       
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐┌─────────────┴─────────────┐                                                          
+│        PARQUET_SCAN       ││        PARQUET_SCAN       ││           FILTER          │                                                          
+│   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+│      ss_sold_date_sk      ││         d_date_sk         ││          IN (...)         │                                                          
+│         ss_item_sk        ││   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││                           │                                                          
+│        ss_store_sk        ││  Filters: d_year=1998 AND ││                           │                                                          
+│     ss_ext_sales_price    ││     d_year IS NOT NULL    ││                           │                                                          
+│       ss_net_profit       ││          EC=8118          ││                           │                                                          
+│        EC=287997144       ││                           ││                           │                                                          
+└───────────────────────────┘└───────────────────────────┘└─────────────┬─────────────┘                                                                                       
+                                                          ┌─────────────┴─────────────┐                                                          
+                                                          │         HASH_JOIN         │                                                          
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │                                                          
+                                                          │            MARK           │                                                          
+                                                          │        s_state = #0       ├──────────────┐                                           
+                                                          │       EC = 0.000000       │              │                                           
+                                                          │      COST = 0.000000      │              │                                           
+                                                          └─────────────┬─────────────┘              │                                                                        
+                                                          ┌─────────────┴─────────────┐┌─────────────┴─────────────┐                             
+                                                          │        PARQUET_SCAN       ││      COLUMN_DATA_SCAN     │                             
+                                                          │   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   ││                           │                             
+                                                          │         s_store_sk        ││                           │                             
+                                                          │          s_state          ││                           │                             
+                                                          │           EC=402          ││                           │                             
+                                                          └───────────────────────────┘└───────────────────────────┘                                                          
+

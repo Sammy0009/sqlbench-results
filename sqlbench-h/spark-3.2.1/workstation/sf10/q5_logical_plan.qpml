@@ -1,0 +1,98 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Aggregate (unknown)"
+    operator: "Aggregate"
+    inputs:
+    - title: "Projection: l_extendedprice#21, l_discount#22, n_name#49"
+      operator: "projection"
+      inputs:
+      - title: "Inner Join: Some((n_regionkey#50L = r_regionkey#102L))"
+        operator: "join"
+        inputs:
+        - title: "Projection: l_extendedprice#21, l_discount#22, n_name#49, n_regionkey#50L"
+          operator: "projection"
+          inputs:
+          - title: "Inner Join: Some((s_nationkey#111L = n_nationkey#48L))"
+            operator: "join"
+            inputs:
+            - title: "Projection: l_extendedprice#21, l_discount#22, s_nationkey#111L"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some(((l_suppkey#18L = s_suppkey#108L) AND (c_nationkey#3L\
+                  \ = s_nationkey#111L)))"
+                operator: "join"
+                inputs:
+                - title: "Projection: c_nationkey#3L, l_suppkey#18L, l_extendedprice#21,\
+                    \ l_discount#22"
+                  operator: "projection"
+                  inputs:
+                  - title: "Inner Join: Some((l_orderkey#16L = o_orderkey#56L))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: c_nationkey#3L, o_orderkey#56L"
+                      operator: "projection"
+                      inputs:
+                      - title: "Inner Join: Some((c_custkey#0L = o_custkey#57L))"
+                        operator: "join"
+                        inputs:
+                        - title: "Projection: c_custkey#0L, c_nationkey#3L"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (isnotnull(c_custkey#0L) AND isnotnull(c_nationkey#3L))"
+                            operator: "filter"
+                            inputs:
+                            - title: "customer.parquet"
+                              operator: "scan"
+                              inputs: []
+                        - title: "Projection: o_orderkey#56L, o_custkey#57L"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: (((isnotnull(o_orderdate#60) AND ((o_orderdate#60\
+                              \ >= 1997-01-01) AND (o_orderdate#60 < 1998-01-01)))\
+                              \ AND isnotnull(o_custkey#57L)) AND isnotnull(o_orderkey#56L))"
+                            operator: "filter"
+                            inputs:
+                            - title: "orders.parquet"
+                              operator: "scan"
+                              inputs: []
+                    - title: "Projection: l_orderkey#16L, l_suppkey#18L, l_extendedprice#21,\
+                        \ l_discount#22"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: (isnotnull(l_orderkey#16L) AND isnotnull(l_suppkey#18L))"
+                        operator: "filter"
+                        inputs:
+                        - title: "lineitem.parquet"
+                          operator: "scan"
+                          inputs: []
+                - title: "Projection: s_suppkey#108L, s_nationkey#111L"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: (isnotnull(s_suppkey#108L) AND isnotnull(s_nationkey#111L))"
+                    operator: "filter"
+                    inputs:
+                    - title: "supplier.parquet"
+                      operator: "scan"
+                      inputs: []
+            - title: "Projection: n_nationkey#48L, n_name#49, n_regionkey#50L"
+              operator: "projection"
+              inputs:
+              - title: "Filter: (isnotnull(n_nationkey#48L) AND isnotnull(n_regionkey#50L))"
+                operator: "filter"
+                inputs:
+                - title: "nation.parquet"
+                  operator: "scan"
+                  inputs: []
+        - title: "Projection: r_regionkey#102L"
+          operator: "projection"
+          inputs:
+          - title: "Filter: ((isnotnull(r_name#103) AND (r_name#103 = AFRICA)) AND\
+              \ isnotnull(r_regionkey#102L))"
+            operator: "filter"
+            inputs:
+            - title: "region.parquet"
+              operator: "scan"
+              inputs: []

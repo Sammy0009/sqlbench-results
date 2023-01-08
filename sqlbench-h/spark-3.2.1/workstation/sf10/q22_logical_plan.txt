@@ -1,0 +1,13 @@
+Sort [cntrycode#820 ASC NULLS FIRST], true
++- Aggregate [cntrycode#820], [cntrycode#820, count(1) AS numcust#823L, sum(c_acctbal#5) AS totacctbal#824]
+   +- Project [substring(c_phone#4, 1, 2) AS cntrycode#820, c_acctbal#5]
+      +- Join LeftAnti, (o_custkey#57L = c_custkey#0L)
+         :- Project [c_custkey#0L, c_phone#4, c_acctbal#5]
+         :  +- Filter ((isnotnull(c_acctbal#5) AND substring(c_phone#4, 1, 2) IN (29,22,27,10,18,24,30)) AND (cast(c_acctbal#5 as decimal(15,6)) > scalar-subquery#821 []))
+         :     :  +- Aggregate [cast((avg(UnscaledValue(c_acctbal#833)) / 100.0) as decimal(15,6)) AS avg(c_acctbal)#827]
+         :     :     +- Project [c_acctbal#833]
+         :     :        +- Filter (isnotnull(c_acctbal#833) AND ((c_acctbal#833 > 0.00) AND substring(c_phone#832, 1, 2) IN (29,22,27,10,18,24,30)))
+         :     :           +- Relation [c_custkey#828L,c_name#829,c_address#830,c_nationkey#831L,c_phone#832,c_acctbal#833,c_mktsegment#834,c_comment#835] parquet
+         :     +- Relation [c_custkey#0L,c_name#1,c_address#2,c_nationkey#3L,c_phone#4,c_acctbal#5,c_mktsegment#6,c_comment#7] parquet
+         +- Project [o_custkey#57L]
+            +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet

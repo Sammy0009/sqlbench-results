@@ -1,0 +1,45 @@
+---
+diagram:
+  title: "Aggregate (unknown)"
+  operator: "Aggregate"
+  inputs:
+  - title: "Projection: l_extendedprice#21, l_discount#22"
+    operator: "projection"
+    inputs:
+    - title: "Inner Join: Some(((p_partkey#74L = l_partkey#17L) AND (((((((p_brand#77\
+        \ = Brand#41) AND p_container#80 IN (SM CASE,SM BOX,SM PACK,SM PKG)) AND (l_quantity#20\
+        \ >= 8.00)) AND (l_quantity#20 <= 18.00)) AND (p_size#79 <= 5)) OR (((((p_brand#77\
+        \ = Brand#44) AND p_container#80 IN (MED BAG,MED BOX,MED PKG,MED PACK)) AND\
+        \ (l_quantity#20 >= 12.00)) AND (l_quantity#20 <= 22.00)) AND (p_size#79 <=\
+        \ 10))) OR (((((p_brand#77 = Brand#34) AND p_container#80 IN (LG CASE,LG BOX,LG\
+        \ PACK,LG PKG)) AND (l_quantity#20 >= 25.00)) AND (l_quantity#20 <= 35.00))\
+        \ AND (p_size#79 <= 15)))))"
+      operator: "join"
+      inputs:
+      - title: "Projection: l_partkey#17L, l_quantity#20, l_extendedprice#21, l_discount#22"
+        operator: "projection"
+        inputs:
+        - title: "Filter: (((isnotnull(l_shipinstruct#29) AND (l_shipmode#30 IN (AIR,AIR\
+            \ REG) AND (l_shipinstruct#29 = DELIVER IN PERSON))) AND isnotnull(l_partkey#17L))\
+            \ AND ((((l_quantity#20 >= 8.00) AND (l_quantity#20 <= 18.00)) OR ((l_quantity#20\
+            \ >= 12.00) AND (l_quantity#20 <= 22.00))) OR ((l_quantity#20 >= 25.00)\
+            \ AND (l_quantity#20 <= 35.00))))"
+          operator: "filter"
+          inputs:
+          - title: "lineitem.parquet"
+            operator: "scan"
+            inputs: []
+      - title: "Projection: p_partkey#74L, p_brand#77, p_size#79, p_container#80"
+        operator: "projection"
+        inputs:
+        - title: "Filter: (((isnotnull(p_size#79) AND (p_size#79 >= 1)) AND isnotnull(p_partkey#74L))\
+            \ AND (((((p_brand#77 = Brand#41) AND p_container#80 IN (SM CASE,SM BOX,SM\
+            \ PACK,SM PKG)) AND (p_size#79 <= 5)) OR (((p_brand#77 = Brand#44) AND\
+            \ p_container#80 IN (MED BAG,MED BOX,MED PKG,MED PACK)) AND (p_size#79\
+            \ <= 10))) OR (((p_brand#77 = Brand#34) AND p_container#80 IN (LG CASE,LG\
+            \ BOX,LG PACK,LG PKG)) AND (p_size#79 <= 15))))"
+          operator: "filter"
+          inputs:
+          - title: "part.parquet"
+            operator: "scan"
+            inputs: []

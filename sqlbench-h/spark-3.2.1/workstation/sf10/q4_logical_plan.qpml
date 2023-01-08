@@ -1,0 +1,34 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Aggregate (unknown)"
+    operator: "Aggregate"
+    inputs:
+    - title: "Projection: o_orderpriority#61"
+      operator: "projection"
+      inputs:
+      - title: "LeftSemi Join: Some((l_orderkey#16L = o_orderkey#56L))"
+        operator: "join"
+        inputs:
+        - title: "Projection: o_orderkey#56L, o_orderpriority#61"
+          operator: "projection"
+          inputs:
+          - title: "Filter: ((isnotnull(o_orderdate#60) AND (o_orderdate#60 >= 1996-02-01))\
+              \ AND (o_orderdate#60 < 1996-05-01))"
+            operator: "filter"
+            inputs:
+            - title: "orders.parquet"
+              operator: "scan"
+              inputs: []
+        - title: "Projection: l_orderkey#16L"
+          operator: "projection"
+          inputs:
+          - title: "Filter: ((isnotnull(l_commitdate#27) AND isnotnull(l_receiptdate#28))\
+              \ AND (l_commitdate#27 < l_receiptdate#28))"
+            operator: "filter"
+            inputs:
+            - title: "lineitem.parquet"
+              operator: "scan"
+              inputs: []

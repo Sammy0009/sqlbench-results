@@ -1,0 +1,45 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: dw2.i_category, dw2.i_class, dw2.i_brand, dw2.i_product_name, dw2.d_year, dw2.d_qoy, dw2.d_moy, dw2.s_store_id, dw2.sumsales, dw2.rk'
+      style: projection
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Projection: dw1.i_category, dw1.i_class, dw1.i_brand, dw1.i_product_name, dw1.d_year, dw1.d_qoy, dw1.d_moy, dw1.s_store_id, dw1.sumsales, RANK() PARTITION BY [dw1.i_category] ORDER BY [dw1.sumsales DESC NULLS FIRST] AS rk'
+          style: projection
+          inputs:
+          - title: 'Filter: RANK() PARTITION BY [dw1.i_category] ORDER BY [dw1.sumsales DESC NULLS FIRST] <= UInt64(100)'
+            style: filter
+            inputs:
+            - title: unknown
+              inputs:
+              - title: unknown
+                inputs:
+                - title: 'Projection: item.i_category, item.i_class, item.i_brand, item.i_product_name, date_dim.d_year, date_dim.d_qoy, date_dim.d_moy, store.s_store_id, SUM(coalesce(store_sales.ss_sales_price * store_sales.ss_quantity,Int64(0))) AS sumsales'
+                  style: projection
+                  inputs:
+                  - title: unknown
+                    inputs:
+                    - title: 'Join: store_sales.ss_item_sk = item.i_item_sk'
+                      style: join
+                      inputs:
+                      - title: 'Join: store_sales.ss_store_sk = store.s_store_sk'
+                        style: join
+                        inputs:
+                        - title: 'Join: store_sales.ss_sold_date_sk = date_dim.d_date_sk'
+                          style: join
+                          inputs:
+                          - title: store_sales
+                            style: scan
+                          - title: 'Filter: date_dim.d_month_seq >= Int32(1208) AND date_dim.d_month_seq <= Int32(1219)'
+                            style: filter
+                            inputs:
+                            - title: date_dim
+                              style: scan
+                        - title: store
+                          style: scan
+                      - title: item
+                        style: scan

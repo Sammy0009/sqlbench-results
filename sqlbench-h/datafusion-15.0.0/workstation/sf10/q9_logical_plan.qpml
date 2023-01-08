@@ -1,0 +1,46 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: profit.nation, profit.o_year, SUM(profit.amount) AS sum_profit'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Projection: nation.n_name AS nation, datepart(Utf8("YEAR"), orders.o_orderdate) AS o_year, CAST(CAST(lineitem.l_extendedprice AS Decimal128(35, 4)) * CAST(Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2)) AS Decimal128(35, 4)) AS Decimal128(36, 4)) - CAST(partsupp.ps_supplycost * lineitem.l_quantity AS Decimal128(36, 4)) AS amount'
+          style: projection
+          inputs:
+          - title: 'Projection: lineitem.l_quantity, lineitem.l_extendedprice, lineitem.l_discount, partsupp.ps_supplycost, orders.o_orderdate, nation.n_name'
+            style: projection
+            inputs:
+            - title: 'Join: supplier.s_nationkey = nation.n_nationkey'
+              style: join
+              inputs:
+              - title: 'Join: lineitem.l_orderkey = orders.o_orderkey'
+                style: join
+                inputs:
+                - title: 'Join: lineitem.l_suppkey = partsupp.ps_suppkey AND lineitem.l_partkey = partsupp.ps_partkey'
+                  style: join
+                  inputs:
+                  - title: 'Join: lineitem.l_suppkey = supplier.s_suppkey'
+                    style: join
+                    inputs:
+                    - title: 'Join: part.p_partkey = lineitem.l_partkey'
+                      style: join
+                      inputs:
+                      - title: 'Filter: part.p_name LIKE Utf8("%dark%")'
+                        style: filter
+                        inputs:
+                        - title: part
+                          style: scan
+                      - title: lineitem
+                        style: scan
+                    - title: supplier
+                      style: scan
+                  - title: partsupp
+                    style: scan
+                - title: orders
+                  style: scan
+              - title: nation
+                style: scan

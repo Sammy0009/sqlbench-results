@@ -1,0 +1,17 @@
+---
+diagram:
+  title: "Aggregate (unknown)"
+  operator: "Aggregate"
+  inputs:
+  - title: "Projection: l_extendedprice#21, l_discount#22"
+    operator: "projection"
+    inputs:
+    - title: "Filter: (((isnotnull(l_shipdate#26) AND isnotnull(l_discount#22)) AND\
+        \ isnotnull(l_quantity#20)) AND (((l_shipdate#26 >= 1997-01-01) AND (l_shipdate#26\
+        \ < 1998-01-01)) AND (((l_discount#22 >= 0.06) AND (l_discount#22 <= 0.08))\
+        \ AND (l_quantity#20 < 25.00))))"
+      operator: "filter"
+      inputs:
+      - title: "lineitem.parquet"
+        operator: "scan"
+        inputs: []

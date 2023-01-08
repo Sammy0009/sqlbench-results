@@ -1,0 +1,18 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: lineitem.l_shipmode, SUM(CASE WHEN orders.o_orderpriority = Utf8("1-URGENT") OR orders.o_orderpriority = Utf8("2-HIGH") THEN Int64(1) ELSE Int64(0) END) AS high_line_count, SUM(CASE WHEN orders.o_orderpriority != Utf8("1-URGENT") AND orders.o_orderpriority != Utf8("2-HIGH") THEN Int64(1) ELSE Int64(0) END) AS low_line_count'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: 'Join: orders.o_orderkey = lineitem.l_orderkey'
+        style: join
+        inputs:
+        - title: orders
+          style: scan
+        - title: 'Filter: (lineitem.l_shipmode = Utf8("AIR") OR lineitem.l_shipmode = Utf8("FOB")) AND lineitem.l_commitdate < lineitem.l_receiptdate AND lineitem.l_shipdate < lineitem.l_commitdate AND lineitem.l_receiptdate >= Date32("8766") AND lineitem.l_receiptdate < Date32("9131")'
+          style: filter
+          inputs:
+          - title: lineitem
+            style: scan
