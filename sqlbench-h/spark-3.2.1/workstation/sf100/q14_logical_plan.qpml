@@ -1,0 +1,30 @@
+---
+diagram:
+  title: "Aggregate (unknown)"
+  operator: "Aggregate"
+  inputs:
+  - title: "Projection: l_extendedprice#79, l_discount#80, p_type#18"
+    operator: "projection"
+    inputs:
+    - title: "Inner Join: Some((l_partkey#75L = p_partkey#14L))"
+      operator: "join"
+      inputs:
+      - title: "Projection: l_partkey#75L, l_extendedprice#79, l_discount#80"
+        operator: "projection"
+        inputs:
+        - title: "Filter: ((isnotnull(l_shipdate#84) AND ((l_shipdate#84 >= 1997-06-01)\
+            \ AND (l_shipdate#84 < 1997-07-01))) AND isnotnull(l_partkey#75L))"
+          operator: "filter"
+          inputs:
+          - title: "lineitem.parquet"
+            operator: "scan"
+            inputs: []
+      - title: "Projection: p_partkey#14L, p_type#18"
+        operator: "projection"
+        inputs:
+        - title: "Filter: isnotnull(p_partkey#14L)"
+          operator: "filter"
+          inputs:
+          - title: "part.parquet"
+            operator: "scan"
+            inputs: []

@@ -1,0 +1,75 @@
+---
+diagram:
+  title: "GlobalLimit (unknown)"
+  operator: "GlobalLimit"
+  inputs:
+  - title: "LocalLimit (unknown)"
+    operator: "LocalLimit"
+    inputs:
+    - title: "Sort (unknown)"
+      operator: "Sort"
+      inputs:
+      - title: "Aggregate (unknown)"
+        operator: "Aggregate"
+        inputs:
+        - title: "Projection: c_custkey#106L, c_name#107, c_address#108, c_phone#110,\
+            \ c_acctbal#111, c_comment#113, l_extendedprice#79, l_discount#80, n_name#43"
+          operator: "projection"
+          inputs:
+          - title: "Inner Join: Some((c_nationkey#109L = n_nationkey#42L))"
+            operator: "join"
+            inputs:
+            - title: "Projection: c_custkey#106L, c_name#107, c_address#108, c_nationkey#109L,\
+                \ c_phone#110, c_acctbal#111, c_comment#113, l_extendedprice#79, l_discount#80"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some((l_orderkey#74L = o_orderkey#56L))"
+                operator: "join"
+                inputs:
+                - title: "Projection: c_custkey#106L, c_name#107, c_address#108, c_nationkey#109L,\
+                    \ c_phone#110, c_acctbal#111, c_comment#113, o_orderkey#56L"
+                  operator: "projection"
+                  inputs:
+                  - title: "Inner Join: Some((c_custkey#106L = o_custkey#57L))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: c_custkey#106L, c_name#107, c_address#108,\
+                        \ c_nationkey#109L, c_phone#110, c_acctbal#111, c_comment#113"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: (isnotnull(c_custkey#106L) AND isnotnull(c_nationkey#109L))"
+                        operator: "filter"
+                        inputs:
+                        - title: "customer.parquet"
+                          operator: "scan"
+                          inputs: []
+                    - title: "Projection: o_orderkey#56L, o_custkey#57L"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: (((isnotnull(o_orderdate#60) AND ((o_orderdate#60\
+                          \ >= 1993-10-01) AND (o_orderdate#60 < 1994-01-01))) AND\
+                          \ isnotnull(o_custkey#57L)) AND isnotnull(o_orderkey#56L))"
+                        operator: "filter"
+                        inputs:
+                        - title: "orders.parquet"
+                          operator: "scan"
+                          inputs: []
+                - title: "Projection: l_orderkey#74L, l_extendedprice#79, l_discount#80"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: ((isnotnull(l_returnflag#82) AND (l_returnflag#82\
+                      \ = R)) AND isnotnull(l_orderkey#74L))"
+                    operator: "filter"
+                    inputs:
+                    - title: "lineitem.parquet"
+                      operator: "scan"
+                      inputs: []
+            - title: "Projection: n_nationkey#42L, n_name#43"
+              operator: "projection"
+              inputs:
+              - title: "Filter: isnotnull(n_nationkey#42L)"
+                operator: "filter"
+                inputs:
+                - title: "nation.parquet"
+                  operator: "scan"
+                  inputs: []

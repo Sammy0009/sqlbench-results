@@ -1,0 +1,29 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- Sort [numwait#851L DESC NULLS LAST, s_name#1 ASC NULLS FIRST], true
+      +- Aggregate [s_name#1], [s_name#1, count(1) AS numwait#851L]
+         +- Project [s_name#1]
+            +- Join Inner, (s_nationkey#3L = n_nationkey#42L)
+               :- Project [s_name#1, s_nationkey#3L]
+               :  +- Join Inner, (o_orderkey#56L = l_orderkey#74L)
+               :     :- Project [s_name#1, s_nationkey#3L, l_orderkey#74L]
+               :     :  +- Join Inner, (s_suppkey#0L = l_suppkey#76L)
+               :     :     :- Project [s_suppkey#0L, s_name#1, s_nationkey#3L]
+               :     :     :  +- Filter (isnotnull(s_suppkey#0L) AND isnotnull(s_nationkey#3L))
+               :     :     :     +- Relation [s_suppkey#0L,s_name#1,s_address#2,s_nationkey#3L,s_phone#4,s_acctbal#5,s_comment#6] parquet
+               :     :     +- Join LeftAnti, ((l_orderkey#871L = l_orderkey#74L) AND NOT (l_suppkey#873L = l_suppkey#76L))
+               :     :        :- Join LeftSemi, ((l_orderkey#855L = l_orderkey#74L) AND NOT (l_suppkey#857L = l_suppkey#76L))
+               :     :        :  :- Project [l_orderkey#74L, l_suppkey#76L]
+               :     :        :  :  +- Filter ((((isnotnull(l_receiptdate#86) AND isnotnull(l_commitdate#85)) AND (l_receiptdate#86 > l_commitdate#85)) AND isnotnull(l_suppkey#76L)) AND isnotnull(l_orderkey#74L))
+               :     :        :  :     +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet
+               :     :        :  +- Project [l_orderkey#855L, l_suppkey#857L]
+               :     :        :     +- Relation [l_orderkey#855L,l_partkey#856L,l_suppkey#857L,l_linenumber#858,l_quantity#859,l_extendedprice#860,l_discount#861,l_tax#862,l_returnflag#863,l_linestatus#864,l_shipdate#865,l_commitdate#866,l_receiptdate#867,l_shipinstruct#868,l_shipmode#869,l_comment#870] parquet
+               :     :        +- Project [l_orderkey#871L, l_suppkey#873L]
+               :     :           +- Filter ((isnotnull(l_receiptdate#883) AND isnotnull(l_commitdate#882)) AND (l_receiptdate#883 > l_commitdate#882))
+               :     :              +- Relation [l_orderkey#871L,l_partkey#872L,l_suppkey#873L,l_linenumber#874,l_quantity#875,l_extendedprice#876,l_discount#877,l_tax#878,l_returnflag#879,l_linestatus#880,l_shipdate#881,l_commitdate#882,l_receiptdate#883,l_shipinstruct#884,l_shipmode#885,l_comment#886] parquet
+               :     +- Project [o_orderkey#56L]
+               :        +- Filter ((isnotnull(o_orderstatus#58) AND (o_orderstatus#58 = F)) AND isnotnull(o_orderkey#56L))
+               :           +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet
+               +- Project [n_nationkey#42L]
+                  +- Filter ((isnotnull(n_name#43) AND (n_name#43 = BRAZIL)) AND isnotnull(n_nationkey#42L))
+                     +- Relation [n_nationkey#42L,n_name#43,n_regionkey#44L,n_comment#45] parquet

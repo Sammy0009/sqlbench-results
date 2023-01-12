@@ -1,0 +1,30 @@
+Sort [value#455 DESC NULLS LAST], true
++- Filter (isnotnull(value#455) AND (cast(value#455 as decimal(38,7)) > scalar-subquery#456 []))
+   :  +- Aggregate [CheckOverflow((promote_precision(cast(sum(CheckOverflow((promote_precision(cast(ps_supplycost#464 as decimal(12,2))) * promote_precision(cast(cast(ps_availqty#463 as decimal(10,0)) as decimal(12,2)))), DecimalType(22,2), true)) as decimal(38,10))) * 0.0000010000), DecimalType(38,7), true) AS (sum((ps_supplycost * ps_availqty)) * 0.0000010000)#459]
+   :     +- Project [ps_availqty#463, ps_supplycost#464]
+   :        +- Join Inner, (s_nationkey#469L = n_nationkey#473L)
+   :           :- Project [ps_availqty#463, ps_supplycost#464, s_nationkey#469L]
+   :           :  +- Join Inner, (ps_suppkey#462L = s_suppkey#466L)
+   :           :     :- Project [ps_suppkey#462L, ps_availqty#463, ps_supplycost#464]
+   :           :     :  +- Filter isnotnull(ps_suppkey#462L)
+   :           :     :     +- Relation [ps_partkey#461L,ps_suppkey#462L,ps_availqty#463,ps_supplycost#464,ps_comment#465] parquet
+   :           :     +- Project [s_suppkey#466L, s_nationkey#469L]
+   :           :        +- Filter (isnotnull(s_suppkey#466L) AND isnotnull(s_nationkey#469L))
+   :           :           +- Relation [s_suppkey#466L,s_name#467,s_address#468,s_nationkey#469L,s_phone#470,s_acctbal#471,s_comment#472] parquet
+   :           +- Project [n_nationkey#473L]
+   :              +- Filter ((isnotnull(n_name#474) AND (n_name#474 = UNITED STATES)) AND isnotnull(n_nationkey#473L))
+   :                 +- Relation [n_nationkey#473L,n_name#474,n_regionkey#475L,n_comment#476] parquet
+   +- Aggregate [ps_partkey#32L], [ps_partkey#32L, sum(CheckOverflow((promote_precision(cast(ps_supplycost#35 as decimal(12,2))) * promote_precision(cast(cast(ps_availqty#34 as decimal(10,0)) as decimal(12,2)))), DecimalType(22,2), true)) AS value#455]
+      +- Project [ps_partkey#32L, ps_availqty#34, ps_supplycost#35]
+         +- Join Inner, (s_nationkey#3L = n_nationkey#42L)
+            :- Project [ps_partkey#32L, ps_availqty#34, ps_supplycost#35, s_nationkey#3L]
+            :  +- Join Inner, (ps_suppkey#33L = s_suppkey#0L)
+            :     :- Project [ps_partkey#32L, ps_suppkey#33L, ps_availqty#34, ps_supplycost#35]
+            :     :  +- Filter isnotnull(ps_suppkey#33L)
+            :     :     +- Relation [ps_partkey#32L,ps_suppkey#33L,ps_availqty#34,ps_supplycost#35,ps_comment#36] parquet
+            :     +- Project [s_suppkey#0L, s_nationkey#3L]
+            :        +- Filter (isnotnull(s_suppkey#0L) AND isnotnull(s_nationkey#3L))
+            :           +- Relation [s_suppkey#0L,s_name#1,s_address#2,s_nationkey#3L,s_phone#4,s_acctbal#5,s_comment#6] parquet
+            +- Project [n_nationkey#42L]
+               +- Filter ((isnotnull(n_name#43) AND (n_name#43 = UNITED STATES)) AND isnotnull(n_nationkey#42L))
+                  +- Relation [n_nationkey#42L,n_name#43,n_regionkey#44L,n_comment#45] parquet

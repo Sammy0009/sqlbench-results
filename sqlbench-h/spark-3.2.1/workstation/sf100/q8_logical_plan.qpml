@@ -1,0 +1,136 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Aggregate (unknown)"
+    operator: "Aggregate"
+    inputs:
+    - title: "Projection: year(o_orderdate#60) AS o_year#373, CheckOverflow((promote_precision(cast(l_extendedprice#79\
+        \ as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80\
+        \ as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true)\
+        \ AS volume#374, n_name#378 AS nation#375"
+      operator: "projection"
+      inputs:
+      - title: "Inner Join: Some((n_regionkey#44L = r_regionkey#50L))"
+        operator: "join"
+        inputs:
+        - title: "Projection: l_extendedprice#79, l_discount#80, o_orderdate#60, n_regionkey#44L,\
+            \ n_name#378"
+          operator: "projection"
+          inputs:
+          - title: "Inner Join: Some((s_nationkey#3L = n_nationkey#377L))"
+            operator: "join"
+            inputs:
+            - title: "Projection: l_extendedprice#79, l_discount#80, s_nationkey#3L,\
+                \ o_orderdate#60, n_regionkey#44L"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some((c_nationkey#109L = n_nationkey#42L))"
+                operator: "join"
+                inputs:
+                - title: "Projection: l_extendedprice#79, l_discount#80, s_nationkey#3L,\
+                    \ o_orderdate#60, c_nationkey#109L"
+                  operator: "projection"
+                  inputs:
+                  - title: "Inner Join: Some((o_custkey#57L = c_custkey#106L))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: l_extendedprice#79, l_discount#80, s_nationkey#3L,\
+                        \ o_custkey#57L, o_orderdate#60"
+                      operator: "projection"
+                      inputs:
+                      - title: "Inner Join: Some((l_orderkey#74L = o_orderkey#56L))"
+                        operator: "join"
+                        inputs:
+                        - title: "Projection: l_orderkey#74L, l_extendedprice#79,\
+                            \ l_discount#80, s_nationkey#3L"
+                          operator: "projection"
+                          inputs:
+                          - title: "Inner Join: Some((s_suppkey#0L = l_suppkey#76L))"
+                            operator: "join"
+                            inputs:
+                            - title: "Projection: l_orderkey#74L, l_suppkey#76L, l_extendedprice#79,\
+                                \ l_discount#80"
+                              operator: "projection"
+                              inputs:
+                              - title: "Inner Join: Some((p_partkey#14L = l_partkey#75L))"
+                                operator: "join"
+                                inputs:
+                                - title: "Projection: p_partkey#14L"
+                                  operator: "projection"
+                                  inputs:
+                                  - title: "Filter: ((isnotnull(p_type#18) AND (p_type#18\
+                                      \ = PROMO PLATED STEEL)) AND isnotnull(p_partkey#14L))"
+                                    operator: "filter"
+                                    inputs:
+                                    - title: "part.parquet"
+                                      operator: "scan"
+                                      inputs: []
+                                - title: "Projection: l_orderkey#74L, l_partkey#75L,\
+                                    \ l_suppkey#76L, l_extendedprice#79, l_discount#80"
+                                  operator: "projection"
+                                  inputs:
+                                  - title: "Filter: (isnotnull(l_partkey#75L) AND\
+                                      \ (isnotnull(l_suppkey#76L) AND isnotnull(l_orderkey#74L)))"
+                                    operator: "filter"
+                                    inputs:
+                                    - title: "lineitem.parquet"
+                                      operator: "scan"
+                                      inputs: []
+                            - title: "Projection: s_suppkey#0L, s_nationkey#3L"
+                              operator: "projection"
+                              inputs:
+                              - title: "Filter: (isnotnull(s_suppkey#0L) AND isnotnull(s_nationkey#3L))"
+                                operator: "filter"
+                                inputs:
+                                - title: "supplier.parquet"
+                                  operator: "scan"
+                                  inputs: []
+                        - title: "Projection: o_orderkey#56L, o_custkey#57L, o_orderdate#60"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: ((isnotnull(o_orderdate#60) AND ((o_orderdate#60\
+                              \ >= 1995-01-01) AND (o_orderdate#60 <= 1996-12-31)))\
+                              \ AND (isnotnull(o_orderkey#56L) AND isnotnull(o_custkey#57L)))"
+                            operator: "filter"
+                            inputs:
+                            - title: "orders.parquet"
+                              operator: "scan"
+                              inputs: []
+                    - title: "Projection: c_custkey#106L, c_nationkey#109L"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: (isnotnull(c_custkey#106L) AND isnotnull(c_nationkey#109L))"
+                        operator: "filter"
+                        inputs:
+                        - title: "customer.parquet"
+                          operator: "scan"
+                          inputs: []
+                - title: "Projection: n_nationkey#42L, n_regionkey#44L"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: (isnotnull(n_nationkey#42L) AND isnotnull(n_regionkey#44L))"
+                    operator: "filter"
+                    inputs:
+                    - title: "nation.parquet"
+                      operator: "scan"
+                      inputs: []
+            - title: "Projection: n_nationkey#377L, n_name#378"
+              operator: "projection"
+              inputs:
+              - title: "Filter: isnotnull(n_nationkey#377L)"
+                operator: "filter"
+                inputs:
+                - title: "nation.parquet"
+                  operator: "scan"
+                  inputs: []
+        - title: "Projection: r_regionkey#50L"
+          operator: "projection"
+          inputs:
+          - title: "Filter: ((isnotnull(r_name#51) AND (r_name#51 = ASIA)) AND isnotnull(r_regionkey#50L))"
+            operator: "filter"
+            inputs:
+            - title: "region.parquet"
+              operator: "scan"
+              inputs: []

@@ -1,0 +1,29 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- Sort [o_totalprice#59 DESC NULLS LAST, o_orderdate#60 ASC NULLS FIRST], true
+      +- Aggregate [c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59], [c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59, sum(l_quantity#78) AS sum(l_quantity)#780]
+         +- Project [c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59, o_orderdate#60, l_quantity#78]
+            +- Join Inner, (o_orderkey#56L = l_orderkey#74L)
+               :- Project [c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59, o_orderdate#60]
+               :  +- Join Inner, (c_custkey#106L = o_custkey#57L)
+               :     :- Project [c_custkey#106L, c_name#107]
+               :     :  +- Filter isnotnull(c_custkey#106L)
+               :     :     +- Relation [c_custkey#106L,c_name#107,c_address#108,c_nationkey#109L,c_phone#110,c_acctbal#111,c_mktsegment#112,c_comment#113] parquet
+               :     +- Join LeftSemi, (o_orderkey#56L = l_orderkey#763L)
+               :        :- Project [o_orderkey#56L, o_custkey#57L, o_totalprice#59, o_orderdate#60]
+               :        :  +- Filter (isnotnull(o_custkey#57L) AND isnotnull(o_orderkey#56L))
+               :        :     +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet
+               :        +- Project [l_orderkey#763L]
+               :           +- Filter (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762 > 313.00))
+               :              +- Aggregate [l_orderkey#763L], [l_orderkey#763L, sum(l_quantity#767) AS sum(l_quantity#78)#762]
+               :                 +- Project [l_orderkey#763L, l_quantity#767]
+               :                    +- Relation [l_orderkey#763L,l_partkey#764L,l_suppkey#765L,l_linenumber#766,l_quantity#767,l_extendedprice#768,l_discount#769,l_tax#770,l_returnflag#771,l_linestatus#772,l_shipdate#773,l_commitdate#774,l_receiptdate#775,l_shipinstruct#776,l_shipmode#777,l_comment#778] parquet
+               +- Join LeftSemi, (l_orderkey#74L = l_orderkey#763L)
+                  :- Project [l_orderkey#74L, l_quantity#78]
+                  :  +- Filter isnotnull(l_orderkey#74L)
+                  :     +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet
+                  +- Project [l_orderkey#763L]
+                     +- Filter (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762 > 313.00))
+                        +- Aggregate [l_orderkey#763L], [l_orderkey#763L, sum(l_quantity#767) AS sum(l_quantity#78)#762]
+                           +- Project [l_orderkey#763L, l_quantity#767]
+                              +- Relation [l_orderkey#763L,l_partkey#764L,l_suppkey#765L,l_linenumber#766,l_quantity#767,l_extendedprice#768,l_discount#769,l_tax#770,l_returnflag#771,l_linestatus#772,l_shipdate#773,l_commitdate#774,l_receiptdate#775,l_shipinstruct#776,l_shipmode#777,l_comment#778] parquet

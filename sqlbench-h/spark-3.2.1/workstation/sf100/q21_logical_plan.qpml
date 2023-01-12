@@ -1,0 +1,96 @@
+---
+diagram:
+  title: "GlobalLimit (unknown)"
+  operator: "GlobalLimit"
+  inputs:
+  - title: "LocalLimit (unknown)"
+    operator: "LocalLimit"
+    inputs:
+    - title: "Sort (unknown)"
+      operator: "Sort"
+      inputs:
+      - title: "Aggregate (unknown)"
+        operator: "Aggregate"
+        inputs:
+        - title: "Projection: s_name#1"
+          operator: "projection"
+          inputs:
+          - title: "Inner Join: Some((s_nationkey#3L = n_nationkey#42L))"
+            operator: "join"
+            inputs:
+            - title: "Projection: s_name#1, s_nationkey#3L"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some((o_orderkey#56L = l_orderkey#74L))"
+                operator: "join"
+                inputs:
+                - title: "Projection: s_name#1, s_nationkey#3L, l_orderkey#74L"
+                  operator: "projection"
+                  inputs:
+                  - title: "Inner Join: Some((s_suppkey#0L = l_suppkey#76L))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: s_suppkey#0L, s_name#1, s_nationkey#3L"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: (isnotnull(s_suppkey#0L) AND isnotnull(s_nationkey#3L))"
+                        operator: "filter"
+                        inputs:
+                        - title: "supplier.parquet"
+                          operator: "scan"
+                          inputs: []
+                    - title: "LeftAnti Join: Some(((l_orderkey#871L = l_orderkey#74L)\
+                        \ AND NOT (l_suppkey#873L = l_suppkey#76L)))"
+                      operator: "join"
+                      inputs:
+                      - title: "LeftSemi Join: Some(((l_orderkey#855L = l_orderkey#74L)\
+                          \ AND NOT (l_suppkey#857L = l_suppkey#76L)))"
+                        operator: "join"
+                        inputs:
+                        - title: "Projection: l_orderkey#74L, l_suppkey#76L"
+                          operator: "projection"
+                          inputs:
+                          - title: "Filter: ((((isnotnull(l_receiptdate#86) AND isnotnull(l_commitdate#85))\
+                              \ AND (l_receiptdate#86 > l_commitdate#85)) AND isnotnull(l_suppkey#76L))\
+                              \ AND isnotnull(l_orderkey#74L))"
+                            operator: "filter"
+                            inputs:
+                            - title: "lineitem.parquet"
+                              operator: "scan"
+                              inputs: []
+                        - title: "Projection: l_orderkey#855L, l_suppkey#857L"
+                          operator: "projection"
+                          inputs:
+                          - title: "lineitem.parquet"
+                            operator: "scan"
+                            inputs: []
+                      - title: "Projection: l_orderkey#871L, l_suppkey#873L"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: ((isnotnull(l_receiptdate#883) AND isnotnull(l_commitdate#882))\
+                            \ AND (l_receiptdate#883 > l_commitdate#882))"
+                          operator: "filter"
+                          inputs:
+                          - title: "lineitem.parquet"
+                            operator: "scan"
+                            inputs: []
+                - title: "Projection: o_orderkey#56L"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: ((isnotnull(o_orderstatus#58) AND (o_orderstatus#58\
+                      \ = F)) AND isnotnull(o_orderkey#56L))"
+                    operator: "filter"
+                    inputs:
+                    - title: "orders.parquet"
+                      operator: "scan"
+                      inputs: []
+            - title: "Projection: n_nationkey#42L"
+              operator: "projection"
+              inputs:
+              - title: "Filter: ((isnotnull(n_name#43) AND (n_name#43 = BRAZIL)) AND\
+                  \ isnotnull(n_nationkey#42L))"
+                operator: "filter"
+                inputs:
+                - title: "nation.parquet"
+                  operator: "scan"
+                  inputs: []

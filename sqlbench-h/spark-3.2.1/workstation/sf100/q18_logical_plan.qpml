@@ -1,0 +1,94 @@
+---
+diagram:
+  title: "GlobalLimit (unknown)"
+  operator: "GlobalLimit"
+  inputs:
+  - title: "LocalLimit (unknown)"
+    operator: "LocalLimit"
+    inputs:
+    - title: "Sort (unknown)"
+      operator: "Sort"
+      inputs:
+      - title: "Aggregate (unknown)"
+        operator: "Aggregate"
+        inputs:
+        - title: "Projection: c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59,\
+            \ o_orderdate#60, l_quantity#78"
+          operator: "projection"
+          inputs:
+          - title: "Inner Join: Some((o_orderkey#56L = l_orderkey#74L))"
+            operator: "join"
+            inputs:
+            - title: "Projection: c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59,\
+                \ o_orderdate#60"
+              operator: "projection"
+              inputs:
+              - title: "Inner Join: Some((c_custkey#106L = o_custkey#57L))"
+                operator: "join"
+                inputs:
+                - title: "Projection: c_custkey#106L, c_name#107"
+                  operator: "projection"
+                  inputs:
+                  - title: "Filter: isnotnull(c_custkey#106L)"
+                    operator: "filter"
+                    inputs:
+                    - title: "customer.parquet"
+                      operator: "scan"
+                      inputs: []
+                - title: "LeftSemi Join: Some((o_orderkey#56L = l_orderkey#763L))"
+                  operator: "join"
+                  inputs:
+                  - title: "Projection: o_orderkey#56L, o_custkey#57L, o_totalprice#59,\
+                      \ o_orderdate#60"
+                    operator: "projection"
+                    inputs:
+                    - title: "Filter: (isnotnull(o_custkey#57L) AND isnotnull(o_orderkey#56L))"
+                      operator: "filter"
+                      inputs:
+                      - title: "orders.parquet"
+                        operator: "scan"
+                        inputs: []
+                  - title: "Projection: l_orderkey#763L"
+                    operator: "projection"
+                    inputs:
+                    - title: "Filter: (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762\
+                        \ > 313.00))"
+                      operator: "filter"
+                      inputs:
+                      - title: "Aggregate (unknown)"
+                        operator: "Aggregate"
+                        inputs:
+                        - title: "Projection: l_orderkey#763L, l_quantity#767"
+                          operator: "projection"
+                          inputs:
+                          - title: "lineitem.parquet"
+                            operator: "scan"
+                            inputs: []
+            - title: "LeftSemi Join: Some((l_orderkey#74L = l_orderkey#763L))"
+              operator: "join"
+              inputs:
+              - title: "Projection: l_orderkey#74L, l_quantity#78"
+                operator: "projection"
+                inputs:
+                - title: "Filter: isnotnull(l_orderkey#74L)"
+                  operator: "filter"
+                  inputs:
+                  - title: "lineitem.parquet"
+                    operator: "scan"
+                    inputs: []
+              - title: "Projection: l_orderkey#763L"
+                operator: "projection"
+                inputs:
+                - title: "Filter: (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762\
+                    \ > 313.00))"
+                  operator: "filter"
+                  inputs:
+                  - title: "Aggregate (unknown)"
+                    operator: "Aggregate"
+                    inputs:
+                    - title: "Projection: l_orderkey#763L, l_quantity#767"
+                      operator: "projection"
+                      inputs:
+                      - title: "lineitem.parquet"
+                        operator: "scan"
+                        inputs: []

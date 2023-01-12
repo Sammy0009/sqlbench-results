@@ -1,0 +1,18 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Aggregate (unknown)"
+    operator: "Aggregate"
+    inputs:
+    - title: "Projection: l_quantity#78, l_extendedprice#79, l_discount#80, l_tax#81,\
+        \ l_returnflag#82, l_linestatus#83"
+      operator: "projection"
+      inputs:
+      - title: "Filter: (isnotnull(l_shipdate#84) AND (l_shipdate#84 <= 1998-08-30))"
+        operator: "filter"
+        inputs:
+        - title: "lineitem.parquet"
+          operator: "scan"
+          inputs: []
