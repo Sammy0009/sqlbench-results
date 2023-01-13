@@ -1,0 +1,37 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: customer.c_name, customer.c_custkey, orders.o_orderkey, orders.o_orderdate, orders.o_totalprice, SUM(lineitem.l_quantity)'
+      style: projection
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Join: orders.o_orderkey = __sq_1.l_orderkey'
+          style: join
+          inputs:
+          - title: 'Join: orders.o_orderkey = lineitem.l_orderkey'
+            style: join
+            inputs:
+            - title: 'Join: customer.c_custkey = orders.o_custkey'
+              style: join
+              inputs:
+              - title: customer
+                style: scan
+              - title: orders
+                style: scan
+            - title: lineitem
+              style: scan
+          - title: unknown
+            inputs:
+            - title: 'Projection: lineitem.l_orderkey AS l_orderkey'
+              style: projection
+              inputs:
+              - title: 'Filter: SUM(lineitem.l_quantity) > Decimal128(Some(31200),21,2)'
+                style: filter
+                inputs:
+                - title: unknown
+                  inputs:
+                  - title: lineitem
+                    style: scan

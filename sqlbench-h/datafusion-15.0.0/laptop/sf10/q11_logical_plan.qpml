@@ -1,0 +1,50 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: partsupp.ps_partkey, SUM(partsupp.ps_supplycost * partsupp.ps_availqty) AS value'
+    style: projection
+    inputs:
+    - title: 'Filter: CAST(SUM(partsupp.ps_supplycost * partsupp.ps_availqty) AS Decimal128(38, 15)) > CAST(__sq_1.__value AS Decimal128(38, 15))'
+      style: filter
+      inputs:
+      - title: unknown
+        inputs:
+        - title: unknown
+          inputs:
+          - title: 'Join: supplier.s_nationkey = nation.n_nationkey'
+            style: join
+            inputs:
+            - title: 'Join: partsupp.ps_suppkey = supplier.s_suppkey'
+              style: join
+              inputs:
+              - title: partsupp
+                style: scan
+              - title: supplier
+                style: scan
+            - title: 'Filter: nation.n_name = Utf8("PERU")'
+              style: filter
+              inputs:
+              - title: nation
+                style: scan
+        - title: unknown
+          inputs:
+          - title: 'Projection: CAST(SUM(partsupp.ps_supplycost * partsupp.ps_availqty) AS Float64) * Float64(0.00001) AS __value'
+            style: projection
+            inputs:
+            - title: unknown
+              inputs:
+              - title: 'Join: supplier.s_nationkey = nation.n_nationkey'
+                style: join
+                inputs:
+                - title: 'Join: partsupp.ps_suppkey = supplier.s_suppkey'
+                  style: join
+                  inputs:
+                  - title: partsupp
+                    style: scan
+                  - title: supplier
+                    style: scan
+                - title: 'Filter: nation.n_name = Utf8("PERU")'
+                  style: filter
+                  inputs:
+                  - title: nation
+                    style: scan

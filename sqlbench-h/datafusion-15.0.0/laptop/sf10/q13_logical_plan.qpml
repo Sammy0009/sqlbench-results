@@ -1,0 +1,30 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: c_orders.c_count, COUNT(UInt8(1)) AS custdist'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Projection: c_orders.COUNT(orders.o_orderkey) AS c_count'
+          style: projection
+          inputs:
+          - title: unknown
+            inputs:
+            - title: 'Projection: COUNT(orders.o_orderkey)'
+              style: projection
+              inputs:
+              - title: unknown
+                inputs:
+                - title: 'Join: customer.c_custkey = orders.o_custkey'
+                  style: join
+                  inputs:
+                  - title: customer
+                    style: scan
+                  - title: 'Filter: orders.o_comment NOT LIKE Utf8("%special%requests%")'
+                    style: filter
+                    inputs:
+                    - title: orders
+                      style: scan

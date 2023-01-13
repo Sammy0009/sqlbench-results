@@ -1,0 +1,177 @@
+{
+  "system_time": 1673586996907,
+  "datafusion_version": "15.0.0",
+  "datafusion_github_sha": null,
+  "config": {
+    "datafusion.catalog.type": "NULL",
+    "datafusion.explain.logical_plan_only": "false",
+    "datafusion.execution.parquet.reorder_filters": "false",
+    "datafusion.optimizer.top_down_join_key_reordering": "true",
+    "datafusion.catalog.location": "NULL",
+    "datafusion.optimizer.skip_failed_rules": "true",
+    "datafusion.execution.batch_size": "8192",
+    "datafusion.execution.parquet.pruning": "true",
+    "datafusion.optimizer.max_passes": "3",
+    "datafusion.optimizer.hash_join_single_partition_threshold": "1048576",
+    "datafusion.execution.parquet.metadata_size_hint": "NULL",
+    "datafusion.execution.parquet.pushdown_filters": "false",
+    "datafusion.execution.time_zone": "+00:00",
+    "datafusion.execution.coalesce_target_batch_size": "4096",
+    "datafusion.execution.parquet.enable_page_index": "false",
+    "datafusion.optimizer.prefer_hash_join": "true",
+    "datafusion.execution.parquet.skip_metadata": "true",
+    "datafusion.execution.coalesce_batches": "true",
+    "datafusion.optimizer.filter_null_join_keys": "false",
+    "datafusion.explain.physical_plan_only": "false"
+  },
+  "command_line_args": [
+    "./target/release/sqlbench-datafusion",
+    "--concurrency",
+    "10",
+    "--data-path",
+    "/Users/andy/data/tpch/sf10-parquet/",
+    "--query-path",
+    "/Users/andy/git/sql-benchmarks/sqlbench-h/queries/sf=10/",
+    "--iterations",
+    "1",
+    "--output",
+    ".",
+    "--num-queries",
+    "22"
+  ],
+  "register_tables_time": 62,
+  "query_times": [
+    [
+      1,
+      [
+        2942
+      ]
+    ],
+    [
+      2,
+      [
+        618
+      ]
+    ],
+    [
+      3,
+      [
+        919
+      ]
+    ],
+    [
+      4,
+      [
+        499
+      ]
+    ],
+    [
+      5,
+      [
+        1911
+      ]
+    ],
+    [
+      6,
+      [
+        561
+      ]
+    ],
+    [
+      7,
+      [
+        3935
+      ]
+    ],
+    [
+      8,
+      [
+        1200
+      ]
+    ],
+    [
+      9,
+      [
+        2950
+      ]
+    ],
+    [
+      10,
+      [
+        1041
+      ]
+    ],
+    [
+      11,
+      [
+        573
+      ]
+    ],
+    [
+      12,
+      [
+        676
+      ]
+    ],
+    [
+      13,
+      [
+        2330
+      ]
+    ],
+    [
+      14,
+      [
+        542
+      ]
+    ],
+    [
+      15,
+      [
+        1796
+      ]
+    ],
+    [
+      16,
+      [
+        605
+      ]
+    ],
+    [
+      17,
+      [
+        17486
+      ]
+    ],
+    [
+      18,
+      [
+        12544
+      ]
+    ],
+    [
+      19,
+      [
+        1222
+      ]
+    ],
+    [
+      20,
+      [
+        3629
+      ]
+    ],
+    [
+      21,
+      [
+        6595
+      ]
+    ],
+    [
+      22,
+      [
+        559
+      ]
+    ]
+  ]
+}

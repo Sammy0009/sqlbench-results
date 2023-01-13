@@ -1,0 +1,31 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: lineitem.l_orderkey, SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount) AS revenue, orders.o_orderdate, orders.o_shippriority'
+      style: projection
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Join: orders.o_orderkey = lineitem.l_orderkey'
+          style: join
+          inputs:
+          - title: 'Join: customer.c_custkey = orders.o_custkey'
+            style: join
+            inputs:
+            - title: 'Filter: customer.c_mktsegment = Utf8("HOUSEHOLD")'
+              style: filter
+              inputs:
+              - title: customer
+                style: scan
+            - title: 'Filter: orders.o_orderdate < Date32("9210")'
+              style: filter
+              inputs:
+              - title: orders
+                style: scan
+          - title: 'Filter: lineitem.l_shipdate > Date32("9210")'
+            style: filter
+            inputs:
+            - title: lineitem
+              style: scan

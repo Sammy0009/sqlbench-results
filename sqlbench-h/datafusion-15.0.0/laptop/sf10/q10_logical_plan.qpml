@@ -1,0 +1,33 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: customer.c_custkey, customer.c_name, SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount) AS revenue, customer.c_acctbal, nation.n_name, customer.c_address, customer.c_phone, customer.c_comment'
+      style: projection
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Join: customer.c_nationkey = nation.n_nationkey'
+          style: join
+          inputs:
+          - title: 'Join: orders.o_orderkey = lineitem.l_orderkey'
+            style: join
+            inputs:
+            - title: 'Join: customer.c_custkey = orders.o_custkey'
+              style: join
+              inputs:
+              - title: customer
+                style: scan
+              - title: 'Filter: orders.o_orderdate >= Date32("8460") AND orders.o_orderdate < Date32("8552")'
+                style: filter
+                inputs:
+                - title: orders
+                  style: scan
+            - title: 'Filter: lineitem.l_returnflag = Utf8("R")'
+              style: filter
+              inputs:
+              - title: lineitem
+                style: scan
+          - title: nation
+            style: scan

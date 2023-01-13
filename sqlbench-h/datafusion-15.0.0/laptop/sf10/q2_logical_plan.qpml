@@ -1,0 +1,69 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: supplier.s_acctbal, supplier.s_name, nation.n_name, part.p_partkey, part.p_mfgr, supplier.s_address, supplier.s_phone, supplier.s_comment'
+      style: projection
+      inputs:
+      - title: 'Projection: part.p_partkey, part.p_mfgr, supplier.s_name, supplier.s_address, supplier.s_phone, supplier.s_acctbal, supplier.s_comment, nation.n_name'
+        style: projection
+        inputs:
+        - title: 'Join: part.p_partkey = __sq_1.ps_partkey AND partsupp.ps_supplycost = __sq_1.__value'
+          style: join
+          inputs:
+          - title: 'Join: nation.n_regionkey = region.r_regionkey'
+            style: join
+            inputs:
+            - title: 'Join: supplier.s_nationkey = nation.n_nationkey'
+              style: join
+              inputs:
+              - title: 'Join: partsupp.ps_suppkey = supplier.s_suppkey'
+                style: join
+                inputs:
+                - title: 'Join: part.p_partkey = partsupp.ps_partkey'
+                  style: join
+                  inputs:
+                  - title: 'Filter: part.p_size = Int32(8) AND part.p_type LIKE Utf8("%BRASS")'
+                    style: filter
+                    inputs:
+                    - title: part
+                      style: scan
+                  - title: partsupp
+                    style: scan
+                - title: supplier
+                  style: scan
+              - title: nation
+                style: scan
+            - title: 'Filter: region.r_name = Utf8("EUROPE")'
+              style: filter
+              inputs:
+              - title: region
+                style: scan
+          - title: unknown
+            inputs:
+            - title: 'Projection: partsupp.ps_partkey, MIN(partsupp.ps_supplycost) AS __value'
+              style: projection
+              inputs:
+              - title: unknown
+                inputs:
+                - title: 'Join: nation.n_regionkey = region.r_regionkey'
+                  style: join
+                  inputs:
+                  - title: 'Join: supplier.s_nationkey = nation.n_nationkey'
+                    style: join
+                    inputs:
+                    - title: 'Join: partsupp.ps_suppkey = supplier.s_suppkey'
+                      style: join
+                      inputs:
+                      - title: partsupp
+                        style: scan
+                      - title: supplier
+                        style: scan
+                    - title: nation
+                      style: scan
+                  - title: 'Filter: region.r_name = Utf8("EUROPE")'
+                    style: filter
+                    inputs:
+                    - title: region
+                      style: scan
