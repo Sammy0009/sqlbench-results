@@ -1,0 +1,11 @@
+diagram:
+  title: 'Projection: SUM(lineitem.l_extendedprice * lineitem.l_discount) AS revenue'
+  style: projection
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Filter: lineitem.l_shipdate >= Date32("8401") AND lineitem.l_shipdate < Date32("8766") AND lineitem.l_discount >= Decimal128(Some(5),11,2) AND lineitem.l_discount <= Decimal128(Some(7),11,2) AND lineitem.l_quantity < Decimal128(Some(2500),11,2)'
+      style: filter
+      inputs:
+      - title: lineitem
+        style: scan

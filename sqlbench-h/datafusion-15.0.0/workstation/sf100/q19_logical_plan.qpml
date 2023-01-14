@@ -1,0 +1,25 @@
+diagram:
+  title: 'Projection: SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount) AS revenue'
+  style: projection
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: lineitem.l_extendedprice, lineitem.l_discount'
+      style: projection
+      inputs:
+      - title: 'Filter: part.p_brand = Utf8("Brand#14") AND (part.p_container IN ([Utf8("SM CASE"), Utf8("SM BOX"), Utf8("SM PACK"), Utf8("SM PKG")]) AND lineitem.l_quantity >= Decimal128(Some(600),11,2) AND lineitem.l_quantity <= Decimal128(Some(1600),11,2) AND part.p_size <= Int32(5) OR part.p_container IN ([Utf8("MED BAG"), Utf8("MED BOX"), Utf8("MED PKG"), Utf8("MED PACK")]) AND lineitem.l_quantity >= Decimal128(Some(1300),11,2) AND lineitem.l_quantity <= Decimal128(Some(2300),11,2) AND part.p_size <= Int32(10)) OR part.p_brand = Utf8("Brand#53") AND part.p_container IN ([Utf8("LG CASE"), Utf8("LG BOX"), Utf8("LG PACK"), Utf8("LG PKG")]) AND lineitem.l_quantity >= Decimal128(Some(2600),11,2) AND lineitem.l_quantity <= Decimal128(Some(3600),11,2) AND part.p_size <= Int32(15)'
+        style: filter
+        inputs:
+        - title: 'Join: lineitem.l_partkey = part.p_partkey'
+          style: join
+          inputs:
+          - title: 'Filter: (lineitem.l_quantity >= Decimal128(Some(600),11,2) AND lineitem.l_quantity <= Decimal128(Some(1600),11,2) OR lineitem.l_quantity >= Decimal128(Some(1300),11,2) AND lineitem.l_quantity <= Decimal128(Some(2300),11,2) OR lineitem.l_quantity >= Decimal128(Some(2600),11,2) AND lineitem.l_quantity <= Decimal128(Some(3600),11,2)) AND (lineitem.l_shipmode = Utf8("AIR REG") OR lineitem.l_shipmode = Utf8("AIR")) AND lineitem.l_shipinstruct = Utf8("DELIVER IN PERSON")'
+            style: filter
+            inputs:
+            - title: lineitem
+              style: scan
+          - title: 'Filter: (part.p_brand = Utf8("Brand#14") AND (part.p_container IN ([Utf8("SM CASE"), Utf8("SM BOX"), Utf8("SM PACK"), Utf8("SM PKG")]) AND part.p_size <= Int32(5) OR part.p_container IN ([Utf8("MED BAG"), Utf8("MED BOX"), Utf8("MED PKG"), Utf8("MED PACK")]) AND part.p_size <= Int32(10)) OR part.p_brand = Utf8("Brand#53") AND part.p_container IN ([Utf8("LG CASE"), Utf8("LG BOX"), Utf8("LG PACK"), Utf8("LG PKG")]) AND part.p_size <= Int32(15)) AND part.p_size >= Int32(1)'
+            style: filter
+            inputs:
+            - title: part
+              style: scan

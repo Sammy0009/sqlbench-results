@@ -1,0 +1,171 @@
+{
+  "system_time": 1673660628977,
+  "datafusion_version": "15.0.0",
+  "datafusion_github_sha": null,
+  "config": {
+    "datafusion.execution.parquet.pruning": "true",
+    "datafusion.optimizer.top_down_join_key_reordering": "true",
+    "datafusion.execution.time_zone": "+00:00",
+    "datafusion.optimizer.prefer_hash_join": "true",
+    "datafusion.execution.parquet.skip_metadata": "true",
+    "datafusion.optimizer.max_passes": "3",
+    "datafusion.explain.physical_plan_only": "false",
+    "datafusion.execution.parquet.pushdown_filter": "true",
+    "datafusion.execution.coalesce_target_batch_size": "4096",
+    "datafusion.catalog.type": "NULL",
+    "datafusion.execution.parquet.enable_page_index": "true",
+    "datafusion.optimizer.skip_failed_rules": "true",
+    "datafusion.execution.parquet.reorder_filters": "true",
+    "datafusion.execution.coalesce_batches": "true",
+    "datafusion.catalog.location": "NULL",
+    "datafusion.optimizer.filter_null_join_keys": "true",
+    "datafusion.explain.logical_plan_only": "false",
+    "datafusion.optimizer.hash_join_single_partition_threshold": "1048576",
+    "datafusion.execution.parquet.pushdown_filters": "false",
+    "datafusion.execution.parquet.metadata_size_hint": "NULL",
+    "datafusion.execution.batch_size": "8192"
+  },
+  "command_line_args": [
+    "/home/andy/git/sql-benchmarks/sqlbench-runners/datafusion//target/release/sqlbench-datafusion",
+    "--concurrency",
+    "24",
+    "--config-path",
+    "./default-configs.properties",
+    "--data-path",
+    "/mnt/bigdata/tpch/sf100-parquet/",
+    "--query-path",
+    "/home/andy/git/sql-benchmarks/sqlbench-h/queries/sf=100/",
+    "--iterations",
+    "1",
+    "--output",
+    "/home/andy/git/sql-benchmarks/sqlbench-results/sqlbench-h/datafusion-15.0.0/workstation/sf100/",
+    "--num-queries",
+    "22",
+    "--exclude",
+    "17",
+    "18"
+  ],
+  "register_tables_time": 85,
+  "query_times": [
+    [
+      1,
+      [
+        12228
+      ]
+    ],
+    [
+      2,
+      [
+        10731
+      ]
+    ],
+    [
+      3,
+      [
+        12026
+      ]
+    ],
+    [
+      4,
+      [
+        5003
+      ]
+    ],
+    [
+      5,
+      [
+        25483
+      ]
+    ],
+    [
+      6,
+      [
+        2492
+      ]
+    ],
+    [
+      7,
+      [
+        51372
+      ]
+    ],
+    [
+      8,
+      [
+        15522
+      ]
+    ],
+    [
+      9,
+      [
+        35258
+      ]
+    ],
+    [
+      10,
+      [
+        9924
+      ]
+    ],
+    [
+      11,
+      [
+        6045
+      ]
+    ],
+    [
+      12,
+      [
+        5773
+      ]
+    ],
+    [
+      13,
+      [
+        19931
+      ]
+    ],
+    [
+      14,
+      [
+        3277
+      ]
+    ],
+    [
+      15,
+      [
+        12658
+      ]
+    ],
+    [
+      16,
+      [
+        5810
+      ]
+    ],
+    [
+      19,
+      [
+        4992
+      ]
+    ],
+    [
+      20,
+      [
+        38250
+      ]
+    ],
+    [
+      21,
+      [
+        66275
+      ]
+    ],
+    [
+      22,
+      [
+        10273
+      ]
+    ]
+  ]
+}

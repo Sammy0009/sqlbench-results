@@ -1,0 +1,19 @@
+diagram:
+  title: 'Projection: Float64(100) * CAST(SUM(CASE WHEN part.p_type LIKE Utf8("PROMO%")  THEN lineitem.l_extendedprice * Int64(1) - lineitem.l_discount ELSE Int64(0) END) AS Float64) / CAST(SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount) AS Float64) AS promo_revenue'
+  style: projection
+  inputs:
+  - title: unknown
+    inputs:
+    - title: 'Projection: CAST(lineitem.l_extendedprice AS Decimal128(35, 4)) * CAST(Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2)) AS Decimal128(35, 4)) AS CAST(lineitem.l_extendedprice AS Decimal128(35, 4)) * CAST(Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2)) AS Decimal128(35, 4))CAST(Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2)) AS Decimal128(35, 4))Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2))CAST(lineitem.l_discount AS Decimal128(23, 2))lineitem.l_discountDecimal128(Some(100),23,2)CAST(lineitem.l_extendedprice AS Decimal128(35, 4))lineitem.l_extendedprice, part.p_type'
+      style: projection
+      inputs:
+      - title: 'Join: lineitem.l_partkey = part.p_partkey'
+        style: join
+        inputs:
+        - title: 'Filter: lineitem.l_shipdate >= Date32("10013") AND lineitem.l_shipdate < Date32("10043")'
+          style: filter
+          inputs:
+          - title: lineitem
+            style: scan
+        - title: part
+          style: scan

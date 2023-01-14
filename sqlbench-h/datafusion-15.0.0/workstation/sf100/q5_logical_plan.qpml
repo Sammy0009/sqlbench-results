@@ -1,0 +1,41 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: nation.n_name, SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount) AS revenue'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: 'Join: nation.n_regionkey = region.r_regionkey'
+        style: join
+        inputs:
+        - title: 'Join: supplier.s_nationkey = nation.n_nationkey'
+          style: join
+          inputs:
+          - title: 'Join: lineitem.l_suppkey = supplier.s_suppkey AND customer.c_nationkey = supplier.s_nationkey'
+            style: join
+            inputs:
+            - title: 'Join: orders.o_orderkey = lineitem.l_orderkey'
+              style: join
+              inputs:
+              - title: 'Join: customer.c_custkey = orders.o_custkey'
+                style: join
+                inputs:
+                - title: customer
+                  style: scan
+                - title: 'Filter: orders.o_orderdate >= Date32("8401") AND orders.o_orderdate < Date32("8766")'
+                  style: filter
+                  inputs:
+                  - title: orders
+                    style: scan
+              - title: lineitem
+                style: scan
+            - title: supplier
+              style: scan
+          - title: nation
+            style: scan
+        - title: 'Filter: region.r_name = Utf8("ASIA")'
+          style: filter
+          inputs:
+          - title: region
+            style: scan

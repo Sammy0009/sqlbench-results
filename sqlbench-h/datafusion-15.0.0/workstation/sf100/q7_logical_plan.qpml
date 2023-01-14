@@ -1,0 +1,56 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: shipping.supp_nation, shipping.cust_nation, shipping.l_year, SUM(shipping.volume) AS revenue'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Projection: n1.n_name AS supp_nation, n2.n_name AS cust_nation, datepart(Utf8("YEAR"), lineitem.l_shipdate) AS l_year, CAST(lineitem.l_extendedprice AS Decimal128(35, 4)) * CAST(Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2)) AS Decimal128(35, 4)) AS volume'
+          style: projection
+          inputs:
+          - title: 'Filter: (n1.n_name = Utf8("JORDAN") OR n2.n_name = Utf8("JORDAN")) AND (n2.n_name = Utf8("CHINA") OR n1.n_name = Utf8("CHINA"))'
+            style: filter
+            inputs:
+            - title: 'Join: customer.c_nationkey = n2.n_nationkey'
+              style: join
+              inputs:
+              - title: 'Join: supplier.s_nationkey = n1.n_nationkey'
+                style: join
+                inputs:
+                - title: 'Join: orders.o_custkey = customer.c_custkey'
+                  style: join
+                  inputs:
+                  - title: 'Join: lineitem.l_orderkey = orders.o_orderkey'
+                    style: join
+                    inputs:
+                    - title: 'Join: supplier.s_suppkey = lineitem.l_suppkey'
+                      style: join
+                      inputs:
+                      - title: supplier
+                        style: scan
+                      - title: 'Filter: lineitem.l_shipdate >= Date32("9131") AND lineitem.l_shipdate <= Date32("9861")'
+                        style: filter
+                        inputs:
+                        - title: lineitem
+                          style: scan
+                    - title: orders
+                      style: scan
+                  - title: customer
+                    style: scan
+                - title: unknown
+                  inputs:
+                  - title: 'Filter: nation.n_name = Utf8("JORDAN") OR nation.n_name = Utf8("CHINA")'
+                    style: filter
+                    inputs:
+                    - title: nation
+                      style: scan
+              - title: unknown
+                inputs:
+                - title: 'Filter: nation.n_name = Utf8("CHINA") OR nation.n_name = Utf8("JORDAN")'
+                  style: filter
+                  inputs:
+                  - title: nation
+                    style: scan

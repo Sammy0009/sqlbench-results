@@ -1,0 +1,21 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: orders.o_orderpriority, COUNT(UInt8(1)) AS order_count'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: 'Join: orders.o_orderkey = lineitem.l_orderkey'
+        style: join
+        inputs:
+        - title: 'Filter: orders.o_orderdate >= Date32("9801") AND orders.o_orderdate < Date32("9893")'
+          style: filter
+          inputs:
+          - title: orders
+            style: scan
+        - title: 'Filter: lineitem.l_commitdate < lineitem.l_receiptdate'
+          style: filter
+          inputs:
+          - title: lineitem
+            style: scan

@@ -1,0 +1,66 @@
+diagram:
+  title: unknown
+  inputs:
+  - title: 'Projection: all_nations.o_year, SUM(CASE WHEN all_nations.nation = Utf8("CHINA") THEN all_nations.volume ELSE Int64(0) END) / SUM(all_nations.volume) AS mkt_share'
+    style: projection
+    inputs:
+    - title: unknown
+      inputs:
+      - title: unknown
+        inputs:
+        - title: 'Projection: datepart(Utf8("YEAR"), orders.o_orderdate) AS o_year, CAST(lineitem.l_extendedprice AS Decimal128(35, 4)) * CAST(Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2)) AS Decimal128(35, 4)) AS volume, n2.n_name AS nation'
+          style: projection
+          inputs:
+          - title: 'Projection: lineitem.l_extendedprice, lineitem.l_discount, orders.o_orderdate, n2.n_name'
+            style: projection
+            inputs:
+            - title: 'Join: n1.n_regionkey = region.r_regionkey'
+              style: join
+              inputs:
+              - title: 'Join: supplier.s_nationkey = n2.n_nationkey'
+                style: join
+                inputs:
+                - title: 'Join: customer.c_nationkey = n1.n_nationkey'
+                  style: join
+                  inputs:
+                  - title: 'Join: orders.o_custkey = customer.c_custkey'
+                    style: join
+                    inputs:
+                    - title: 'Join: lineitem.l_orderkey = orders.o_orderkey'
+                      style: join
+                      inputs:
+                      - title: 'Join: lineitem.l_suppkey = supplier.s_suppkey'
+                        style: join
+                        inputs:
+                        - title: 'Join: part.p_partkey = lineitem.l_partkey'
+                          style: join
+                          inputs:
+                          - title: 'Filter: part.p_type = Utf8("PROMO PLATED STEEL")'
+                            style: filter
+                            inputs:
+                            - title: part
+                              style: scan
+                          - title: lineitem
+                            style: scan
+                        - title: supplier
+                          style: scan
+                      - title: 'Filter: orders.o_orderdate >= Date32("9131") AND orders.o_orderdate <= Date32("9861")'
+                        style: filter
+                        inputs:
+                        - title: orders
+                          style: scan
+                    - title: customer
+                      style: scan
+                  - title: unknown
+                    inputs:
+                    - title: nation
+                      style: scan
+                - title: unknown
+                  inputs:
+                  - title: nation
+                    style: scan
+              - title: 'Filter: region.r_name = Utf8("ASIA")'
+                style: filter
+                inputs:
+                - title: region
+                  style: scan
