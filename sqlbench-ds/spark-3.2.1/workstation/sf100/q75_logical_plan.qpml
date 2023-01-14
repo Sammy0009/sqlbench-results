@@ -9,18 +9,18 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: d_year#27096 AS prev_year#26901, d_year#618 AS year#26902,\
-          \ i_brand_id#675, i_class_id#677, i_category_id#679, i_manufact_id#681,\
-          \ sales_cnt#27022L AS prev_yr_cnt#26903L, sales_cnt#26913L AS curr_yr_cnt#26904L,\
-          \ (sales_cnt#26913L - sales_cnt#27022L) AS sales_cnt_diff#26905L, CheckOverflow((promote_precision(cast(sales_amt#26914\
-          \ as decimal(19,2))) - promote_precision(cast(sales_amt#27023 as decimal(19,2)))),\
-          \ DecimalType(19,2), true) AS sales_amt_diff#26906"
+      - title: "Projection: d_year#16581 AS prev_year#16386, d_year#604 AS year#16387,\
+          \ i_brand_id#507, i_class_id#509, i_category_id#511, i_manufact_id#513,\
+          \ sales_cnt#16507L AS prev_yr_cnt#16388L, sales_cnt#16398L AS curr_yr_cnt#16389L,\
+          \ (sales_cnt#16398L - sales_cnt#16507L) AS sales_cnt_diff#16390L, CheckOverflow((promote_precision(cast(sales_amt#16399\
+          \ as decimal(19,2))) - promote_precision(cast(sales_amt#16508 as decimal(19,2)))),\
+          \ DecimalType(19,2), true) AS sales_amt_diff#16391"
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((((((i_brand_id#675 = i_brand_id#27075) AND (i_class_id#677\
-            \ = i_class_id#27077)) AND (i_category_id#679 = i_category_id#27079))\
-            \ AND (i_manufact_id#681 = i_manufact_id#27081)) AND (CheckOverflow((promote_precision(cast(sales_cnt#26913L\
-            \ as decimal(17,2))) / promote_precision(cast(sales_cnt#27022L as decimal(17,2)))),\
+        - title: "Inner Join: Some((((((i_brand_id#507 = i_brand_id#16560) AND (i_class_id#509\
+            \ = i_class_id#16562)) AND (i_category_id#511 = i_category_id#16564))\
+            \ AND (i_manufact_id#513 = i_manufact_id#16566)) AND (CheckOverflow((promote_precision(cast(sales_cnt#16398L\
+            \ as decimal(17,2))) / promote_precision(cast(sales_cnt#16507L as decimal(17,2)))),\
             \ DecimalType(37,20), true) < 0.90000000000000000000)))"
           operator: "join"
           inputs:
@@ -33,211 +33,213 @@ diagram:
               - title: "Union (unknown)"
                 operator: "Union"
                 inputs:
-                - title: "Projection: d_year#618, i_brand_id#675, i_class_id#677,\
-                    \ i_category_id#679, i_manufact_id#681, (cs_quantity#562 - coalesce(cr_return_quantity#363,\
-                    \ 0)) AS sales_cnt#26907, CheckOverflow((promote_precision(cast(cs_ext_sales_price#567\
-                    \ as decimal(8,2))) - promote_precision(cast(coalesce(cr_return_amount#364,\
-                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#26908"
+                - title: "Projection: d_year#604, i_brand_id#507, i_class_id#509,\
+                    \ i_category_id#511, i_manufact_id#513, (cs_quantity#136 - coalesce(cr_return_quantity#265,\
+                    \ 0)) AS sales_cnt#16392, CheckOverflow((promote_precision(cast(cs_ext_sales_price#141\
+                    \ as decimal(8,2))) - promote_precision(cast(coalesce(cr_return_amount#266,\
+                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#16393"
                   operator: "projection"
                   inputs:
-                  - title: "LeftOuter Join: Some(((cs_order_number#561L = cr_order_number#362L)\
-                      \ AND (cs_item_sk#559 = cr_item_sk#348)))"
+                  - title: "LeftOuter Join: Some(((cs_order_number#135L = cr_order_number#264L)\
+                      \ AND (cs_item_sk#133 = cr_item_sk#250)))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: cs_item_sk#559, cs_order_number#561L, cs_quantity#562,\
-                        \ cs_ext_sales_price#567, d_year#618, i_brand_id#675, i_class_id#677,\
-                        \ i_category_id#679, i_manufact_id#681"
+                    - title: "Projection: cs_item_sk#133, cs_order_number#135L, cs_quantity#136,\
+                        \ cs_ext_sales_price#141, i_brand_id#507, i_class_id#509,\
+                        \ i_category_id#511, i_manufact_id#513, d_year#604"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((i_item_sk#668 = cs_item_sk#559))"
+                      - title: "Inner Join: Some((d_date_sk#598 = cs_sold_date_sk#118))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: cs_item_sk#559, cs_order_number#561L,\
-                            \ cs_quantity#562, cs_ext_sales_price#567, d_year#618"
+                        - title: "Projection: cs_sold_date_sk#118, cs_item_sk#133,\
+                            \ cs_order_number#135L, cs_quantity#136, cs_ext_sales_price#141,\
+                            \ i_brand_id#507, i_class_id#509, i_category_id#511, i_manufact_id#513"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((d_date_sk#612 = cs_sold_date_sk#544))"
+                          - title: "Inner Join: Some((i_item_sk#500 = cs_item_sk#133))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: cs_sold_date_sk#544, cs_item_sk#559,\
-                                \ cs_order_number#561L, cs_quantity#562, cs_ext_sales_price#567"
+                            - title: "Projection: cs_sold_date_sk#118, cs_item_sk#133,\
+                                \ cs_order_number#135L, cs_quantity#136, cs_ext_sales_price#141"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(cs_sold_date_sk#544) AND\
-                                  \ isnotnull(cs_item_sk#559))"
+                              - title: "Filter: (isnotnull(cs_item_sk#133) AND isnotnull(cs_sold_date_sk#118))"
                                 operator: "filter"
                                 inputs:
                                 - title: "catalog_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#612, d_year#618"
+                            - title: "Projection: i_item_sk#500, i_brand_id#507, i_class_id#509,\
+                                \ i_category_id#511, i_manufact_id#513"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: ((isnotnull(d_year#618) AND (d_year#618\
-                                  \ = 2000)) AND isnotnull(d_date_sk#612))"
+                              - title: "Filter: (((isnotnull(i_category#512) AND (i_category#512\
+                                  \ = Shoes)) AND isnotnull(i_item_sk#500)) AND (((isnotnull(i_brand_id#507)\
+                                  \ AND isnotnull(i_class_id#509)) AND isnotnull(i_category_id#511))\
+                                  \ AND isnotnull(i_manufact_id#513)))"
                                 operator: "filter"
                                 inputs:
-                                - title: "date_dim.parquet"
+                                - title: "item.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: i_item_sk#668, i_brand_id#675, i_class_id#677,\
-                            \ i_category_id#679, i_manufact_id#681"
+                        - title: "Projection: d_date_sk#598, d_year#604"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: ((isnotnull(i_category#680) AND (i_category#680\
-                              \ = Shoes)) AND ((((isnotnull(i_item_sk#668) AND isnotnull(i_brand_id#675))\
-                              \ AND isnotnull(i_class_id#677)) AND isnotnull(i_category_id#679))\
-                              \ AND isnotnull(i_manufact_id#681)))"
+                          - title: "Filter: ((isnotnull(d_year#604) AND (d_year#604\
+                              \ = 2000)) AND isnotnull(d_date_sk#598))"
                             operator: "filter"
                             inputs:
-                            - title: "item.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: cr_item_sk#348, cr_order_number#362L, cr_return_quantity#363,\
-                        \ cr_return_amount#364"
+                    - title: "Projection: cr_item_sk#250, cr_order_number#264L, cr_return_quantity#265,\
+                        \ cr_return_amount#266"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(cr_order_number#362L) AND isnotnull(cr_item_sk#348))"
+                      - title: "Filter: (isnotnull(cr_order_number#264L) AND isnotnull(cr_item_sk#250))"
                         operator: "filter"
                         inputs:
                         - title: "catalog_returns.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: d_year#26943, i_brand_id#26922, i_class_id#26924,\
-                    \ i_category_id#26926, i_manufact_id#26928, (ss_quantity#262 -\
-                    \ coalesce(sr_return_quantity#146, 0)) AS sales_cnt#26909, CheckOverflow((promote_precision(cast(ss_ext_sales_price#267\
-                    \ as decimal(8,2))) - promote_precision(cast(coalesce(sr_return_amt#147,\
-                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#26910"
+                - title: "Projection: d_year#16428, i_brand_id#16407, i_class_id#16409,\
+                    \ i_category_id#16411, i_manufact_id#16413, (ss_quantity#674 -\
+                    \ coalesce(sr_return_quantity#720, 0)) AS sales_cnt#16394, CheckOverflow((promote_precision(cast(ss_ext_sales_price#679\
+                    \ as decimal(8,2))) - promote_precision(cast(coalesce(sr_return_amt#721,\
+                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#16395"
                   operator: "projection"
                   inputs:
-                  - title: "LeftOuter Join: Some(((ss_ticket_number#261L = sr_ticket_number#145L)\
-                      \ AND (ss_item_sk#254 = sr_item_sk#138)))"
+                  - title: "LeftOuter Join: Some(((ss_ticket_number#673L = sr_ticket_number#719L)\
+                      \ AND (ss_item_sk#666 = sr_item_sk#712)))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ss_item_sk#254, ss_ticket_number#261L, ss_quantity#262,\
-                        \ ss_ext_sales_price#267, d_year#26943, i_brand_id#26922,\
-                        \ i_class_id#26924, i_category_id#26926, i_manufact_id#26928"
+                    - title: "Projection: ss_item_sk#666, ss_ticket_number#673L, ss_quantity#674,\
+                        \ ss_ext_sales_price#679, i_brand_id#16407, i_class_id#16409,\
+                        \ i_category_id#16411, i_manufact_id#16413, d_year#16428"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((i_item_sk#26915 = ss_item_sk#254))"
+                      - title: "Inner Join: Some((d_date_sk#16422 = ss_sold_date_sk#664))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ss_item_sk#254, ss_ticket_number#261L,\
-                            \ ss_quantity#262, ss_ext_sales_price#267, d_year#26943"
+                        - title: "Projection: ss_sold_date_sk#664, ss_item_sk#666,\
+                            \ ss_ticket_number#673L, ss_quantity#674, ss_ext_sales_price#679,\
+                            \ i_brand_id#16407, i_class_id#16409, i_category_id#16411,\
+                            \ i_manufact_id#16413"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((d_date_sk#26937 = ss_sold_date_sk#252))"
+                          - title: "Inner Join: Some((i_item_sk#16400 = ss_item_sk#666))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ss_sold_date_sk#252, ss_item_sk#254,\
-                                \ ss_ticket_number#261L, ss_quantity#262, ss_ext_sales_price#267"
+                            - title: "Projection: ss_sold_date_sk#664, ss_item_sk#666,\
+                                \ ss_ticket_number#673L, ss_quantity#674, ss_ext_sales_price#679"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ss_sold_date_sk#252) AND\
-                                  \ isnotnull(ss_item_sk#254))"
+                              - title: "Filter: (isnotnull(ss_item_sk#666) AND isnotnull(ss_sold_date_sk#664))"
                                 operator: "filter"
                                 inputs:
                                 - title: "store_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#26937, d_year#26943"
+                            - title: "Projection: i_item_sk#16400, i_brand_id#16407,\
+                                \ i_class_id#16409, i_category_id#16411, i_manufact_id#16413"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: ((isnotnull(d_year#26943) AND (d_year#26943\
-                                  \ = 2000)) AND isnotnull(d_date_sk#26937))"
+                              - title: "Filter: (((isnotnull(i_category#16412) AND\
+                                  \ (i_category#16412 = Shoes)) AND isnotnull(i_item_sk#16400))\
+                                  \ AND (((isnotnull(i_brand_id#16407) AND isnotnull(i_class_id#16409))\
+                                  \ AND isnotnull(i_category_id#16411)) AND isnotnull(i_manufact_id#16413)))"
                                 operator: "filter"
                                 inputs:
-                                - title: "date_dim.parquet"
+                                - title: "item.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: i_item_sk#26915, i_brand_id#26922, i_class_id#26924,\
-                            \ i_category_id#26926, i_manufact_id#26928"
+                        - title: "Projection: d_date_sk#16422, d_year#16428"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: ((isnotnull(i_category#26927) AND (i_category#26927\
-                              \ = Shoes)) AND ((((isnotnull(i_item_sk#26915) AND isnotnull(i_brand_id#26922))\
-                              \ AND isnotnull(i_class_id#26924)) AND isnotnull(i_category_id#26926))\
-                              \ AND isnotnull(i_manufact_id#26928)))"
+                          - title: "Filter: ((isnotnull(d_year#16428) AND (d_year#16428\
+                              \ = 2000)) AND isnotnull(d_date_sk#16422))"
                             operator: "filter"
                             inputs:
-                            - title: "item.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: sr_item_sk#138, sr_ticket_number#145L, sr_return_quantity#146,\
-                        \ sr_return_amt#147"
+                    - title: "Projection: sr_item_sk#712, sr_ticket_number#719L, sr_return_quantity#720,\
+                        \ sr_return_amt#721"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(sr_ticket_number#145L) AND isnotnull(sr_item_sk#138))"
+                      - title: "Filter: (isnotnull(sr_ticket_number#719L) AND isnotnull(sr_item_sk#712))"
                         operator: "filter"
                         inputs:
                         - title: "store_returns.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: d_year#26993, i_brand_id#26972, i_class_id#26974,\
-                    \ i_category_id#26976, i_manufact_id#26978, (ws_quantity#494 -\
-                    \ coalesce(wr_return_quantity#312, 0)) AS sales_cnt#26911, CheckOverflow((promote_precision(cast(ws_ext_sales_price#499\
-                    \ as decimal(8,2))) - promote_precision(cast(coalesce(wr_return_amt#313,\
-                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#26912"
+                - title: "Projection: d_year#16478, i_brand_id#16457, i_class_id#16459,\
+                    \ i_category_id#16461, i_manufact_id#16463, (ws_quantity#402 -\
+                    \ coalesce(wr_return_quantity#466, 0)) AS sales_cnt#16396, CheckOverflow((promote_precision(cast(ws_ext_sales_price#407\
+                    \ as decimal(8,2))) - promote_precision(cast(coalesce(wr_return_amt#467,\
+                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#16397"
                   operator: "projection"
                   inputs:
-                  - title: "LeftOuter Join: Some(((ws_order_number#493L = wr_order_number#311L)\
-                      \ AND (ws_item_sk#479 = wr_item_sk#300)))"
+                  - title: "LeftOuter Join: Some(((ws_order_number#401L = wr_order_number#465L)\
+                      \ AND (ws_item_sk#387 = wr_item_sk#454)))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ws_item_sk#479, ws_order_number#493L, ws_quantity#494,\
-                        \ ws_ext_sales_price#499, d_year#26993, i_brand_id#26972,\
-                        \ i_class_id#26974, i_category_id#26976, i_manufact_id#26978"
+                    - title: "Projection: ws_item_sk#387, ws_order_number#401L, ws_quantity#402,\
+                        \ ws_ext_sales_price#407, i_brand_id#16457, i_class_id#16459,\
+                        \ i_category_id#16461, i_manufact_id#16463, d_year#16478"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((i_item_sk#26965 = ws_item_sk#479))"
+                      - title: "Inner Join: Some((d_date_sk#16472 = ws_sold_date_sk#384))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ws_item_sk#479, ws_order_number#493L,\
-                            \ ws_quantity#494, ws_ext_sales_price#499, d_year#26993"
+                        - title: "Projection: ws_sold_date_sk#384, ws_item_sk#387,\
+                            \ ws_order_number#401L, ws_quantity#402, ws_ext_sales_price#407,\
+                            \ i_brand_id#16457, i_class_id#16459, i_category_id#16461,\
+                            \ i_manufact_id#16463"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((d_date_sk#26987 = ws_sold_date_sk#476))"
+                          - title: "Inner Join: Some((i_item_sk#16450 = ws_item_sk#387))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ws_sold_date_sk#476, ws_item_sk#479,\
-                                \ ws_order_number#493L, ws_quantity#494, ws_ext_sales_price#499"
+                            - title: "Projection: ws_sold_date_sk#384, ws_item_sk#387,\
+                                \ ws_order_number#401L, ws_quantity#402, ws_ext_sales_price#407"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ws_sold_date_sk#476) AND\
-                                  \ isnotnull(ws_item_sk#479))"
+                              - title: "Filter: (isnotnull(ws_item_sk#387) AND isnotnull(ws_sold_date_sk#384))"
                                 operator: "filter"
                                 inputs:
                                 - title: "web_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#26987, d_year#26993"
+                            - title: "Projection: i_item_sk#16450, i_brand_id#16457,\
+                                \ i_class_id#16459, i_category_id#16461, i_manufact_id#16463"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: ((isnotnull(d_year#26993) AND (d_year#26993\
-                                  \ = 2000)) AND isnotnull(d_date_sk#26987))"
+                              - title: "Filter: (((isnotnull(i_category#16462) AND\
+                                  \ (i_category#16462 = Shoes)) AND isnotnull(i_item_sk#16450))\
+                                  \ AND (((isnotnull(i_brand_id#16457) AND isnotnull(i_class_id#16459))\
+                                  \ AND isnotnull(i_category_id#16461)) AND isnotnull(i_manufact_id#16463)))"
                                 operator: "filter"
                                 inputs:
-                                - title: "date_dim.parquet"
+                                - title: "item.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: i_item_sk#26965, i_brand_id#26972, i_class_id#26974,\
-                            \ i_category_id#26976, i_manufact_id#26978"
+                        - title: "Projection: d_date_sk#16472, d_year#16478"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: ((isnotnull(i_category#26977) AND (i_category#26977\
-                              \ = Shoes)) AND ((((isnotnull(i_item_sk#26965) AND isnotnull(i_brand_id#26972))\
-                              \ AND isnotnull(i_class_id#26974)) AND isnotnull(i_category_id#26976))\
-                              \ AND isnotnull(i_manufact_id#26978)))"
+                          - title: "Filter: ((isnotnull(d_year#16478) AND (d_year#16478\
+                              \ = 2000)) AND isnotnull(d_date_sk#16472))"
                             operator: "filter"
                             inputs:
-                            - title: "item.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: wr_item_sk#300, wr_order_number#311L, wr_return_quantity#312,\
-                        \ wr_return_amt#313"
+                    - title: "Projection: wr_item_sk#454, wr_order_number#465L, wr_return_quantity#466,\
+                        \ wr_return_amt#467"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(wr_order_number#311L) AND isnotnull(wr_item_sk#300))"
+                      - title: "Filter: (isnotnull(wr_order_number#465L) AND isnotnull(wr_item_sk#454))"
                         operator: "filter"
                         inputs:
                         - title: "web_returns.parquet"
@@ -252,217 +254,220 @@ diagram:
               - title: "Union (unknown)"
                 operator: "Union"
                 inputs:
-                - title: "Projection: d_year#27096, i_brand_id#27075, i_class_id#27077,\
-                    \ i_category_id#27079, i_manufact_id#27081, (cs_quantity#27052\
-                    \ - coalesce(cr_return_quantity#27135, 0)) AS sales_cnt#26907,\
-                    \ CheckOverflow((promote_precision(cast(cs_ext_sales_price#27057\
-                    \ as decimal(8,2))) - promote_precision(cast(coalesce(cr_return_amount#27136,\
-                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#26908"
+                - title: "Projection: d_year#16581, i_brand_id#16560, i_class_id#16562,\
+                    \ i_category_id#16564, i_manufact_id#16566, (cs_quantity#16537\
+                    \ - coalesce(cr_return_quantity#16620, 0)) AS sales_cnt#16392,\
+                    \ CheckOverflow((promote_precision(cast(cs_ext_sales_price#16542\
+                    \ as decimal(8,2))) - promote_precision(cast(coalesce(cr_return_amount#16621,\
+                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#16393"
                   operator: "projection"
                   inputs:
-                  - title: "LeftOuter Join: Some(((cs_order_number#27051L = cr_order_number#27134L)\
-                      \ AND (cs_item_sk#27049 = cr_item_sk#27120)))"
+                  - title: "LeftOuter Join: Some(((cs_order_number#16536L = cr_order_number#16619L)\
+                      \ AND (cs_item_sk#16534 = cr_item_sk#16605)))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: cs_item_sk#27049, cs_order_number#27051L,\
-                        \ cs_quantity#27052, cs_ext_sales_price#27057, d_year#27096,\
-                        \ i_brand_id#27075, i_class_id#27077, i_category_id#27079,\
-                        \ i_manufact_id#27081"
+                    - title: "Projection: cs_item_sk#16534, cs_order_number#16536L,\
+                        \ cs_quantity#16537, cs_ext_sales_price#16542, i_brand_id#16560,\
+                        \ i_class_id#16562, i_category_id#16564, i_manufact_id#16566,\
+                        \ d_year#16581"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((i_item_sk#27068 = cs_item_sk#27049))"
+                      - title: "Inner Join: Some((d_date_sk#16575 = cs_sold_date_sk#16519))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: cs_item_sk#27049, cs_order_number#27051L,\
-                            \ cs_quantity#27052, cs_ext_sales_price#27057, d_year#27096"
+                        - title: "Projection: cs_sold_date_sk#16519, cs_item_sk#16534,\
+                            \ cs_order_number#16536L, cs_quantity#16537, cs_ext_sales_price#16542,\
+                            \ i_brand_id#16560, i_class_id#16562, i_category_id#16564,\
+                            \ i_manufact_id#16566"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((d_date_sk#27090 = cs_sold_date_sk#27034))"
+                          - title: "Inner Join: Some((i_item_sk#16553 = cs_item_sk#16534))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: cs_sold_date_sk#27034, cs_item_sk#27049,\
-                                \ cs_order_number#27051L, cs_quantity#27052, cs_ext_sales_price#27057"
+                            - title: "Projection: cs_sold_date_sk#16519, cs_item_sk#16534,\
+                                \ cs_order_number#16536L, cs_quantity#16537, cs_ext_sales_price#16542"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(cs_sold_date_sk#27034)\
-                                  \ AND isnotnull(cs_item_sk#27049))"
+                              - title: "Filter: (isnotnull(cs_item_sk#16534) AND isnotnull(cs_sold_date_sk#16519))"
                                 operator: "filter"
                                 inputs:
                                 - title: "catalog_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#27090, d_year#27096"
+                            - title: "Projection: i_item_sk#16553, i_brand_id#16560,\
+                                \ i_class_id#16562, i_category_id#16564, i_manufact_id#16566"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: ((isnotnull(d_year#27096) AND (d_year#27096\
-                                  \ = 1999)) AND isnotnull(d_date_sk#27090))"
+                              - title: "Filter: (((isnotnull(i_category#16565) AND\
+                                  \ (i_category#16565 = Shoes)) AND isnotnull(i_item_sk#16553))\
+                                  \ AND (((isnotnull(i_brand_id#16560) AND isnotnull(i_class_id#16562))\
+                                  \ AND isnotnull(i_category_id#16564)) AND isnotnull(i_manufact_id#16566)))"
                                 operator: "filter"
                                 inputs:
-                                - title: "date_dim.parquet"
+                                - title: "item.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: i_item_sk#27068, i_brand_id#27075, i_class_id#27077,\
-                            \ i_category_id#27079, i_manufact_id#27081"
+                        - title: "Projection: d_date_sk#16575, d_year#16581"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: ((isnotnull(i_category#27080) AND (i_category#27080\
-                              \ = Shoes)) AND ((((isnotnull(i_item_sk#27068) AND isnotnull(i_brand_id#27075))\
-                              \ AND isnotnull(i_class_id#27077)) AND isnotnull(i_category_id#27079))\
-                              \ AND isnotnull(i_manufact_id#27081)))"
+                          - title: "Filter: ((isnotnull(d_year#16581) AND (d_year#16581\
+                              \ = 1999)) AND isnotnull(d_date_sk#16575))"
                             operator: "filter"
                             inputs:
-                            - title: "item.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: cr_item_sk#27120, cr_order_number#27134L,\
-                        \ cr_return_quantity#27135, cr_return_amount#27136"
+                    - title: "Projection: cr_item_sk#16605, cr_order_number#16619L,\
+                        \ cr_return_quantity#16620, cr_return_amount#16621"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(cr_order_number#27134L) AND isnotnull(cr_item_sk#27120))"
+                      - title: "Filter: (isnotnull(cr_order_number#16619L) AND isnotnull(cr_item_sk#16605))"
                         operator: "filter"
                         inputs:
                         - title: "catalog_returns.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: d_year#27196, i_brand_id#27175, i_class_id#27177,\
-                    \ i_category_id#27179, i_manufact_id#27181, (ss_quantity#27155\
-                    \ - coalesce(sr_return_quantity#27228, 0)) AS sales_cnt#26909,\
-                    \ CheckOverflow((promote_precision(cast(ss_ext_sales_price#27160\
-                    \ as decimal(8,2))) - promote_precision(cast(coalesce(sr_return_amt#27229,\
-                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#26910"
+                - title: "Projection: d_year#16681, i_brand_id#16660, i_class_id#16662,\
+                    \ i_category_id#16664, i_manufact_id#16666, (ss_quantity#16640\
+                    \ - coalesce(sr_return_quantity#16713, 0)) AS sales_cnt#16394,\
+                    \ CheckOverflow((promote_precision(cast(ss_ext_sales_price#16645\
+                    \ as decimal(8,2))) - promote_precision(cast(coalesce(sr_return_amt#16714,\
+                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#16395"
                   operator: "projection"
                   inputs:
-                  - title: "LeftOuter Join: Some(((ss_ticket_number#27154L = sr_ticket_number#27227L)\
-                      \ AND (ss_item_sk#27147 = sr_item_sk#27220)))"
+                  - title: "LeftOuter Join: Some(((ss_ticket_number#16639L = sr_ticket_number#16712L)\
+                      \ AND (ss_item_sk#16632 = sr_item_sk#16705)))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ss_item_sk#27147, ss_ticket_number#27154L,\
-                        \ ss_quantity#27155, ss_ext_sales_price#27160, d_year#27196,\
-                        \ i_brand_id#27175, i_class_id#27177, i_category_id#27179,\
-                        \ i_manufact_id#27181"
+                    - title: "Projection: ss_item_sk#16632, ss_ticket_number#16639L,\
+                        \ ss_quantity#16640, ss_ext_sales_price#16645, i_brand_id#16660,\
+                        \ i_class_id#16662, i_category_id#16664, i_manufact_id#16666,\
+                        \ d_year#16681"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((i_item_sk#27168 = ss_item_sk#27147))"
+                      - title: "Inner Join: Some((d_date_sk#16675 = ss_sold_date_sk#16630))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ss_item_sk#27147, ss_ticket_number#27154L,\
-                            \ ss_quantity#27155, ss_ext_sales_price#27160, d_year#27196"
+                        - title: "Projection: ss_sold_date_sk#16630, ss_item_sk#16632,\
+                            \ ss_ticket_number#16639L, ss_quantity#16640, ss_ext_sales_price#16645,\
+                            \ i_brand_id#16660, i_class_id#16662, i_category_id#16664,\
+                            \ i_manufact_id#16666"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((d_date_sk#27190 = ss_sold_date_sk#27145))"
+                          - title: "Inner Join: Some((i_item_sk#16653 = ss_item_sk#16632))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ss_sold_date_sk#27145, ss_item_sk#27147,\
-                                \ ss_ticket_number#27154L, ss_quantity#27155, ss_ext_sales_price#27160"
+                            - title: "Projection: ss_sold_date_sk#16630, ss_item_sk#16632,\
+                                \ ss_ticket_number#16639L, ss_quantity#16640, ss_ext_sales_price#16645"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ss_sold_date_sk#27145)\
-                                  \ AND isnotnull(ss_item_sk#27147))"
+                              - title: "Filter: (isnotnull(ss_item_sk#16632) AND isnotnull(ss_sold_date_sk#16630))"
                                 operator: "filter"
                                 inputs:
                                 - title: "store_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#27190, d_year#27196"
+                            - title: "Projection: i_item_sk#16653, i_brand_id#16660,\
+                                \ i_class_id#16662, i_category_id#16664, i_manufact_id#16666"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: ((isnotnull(d_year#27196) AND (d_year#27196\
-                                  \ = 1999)) AND isnotnull(d_date_sk#27190))"
+                              - title: "Filter: (((isnotnull(i_category#16665) AND\
+                                  \ (i_category#16665 = Shoes)) AND isnotnull(i_item_sk#16653))\
+                                  \ AND (((isnotnull(i_brand_id#16660) AND isnotnull(i_class_id#16662))\
+                                  \ AND isnotnull(i_category_id#16664)) AND isnotnull(i_manufact_id#16666)))"
                                 operator: "filter"
                                 inputs:
-                                - title: "date_dim.parquet"
+                                - title: "item.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: i_item_sk#27168, i_brand_id#27175, i_class_id#27177,\
-                            \ i_category_id#27179, i_manufact_id#27181"
+                        - title: "Projection: d_date_sk#16675, d_year#16681"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: ((isnotnull(i_category#27180) AND (i_category#27180\
-                              \ = Shoes)) AND ((((isnotnull(i_item_sk#27168) AND isnotnull(i_brand_id#27175))\
-                              \ AND isnotnull(i_class_id#27177)) AND isnotnull(i_category_id#27179))\
-                              \ AND isnotnull(i_manufact_id#27181)))"
+                          - title: "Filter: ((isnotnull(d_year#16681) AND (d_year#16681\
+                              \ = 1999)) AND isnotnull(d_date_sk#16675))"
                             operator: "filter"
                             inputs:
-                            - title: "item.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: sr_item_sk#27220, sr_ticket_number#27227L,\
-                        \ sr_return_quantity#27228, sr_return_amt#27229"
+                    - title: "Projection: sr_item_sk#16705, sr_ticket_number#16712L,\
+                        \ sr_return_quantity#16713, sr_return_amt#16714"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(sr_ticket_number#27227L) AND isnotnull(sr_item_sk#27220))"
+                      - title: "Filter: (isnotnull(sr_ticket_number#16712L) AND isnotnull(sr_item_sk#16705))"
                         operator: "filter"
                         inputs:
                         - title: "store_returns.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: d_year#27300, i_brand_id#27279, i_class_id#27281,\
-                    \ i_category_id#27283, i_manufact_id#27285, (ws_quantity#27256\
-                    \ - coalesce(wr_return_quantity#27336, 0)) AS sales_cnt#26911,\
-                    \ CheckOverflow((promote_precision(cast(ws_ext_sales_price#27261\
-                    \ as decimal(8,2))) - promote_precision(cast(coalesce(wr_return_amt#27337,\
-                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#26912"
+                - title: "Projection: d_year#16785, i_brand_id#16764, i_class_id#16766,\
+                    \ i_category_id#16768, i_manufact_id#16770, (ws_quantity#16741\
+                    \ - coalesce(wr_return_quantity#16821, 0)) AS sales_cnt#16396,\
+                    \ CheckOverflow((promote_precision(cast(ws_ext_sales_price#16746\
+                    \ as decimal(8,2))) - promote_precision(cast(coalesce(wr_return_amt#16822,\
+                    \ 0.00) as decimal(8,2)))), DecimalType(8,2), true) AS sales_amt#16397"
                   operator: "projection"
                   inputs:
-                  - title: "LeftOuter Join: Some(((ws_order_number#27255L = wr_order_number#27335L)\
-                      \ AND (ws_item_sk#27241 = wr_item_sk#27324)))"
+                  - title: "LeftOuter Join: Some(((ws_order_number#16740L = wr_order_number#16820L)\
+                      \ AND (ws_item_sk#16726 = wr_item_sk#16809)))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ws_item_sk#27241, ws_order_number#27255L,\
-                        \ ws_quantity#27256, ws_ext_sales_price#27261, d_year#27300,\
-                        \ i_brand_id#27279, i_class_id#27281, i_category_id#27283,\
-                        \ i_manufact_id#27285"
+                    - title: "Projection: ws_item_sk#16726, ws_order_number#16740L,\
+                        \ ws_quantity#16741, ws_ext_sales_price#16746, i_brand_id#16764,\
+                        \ i_class_id#16766, i_category_id#16768, i_manufact_id#16770,\
+                        \ d_year#16785"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((i_item_sk#27272 = ws_item_sk#27241))"
+                      - title: "Inner Join: Some((d_date_sk#16779 = ws_sold_date_sk#16723))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ws_item_sk#27241, ws_order_number#27255L,\
-                            \ ws_quantity#27256, ws_ext_sales_price#27261, d_year#27300"
+                        - title: "Projection: ws_sold_date_sk#16723, ws_item_sk#16726,\
+                            \ ws_order_number#16740L, ws_quantity#16741, ws_ext_sales_price#16746,\
+                            \ i_brand_id#16764, i_class_id#16766, i_category_id#16768,\
+                            \ i_manufact_id#16770"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((d_date_sk#27294 = ws_sold_date_sk#27238))"
+                          - title: "Inner Join: Some((i_item_sk#16757 = ws_item_sk#16726))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ws_sold_date_sk#27238, ws_item_sk#27241,\
-                                \ ws_order_number#27255L, ws_quantity#27256, ws_ext_sales_price#27261"
+                            - title: "Projection: ws_sold_date_sk#16723, ws_item_sk#16726,\
+                                \ ws_order_number#16740L, ws_quantity#16741, ws_ext_sales_price#16746"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ws_sold_date_sk#27238)\
-                                  \ AND isnotnull(ws_item_sk#27241))"
+                              - title: "Filter: (isnotnull(ws_item_sk#16726) AND isnotnull(ws_sold_date_sk#16723))"
                                 operator: "filter"
                                 inputs:
                                 - title: "web_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#27294, d_year#27300"
+                            - title: "Projection: i_item_sk#16757, i_brand_id#16764,\
+                                \ i_class_id#16766, i_category_id#16768, i_manufact_id#16770"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: ((isnotnull(d_year#27300) AND (d_year#27300\
-                                  \ = 1999)) AND isnotnull(d_date_sk#27294))"
+                              - title: "Filter: (((isnotnull(i_category#16769) AND\
+                                  \ (i_category#16769 = Shoes)) AND isnotnull(i_item_sk#16757))\
+                                  \ AND (((isnotnull(i_brand_id#16764) AND isnotnull(i_class_id#16766))\
+                                  \ AND isnotnull(i_category_id#16768)) AND isnotnull(i_manufact_id#16770)))"
                                 operator: "filter"
                                 inputs:
-                                - title: "date_dim.parquet"
+                                - title: "item.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: i_item_sk#27272, i_brand_id#27279, i_class_id#27281,\
-                            \ i_category_id#27283, i_manufact_id#27285"
+                        - title: "Projection: d_date_sk#16779, d_year#16785"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: ((isnotnull(i_category#27284) AND (i_category#27284\
-                              \ = Shoes)) AND ((((isnotnull(i_item_sk#27272) AND isnotnull(i_brand_id#27279))\
-                              \ AND isnotnull(i_class_id#27281)) AND isnotnull(i_category_id#27283))\
-                              \ AND isnotnull(i_manufact_id#27285)))"
+                          - title: "Filter: ((isnotnull(d_year#16785) AND (d_year#16785\
+                              \ = 1999)) AND isnotnull(d_date_sk#16779))"
                             operator: "filter"
                             inputs:
-                            - title: "item.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: wr_item_sk#27324, wr_order_number#27335L,\
-                        \ wr_return_quantity#27336, wr_return_amt#27337"
+                    - title: "Projection: wr_item_sk#16809, wr_order_number#16820L,\
+                        \ wr_return_quantity#16821, wr_return_amt#16822"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(wr_order_number#27335L) AND isnotnull(wr_item_sk#27324))"
+                      - title: "Filter: (isnotnull(wr_order_number#16820L) AND isnotnull(wr_item_sk#16809))"
                         operator: "filter"
                         inputs:
                         - title: "web_returns.parquet"

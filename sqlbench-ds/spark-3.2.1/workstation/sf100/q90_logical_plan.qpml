@@ -1,8 +1,8 @@
- ---
+---
 diagram:
-  title: "Projection: CheckOverflow((promote_precision(cast(amc#32253L as decimal(15,4)))\
-    \ / promote_precision(cast(pmc#32254L as decimal(15,4)))), DecimalType(35,20),\
-    \ true) AS am_pm_ratio#32255"
+  title: "Projection: CheckOverflow((promote_precision(cast(amc#19131L as decimal(15,4)))\
+    \ / promote_precision(cast(pmc#19132L as decimal(15,4)))), DecimalType(35,20),\
+    \ true) AS am_pm_ratio#19133"
   operator: "projection"
   inputs:
   - title: "Inner Join: None"
@@ -14,60 +14,60 @@ diagram:
       - title: "Projection: "
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((ws_sold_time_sk#477 = t_time_sk#456))"
+        - title: "Inner Join: Some((ws_web_page_sk#396 = wp_web_page_sk#0))"
           operator: "join"
           inputs:
-          - title: "Projection: ws_sold_time_sk#477"
+          - title: "Projection: ws_web_page_sk#396"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((ws_ship_hdemo_sk#486 = hd_demo_sk#88))"
+            - title: "Inner Join: Some((ws_sold_time_sk#385 = t_time_sk#28))"
               operator: "join"
               inputs:
-              - title: "Projection: ws_sold_time_sk#477, ws_ship_hdemo_sk#486"
+              - title: "Projection: ws_sold_time_sk#385, ws_web_page_sk#396"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((ws_web_page_sk#488 = wp_web_page_sk#176))"
+                - title: "Inner Join: Some((ws_ship_hdemo_sk#394 = hd_demo_sk#654))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_sold_time_sk#477, ws_ship_hdemo_sk#486,\
-                      \ ws_web_page_sk#488"
+                  - title: "Projection: ws_sold_time_sk#385, ws_ship_hdemo_sk#394,\
+                      \ ws_web_page_sk#396"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(ws_web_page_sk#488) AND (isnotnull(ws_ship_hdemo_sk#486)\
-                        \ AND isnotnull(ws_sold_time_sk#477)))"
+                    - title: "Filter: (isnotnull(ws_ship_hdemo_sk#394) AND (isnotnull(ws_sold_time_sk#385)\
+                        \ AND isnotnull(ws_web_page_sk#396)))"
                       operator: "filter"
                       inputs:
                       - title: "web_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: wp_web_page_sk#176"
+                  - title: "Projection: hd_demo_sk#654"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((isnotnull(wp_char_count#186) AND ((wp_char_count#186\
-                        \ >= 5000) AND (wp_char_count#186 <= 5200))) AND isnotnull(wp_web_page_sk#176))"
+                    - title: "Filter: ((isnotnull(hd_dep_count#657) AND (hd_dep_count#657\
+                        \ = 6)) AND isnotnull(hd_demo_sk#654))"
                       operator: "filter"
                       inputs:
-                      - title: "web_page.parquet"
+                      - title: "household_demographics.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: hd_demo_sk#88"
+              - title: "Projection: t_time_sk#28"
                 operator: "projection"
                 inputs:
-                - title: "Filter: ((isnotnull(hd_dep_count#91) AND (hd_dep_count#91\
-                    \ = 6)) AND isnotnull(hd_demo_sk#88))"
+                - title: "Filter: ((isnotnull(t_hour#31) AND ((t_hour#31 >= 10) AND\
+                    \ (t_hour#31 <= 11))) AND isnotnull(t_time_sk#28))"
                   operator: "filter"
                   inputs:
-                  - title: "household_demographics.parquet"
+                  - title: "time_dim.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Projection: t_time_sk#456"
+          - title: "Projection: wp_web_page_sk#0"
             operator: "projection"
             inputs:
-            - title: "Filter: ((isnotnull(t_hour#459) AND ((t_hour#459 >= 10) AND\
-                \ (t_hour#459 <= 11))) AND isnotnull(t_time_sk#456))"
+            - title: "Filter: ((isnotnull(wp_char_count#10) AND ((wp_char_count#10\
+                \ >= 5000) AND (wp_char_count#10 <= 5200))) AND isnotnull(wp_web_page_sk#0))"
               operator: "filter"
               inputs:
-              - title: "time_dim.parquet"
+              - title: "web_page.parquet"
                 operator: "scan"
                 inputs: []
     - title: "Aggregate (unknown)"
@@ -76,59 +76,59 @@ diagram:
       - title: "Projection: "
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((ws_sold_time_sk#32257 = t_time_sk#32295))"
+        - title: "Inner Join: Some((ws_web_page_sk#19146 = wp_web_page_sk#19183))"
           operator: "join"
           inputs:
-          - title: "Projection: ws_sold_time_sk#32257"
+          - title: "Projection: ws_web_page_sk#19146"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((ws_ship_hdemo_sk#32266 = hd_demo_sk#32290))"
+            - title: "Inner Join: Some((ws_sold_time_sk#19135 = t_time_sk#19173))"
               operator: "join"
               inputs:
-              - title: "Projection: ws_sold_time_sk#32257, ws_ship_hdemo_sk#32266"
+              - title: "Projection: ws_sold_time_sk#19135, ws_web_page_sk#19146"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((ws_web_page_sk#32268 = wp_web_page_sk#32305))"
+                - title: "Inner Join: Some((ws_ship_hdemo_sk#19144 = hd_demo_sk#19168))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_sold_time_sk#32257, ws_ship_hdemo_sk#32266,\
-                      \ ws_web_page_sk#32268"
+                  - title: "Projection: ws_sold_time_sk#19135, ws_ship_hdemo_sk#19144,\
+                      \ ws_web_page_sk#19146"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(ws_web_page_sk#32268) AND (isnotnull(ws_ship_hdemo_sk#32266)\
-                        \ AND isnotnull(ws_sold_time_sk#32257)))"
+                    - title: "Filter: (isnotnull(ws_ship_hdemo_sk#19144) AND (isnotnull(ws_sold_time_sk#19135)\
+                        \ AND isnotnull(ws_web_page_sk#19146)))"
                       operator: "filter"
                       inputs:
                       - title: "web_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: wp_web_page_sk#32305"
+                  - title: "Projection: hd_demo_sk#19168"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((isnotnull(wp_char_count#32315) AND ((wp_char_count#32315\
-                        \ >= 5000) AND (wp_char_count#32315 <= 5200))) AND isnotnull(wp_web_page_sk#32305))"
+                    - title: "Filter: ((isnotnull(hd_dep_count#19171) AND (hd_dep_count#19171\
+                        \ = 6)) AND isnotnull(hd_demo_sk#19168))"
                       operator: "filter"
                       inputs:
-                      - title: "web_page.parquet"
+                      - title: "household_demographics.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: hd_demo_sk#32290"
+              - title: "Projection: t_time_sk#19173"
                 operator: "projection"
                 inputs:
-                - title: "Filter: ((isnotnull(hd_dep_count#32293) AND (hd_dep_count#32293\
-                    \ = 6)) AND isnotnull(hd_demo_sk#32290))"
+                - title: "Filter: ((isnotnull(t_hour#19176) AND ((t_hour#19176 >=\
+                    \ 18) AND (t_hour#19176 <= 19))) AND isnotnull(t_time_sk#19173))"
                   operator: "filter"
                   inputs:
-                  - title: "household_demographics.parquet"
+                  - title: "time_dim.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Projection: t_time_sk#32295"
+          - title: "Projection: wp_web_page_sk#19183"
             operator: "projection"
             inputs:
-            - title: "Filter: ((isnotnull(t_hour#32298) AND ((t_hour#32298 >= 18)\
-                \ AND (t_hour#32298 <= 19))) AND isnotnull(t_time_sk#32295))"
+            - title: "Filter: ((isnotnull(wp_char_count#19193) AND ((wp_char_count#19193\
+                \ >= 5000) AND (wp_char_count#19193 <= 5200))) AND isnotnull(wp_web_page_sk#19183))"
               operator: "filter"
               inputs:
-              - title: "time_dim.parquet"
+              - title: "web_page.parquet"
                 operator: "scan"
                 inputs: []

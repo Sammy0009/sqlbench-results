@@ -3,146 +3,143 @@ diagram:
   title: "Sort (unknown)"
   operator: "Sort"
   inputs:
-  - title: "Inner Join: Some(((i_item_sk#668 = i_item_sk#14586) AND (w_warehouse_sk#770\
-      \ = w_warehouse_sk#14608)))"
+  - title: "Inner Join: Some(((i_item_sk#500 = i_item_sk#8736) AND (w_warehouse_sk#186\
+      \ = w_warehouse_sk#8758)))"
     operator: "join"
     inputs:
-    - title: "Projection: w_warehouse_sk#770, i_item_sk#668, d_moy#620, mean#14529,\
-        \ CASE WHEN (mean#14529 = 0.0) THEN null ELSE (stdev#14528 / mean#14529) END\
-        \ AS cov#14530"
+    - title: "Projection: w_warehouse_sk#186, i_item_sk#500, d_moy#606, mean#8679,\
+        \ CASE WHEN (mean#8679 = 0.0) THEN null ELSE (stdev#8678 / mean#8679) END\
+        \ AS cov#8680"
       operator: "projection"
       inputs:
-      - title: "Filter: ((isnotnull(stdev#14528) AND isnotnull(mean#14529)) AND (NOT\
-          \ coalesce((mean#14529 = 0.0), false) AND ((stdev#14528 / mean#14529) >\
-          \ 1.0)))"
+      - title: "Filter: ((isnotnull(stdev#8678) AND isnotnull(mean#8679)) AND (NOT\
+          \ coalesce((mean#8679 = 0.0), false) AND ((stdev#8678 / mean#8679) > 1.0)))"
         operator: "filter"
         inputs:
         - title: "Aggregate (unknown)"
           operator: "Aggregate"
           inputs:
-          - title: "Projection: inv_quantity_on_hand#439, d_moy#620, i_item_sk#668,\
-              \ w_warehouse_sk#770, w_warehouse_name#772"
+          - title: "Projection: inv_quantity_on_hand#243, i_item_sk#500, w_warehouse_sk#186,\
+              \ w_warehouse_name#188, d_moy#606"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((inv_warehouse_sk#438 = w_warehouse_sk#770))"
+            - title: "Inner Join: Some((inv_date_sk#240 = d_date_sk#598))"
               operator: "join"
               inputs:
-              - title: "Projection: inv_warehouse_sk#438, inv_quantity_on_hand#439,\
-                  \ d_moy#620, i_item_sk#668"
+              - title: "Projection: inv_date_sk#240, inv_quantity_on_hand#243, i_item_sk#500,\
+                  \ w_warehouse_sk#186, w_warehouse_name#188"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((inv_item_sk#437 = i_item_sk#668))"
+                - title: "Inner Join: Some((inv_warehouse_sk#242 = w_warehouse_sk#186))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: inv_item_sk#437, inv_warehouse_sk#438, inv_quantity_on_hand#439,\
-                      \ d_moy#620"
+                  - title: "Projection: inv_date_sk#240, inv_warehouse_sk#242, inv_quantity_on_hand#243,\
+                      \ i_item_sk#500"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((inv_date_sk#436 = d_date_sk#612))"
+                    - title: "Inner Join: Some((inv_item_sk#241 = i_item_sk#500))"
                       operator: "join"
                       inputs:
-                      - title: "Filter: (isnotnull(inv_date_sk#436) AND (isnotnull(inv_item_sk#437)\
-                          \ AND isnotnull(inv_warehouse_sk#438)))"
+                      - title: "Filter: (isnotnull(inv_item_sk#241) AND (isnotnull(inv_warehouse_sk#242)\
+                          \ AND isnotnull(inv_date_sk#240)))"
                         operator: "filter"
                         inputs:
                         - title: "inventory.parquet"
                           operator: "scan"
                           inputs: []
-                      - title: "Projection: d_date_sk#612, d_moy#620"
+                      - title: "Projection: i_item_sk#500"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (((isnotnull(d_year#618) AND isnotnull(d_moy#620))\
-                            \ AND ((d_year#618 = 2001) AND (d_moy#620 = 1))) AND isnotnull(d_date_sk#612))"
+                        - title: "Filter: isnotnull(i_item_sk#500)"
                           operator: "filter"
                           inputs:
-                          - title: "date_dim.parquet"
+                          - title: "item.parquet"
                             operator: "scan"
                             inputs: []
-                  - title: "Projection: i_item_sk#668"
+                  - title: "Projection: w_warehouse_sk#186, w_warehouse_name#188"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: isnotnull(i_item_sk#668)"
+                    - title: "Filter: isnotnull(w_warehouse_sk#186)"
                       operator: "filter"
                       inputs:
-                      - title: "item.parquet"
+                      - title: "warehouse.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: w_warehouse_sk#770, w_warehouse_name#772"
+              - title: "Projection: d_date_sk#598, d_moy#606"
                 operator: "projection"
                 inputs:
-                - title: "Filter: isnotnull(w_warehouse_sk#770)"
+                - title: "Filter: (((isnotnull(d_year#604) AND isnotnull(d_moy#606))\
+                    \ AND ((d_year#604 = 2001) AND (d_moy#606 = 1))) AND isnotnull(d_date_sk#598))"
                   operator: "filter"
                   inputs:
-                  - title: "warehouse.parquet"
+                  - title: "date_dim.parquet"
                     operator: "scan"
                     inputs: []
-    - title: "Projection: w_warehouse_sk#14608, i_item_sk#14586, d_moy#14630, mean#14529\
-        \ AS mean#14562, CASE WHEN (mean#14529 = 0.0) THEN null ELSE (stdev#14528\
-        \ / mean#14529) END AS cov#14563"
+    - title: "Projection: w_warehouse_sk#8758, i_item_sk#8736, d_moy#8780, mean#8679\
+        \ AS mean#8712, CASE WHEN (mean#8679 = 0.0) THEN null ELSE (stdev#8678 / mean#8679)\
+        \ END AS cov#8713"
       operator: "projection"
       inputs:
-      - title: "Filter: ((isnotnull(stdev#14528) AND isnotnull(mean#14529)) AND (NOT\
-          \ coalesce((mean#14529 = 0.0), false) AND ((stdev#14528 / mean#14529) >\
-          \ 1.0)))"
+      - title: "Filter: ((isnotnull(stdev#8678) AND isnotnull(mean#8679)) AND (NOT\
+          \ coalesce((mean#8679 = 0.0), false) AND ((stdev#8678 / mean#8679) > 1.0)))"
         operator: "filter"
         inputs:
         - title: "Aggregate (unknown)"
           operator: "Aggregate"
           inputs:
-          - title: "Projection: inv_quantity_on_hand#14585, d_moy#14630, i_item_sk#14586,\
-              \ w_warehouse_sk#14608, w_warehouse_name#14610"
+          - title: "Projection: inv_quantity_on_hand#8735, i_item_sk#8736, w_warehouse_sk#8758,\
+              \ w_warehouse_name#8760, d_moy#8780"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((inv_warehouse_sk#14584 = w_warehouse_sk#14608))"
+            - title: "Inner Join: Some((inv_date_sk#8732 = d_date_sk#8772))"
               operator: "join"
               inputs:
-              - title: "Projection: inv_warehouse_sk#14584, inv_quantity_on_hand#14585,\
-                  \ d_moy#14630, i_item_sk#14586"
+              - title: "Projection: inv_date_sk#8732, inv_quantity_on_hand#8735, i_item_sk#8736,\
+                  \ w_warehouse_sk#8758, w_warehouse_name#8760"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((inv_item_sk#14583 = i_item_sk#14586))"
+                - title: "Inner Join: Some((inv_warehouse_sk#8734 = w_warehouse_sk#8758))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: inv_item_sk#14583, inv_warehouse_sk#14584,\
-                      \ inv_quantity_on_hand#14585, d_moy#14630"
+                  - title: "Projection: inv_date_sk#8732, inv_warehouse_sk#8734, inv_quantity_on_hand#8735,\
+                      \ i_item_sk#8736"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((inv_date_sk#14582 = d_date_sk#14622))"
+                    - title: "Inner Join: Some((inv_item_sk#8733 = i_item_sk#8736))"
                       operator: "join"
                       inputs:
-                      - title: "Filter: (isnotnull(inv_date_sk#14582) AND (isnotnull(inv_item_sk#14583)\
-                          \ AND isnotnull(inv_warehouse_sk#14584)))"
+                      - title: "Filter: (isnotnull(inv_item_sk#8733) AND (isnotnull(inv_warehouse_sk#8734)\
+                          \ AND isnotnull(inv_date_sk#8732)))"
                         operator: "filter"
                         inputs:
                         - title: "inventory.parquet"
                           operator: "scan"
                           inputs: []
-                      - title: "Projection: d_date_sk#14622, d_moy#14630"
+                      - title: "Projection: i_item_sk#8736"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (((isnotnull(d_year#14628) AND isnotnull(d_moy#14630))\
-                            \ AND ((d_year#14628 = 2001) AND (d_moy#14630 = 2))) AND\
-                            \ isnotnull(d_date_sk#14622))"
+                        - title: "Filter: isnotnull(i_item_sk#8736)"
                           operator: "filter"
                           inputs:
-                          - title: "date_dim.parquet"
+                          - title: "item.parquet"
                             operator: "scan"
                             inputs: []
-                  - title: "Projection: i_item_sk#14586"
+                  - title: "Projection: w_warehouse_sk#8758, w_warehouse_name#8760"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: isnotnull(i_item_sk#14586)"
+                    - title: "Filter: isnotnull(w_warehouse_sk#8758)"
                       operator: "filter"
                       inputs:
-                      - title: "item.parquet"
+                      - title: "warehouse.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: w_warehouse_sk#14608, w_warehouse_name#14610"
+              - title: "Projection: d_date_sk#8772, d_moy#8780"
                 operator: "projection"
                 inputs:
-                - title: "Filter: isnotnull(w_warehouse_sk#14608)"
+                - title: "Filter: (((isnotnull(d_year#8778) AND isnotnull(d_moy#8780))\
+                    \ AND ((d_year#8778 = 2001) AND (d_moy#8780 = 2))) AND isnotnull(d_date_sk#8772))"
                   operator: "filter"
                   inputs:
-                  - title: "warehouse.parquet"
+                  - title: "date_dim.parquet"
                     operator: "scan"
                     inputs: []

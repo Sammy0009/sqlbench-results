@@ -1,89 +1,58 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   GpuColumnarToRow false
-   +- GpuTopN(limit=100, orderBy=[w_warehouse_name#772 ASC NULLS FIRST,i_item_id#669 ASC NULLS FIRST], output=[w_warehouse_name#772,i_item_id#669,inv_before#9124L,inv_after#9125L])
-      +- GpuShuffleCoalesce 2147483647
-         +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#165376]
-            +- GpuTopN(limit=100, orderBy=[w_warehouse_name#772 ASC NULLS FIRST,i_item_id#669 ASC NULLS FIRST], output=[w_warehouse_name#772,i_item_id#669,inv_before#9124L,inv_after#9125L])
-               +- GpuRowToColumnar targetsize(2147483647)
-                  +- *(1) Filter ((isnotnull(inv_before#9124L) AND isnotnull(inv_after#9125L)) AND (((inv_before#9124L > 0) AND ((cast(inv_after#9125L as double) / cast(inv_before#9124L as double)) >= 0.666667)) AND ((cast(inv_after#9125L as double) / cast(inv_before#9124L as double)) <= 1.5)))
-                     +- GpuColumnarToRow false
-                        +- GpuHashAggregate(keys=[w_warehouse_name#772, i_item_id#669], functions=[gpubasicsum(CASE WHEN (d_date#614 < 11096) THEN inv_quantity_on_hand#439 ELSE 0 END, LongType, false), gpubasicsum(CASE WHEN (d_date#614 >= 11096) THEN inv_quantity_on_hand#439 ELSE 0 END, LongType, false)], output=[w_warehouse_name#772, i_item_id#669, inv_before#9124L, inv_after#9125L])
-                           +- GpuShuffleCoalesce 2147483647
-                              +- GpuCustomShuffleReader coalesced
-                                 +- ShuffleQueryStage 6
-                                    +- GpuColumnarExchange gpuhashpartitioning(w_warehouse_name#772, i_item_id#669, 200), ENSURE_REQUIREMENTS, [id=#165279]
-                                       +- GpuHashAggregate(keys=[w_warehouse_name#772, i_item_id#669], functions=[partial_gpubasicsum(CASE WHEN (d_date#614 < 11096) THEN inv_quantity_on_hand#439 ELSE 0 END, LongType, false), partial_gpubasicsum(CASE WHEN (d_date#614 >= 11096) THEN inv_quantity_on_hand#439 ELSE 0 END, LongType, false)], output=[w_warehouse_name#772, i_item_id#669, sum#9134L, sum#9135L])
-                                          +- GpuProject [inv_quantity_on_hand#439, w_warehouse_name#772, d_date#614, i_item_id#669], true
-                                             +- GpuShuffledHashJoin [inv_item_sk#437], [i_item_sk#668], Inner, GpuBuildRight, false
-                                                :- GpuShuffleCoalesce 2147483647
-                                                :  +- GpuCustomShuffleReader coalesced
-                                                :     +- ShuffleQueryStage 5
-                                                :        +- GpuColumnarExchange gpuhashpartitioning(inv_item_sk#437, 200), ENSURE_REQUIREMENTS, [id=#165131]
-                                                :           +- GpuProject [inv_item_sk#437, inv_quantity_on_hand#439, w_warehouse_name#772, d_date#614], true
-                                                :              +- GpuShuffledHashJoin [inv_date_sk#436], [d_date_sk#612], Inner, GpuBuildRight, false
-                                                :                 :- GpuShuffleCoalesce 2147483647
-                                                :                 :  +- GpuCustomShuffleReader coalesced
-                                                :                 :     +- ShuffleQueryStage 4
-                                                :                 :        +- GpuColumnarExchange gpuhashpartitioning(inv_date_sk#436, 200), ENSURE_REQUIREMENTS, [id=#164948]
-                                                :                 :           +- GpuProject [inv_date_sk#436, inv_item_sk#437, inv_quantity_on_hand#439, w_warehouse_name#772], true
-                                                :                 :              +- GpuShuffledHashJoin [inv_warehouse_sk#438], [w_warehouse_sk#770], Inner, GpuBuildRight, false
-                                                :                 :                 :- GpuShuffleCoalesce 2147483647
-                                                :                 :                 :  +- GpuCustomShuffleReader coalesced
-                                                :                 :                 :     +- ShuffleQueryStage 0
-                                                :                 :                 :        +- GpuColumnarExchange gpuhashpartitioning(inv_warehouse_sk#438, 200), ENSURE_REQUIREMENTS, [id=#164257]
-                                                :                 :                 :           +- GpuCoalesceBatches targetsize(2147483647)
-                                                :                 :                 :              +- GpuFilter ((gpuisnotnull(inv_warehouse_sk#438) AND gpuisnotnull(inv_date_sk#436)) AND gpuisnotnull(inv_item_sk#437)), true
-                                                :                 :                 :                 +- GpuFileGpuScan parquet [inv_date_sk#436,inv_item_sk#437,inv_warehouse_sk#438,inv_quantity_on_hand#439] Batched: true, DataFilters: [isnotnull(inv_warehouse_sk#438), isnotnull(inv_date_sk#436), isnotnull(inv_item_sk#437)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_warehouse_sk), IsNotNull(inv_date_sk), IsNotNull(inv_item_sk)], ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_warehouse_sk:int,inv_quantity_on_hand:int>
-                                                :                 :                 +- GpuCustomShuffleReader coalesced
-                                                :                 :                    +- ShuffleQueryStage 1
-                                                :                 :                       +- GpuColumnarExchange gpuhashpartitioning(w_warehouse_sk#770, 200), ENSURE_REQUIREMENTS, [id=#164285]
-                                                :                 :                          +- GpuCoalesceBatches targetsize(2147483647)
-                                                :                 :                             +- GpuFilter gpuisnotnull(w_warehouse_sk#770), true
-                                                :                 :                                +- GpuFileGpuScan parquet [w_warehouse_sk#770,w_warehouse_name#772] Batched: true, DataFilters: [isnotnull(w_warehouse_sk#770)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/warehouse.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(w_warehouse_sk)], ReadSchema: struct<w_warehouse_sk:int,w_warehouse_name:string>
-                                                :                 +- GpuCustomShuffleReader coalesced
-                                                :                    +- ShuffleQueryStage 2
-                                                :                       +- GpuColumnarExchange gpuhashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#164317]
-                                                :                          +- GpuCoalesceBatches targetsize(2147483647)
-                                                :                             +- GpuFilter (((gpuisnotnull(d_date#614) AND (d_date#614 >= 11066)) AND (d_date#614 <= 11126)) AND gpuisnotnull(d_date_sk#612)), true
-                                                :                                +- GpuFileGpuScan parquet [d_date_sk#612,d_date#614] Batched: true, DataFilters: [isnotnull(d_date#614), (d_date#614 >= 2000-04-19), (d_date#614 <= 2000-06-18), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2000-04-19), LessThanOrEqual(d_date,2000-06-18), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>
-                                                +- GpuCustomShuffleReader coalesced
-                                                   +- ShuffleQueryStage 3
-                                                      +- GpuColumnarExchange gpuhashpartitioning(i_item_sk#668, 200), ENSURE_REQUIREMENTS, [id=#164358]
-                                                         +- GpuProject [i_item_sk#668, i_item_id#669], true
-                                                            +- GpuCoalesceBatches targetsize(2147483647)
-                                                               +- GpuFilter (((gpuisnotnull(i_current_price#673) AND (i_current_price#673 >= 0.99)) AND (i_current_price#673 <= 1.49)) AND gpuisnotnull(i_item_sk#668)), true
-                                                                  +- GpuFileGpuScan parquet [i_item_sk#668,i_item_id#669,i_current_price#673] Batched: true, DataFilters: [isnotnull(i_current_price#673), (i_current_price#673 >= 0.99), (i_current_price#673 <= 1.49), is..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_current_price), GreaterThanOrEqual(i_current_price,0.99), LessThanOrEqual(i_current_..., ReadSchema: struct<i_item_sk:int,i_item_id:string,i_current_price:decimal(7,2)>
+   TakeOrderedAndProject(limit=100, orderBy=[w_warehouse_name#188 ASC NULLS FIRST,i_item_id#501 ASC NULLS FIRST], output=[w_warehouse_name#188,i_item_id#501,inv_before#6215L,inv_after#6216L])
+   +- *(5) Filter ((isnotnull(inv_before#6215L) AND isnotnull(inv_after#6216L)) AND (((inv_before#6215L > 0) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) >= 0.666667)) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) <= 1.5)))
+      +- *(5) HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, inv_before#6215L, inv_after#6216L])
+         +- AQEShuffleRead coalesced
+            +- ShuffleQueryStage 3
+               +- Exchange hashpartitioning(w_warehouse_name#188, i_item_id#501, 200), ENSURE_REQUIREMENTS, [id=#46835]
+                  +- *(4) HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[partial_sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), partial_sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, sum#6225L, sum#6226L])
+                     +- *(4) Project [inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501, d_date#600]
+                        +- *(4) BroadcastHashJoin [inv_date_sk#240], [d_date_sk#598], Inner, BuildRight, false
+                           :- *(4) Project [inv_date_sk#240, inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501]
+                           :  +- *(4) BroadcastHashJoin [inv_item_sk#241], [i_item_sk#500], Inner, BuildRight, false
+                           :     :- *(4) Project [inv_date_sk#240, inv_item_sk#241, inv_quantity_on_hand#243, w_warehouse_name#188]
+                           :     :  +- *(4) BroadcastHashJoin [inv_warehouse_sk#242], [w_warehouse_sk#186], Inner, BuildRight, false
+                           :     :     :- *(4) Filter ((isnotnull(inv_warehouse_sk#242) AND isnotnull(inv_item_sk#241)) AND isnotnull(inv_date_sk#240))
+                           :     :     :  +- *(4) ColumnarToRow
+                           :     :     :     +- FileScan parquet [inv_date_sk#240,inv_item_sk#241,inv_warehouse_sk#242,inv_quantity_on_hand#243] Batched: true, DataFilters: [isnotnull(inv_warehouse_sk#242), isnotnull(inv_item_sk#241), isnotnull(inv_date_sk#240)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_warehouse_sk), IsNotNull(inv_item_sk), IsNotNull(inv_date_sk)], ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_warehouse_sk:int,inv_quantity_on_hand:int>
+                           :     :     +- BroadcastQueryStage 0
+                           :     :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46586]
+                           :     :           +- *(1) Filter isnotnull(w_warehouse_sk#186)
+                           :     :              +- *(1) ColumnarToRow
+                           :     :                 +- FileScan parquet [w_warehouse_sk#186,w_warehouse_name#188] Batched: true, DataFilters: [isnotnull(w_warehouse_sk#186)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/warehouse.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(w_warehouse_sk)], ReadSchema: struct<w_warehouse_sk:int,w_warehouse_name:string>
+                           :     +- BroadcastQueryStage 1
+                           :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#46605]
+                           :           +- *(2) Project [i_item_sk#500, i_item_id#501]
+                           :              +- *(2) Filter (((isnotnull(i_current_price#505) AND (i_current_price#505 >= 0.99)) AND (i_current_price#505 <= 1.49)) AND isnotnull(i_item_sk#500))
+                           :                 +- *(2) ColumnarToRow
+                           :                    +- FileScan parquet [i_item_sk#500,i_item_id#501,i_current_price#505] Batched: true, DataFilters: [isnotnull(i_current_price#505), (i_current_price#505 >= 0.99), (i_current_price#505 <= 1.49), is..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_current_price), GreaterThanOrEqual(i_current_price,0.99), LessThanOrEqual(i_current_..., ReadSchema: struct<i_item_sk:int,i_item_id:string,i_current_price:decimal(7,2)>
+                           +- BroadcastQueryStage 2
+                              +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46624]
+                                 +- *(3) Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2000-04-19)) AND (d_date#600 <= 2000-06-18)) AND isnotnull(d_date_sk#598))
+                                    +- *(3) ColumnarToRow
+                                       +- FileScan parquet [d_date_sk#598,d_date#600] Batched: true, DataFilters: [isnotnull(d_date#600), (d_date#600 >= 2000-04-19), (d_date#600 <= 2000-06-18), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2000-04-19), LessThanOrEqual(d_date,2000-06-18), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>
 +- == Initial Plan ==
-   TakeOrderedAndProject(limit=100, orderBy=[w_warehouse_name#772 ASC NULLS FIRST,i_item_id#669 ASC NULLS FIRST], output=[w_warehouse_name#772,i_item_id#669,inv_before#9124L,inv_after#9125L])
-   +- Filter ((isnotnull(inv_before#9124L) AND isnotnull(inv_after#9125L)) AND (((inv_before#9124L > 0) AND ((cast(inv_after#9125L as double) / cast(inv_before#9124L as double)) >= 0.666667)) AND ((cast(inv_after#9125L as double) / cast(inv_before#9124L as double)) <= 1.5)))
-      +- HashAggregate(keys=[w_warehouse_name#772, i_item_id#669], functions=[sum(CASE WHEN (d_date#614 < 2000-05-19) THEN inv_quantity_on_hand#439 ELSE 0 END), sum(CASE WHEN (d_date#614 >= 2000-05-19) THEN inv_quantity_on_hand#439 ELSE 0 END)], output=[w_warehouse_name#772, i_item_id#669, inv_before#9124L, inv_after#9125L])
-         +- Exchange hashpartitioning(w_warehouse_name#772, i_item_id#669, 200), ENSURE_REQUIREMENTS, [id=#163829]
-            +- HashAggregate(keys=[w_warehouse_name#772, i_item_id#669], functions=[partial_sum(CASE WHEN (d_date#614 < 2000-05-19) THEN inv_quantity_on_hand#439 ELSE 0 END), partial_sum(CASE WHEN (d_date#614 >= 2000-05-19) THEN inv_quantity_on_hand#439 ELSE 0 END)], output=[w_warehouse_name#772, i_item_id#669, sum#9134L, sum#9135L])
-               +- Project [inv_quantity_on_hand#439, w_warehouse_name#772, d_date#614, i_item_id#669]
-                  +- SortMergeJoin [inv_item_sk#437], [i_item_sk#668], Inner
-                     :- Sort [inv_item_sk#437 ASC NULLS FIRST], false, 0
-                     :  +- Exchange hashpartitioning(inv_item_sk#437, 200), ENSURE_REQUIREMENTS, [id=#163821]
-                     :     +- Project [inv_item_sk#437, inv_quantity_on_hand#439, w_warehouse_name#772, d_date#614]
-                     :        +- SortMergeJoin [inv_date_sk#436], [d_date_sk#612], Inner
-                     :           :- Sort [inv_date_sk#436 ASC NULLS FIRST], false, 0
-                     :           :  +- Exchange hashpartitioning(inv_date_sk#436, 200), ENSURE_REQUIREMENTS, [id=#163813]
-                     :           :     +- Project [inv_date_sk#436, inv_item_sk#437, inv_quantity_on_hand#439, w_warehouse_name#772]
-                     :           :        +- SortMergeJoin [inv_warehouse_sk#438], [w_warehouse_sk#770], Inner
-                     :           :           :- Sort [inv_warehouse_sk#438 ASC NULLS FIRST], false, 0
-                     :           :           :  +- Exchange hashpartitioning(inv_warehouse_sk#438, 200), ENSURE_REQUIREMENTS, [id=#163805]
-                     :           :           :     +- Filter ((isnotnull(inv_warehouse_sk#438) AND isnotnull(inv_date_sk#436)) AND isnotnull(inv_item_sk#437))
-                     :           :           :        +- FileScan parquet [inv_date_sk#436,inv_item_sk#437,inv_warehouse_sk#438,inv_quantity_on_hand#439] Batched: true, DataFilters: [isnotnull(inv_warehouse_sk#438), isnotnull(inv_date_sk#436), isnotnull(inv_item_sk#437)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_warehouse_sk), IsNotNull(inv_date_sk), IsNotNull(inv_item_sk)], ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_warehouse_sk:int,inv_quantity_on_hand:int>
-                     :           :           +- Sort [w_warehouse_sk#770 ASC NULLS FIRST], false, 0
-                     :           :              +- Exchange hashpartitioning(w_warehouse_sk#770, 200), ENSURE_REQUIREMENTS, [id=#163806]
-                     :           :                 +- Filter isnotnull(w_warehouse_sk#770)
-                     :           :                    +- FileScan parquet [w_warehouse_sk#770,w_warehouse_name#772] Batched: true, DataFilters: [isnotnull(w_warehouse_sk#770)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/warehouse.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(w_warehouse_sk)], ReadSchema: struct<w_warehouse_sk:int,w_warehouse_name:string>
-                     :           +- Sort [d_date_sk#612 ASC NULLS FIRST], false, 0
-                     :              +- Exchange hashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#163814]
-                     :                 +- Filter (((isnotnull(d_date#614) AND (d_date#614 >= 2000-04-19)) AND (d_date#614 <= 2000-06-18)) AND isnotnull(d_date_sk#612))
-                     :                    +- FileScan parquet [d_date_sk#612,d_date#614] Batched: true, DataFilters: [isnotnull(d_date#614), (d_date#614 >= 2000-04-19), (d_date#614 <= 2000-06-18), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2000-04-19), LessThanOrEqual(d_date,2000-06-18), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>
-                     +- Sort [i_item_sk#668 ASC NULLS FIRST], false, 0
-                        +- Exchange hashpartitioning(i_item_sk#668, 200), ENSURE_REQUIREMENTS, [id=#163822]
-                           +- Project [i_item_sk#668, i_item_id#669]
-                              +- Filter (((isnotnull(i_current_price#673) AND (i_current_price#673 >= 0.99)) AND (i_current_price#673 <= 1.49)) AND isnotnull(i_item_sk#668))
-                                 +- FileScan parquet [i_item_sk#668,i_item_id#669,i_current_price#673] Batched: true, DataFilters: [isnotnull(i_current_price#673), (i_current_price#673 >= 0.99), (i_current_price#673 <= 1.49), is..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_current_price), GreaterThanOrEqual(i_current_price,0.99), LessThanOrEqual(i_current_..., ReadSchema: struct<i_item_sk:int,i_item_id:string,i_current_price:decimal(7,2)>
+   TakeOrderedAndProject(limit=100, orderBy=[w_warehouse_name#188 ASC NULLS FIRST,i_item_id#501 ASC NULLS FIRST], output=[w_warehouse_name#188,i_item_id#501,inv_before#6215L,inv_after#6216L])
+   +- Filter ((isnotnull(inv_before#6215L) AND isnotnull(inv_after#6216L)) AND (((inv_before#6215L > 0) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) >= 0.666667)) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) <= 1.5)))
+      +- HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, inv_before#6215L, inv_after#6216L])
+         +- Exchange hashpartitioning(w_warehouse_name#188, i_item_id#501, 200), ENSURE_REQUIREMENTS, [id=#46542]
+            +- HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[partial_sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), partial_sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, sum#6225L, sum#6226L])
+               +- Project [inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501, d_date#600]
+                  +- BroadcastHashJoin [inv_date_sk#240], [d_date_sk#598], Inner, BuildRight, false
+                     :- Project [inv_date_sk#240, inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501]
+                     :  +- BroadcastHashJoin [inv_item_sk#241], [i_item_sk#500], Inner, BuildRight, false
+                     :     :- Project [inv_date_sk#240, inv_item_sk#241, inv_quantity_on_hand#243, w_warehouse_name#188]
+                     :     :  +- BroadcastHashJoin [inv_warehouse_sk#242], [w_warehouse_sk#186], Inner, BuildRight, false
+                     :     :     :- Filter ((isnotnull(inv_warehouse_sk#242) AND isnotnull(inv_item_sk#241)) AND isnotnull(inv_date_sk#240))
+                     :     :     :  +- FileScan parquet [inv_date_sk#240,inv_item_sk#241,inv_warehouse_sk#242,inv_quantity_on_hand#243] Batched: true, DataFilters: [isnotnull(inv_warehouse_sk#242), isnotnull(inv_item_sk#241), isnotnull(inv_date_sk#240)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_warehouse_sk), IsNotNull(inv_item_sk), IsNotNull(inv_date_sk)], ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_warehouse_sk:int,inv_quantity_on_hand:int>
+                     :     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46529]
+                     :     :        +- Filter isnotnull(w_warehouse_sk#186)
+                     :     :           +- FileScan parquet [w_warehouse_sk#186,w_warehouse_name#188] Batched: true, DataFilters: [isnotnull(w_warehouse_sk#186)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/warehouse.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(w_warehouse_sk)], ReadSchema: struct<w_warehouse_sk:int,w_warehouse_name:string>
+                     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#46533]
+                     :        +- Project [i_item_sk#500, i_item_id#501]
+                     :           +- Filter (((isnotnull(i_current_price#505) AND (i_current_price#505 >= 0.99)) AND (i_current_price#505 <= 1.49)) AND isnotnull(i_item_sk#500))
+                     :              +- FileScan parquet [i_item_sk#500,i_item_id#501,i_current_price#505] Batched: true, DataFilters: [isnotnull(i_current_price#505), (i_current_price#505 >= 0.99), (i_current_price#505 <= 1.49), is..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_current_price), GreaterThanOrEqual(i_current_price,0.99), LessThanOrEqual(i_current_..., ReadSchema: struct<i_item_sk:int,i_item_id:string,i_current_price:decimal(7,2)>
+                     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46537]
+                        +- Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2000-04-19)) AND (d_date#600 <= 2000-06-18)) AND isnotnull(d_date_sk#598))
+                           +- FileScan parquet [d_date_sk#598,d_date#600] Batched: true, DataFilters: [isnotnull(d_date#600), (d_date#600 >= 2000-04-19), (d_date#600 <= 2000-06-18), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2000-04-19), LessThanOrEqual(d_date,2000-06-18), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>

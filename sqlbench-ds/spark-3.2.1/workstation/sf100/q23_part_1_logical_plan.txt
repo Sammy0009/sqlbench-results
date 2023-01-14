@@ -1,110 +1,110 @@
-Aggregate [sum(sales#9261) AS sum(sales)#9435]
+Aggregate [sum(sales#6270) AS sum(sales)#6444]
 +- Union false, false
-   :- Project [CheckOverflow((promote_precision(cast(cast(cs_quantity#562 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(cs_list_price#564 as decimal(12,2)))), DecimalType(18,2), true) AS sales#9261]
-   :  +- Join Inner, (cs_sold_date_sk#544 = d_date_sk#9367)
-   :     :- Project [cs_sold_date_sk#544, cs_quantity#562, cs_list_price#564]
-   :     :  +- Join LeftSemi, (cs_bill_customer_sk#547 = c_customer_sk#9349)
-   :     :     :- Project [cs_sold_date_sk#544, cs_bill_customer_sk#547, cs_quantity#562, cs_list_price#564]
-   :     :     :  +- Join LeftSemi, (cs_item_sk#559 = item_sk#9268)
-   :     :     :     :- Project [cs_sold_date_sk#544, cs_bill_customer_sk#547, cs_item_sk#559, cs_quantity#562, cs_list_price#564]
-   :     :     :     :  +- Filter isnotnull(cs_sold_date_sk#544)
-   :     :     :     :     +- Relation [cs_sold_date_sk#544,cs_sold_time_sk#545,cs_ship_date_sk#546,cs_bill_customer_sk#547,cs_bill_cdemo_sk#548,cs_bill_hdemo_sk#549,cs_bill_addr_sk#550,cs_ship_customer_sk#551,cs_ship_cdemo_sk#552,cs_ship_hdemo_sk#553,cs_ship_addr_sk#554,cs_call_center_sk#555,cs_catalog_page_sk#556,cs_ship_mode_sk#557,cs_warehouse_sk#558,cs_item_sk#559,cs_promo_sk#560,cs_order_number#561L,cs_quantity#562,cs_wholesale_cost#563,cs_list_price#564,cs_sales_price#565,cs_ext_discount_amt#566,cs_ext_sales_price#567,... 10 more fields] parquet
-   :     :     :     +- Project [item_sk#9268]
-   :     :     :        +- Filter (cnt#9270L > 4)
-   :     :     :           +- Aggregate [_groupingexpression#9437, i_item_sk#668, d_date#614], [i_item_sk#668 AS item_sk#9268, count(1) AS cnt#9270L]
-   :     :     :              +- Project [d_date#614, i_item_sk#668, substr(i_item_desc#672, 1, 30) AS _groupingexpression#9437]
-   :     :     :                 +- Join Inner, (ss_item_sk#254 = i_item_sk#668)
-   :     :     :                    :- Project [ss_item_sk#254, d_date#614]
-   :     :     :                    :  +- Join Inner, (ss_sold_date_sk#252 = d_date_sk#612)
-   :     :     :                    :     :- Project [ss_sold_date_sk#252, ss_item_sk#254]
-   :     :     :                    :     :  +- Filter (isnotnull(ss_sold_date_sk#252) AND isnotnull(ss_item_sk#254))
-   :     :     :                    :     :     +- Relation [ss_sold_date_sk#252,ss_sold_time_sk#253,ss_item_sk#254,ss_customer_sk#255,ss_cdemo_sk#256,ss_hdemo_sk#257,ss_addr_sk#258,ss_store_sk#259,ss_promo_sk#260,ss_ticket_number#261L,ss_quantity#262,ss_wholesale_cost#263,ss_list_price#264,ss_sales_price#265,ss_ext_discount_amt#266,ss_ext_sales_price#267,ss_ext_wholesale_cost#268,ss_ext_list_price#269,ss_ext_tax#270,ss_coupon_amt#271,ss_net_paid#272,ss_net_paid_inc_tax#273,ss_net_profit#274] parquet
-   :     :     :                    :     +- Project [d_date_sk#612, d_date#614]
-   :     :     :                    :        +- Filter (d_year#618 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#612))
-   :     :     :                    :           +- Relation [d_date_sk#612,d_date_id#613,d_date#614,d_month_seq#615,d_week_seq#616,d_quarter_seq#617,d_year#618,d_dow#619,d_moy#620,d_dom#621,d_qoy#622,d_fy_year#623,d_fy_quarter_seq#624,d_fy_week_seq#625,d_day_name#626,d_quarter_name#627,d_holiday#628,d_weekend#629,d_following_holiday#630,d_first_dom#631,d_last_dom#632,d_same_day_ly#633,d_same_day_lq#634,d_current_day#635,... 4 more fields] parquet
-   :     :     :                    +- Project [i_item_sk#668, i_item_desc#672]
-   :     :     :                       +- Filter isnotnull(i_item_sk#668)
-   :     :     :                          +- Relation [i_item_sk#668,i_item_id#669,i_rec_start_date#670,i_rec_end_date#671,i_item_desc#672,i_current_price#673,i_wholesale_cost#674,i_brand_id#675,i_brand#676,i_class_id#677,i_class#678,i_category_id#679,i_category#680,i_manufact_id#681,i_manufact#682,i_size#683,i_formulation#684,i_color#685,i_units#686,i_container#687,i_manager_id#688,i_product_name#689] parquet
-   :     :     +- Project [c_customer_sk#9349]
-   :     :        +- Filter (isnotnull(ssales#9273) AND (cast(ssales#9273 as decimal(38,8)) > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#9274 [] as decimal(32,6)))), DecimalType(38,8), true)))
-   :     :           :  +- Aggregate [max(csales#9271) AS tpcds_cmax#9272]
-   :     :           :     +- Aggregate [c_customer_sk#400], [sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#9285 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#9288 as decimal(12,2)))), DecimalType(18,2), true)) AS csales#9271]
-   :     :           :        +- Project [ss_quantity#9285, ss_sales_price#9288, c_customer_sk#400]
-   :     :           :           +- Join Inner, (ss_customer_sk#9278 = c_customer_sk#400)
-   :     :           :              :- Project [ss_customer_sk#9278, ss_quantity#9285, ss_sales_price#9288]
-   :     :           :              :  +- Join Inner, (ss_sold_date_sk#9275 = d_date_sk#9298)
-   :     :           :              :     :- Project [ss_sold_date_sk#9275, ss_customer_sk#9278, ss_quantity#9285, ss_sales_price#9288]
-   :     :           :              :     :  +- Filter (isnotnull(ss_sold_date_sk#9275) AND isnotnull(ss_customer_sk#9278))
-   :     :           :              :     :     +- Relation [ss_sold_date_sk#9275,ss_sold_time_sk#9276,ss_item_sk#9277,ss_customer_sk#9278,ss_cdemo_sk#9279,ss_hdemo_sk#9280,ss_addr_sk#9281,ss_store_sk#9282,ss_promo_sk#9283,ss_ticket_number#9284L,ss_quantity#9285,ss_wholesale_cost#9286,ss_list_price#9287,ss_sales_price#9288,ss_ext_discount_amt#9289,ss_ext_sales_price#9290,ss_ext_wholesale_cost#9291,ss_ext_list_price#9292,ss_ext_tax#9293,ss_coupon_amt#9294,ss_net_paid#9295,ss_net_paid_inc_tax#9296,ss_net_profit#9297] parquet
-   :     :           :              :     +- Project [d_date_sk#9298]
-   :     :           :              :        +- Filter (d_year#9304 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#9298))
-   :     :           :              :           +- Relation [d_date_sk#9298,d_date_id#9299,d_date#9300,d_month_seq#9301,d_week_seq#9302,d_quarter_seq#9303,d_year#9304,d_dow#9305,d_moy#9306,d_dom#9307,d_qoy#9308,d_fy_year#9309,d_fy_quarter_seq#9310,d_fy_week_seq#9311,d_day_name#9312,d_quarter_name#9313,d_holiday#9314,d_weekend#9315,d_following_holiday#9316,d_first_dom#9317,d_last_dom#9318,d_same_day_ly#9319,d_same_day_lq#9320,d_current_day#9321,... 4 more fields] parquet
-   :     :           :              +- Project [c_customer_sk#400]
-   :     :           :                 +- Filter isnotnull(c_customer_sk#400)
-   :     :           :                    +- Relation [c_customer_sk#400,c_customer_id#401,c_current_cdemo_sk#402,c_current_hdemo_sk#403,c_current_addr_sk#404,c_first_shipto_date_sk#405,c_first_sales_date_sk#406,c_salutation#407,c_first_name#408,c_last_name#409,c_preferred_cust_flag#410,c_birth_day#411,c_birth_month#412,c_birth_year#413,c_birth_country#414,c_login#415,c_email_address#416,c_last_review_date_sk#417] parquet
-   :     :           +- Aggregate [c_customer_sk#9349], [c_customer_sk#9349, sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#9336 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#9339 as decimal(12,2)))), DecimalType(18,2), true)) AS ssales#9273]
-   :     :              +- Project [ss_quantity#9336, ss_sales_price#9339, c_customer_sk#9349]
-   :     :                 +- Join Inner, (ss_customer_sk#9329 = c_customer_sk#9349)
-   :     :                    :- Project [ss_customer_sk#9329, ss_quantity#9336, ss_sales_price#9339]
-   :     :                    :  +- Filter isnotnull(ss_customer_sk#9329)
-   :     :                    :     +- Relation [ss_sold_date_sk#9326,ss_sold_time_sk#9327,ss_item_sk#9328,ss_customer_sk#9329,ss_cdemo_sk#9330,ss_hdemo_sk#9331,ss_addr_sk#9332,ss_store_sk#9333,ss_promo_sk#9334,ss_ticket_number#9335L,ss_quantity#9336,ss_wholesale_cost#9337,ss_list_price#9338,ss_sales_price#9339,ss_ext_discount_amt#9340,ss_ext_sales_price#9341,ss_ext_wholesale_cost#9342,ss_ext_list_price#9343,ss_ext_tax#9344,ss_coupon_amt#9345,ss_net_paid#9346,ss_net_paid_inc_tax#9347,ss_net_profit#9348] parquet
-   :     :                    +- Project [c_customer_sk#9349]
-   :     :                       +- Filter isnotnull(c_customer_sk#9349)
-   :     :                          +- Relation [c_customer_sk#9349,c_customer_id#9350,c_current_cdemo_sk#9351,c_current_hdemo_sk#9352,c_current_addr_sk#9353,c_first_shipto_date_sk#9354,c_first_sales_date_sk#9355,c_salutation#9356,c_first_name#9357,c_last_name#9358,c_preferred_cust_flag#9359,c_birth_day#9360,c_birth_month#9361,c_birth_year#9362,c_birth_country#9363,c_login#9364,c_email_address#9365,c_last_review_date_sk#9366] parquet
-   :     +- Project [d_date_sk#9367]
-   :        +- Filter (((isnotnull(d_year#9373) AND isnotnull(d_moy#9375)) AND ((d_year#9373 = 2000) AND (d_moy#9375 = 7))) AND isnotnull(d_date_sk#9367))
-   :           +- Relation [d_date_sk#9367,d_date_id#9368,d_date#9369,d_month_seq#9370,d_week_seq#9371,d_quarter_seq#9372,d_year#9373,d_dow#9374,d_moy#9375,d_dom#9376,d_qoy#9377,d_fy_year#9378,d_fy_quarter_seq#9379,d_fy_week_seq#9380,d_day_name#9381,d_quarter_name#9382,d_holiday#9383,d_weekend#9384,d_following_holiday#9385,d_first_dom#9386,d_last_dom#9387,d_same_day_ly#9388,d_same_day_lq#9389,d_current_day#9390,... 4 more fields] parquet
-   +- Project [CheckOverflow((promote_precision(cast(cast(ws_quantity#494 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ws_list_price#496 as decimal(12,2)))), DecimalType(18,2), true) AS sales#9264]
-      +- Join Inner, (ws_sold_date_sk#476 = d_date_sk#9395)
-         :- Project [ws_sold_date_sk#476, ws_quantity#494, ws_list_price#496]
-         :  +- Join LeftSemi, (ws_bill_customer_sk#480 = c_customer_sk#9349)
-         :     :- Project [ws_sold_date_sk#476, ws_bill_customer_sk#480, ws_quantity#494, ws_list_price#496]
-         :     :  +- Join LeftSemi, (ws_item_sk#479 = item_sk#9268)
-         :     :     :- Project [ws_sold_date_sk#476, ws_item_sk#479, ws_bill_customer_sk#480, ws_quantity#494, ws_list_price#496]
-         :     :     :  +- Filter isnotnull(ws_sold_date_sk#476)
-         :     :     :     +- Relation [ws_sold_date_sk#476,ws_sold_time_sk#477,ws_ship_date_sk#478,ws_item_sk#479,ws_bill_customer_sk#480,ws_bill_cdemo_sk#481,ws_bill_hdemo_sk#482,ws_bill_addr_sk#483,ws_ship_customer_sk#484,ws_ship_cdemo_sk#485,ws_ship_hdemo_sk#486,ws_ship_addr_sk#487,ws_web_page_sk#488,ws_web_site_sk#489,ws_ship_mode_sk#490,ws_warehouse_sk#491,ws_promo_sk#492,ws_order_number#493L,ws_quantity#494,ws_wholesale_cost#495,ws_list_price#496,ws_sales_price#497,ws_ext_discount_amt#498,ws_ext_sales_price#499,... 10 more fields] parquet
-         :     :     +- Project [item_sk#9268]
-         :     :        +- Filter (cnt#9270L > 4)
-         :     :           +- Aggregate [_groupingexpression#9438, i_item_sk#668, d_date#614], [i_item_sk#668 AS item_sk#9268, count(1) AS cnt#9270L]
-         :     :              +- Project [d_date#614, i_item_sk#668, substr(i_item_desc#672, 1, 30) AS _groupingexpression#9438]
-         :     :                 +- Join Inner, (ss_item_sk#254 = i_item_sk#668)
-         :     :                    :- Project [ss_item_sk#254, d_date#614]
-         :     :                    :  +- Join Inner, (ss_sold_date_sk#252 = d_date_sk#612)
-         :     :                    :     :- Project [ss_sold_date_sk#252, ss_item_sk#254]
-         :     :                    :     :  +- Filter (isnotnull(ss_sold_date_sk#252) AND isnotnull(ss_item_sk#254))
-         :     :                    :     :     +- Relation [ss_sold_date_sk#252,ss_sold_time_sk#253,ss_item_sk#254,ss_customer_sk#255,ss_cdemo_sk#256,ss_hdemo_sk#257,ss_addr_sk#258,ss_store_sk#259,ss_promo_sk#260,ss_ticket_number#261L,ss_quantity#262,ss_wholesale_cost#263,ss_list_price#264,ss_sales_price#265,ss_ext_discount_amt#266,ss_ext_sales_price#267,ss_ext_wholesale_cost#268,ss_ext_list_price#269,ss_ext_tax#270,ss_coupon_amt#271,ss_net_paid#272,ss_net_paid_inc_tax#273,ss_net_profit#274] parquet
-         :     :                    :     +- Project [d_date_sk#612, d_date#614]
-         :     :                    :        +- Filter (d_year#618 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#612))
-         :     :                    :           +- Relation [d_date_sk#612,d_date_id#613,d_date#614,d_month_seq#615,d_week_seq#616,d_quarter_seq#617,d_year#618,d_dow#619,d_moy#620,d_dom#621,d_qoy#622,d_fy_year#623,d_fy_quarter_seq#624,d_fy_week_seq#625,d_day_name#626,d_quarter_name#627,d_holiday#628,d_weekend#629,d_following_holiday#630,d_first_dom#631,d_last_dom#632,d_same_day_ly#633,d_same_day_lq#634,d_current_day#635,... 4 more fields] parquet
-         :     :                    +- Project [i_item_sk#668, i_item_desc#672]
-         :     :                       +- Filter isnotnull(i_item_sk#668)
-         :     :                          +- Relation [i_item_sk#668,i_item_id#669,i_rec_start_date#670,i_rec_end_date#671,i_item_desc#672,i_current_price#673,i_wholesale_cost#674,i_brand_id#675,i_brand#676,i_class_id#677,i_class#678,i_category_id#679,i_category#680,i_manufact_id#681,i_manufact#682,i_size#683,i_formulation#684,i_color#685,i_units#686,i_container#687,i_manager_id#688,i_product_name#689] parquet
-         :     +- Project [c_customer_sk#9349]
-         :        +- Filter (isnotnull(ssales#9273) AND (cast(ssales#9273 as decimal(38,8)) > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#9274 [] as decimal(32,6)))), DecimalType(38,8), true)))
-         :           :  +- Aggregate [max(csales#9271) AS tpcds_cmax#9272]
-         :           :     +- Aggregate [c_customer_sk#400], [sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#9285 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#9288 as decimal(12,2)))), DecimalType(18,2), true)) AS csales#9271]
-         :           :        +- Project [ss_quantity#9285, ss_sales_price#9288, c_customer_sk#400]
-         :           :           +- Join Inner, (ss_customer_sk#9278 = c_customer_sk#400)
-         :           :              :- Project [ss_customer_sk#9278, ss_quantity#9285, ss_sales_price#9288]
-         :           :              :  +- Join Inner, (ss_sold_date_sk#9275 = d_date_sk#9298)
-         :           :              :     :- Project [ss_sold_date_sk#9275, ss_customer_sk#9278, ss_quantity#9285, ss_sales_price#9288]
-         :           :              :     :  +- Filter (isnotnull(ss_sold_date_sk#9275) AND isnotnull(ss_customer_sk#9278))
-         :           :              :     :     +- Relation [ss_sold_date_sk#9275,ss_sold_time_sk#9276,ss_item_sk#9277,ss_customer_sk#9278,ss_cdemo_sk#9279,ss_hdemo_sk#9280,ss_addr_sk#9281,ss_store_sk#9282,ss_promo_sk#9283,ss_ticket_number#9284L,ss_quantity#9285,ss_wholesale_cost#9286,ss_list_price#9287,ss_sales_price#9288,ss_ext_discount_amt#9289,ss_ext_sales_price#9290,ss_ext_wholesale_cost#9291,ss_ext_list_price#9292,ss_ext_tax#9293,ss_coupon_amt#9294,ss_net_paid#9295,ss_net_paid_inc_tax#9296,ss_net_profit#9297] parquet
-         :           :              :     +- Project [d_date_sk#9298]
-         :           :              :        +- Filter (d_year#9304 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#9298))
-         :           :              :           +- Relation [d_date_sk#9298,d_date_id#9299,d_date#9300,d_month_seq#9301,d_week_seq#9302,d_quarter_seq#9303,d_year#9304,d_dow#9305,d_moy#9306,d_dom#9307,d_qoy#9308,d_fy_year#9309,d_fy_quarter_seq#9310,d_fy_week_seq#9311,d_day_name#9312,d_quarter_name#9313,d_holiday#9314,d_weekend#9315,d_following_holiday#9316,d_first_dom#9317,d_last_dom#9318,d_same_day_ly#9319,d_same_day_lq#9320,d_current_day#9321,... 4 more fields] parquet
-         :           :              +- Project [c_customer_sk#400]
-         :           :                 +- Filter isnotnull(c_customer_sk#400)
-         :           :                    +- Relation [c_customer_sk#400,c_customer_id#401,c_current_cdemo_sk#402,c_current_hdemo_sk#403,c_current_addr_sk#404,c_first_shipto_date_sk#405,c_first_sales_date_sk#406,c_salutation#407,c_first_name#408,c_last_name#409,c_preferred_cust_flag#410,c_birth_day#411,c_birth_month#412,c_birth_year#413,c_birth_country#414,c_login#415,c_email_address#416,c_last_review_date_sk#417] parquet
-         :           +- Aggregate [c_customer_sk#9349], [c_customer_sk#9349, sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#9336 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#9339 as decimal(12,2)))), DecimalType(18,2), true)) AS ssales#9273]
-         :              +- Project [ss_quantity#9336, ss_sales_price#9339, c_customer_sk#9349]
-         :                 +- Join Inner, (ss_customer_sk#9329 = c_customer_sk#9349)
-         :                    :- Project [ss_customer_sk#9329, ss_quantity#9336, ss_sales_price#9339]
-         :                    :  +- Filter isnotnull(ss_customer_sk#9329)
-         :                    :     +- Relation [ss_sold_date_sk#9326,ss_sold_time_sk#9327,ss_item_sk#9328,ss_customer_sk#9329,ss_cdemo_sk#9330,ss_hdemo_sk#9331,ss_addr_sk#9332,ss_store_sk#9333,ss_promo_sk#9334,ss_ticket_number#9335L,ss_quantity#9336,ss_wholesale_cost#9337,ss_list_price#9338,ss_sales_price#9339,ss_ext_discount_amt#9340,ss_ext_sales_price#9341,ss_ext_wholesale_cost#9342,ss_ext_list_price#9343,ss_ext_tax#9344,ss_coupon_amt#9345,ss_net_paid#9346,ss_net_paid_inc_tax#9347,ss_net_profit#9348] parquet
-         :                    +- Project [c_customer_sk#9349]
-         :                       +- Filter isnotnull(c_customer_sk#9349)
-         :                          +- Relation [c_customer_sk#9349,c_customer_id#9350,c_current_cdemo_sk#9351,c_current_hdemo_sk#9352,c_current_addr_sk#9353,c_first_shipto_date_sk#9354,c_first_sales_date_sk#9355,c_salutation#9356,c_first_name#9357,c_last_name#9358,c_preferred_cust_flag#9359,c_birth_day#9360,c_birth_month#9361,c_birth_year#9362,c_birth_country#9363,c_login#9364,c_email_address#9365,c_last_review_date_sk#9366] parquet
-         +- Project [d_date_sk#9395]
-            +- Filter (((isnotnull(d_year#9401) AND isnotnull(d_moy#9403)) AND ((d_year#9401 = 2000) AND (d_moy#9403 = 7))) AND isnotnull(d_date_sk#9395))
-               +- Relation [d_date_sk#9395,d_date_id#9396,d_date#9397,d_month_seq#9398,d_week_seq#9399,d_quarter_seq#9400,d_year#9401,d_dow#9402,d_moy#9403,d_dom#9404,d_qoy#9405,d_fy_year#9406,d_fy_quarter_seq#9407,d_fy_week_seq#9408,d_day_name#9409,d_quarter_name#9410,d_holiday#9411,d_weekend#9412,d_following_holiday#9413,d_first_dom#9414,d_last_dom#9415,d_same_day_ly#9416,d_same_day_lq#9417,d_current_day#9418,... 4 more fields] parquet
+   :- Project [CheckOverflow((promote_precision(cast(cast(cs_quantity#136 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(cs_list_price#138 as decimal(12,2)))), DecimalType(18,2), true) AS sales#6270]
+   :  +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#6376)
+   :     :- Project [cs_sold_date_sk#118, cs_quantity#136, cs_list_price#138]
+   :     :  +- Join LeftSemi, (cs_bill_customer_sk#121 = c_customer_sk#6358)
+   :     :     :- Project [cs_sold_date_sk#118, cs_bill_customer_sk#121, cs_quantity#136, cs_list_price#138]
+   :     :     :  +- Join LeftSemi, (cs_item_sk#133 = item_sk#6277)
+   :     :     :     :- Project [cs_sold_date_sk#118, cs_bill_customer_sk#121, cs_item_sk#133, cs_quantity#136, cs_list_price#138]
+   :     :     :     :  +- Filter isnotnull(cs_sold_date_sk#118)
+   :     :     :     :     +- Relation [cs_sold_date_sk#118,cs_sold_time_sk#119,cs_ship_date_sk#120,cs_bill_customer_sk#121,cs_bill_cdemo_sk#122,cs_bill_hdemo_sk#123,cs_bill_addr_sk#124,cs_ship_customer_sk#125,cs_ship_cdemo_sk#126,cs_ship_hdemo_sk#127,cs_ship_addr_sk#128,cs_call_center_sk#129,cs_catalog_page_sk#130,cs_ship_mode_sk#131,cs_warehouse_sk#132,cs_item_sk#133,cs_promo_sk#134,cs_order_number#135L,cs_quantity#136,cs_wholesale_cost#137,cs_list_price#138,cs_sales_price#139,cs_ext_discount_amt#140,cs_ext_sales_price#141,... 10 more fields] parquet
+   :     :     :     +- Project [item_sk#6277]
+   :     :     :        +- Filter (cnt#6279L > 4)
+   :     :     :           +- Aggregate [_groupingexpression#6446, i_item_sk#500, d_date#600], [i_item_sk#500 AS item_sk#6277, count(1) AS cnt#6279L]
+   :     :     :              +- Project [d_date#600, i_item_sk#500, substr(i_item_desc#504, 1, 30) AS _groupingexpression#6446]
+   :     :     :                 +- Join Inner, (ss_item_sk#666 = i_item_sk#500)
+   :     :     :                    :- Project [ss_item_sk#666, d_date#600]
+   :     :     :                    :  +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#598)
+   :     :     :                    :     :- Project [ss_sold_date_sk#664, ss_item_sk#666]
+   :     :     :                    :     :  +- Filter (isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_item_sk#666))
+   :     :     :                    :     :     +- Relation [ss_sold_date_sk#664,ss_sold_time_sk#665,ss_item_sk#666,ss_customer_sk#667,ss_cdemo_sk#668,ss_hdemo_sk#669,ss_addr_sk#670,ss_store_sk#671,ss_promo_sk#672,ss_ticket_number#673L,ss_quantity#674,ss_wholesale_cost#675,ss_list_price#676,ss_sales_price#677,ss_ext_discount_amt#678,ss_ext_sales_price#679,ss_ext_wholesale_cost#680,ss_ext_list_price#681,ss_ext_tax#682,ss_coupon_amt#683,ss_net_paid#684,ss_net_paid_inc_tax#685,ss_net_profit#686] parquet
+   :     :     :                    :     +- Project [d_date_sk#598, d_date#600]
+   :     :     :                    :        +- Filter (d_year#604 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#598))
+   :     :     :                    :           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
+   :     :     :                    +- Project [i_item_sk#500, i_item_desc#504]
+   :     :     :                       +- Filter isnotnull(i_item_sk#500)
+   :     :     :                          +- Relation [i_item_sk#500,i_item_id#501,i_rec_start_date#502,i_rec_end_date#503,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand_id#507,i_brand#508,i_class_id#509,i_class#510,i_category_id#511,i_category#512,i_manufact_id#513,i_manufact#514,i_size#515,i_formulation#516,i_color#517,i_units#518,i_container#519,i_manager_id#520,i_product_name#521] parquet
+   :     :     +- Project [c_customer_sk#6358]
+   :     :        +- Filter (isnotnull(ssales#6282) AND (cast(ssales#6282 as decimal(38,8)) > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#6283 [] as decimal(32,6)))), DecimalType(38,8), true)))
+   :     :           :  +- Aggregate [max(csales#6280) AS tpcds_cmax#6281]
+   :     :           :     +- Aggregate [c_customer_sk#562], [sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#6294 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#6297 as decimal(12,2)))), DecimalType(18,2), true)) AS csales#6280]
+   :     :           :        +- Project [ss_quantity#6294, ss_sales_price#6297, c_customer_sk#562]
+   :     :           :           +- Join Inner, (ss_sold_date_sk#6284 = d_date_sk#6307)
+   :     :           :              :- Project [ss_sold_date_sk#6284, ss_quantity#6294, ss_sales_price#6297, c_customer_sk#562]
+   :     :           :              :  +- Join Inner, (ss_customer_sk#6287 = c_customer_sk#562)
+   :     :           :              :     :- Project [ss_sold_date_sk#6284, ss_customer_sk#6287, ss_quantity#6294, ss_sales_price#6297]
+   :     :           :              :     :  +- Filter (isnotnull(ss_customer_sk#6287) AND isnotnull(ss_sold_date_sk#6284))
+   :     :           :              :     :     +- Relation [ss_sold_date_sk#6284,ss_sold_time_sk#6285,ss_item_sk#6286,ss_customer_sk#6287,ss_cdemo_sk#6288,ss_hdemo_sk#6289,ss_addr_sk#6290,ss_store_sk#6291,ss_promo_sk#6292,ss_ticket_number#6293L,ss_quantity#6294,ss_wholesale_cost#6295,ss_list_price#6296,ss_sales_price#6297,ss_ext_discount_amt#6298,ss_ext_sales_price#6299,ss_ext_wholesale_cost#6300,ss_ext_list_price#6301,ss_ext_tax#6302,ss_coupon_amt#6303,ss_net_paid#6304,ss_net_paid_inc_tax#6305,ss_net_profit#6306] parquet
+   :     :           :              :     +- Project [c_customer_sk#562]
+   :     :           :              :        +- Filter isnotnull(c_customer_sk#562)
+   :     :           :              :           +- Relation [c_customer_sk#562,c_customer_id#563,c_current_cdemo_sk#564,c_current_hdemo_sk#565,c_current_addr_sk#566,c_first_shipto_date_sk#567,c_first_sales_date_sk#568,c_salutation#569,c_first_name#570,c_last_name#571,c_preferred_cust_flag#572,c_birth_day#573,c_birth_month#574,c_birth_year#575,c_birth_country#576,c_login#577,c_email_address#578,c_last_review_date_sk#579] parquet
+   :     :           :              +- Project [d_date_sk#6307]
+   :     :           :                 +- Filter (d_year#6313 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#6307))
+   :     :           :                    +- Relation [d_date_sk#6307,d_date_id#6308,d_date#6309,d_month_seq#6310,d_week_seq#6311,d_quarter_seq#6312,d_year#6313,d_dow#6314,d_moy#6315,d_dom#6316,d_qoy#6317,d_fy_year#6318,d_fy_quarter_seq#6319,d_fy_week_seq#6320,d_day_name#6321,d_quarter_name#6322,d_holiday#6323,d_weekend#6324,d_following_holiday#6325,d_first_dom#6326,d_last_dom#6327,d_same_day_ly#6328,d_same_day_lq#6329,d_current_day#6330,... 4 more fields] parquet
+   :     :           +- Aggregate [c_customer_sk#6358], [c_customer_sk#6358, sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#6345 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#6348 as decimal(12,2)))), DecimalType(18,2), true)) AS ssales#6282]
+   :     :              +- Project [ss_quantity#6345, ss_sales_price#6348, c_customer_sk#6358]
+   :     :                 +- Join Inner, (ss_customer_sk#6338 = c_customer_sk#6358)
+   :     :                    :- Project [ss_customer_sk#6338, ss_quantity#6345, ss_sales_price#6348]
+   :     :                    :  +- Filter isnotnull(ss_customer_sk#6338)
+   :     :                    :     +- Relation [ss_sold_date_sk#6335,ss_sold_time_sk#6336,ss_item_sk#6337,ss_customer_sk#6338,ss_cdemo_sk#6339,ss_hdemo_sk#6340,ss_addr_sk#6341,ss_store_sk#6342,ss_promo_sk#6343,ss_ticket_number#6344L,ss_quantity#6345,ss_wholesale_cost#6346,ss_list_price#6347,ss_sales_price#6348,ss_ext_discount_amt#6349,ss_ext_sales_price#6350,ss_ext_wholesale_cost#6351,ss_ext_list_price#6352,ss_ext_tax#6353,ss_coupon_amt#6354,ss_net_paid#6355,ss_net_paid_inc_tax#6356,ss_net_profit#6357] parquet
+   :     :                    +- Project [c_customer_sk#6358]
+   :     :                       +- Filter isnotnull(c_customer_sk#6358)
+   :     :                          +- Relation [c_customer_sk#6358,c_customer_id#6359,c_current_cdemo_sk#6360,c_current_hdemo_sk#6361,c_current_addr_sk#6362,c_first_shipto_date_sk#6363,c_first_sales_date_sk#6364,c_salutation#6365,c_first_name#6366,c_last_name#6367,c_preferred_cust_flag#6368,c_birth_day#6369,c_birth_month#6370,c_birth_year#6371,c_birth_country#6372,c_login#6373,c_email_address#6374,c_last_review_date_sk#6375] parquet
+   :     +- Project [d_date_sk#6376]
+   :        +- Filter (((isnotnull(d_year#6382) AND isnotnull(d_moy#6384)) AND ((d_year#6382 = 2000) AND (d_moy#6384 = 7))) AND isnotnull(d_date_sk#6376))
+   :           +- Relation [d_date_sk#6376,d_date_id#6377,d_date#6378,d_month_seq#6379,d_week_seq#6380,d_quarter_seq#6381,d_year#6382,d_dow#6383,d_moy#6384,d_dom#6385,d_qoy#6386,d_fy_year#6387,d_fy_quarter_seq#6388,d_fy_week_seq#6389,d_day_name#6390,d_quarter_name#6391,d_holiday#6392,d_weekend#6393,d_following_holiday#6394,d_first_dom#6395,d_last_dom#6396,d_same_day_ly#6397,d_same_day_lq#6398,d_current_day#6399,... 4 more fields] parquet
+   +- Project [CheckOverflow((promote_precision(cast(cast(ws_quantity#402 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ws_list_price#404 as decimal(12,2)))), DecimalType(18,2), true) AS sales#6273]
+      +- Join Inner, (ws_sold_date_sk#384 = d_date_sk#6404)
+         :- Project [ws_sold_date_sk#384, ws_quantity#402, ws_list_price#404]
+         :  +- Join LeftSemi, (ws_bill_customer_sk#388 = c_customer_sk#6358)
+         :     :- Project [ws_sold_date_sk#384, ws_bill_customer_sk#388, ws_quantity#402, ws_list_price#404]
+         :     :  +- Join LeftSemi, (ws_item_sk#387 = item_sk#6277)
+         :     :     :- Project [ws_sold_date_sk#384, ws_item_sk#387, ws_bill_customer_sk#388, ws_quantity#402, ws_list_price#404]
+         :     :     :  +- Filter isnotnull(ws_sold_date_sk#384)
+         :     :     :     +- Relation [ws_sold_date_sk#384,ws_sold_time_sk#385,ws_ship_date_sk#386,ws_item_sk#387,ws_bill_customer_sk#388,ws_bill_cdemo_sk#389,ws_bill_hdemo_sk#390,ws_bill_addr_sk#391,ws_ship_customer_sk#392,ws_ship_cdemo_sk#393,ws_ship_hdemo_sk#394,ws_ship_addr_sk#395,ws_web_page_sk#396,ws_web_site_sk#397,ws_ship_mode_sk#398,ws_warehouse_sk#399,ws_promo_sk#400,ws_order_number#401L,ws_quantity#402,ws_wholesale_cost#403,ws_list_price#404,ws_sales_price#405,ws_ext_discount_amt#406,ws_ext_sales_price#407,... 10 more fields] parquet
+         :     :     +- Project [item_sk#6277]
+         :     :        +- Filter (cnt#6279L > 4)
+         :     :           +- Aggregate [_groupingexpression#6447, i_item_sk#500, d_date#600], [i_item_sk#500 AS item_sk#6277, count(1) AS cnt#6279L]
+         :     :              +- Project [d_date#600, i_item_sk#500, substr(i_item_desc#504, 1, 30) AS _groupingexpression#6447]
+         :     :                 +- Join Inner, (ss_item_sk#666 = i_item_sk#500)
+         :     :                    :- Project [ss_item_sk#666, d_date#600]
+         :     :                    :  +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#598)
+         :     :                    :     :- Project [ss_sold_date_sk#664, ss_item_sk#666]
+         :     :                    :     :  +- Filter (isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_item_sk#666))
+         :     :                    :     :     +- Relation [ss_sold_date_sk#664,ss_sold_time_sk#665,ss_item_sk#666,ss_customer_sk#667,ss_cdemo_sk#668,ss_hdemo_sk#669,ss_addr_sk#670,ss_store_sk#671,ss_promo_sk#672,ss_ticket_number#673L,ss_quantity#674,ss_wholesale_cost#675,ss_list_price#676,ss_sales_price#677,ss_ext_discount_amt#678,ss_ext_sales_price#679,ss_ext_wholesale_cost#680,ss_ext_list_price#681,ss_ext_tax#682,ss_coupon_amt#683,ss_net_paid#684,ss_net_paid_inc_tax#685,ss_net_profit#686] parquet
+         :     :                    :     +- Project [d_date_sk#598, d_date#600]
+         :     :                    :        +- Filter (d_year#604 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#598))
+         :     :                    :           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
+         :     :                    +- Project [i_item_sk#500, i_item_desc#504]
+         :     :                       +- Filter isnotnull(i_item_sk#500)
+         :     :                          +- Relation [i_item_sk#500,i_item_id#501,i_rec_start_date#502,i_rec_end_date#503,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand_id#507,i_brand#508,i_class_id#509,i_class#510,i_category_id#511,i_category#512,i_manufact_id#513,i_manufact#514,i_size#515,i_formulation#516,i_color#517,i_units#518,i_container#519,i_manager_id#520,i_product_name#521] parquet
+         :     +- Project [c_customer_sk#6358]
+         :        +- Filter (isnotnull(ssales#6282) AND (cast(ssales#6282 as decimal(38,8)) > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#6283 [] as decimal(32,6)))), DecimalType(38,8), true)))
+         :           :  +- Aggregate [max(csales#6280) AS tpcds_cmax#6281]
+         :           :     +- Aggregate [c_customer_sk#562], [sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#6294 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#6297 as decimal(12,2)))), DecimalType(18,2), true)) AS csales#6280]
+         :           :        +- Project [ss_quantity#6294, ss_sales_price#6297, c_customer_sk#562]
+         :           :           +- Join Inner, (ss_sold_date_sk#6284 = d_date_sk#6307)
+         :           :              :- Project [ss_sold_date_sk#6284, ss_quantity#6294, ss_sales_price#6297, c_customer_sk#562]
+         :           :              :  +- Join Inner, (ss_customer_sk#6287 = c_customer_sk#562)
+         :           :              :     :- Project [ss_sold_date_sk#6284, ss_customer_sk#6287, ss_quantity#6294, ss_sales_price#6297]
+         :           :              :     :  +- Filter (isnotnull(ss_customer_sk#6287) AND isnotnull(ss_sold_date_sk#6284))
+         :           :              :     :     +- Relation [ss_sold_date_sk#6284,ss_sold_time_sk#6285,ss_item_sk#6286,ss_customer_sk#6287,ss_cdemo_sk#6288,ss_hdemo_sk#6289,ss_addr_sk#6290,ss_store_sk#6291,ss_promo_sk#6292,ss_ticket_number#6293L,ss_quantity#6294,ss_wholesale_cost#6295,ss_list_price#6296,ss_sales_price#6297,ss_ext_discount_amt#6298,ss_ext_sales_price#6299,ss_ext_wholesale_cost#6300,ss_ext_list_price#6301,ss_ext_tax#6302,ss_coupon_amt#6303,ss_net_paid#6304,ss_net_paid_inc_tax#6305,ss_net_profit#6306] parquet
+         :           :              :     +- Project [c_customer_sk#562]
+         :           :              :        +- Filter isnotnull(c_customer_sk#562)
+         :           :              :           +- Relation [c_customer_sk#562,c_customer_id#563,c_current_cdemo_sk#564,c_current_hdemo_sk#565,c_current_addr_sk#566,c_first_shipto_date_sk#567,c_first_sales_date_sk#568,c_salutation#569,c_first_name#570,c_last_name#571,c_preferred_cust_flag#572,c_birth_day#573,c_birth_month#574,c_birth_year#575,c_birth_country#576,c_login#577,c_email_address#578,c_last_review_date_sk#579] parquet
+         :           :              +- Project [d_date_sk#6307]
+         :           :                 +- Filter (d_year#6313 IN (2000,2001,2002,2003) AND isnotnull(d_date_sk#6307))
+         :           :                    +- Relation [d_date_sk#6307,d_date_id#6308,d_date#6309,d_month_seq#6310,d_week_seq#6311,d_quarter_seq#6312,d_year#6313,d_dow#6314,d_moy#6315,d_dom#6316,d_qoy#6317,d_fy_year#6318,d_fy_quarter_seq#6319,d_fy_week_seq#6320,d_day_name#6321,d_quarter_name#6322,d_holiday#6323,d_weekend#6324,d_following_holiday#6325,d_first_dom#6326,d_last_dom#6327,d_same_day_ly#6328,d_same_day_lq#6329,d_current_day#6330,... 4 more fields] parquet
+         :           +- Aggregate [c_customer_sk#6358], [c_customer_sk#6358, sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#6345 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#6348 as decimal(12,2)))), DecimalType(18,2), true)) AS ssales#6282]
+         :              +- Project [ss_quantity#6345, ss_sales_price#6348, c_customer_sk#6358]
+         :                 +- Join Inner, (ss_customer_sk#6338 = c_customer_sk#6358)
+         :                    :- Project [ss_customer_sk#6338, ss_quantity#6345, ss_sales_price#6348]
+         :                    :  +- Filter isnotnull(ss_customer_sk#6338)
+         :                    :     +- Relation [ss_sold_date_sk#6335,ss_sold_time_sk#6336,ss_item_sk#6337,ss_customer_sk#6338,ss_cdemo_sk#6339,ss_hdemo_sk#6340,ss_addr_sk#6341,ss_store_sk#6342,ss_promo_sk#6343,ss_ticket_number#6344L,ss_quantity#6345,ss_wholesale_cost#6346,ss_list_price#6347,ss_sales_price#6348,ss_ext_discount_amt#6349,ss_ext_sales_price#6350,ss_ext_wholesale_cost#6351,ss_ext_list_price#6352,ss_ext_tax#6353,ss_coupon_amt#6354,ss_net_paid#6355,ss_net_paid_inc_tax#6356,ss_net_profit#6357] parquet
+         :                    +- Project [c_customer_sk#6358]
+         :                       +- Filter isnotnull(c_customer_sk#6358)
+         :                          +- Relation [c_customer_sk#6358,c_customer_id#6359,c_current_cdemo_sk#6360,c_current_hdemo_sk#6361,c_current_addr_sk#6362,c_first_shipto_date_sk#6363,c_first_sales_date_sk#6364,c_salutation#6365,c_first_name#6366,c_last_name#6367,c_preferred_cust_flag#6368,c_birth_day#6369,c_birth_month#6370,c_birth_year#6371,c_birth_country#6372,c_login#6373,c_email_address#6374,c_last_review_date_sk#6375] parquet
+         +- Project [d_date_sk#6404]
+            +- Filter (((isnotnull(d_year#6410) AND isnotnull(d_moy#6412)) AND ((d_year#6410 = 2000) AND (d_moy#6412 = 7))) AND isnotnull(d_date_sk#6404))
+               +- Relation [d_date_sk#6404,d_date_id#6405,d_date#6406,d_month_seq#6407,d_week_seq#6408,d_quarter_seq#6409,d_year#6410,d_dow#6411,d_moy#6412,d_dom#6413,d_qoy#6414,d_fy_year#6415,d_fy_quarter_seq#6416,d_fy_week_seq#6417,d_day_name#6418,d_quarter_name#6419,d_holiday#6420,d_weekend#6421,d_following_holiday#6422,d_first_dom#6423,d_last_dom#6424,d_same_day_ly#6425,d_same_day_lq#6426,d_current_day#6427,... 4 more fields] parquet

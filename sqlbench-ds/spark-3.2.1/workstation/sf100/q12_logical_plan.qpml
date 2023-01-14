@@ -9,10 +9,10 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: i_item_id#669, i_item_desc#672, i_category#680, i_class#678,\
-          \ i_current_price#673, itemrevenue#5627, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#5633)\
-          \ * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#5635)),\
-          \ DecimalType(38,17), true) AS revenueratio#5628"
+      - title: "Projection: i_item_id#501, i_item_desc#504, i_category#512, i_class#510,\
+          \ i_current_price#505, itemrevenue#4427, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#4433)\
+          \ * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#4435)),\
+          \ DecimalType(38,17), true) AS revenueratio#4428"
         operator: "projection"
         inputs:
         - title: "Window (unknown)"
@@ -21,45 +21,48 @@ diagram:
           - title: "Aggregate (unknown)"
             operator: "Aggregate"
             inputs:
-            - title: "Projection: ws_ext_sales_price#499, i_item_id#669, i_item_desc#672,\
-                \ i_current_price#673, i_class#678, i_category#680"
+            - title: "Projection: ws_ext_sales_price#407, i_item_id#501, i_item_desc#504,\
+                \ i_current_price#505, i_class#510, i_category#512"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ws_item_sk#479 = i_item_sk#668))"
+              - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#598))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ws_item_sk#479, ws_ext_sales_price#499"
+                - title: "Projection: ws_sold_date_sk#384, ws_ext_sales_price#407,\
+                    \ i_item_id#501, i_item_desc#504, i_current_price#505, i_class#510,\
+                    \ i_category#512"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((ws_sold_date_sk#476 = d_date_sk#612))"
+                  - title: "Inner Join: Some((ws_item_sk#387 = i_item_sk#500))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ws_sold_date_sk#476, ws_item_sk#479, ws_ext_sales_price#499"
+                    - title: "Projection: ws_sold_date_sk#384, ws_item_sk#387, ws_ext_sales_price#407"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(ws_sold_date_sk#476) AND isnotnull(ws_item_sk#479))"
+                      - title: "Filter: (isnotnull(ws_item_sk#387) AND isnotnull(ws_sold_date_sk#384))"
                         operator: "filter"
                         inputs:
                         - title: "web_sales.parquet"
                           operator: "scan"
                           inputs: []
-                    - title: "Projection: d_date_sk#612"
+                    - title: "Projection: i_item_sk#500, i_item_id#501, i_item_desc#504,\
+                        \ i_current_price#505, i_class#510, i_category#512"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: ((isnotnull(d_date#614) AND ((d_date#614 >=\
-                          \ 2000-03-01) AND (d_date#614 <= 2000-03-31))) AND isnotnull(d_date_sk#612))"
+                      - title: "Filter: (i_category#512 IN (Home,Children,Shoes) AND\
+                          \ isnotnull(i_item_sk#500))"
                         operator: "filter"
                         inputs:
-                        - title: "date_dim.parquet"
+                        - title: "item.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: i_item_sk#668, i_item_id#669, i_item_desc#672,\
-                    \ i_current_price#673, i_class#678, i_category#680"
+                - title: "Projection: d_date_sk#598"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (i_category#680 IN (Home,Children,Shoes) AND isnotnull(i_item_sk#668))"
+                  - title: "Filter: ((isnotnull(d_date#600) AND ((d_date#600 >= 2000-03-01)\
+                      \ AND (d_date#600 <= 2000-03-31))) AND isnotnull(d_date_sk#598))"
                     operator: "filter"
                     inputs:
-                    - title: "item.parquet"
+                    - title: "date_dim.parquet"
                       operator: "scan"
                       inputs: []

@@ -3,87 +3,88 @@ diagram:
   title: "Aggregate (unknown)"
   operator: "Aggregate"
   inputs:
-  - title: "Projection: cs_order_number#561L, cs_ext_ship_cost#572, cs_net_profit#577"
+  - title: "Projection: cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151"
     operator: "projection"
     inputs:
-    - title: "Inner Join: Some((cs_ship_addr_sk#554 = ca_address_sk#62))"
+    - title: "Inner Join: Some((cs_call_center_sk#129 = cc_call_center_sk#788))"
       operator: "join"
       inputs:
-      - title: "Projection: cs_ship_addr_sk#554, cs_order_number#561L, cs_ext_ship_cost#572,\
-          \ cs_net_profit#577"
+      - title: "Projection: cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146,\
+          \ cs_net_profit#151"
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((cs_ship_date_sk#546 = d_date_sk#612))"
+        - title: "Inner Join: Some((cs_ship_addr_sk#128 = ca_address_sk#214))"
           operator: "join"
           inputs:
-          - title: "Projection: cs_ship_date_sk#546, cs_ship_addr_sk#554, cs_order_number#561L,\
-              \ cs_ext_ship_cost#572, cs_net_profit#577"
+          - title: "Projection: cs_ship_addr_sk#128, cs_call_center_sk#129, cs_order_number#135L,\
+              \ cs_ext_ship_cost#146, cs_net_profit#151"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((cs_call_center_sk#555 = cc_call_center_sk#0))"
+            - title: "Inner Join: Some((cs_ship_date_sk#120 = d_date_sk#598))"
               operator: "join"
               inputs:
-              - title: "LeftAnti Join: Some((cs_order_number#561L = cr_order_number#362L))"
+              - title: "LeftAnti Join: Some((cs_order_number#135L = cr_order_number#264L))"
                 operator: "join"
                 inputs:
-                - title: "Projection: cs_ship_date_sk#546, cs_ship_addr_sk#554, cs_call_center_sk#555,\
-                    \ cs_order_number#561L, cs_ext_ship_cost#572, cs_net_profit#577"
+                - title: "Projection: cs_ship_date_sk#120, cs_ship_addr_sk#128, cs_call_center_sk#129,\
+                    \ cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151"
                   operator: "projection"
                   inputs:
-                  - title: "LeftSemi Join: Some(((cs_order_number#561L = cs_order_number#7666L)\
-                      \ AND NOT (cs_warehouse_sk#558 = cs_warehouse_sk#7663)))"
+                  - title: "LeftSemi Join: Some(((cs_order_number#135L = cs_order_number#5345L)\
+                      \ AND NOT (cs_warehouse_sk#132 = cs_warehouse_sk#5342)))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: cs_ship_date_sk#546, cs_ship_addr_sk#554,\
-                        \ cs_call_center_sk#555, cs_warehouse_sk#558, cs_order_number#561L,\
-                        \ cs_ext_ship_cost#572, cs_net_profit#577"
+                    - title: "Projection: cs_ship_date_sk#120, cs_ship_addr_sk#128,\
+                        \ cs_call_center_sk#129, cs_warehouse_sk#132, cs_order_number#135L,\
+                        \ cs_ext_ship_cost#146, cs_net_profit#151"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: ((isnotnull(cs_call_center_sk#555) AND isnotnull(cs_ship_date_sk#546))\
-                          \ AND isnotnull(cs_ship_addr_sk#554))"
+                      - title: "Filter: ((isnotnull(cs_ship_date_sk#120) AND isnotnull(cs_ship_addr_sk#128))\
+                          \ AND isnotnull(cs_call_center_sk#129))"
                         operator: "filter"
                         inputs:
                         - title: "catalog_sales.parquet"
                           operator: "scan"
                           inputs: []
-                    - title: "Projection: cs_warehouse_sk#7663, cs_order_number#7666L"
+                    - title: "Projection: cs_warehouse_sk#5342, cs_order_number#5345L"
                       operator: "projection"
                       inputs:
                       - title: "catalog_sales.parquet"
                         operator: "scan"
                         inputs: []
-                - title: "Projection: cr_order_number#362L"
+                - title: "Projection: cr_order_number#264L"
                   operator: "projection"
                   inputs:
                   - title: "catalog_returns.parquet"
                     operator: "scan"
                     inputs: []
-              - title: "Projection: cc_call_center_sk#0"
+              - title: "Projection: d_date_sk#598"
                 operator: "projection"
                 inputs:
-                - title: "Filter: (cc_county#25 IN (Franklin Parish,Walker County,Ziebach\
-                    \ County,Fairfield County,Daviess County) AND isnotnull(cc_call_center_sk#0))"
+                - title: "Filter: ((isnotnull(d_date#600) AND ((d_date#600 >= 2001-04-01)\
+                    \ AND (d_date#600 <= 2001-05-31))) AND isnotnull(d_date_sk#598))"
                   operator: "filter"
                   inputs:
-                  - title: "call_center.parquet"
+                  - title: "date_dim.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Projection: d_date_sk#612"
+          - title: "Projection: ca_address_sk#214"
             operator: "projection"
             inputs:
-            - title: "Filter: ((isnotnull(d_date#614) AND ((d_date#614 >= 2001-04-01)\
-                \ AND (d_date#614 <= 2001-05-31))) AND isnotnull(d_date_sk#612))"
+            - title: "Filter: ((isnotnull(ca_state#222) AND (ca_state#222 = TX)) AND\
+                \ isnotnull(ca_address_sk#214))"
               operator: "filter"
               inputs:
-              - title: "date_dim.parquet"
+              - title: "customer_address.parquet"
                 operator: "scan"
                 inputs: []
-      - title: "Projection: ca_address_sk#62"
+      - title: "Projection: cc_call_center_sk#788"
         operator: "projection"
         inputs:
-        - title: "Filter: ((isnotnull(ca_state#70) AND (ca_state#70 = TX)) AND isnotnull(ca_address_sk#62))"
+        - title: "Filter: (cc_county#813 IN (Franklin Parish,Walker County,Ziebach\
+            \ County,Fairfield County,Daviess County) AND isnotnull(cc_call_center_sk#788))"
           operator: "filter"
           inputs:
-          - title: "customer_address.parquet"
+          - title: "call_center.parquet"
             operator: "scan"
             inputs: []

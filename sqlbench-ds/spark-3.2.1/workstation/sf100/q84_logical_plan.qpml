@@ -6,103 +6,102 @@ diagram:
   - title: "LocalLimit (unknown)"
     operator: "LocalLimit"
     inputs:
-    - title: "Projection: customer_id#30980, customername#30981"
+    - title: "Projection: customer_id#18368, customername#18369"
       operator: "projection"
       inputs:
       - title: "Sort (unknown)"
         operator: "Sort"
         inputs:
-        - title: "Projection: c_customer_id#401 AS customer_id#30980, concat(coalesce(c_last_name#409,\
-            \ ), , , coalesce(c_first_name#408, )) AS customername#30981, c_customer_id#401"
+        - title: "Projection: c_customer_id#563 AS customer_id#18368, concat(coalesce(c_last_name#571,\
+            \ ), , , coalesce(c_first_name#570, )) AS customername#18369, c_customer_id#563"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((sr_cdemo_sk#140 = cd_demo_sk#222))"
+          - title: "Inner Join: Some((sr_cdemo_sk#714 = cd_demo_sk#48))"
             operator: "join"
             inputs:
-            - title: "Projection: c_customer_id#401, c_first_name#408, c_last_name#409,\
-                \ cd_demo_sk#222"
+            - title: "Projection: c_customer_id#563, c_first_name#570, c_last_name#571,\
+                \ cd_demo_sk#48"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ib_income_band_sk#240 = hd_income_band_sk#89))"
+              - title: "Inner Join: Some((ib_income_band_sk#302 = hd_income_band_sk#655))"
                 operator: "join"
                 inputs:
-                - title: "Projection: c_customer_id#401, c_first_name#408, c_last_name#409,\
-                    \ cd_demo_sk#222, hd_income_band_sk#89"
+                - title: "Projection: c_customer_id#563, c_first_name#570, c_last_name#571,\
+                    \ cd_demo_sk#48, hd_income_band_sk#655"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((c_current_addr_sk#404 = ca_address_sk#62))"
+                  - title: "Inner Join: Some((hd_demo_sk#654 = c_current_hdemo_sk#565))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: c_customer_id#401, c_current_addr_sk#404,\
-                        \ c_first_name#408, c_last_name#409, cd_demo_sk#222, hd_income_band_sk#89"
+                    - title: "Projection: c_customer_id#563, c_current_hdemo_sk#565,\
+                        \ c_first_name#570, c_last_name#571, cd_demo_sk#48"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((hd_demo_sk#88 = c_current_hdemo_sk#403))"
+                      - title: "Inner Join: Some((cd_demo_sk#48 = c_current_cdemo_sk#564))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: c_customer_id#401, c_current_hdemo_sk#403,\
-                            \ c_current_addr_sk#404, c_first_name#408, c_last_name#409,\
-                            \ cd_demo_sk#222"
+                        - title: "Projection: c_customer_id#563, c_current_cdemo_sk#564,\
+                            \ c_current_hdemo_sk#565, c_first_name#570, c_last_name#571"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((cd_demo_sk#222 = c_current_cdemo_sk#402))"
+                          - title: "Inner Join: Some((c_current_addr_sk#566 = ca_address_sk#214))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: c_customer_id#401, c_current_cdemo_sk#402,\
-                                \ c_current_hdemo_sk#403, c_current_addr_sk#404, c_first_name#408,\
-                                \ c_last_name#409"
+                            - title: "Projection: c_customer_id#563, c_current_cdemo_sk#564,\
+                                \ c_current_hdemo_sk#565, c_current_addr_sk#566, c_first_name#570,\
+                                \ c_last_name#571"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(c_current_cdemo_sk#402)\
-                                  \ AND (isnotnull(c_current_hdemo_sk#403) AND isnotnull(c_current_addr_sk#404)))"
+                              - title: "Filter: (isnotnull(c_current_addr_sk#566)\
+                                  \ AND (isnotnull(c_current_cdemo_sk#564) AND isnotnull(c_current_hdemo_sk#565)))"
                                 operator: "filter"
                                 inputs:
                                 - title: "customer.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: cd_demo_sk#222"
+                            - title: "Projection: ca_address_sk#214"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: isnotnull(cd_demo_sk#222)"
+                              - title: "Filter: ((isnotnull(ca_city#220) AND (ca_city#220\
+                                  \ = Oak Hill)) AND isnotnull(ca_address_sk#214))"
                                 operator: "filter"
                                 inputs:
-                                - title: "customer_demographics.parquet"
+                                - title: "customer_address.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: hd_demo_sk#88, hd_income_band_sk#89"
+                        - title: "Projection: cd_demo_sk#48"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (isnotnull(hd_demo_sk#88) AND isnotnull(hd_income_band_sk#89))"
+                          - title: "Filter: isnotnull(cd_demo_sk#48)"
                             operator: "filter"
                             inputs:
-                            - title: "household_demographics.parquet"
+                            - title: "customer_demographics.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: ca_address_sk#62"
+                    - title: "Projection: hd_demo_sk#654, hd_income_band_sk#655"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: ((isnotnull(ca_city#68) AND (ca_city#68 =\
-                          \ Oak Hill)) AND isnotnull(ca_address_sk#62))"
+                      - title: "Filter: (isnotnull(hd_demo_sk#654) AND isnotnull(hd_income_band_sk#655))"
                         operator: "filter"
                         inputs:
-                        - title: "customer_address.parquet"
+                        - title: "household_demographics.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: ib_income_band_sk#240"
+                - title: "Projection: ib_income_band_sk#302"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (((isnotnull(ib_lower_bound#241) AND isnotnull(ib_upper_bound#242))\
-                      \ AND ((ib_lower_bound#241 >= 47241) AND (ib_upper_bound#242\
-                      \ <= 97241))) AND isnotnull(ib_income_band_sk#240))"
+                  - title: "Filter: (((isnotnull(ib_lower_bound#303) AND isnotnull(ib_upper_bound#304))\
+                      \ AND ((ib_lower_bound#303 >= 47241) AND (ib_upper_bound#304\
+                      \ <= 97241))) AND isnotnull(ib_income_band_sk#302))"
                     operator: "filter"
                     inputs:
                     - title: "income_band.parquet"
                       operator: "scan"
                       inputs: []
-            - title: "Projection: sr_cdemo_sk#140"
+            - title: "Projection: sr_cdemo_sk#714"
               operator: "projection"
               inputs:
-              - title: "Filter: isnotnull(sr_cdemo_sk#140)"
+              - title: "Filter: isnotnull(sr_cdemo_sk#714)"
                 operator: "filter"
                 inputs:
                 - title: "store_returns.parquet"

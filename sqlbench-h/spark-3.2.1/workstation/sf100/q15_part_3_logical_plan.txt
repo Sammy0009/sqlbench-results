@@ -1,2 +1,0 @@
-CommandResult Execute DropTableCommand
-   +- DropTableCommand `revenue0`, false, true, false

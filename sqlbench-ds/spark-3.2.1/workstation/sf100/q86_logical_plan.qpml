@@ -9,8 +9,8 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: total_sum#31189, i_category#31199, i_class#31200, lochierarchy#31190,\
-          \ rank_within_parent#31191"
+      - title: "Projection: total_sum#18433, i_category#18443, i_class#18444, lochierarchy#18434,\
+          \ rank_within_parent#18435"
         operator: "projection"
         inputs:
         - title: "Window (unknown)"
@@ -22,41 +22,41 @@ diagram:
             - title: "Expand (unknown)"
               operator: "Expand"
               inputs:
-              - title: "Projection: ws_net_paid#505, i_category#680, i_class#678"
+              - title: "Projection: ws_net_paid#413, i_category#512, i_class#510"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((i_item_sk#668 = ws_item_sk#479))"
+                - title: "Inner Join: Some((i_item_sk#500 = ws_item_sk#387))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_item_sk#479, ws_net_paid#505"
+                  - title: "Projection: ws_item_sk#387, ws_net_paid#413"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((d_date_sk#612 = ws_sold_date_sk#476))"
+                    - title: "Inner Join: Some((d_date_sk#598 = ws_sold_date_sk#384))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ws_sold_date_sk#476, ws_item_sk#479, ws_net_paid#505"
+                      - title: "Projection: ws_sold_date_sk#384, ws_item_sk#387, ws_net_paid#413"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (isnotnull(ws_sold_date_sk#476) AND isnotnull(ws_item_sk#479))"
+                        - title: "Filter: (isnotnull(ws_sold_date_sk#384) AND isnotnull(ws_item_sk#387))"
                           operator: "filter"
                           inputs:
                           - title: "web_sales.parquet"
                             operator: "scan"
                             inputs: []
-                      - title: "Projection: d_date_sk#612"
+                      - title: "Projection: d_date_sk#598"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: ((isnotnull(d_month_seq#615) AND ((d_month_seq#615\
-                            \ >= 1205) AND (d_month_seq#615 <= 1216))) AND isnotnull(d_date_sk#612))"
+                        - title: "Filter: ((isnotnull(d_month_seq#601) AND ((d_month_seq#601\
+                            \ >= 1205) AND (d_month_seq#601 <= 1216))) AND isnotnull(d_date_sk#598))"
                           operator: "filter"
                           inputs:
                           - title: "date_dim.parquet"
                             operator: "scan"
                             inputs: []
-                  - title: "Projection: i_item_sk#668, i_class#678, i_category#680"
+                  - title: "Projection: i_item_sk#500, i_class#510, i_category#512"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: isnotnull(i_item_sk#668)"
+                    - title: "Filter: isnotnull(i_item_sk#500)"
                       operator: "filter"
                       inputs:
                       - title: "item.parquet"

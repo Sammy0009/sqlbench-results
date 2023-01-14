@@ -3,89 +3,89 @@ diagram:
   title: "Sort (unknown)"
   operator: "Sort"
   inputs:
-  - title: "Projection: ca_county#69, d_year#618, CheckOverflow((promote_precision(web_sales#12643)\
-      \ / promote_precision(web_sales#12588)), DecimalType(37,20), true) AS web_q1_q2_increase#12583,\
-      \ CheckOverflow((promote_precision(store_sales#12635) / promote_precision(store_sales#12587)),\
-      \ DecimalType(37,20), true) AS store_q1_q2_increase#12584, CheckOverflow((promote_precision(web_sales#12647)\
-      \ / promote_precision(web_sales#12643)), DecimalType(37,20), true) AS web_q2_q3_increase#12585,\
-      \ CheckOverflow((promote_precision(store_sales#12639) / promote_precision(store_sales#12635)),\
-      \ DecimalType(37,20), true) AS store_q2_q3_increase#12586"
+  - title: "Projection: ca_county#221, d_year#604, CheckOverflow((promote_precision(web_sales#7654)\
+      \ / promote_precision(web_sales#7599)), DecimalType(37,20), true) AS web_q1_q2_increase#7594,\
+      \ CheckOverflow((promote_precision(store_sales#7646) / promote_precision(store_sales#7598)),\
+      \ DecimalType(37,20), true) AS store_q1_q2_increase#7595, CheckOverflow((promote_precision(web_sales#7658)\
+      \ / promote_precision(web_sales#7654)), DecimalType(37,20), true) AS web_q2_q3_increase#7596,\
+      \ CheckOverflow((promote_precision(store_sales#7650) / promote_precision(store_sales#7646)),\
+      \ DecimalType(37,20), true) AS store_q2_q3_increase#7597"
     operator: "projection"
     inputs:
-    - title: "Inner Join: Some(((ca_county#12624 = ca_county#12929) AND (CASE WHEN\
-        \ (web_sales#12643 > 0.00) THEN CheckOverflow((promote_precision(web_sales#12647)\
-        \ / promote_precision(web_sales#12643)), DecimalType(37,20), true) END > CASE\
-        \ WHEN (store_sales#12635 > 0.00) THEN CheckOverflow((promote_precision(store_sales#12639)\
-        \ / promote_precision(store_sales#12635)), DecimalType(37,20), true) END)))"
+    - title: "Inner Join: Some(((ca_county#7635 = ca_county#7940) AND (CASE WHEN (web_sales#7654\
+        \ > 0.00) THEN CheckOverflow((promote_precision(web_sales#7658) / promote_precision(web_sales#7654)),\
+        \ DecimalType(37,20), true) END > CASE WHEN (store_sales#7646 > 0.00) THEN\
+        \ CheckOverflow((promote_precision(store_sales#7650) / promote_precision(store_sales#7646)),\
+        \ DecimalType(37,20), true) END)))"
       operator: "join"
       inputs:
-      - title: "Projection: ca_county#69, d_year#618, store_sales#12587, store_sales#12635,\
-          \ store_sales#12639, ca_county#12624, web_sales#12588, web_sales#12643"
+      - title: "Projection: ca_county#221, d_year#604, store_sales#7598, store_sales#7646,\
+          \ store_sales#7650, ca_county#7635, web_sales#7599, web_sales#7654"
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some(((ca_county#12624 = ca_county#12853) AND (CASE\
-            \ WHEN (web_sales#12588 > 0.00) THEN CheckOverflow((promote_precision(web_sales#12643)\
-            \ / promote_precision(web_sales#12588)), DecimalType(37,20), true) END\
-            \ > CASE WHEN (store_sales#12587 > 0.00) THEN CheckOverflow((promote_precision(store_sales#12635)\
-            \ / promote_precision(store_sales#12587)), DecimalType(37,20), true) END)))"
+        - title: "Inner Join: Some(((ca_county#7635 = ca_county#7864) AND (CASE WHEN\
+            \ (web_sales#7599 > 0.00) THEN CheckOverflow((promote_precision(web_sales#7654)\
+            \ / promote_precision(web_sales#7599)), DecimalType(37,20), true) END\
+            \ > CASE WHEN (store_sales#7598 > 0.00) THEN CheckOverflow((promote_precision(store_sales#7646)\
+            \ / promote_precision(store_sales#7598)), DecimalType(37,20), true) END)))"
           operator: "join"
           inputs:
-          - title: "Inner Join: Some((ca_county#69 = ca_county#12624))"
+          - title: "Inner Join: Some((ca_county#221 = ca_county#7635))"
             operator: "join"
             inputs:
-            - title: "Projection: ca_county#69, d_year#618, store_sales#12587, store_sales#12635,\
-                \ store_sales#12639"
+            - title: "Projection: ca_county#221, d_year#604, store_sales#7598, store_sales#7646,\
+                \ store_sales#7650"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ca_county#12712 = ca_county#12777))"
+              - title: "Inner Join: Some((ca_county#7723 = ca_county#7788))"
                 operator: "join"
                 inputs:
-                - title: "Inner Join: Some((ca_county#69 = ca_county#12712))"
+                - title: "Inner Join: Some((ca_county#221 = ca_county#7723))"
                   operator: "join"
                   inputs:
                   - title: "Aggregate (unknown)"
                     operator: "Aggregate"
                     inputs:
-                    - title: "Projection: ss_ext_sales_price#267, d_year#618, d_qoy#622,\
-                        \ ca_county#69"
+                    - title: "Projection: ss_ext_sales_price#679, d_year#604, d_qoy#608,\
+                        \ ca_county#221"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((ss_addr_sk#258 = ca_address_sk#62))"
+                      - title: "Inner Join: Some((ss_addr_sk#670 = ca_address_sk#214))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ss_addr_sk#258, ss_ext_sales_price#267,\
-                            \ d_year#618, d_qoy#622"
+                        - title: "Projection: ss_addr_sk#670, ss_ext_sales_price#679,\
+                            \ d_year#604, d_qoy#608"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((ss_sold_date_sk#252 = d_date_sk#612))"
+                          - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#598))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ss_sold_date_sk#252, ss_addr_sk#258,\
-                                \ ss_ext_sales_price#267"
+                            - title: "Projection: ss_sold_date_sk#664, ss_addr_sk#670,\
+                                \ ss_ext_sales_price#679"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ss_sold_date_sk#252) AND\
-                                  \ isnotnull(ss_addr_sk#258))"
+                              - title: "Filter: (isnotnull(ss_sold_date_sk#664) AND\
+                                  \ isnotnull(ss_addr_sk#670))"
                                 operator: "filter"
                                 inputs:
                                 - title: "store_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#612, d_year#618, d_qoy#622"
+                            - title: "Projection: d_date_sk#598, d_year#604, d_qoy#608"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (((isnotnull(d_qoy#622) AND isnotnull(d_year#618))\
-                                  \ AND ((d_qoy#622 = 1) AND (d_year#618 = 1998)))\
-                                  \ AND isnotnull(d_date_sk#612))"
+                              - title: "Filter: (((isnotnull(d_qoy#608) AND isnotnull(d_year#604))\
+                                  \ AND ((d_qoy#608 = 1) AND (d_year#604 = 1998)))\
+                                  \ AND isnotnull(d_date_sk#598))"
                                 operator: "filter"
                                 inputs:
                                 - title: "date_dim.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: ca_address_sk#62, ca_county#69"
+                        - title: "Projection: ca_address_sk#214, ca_county#221"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (isnotnull(ca_address_sk#62) AND isnotnull(ca_county#69))"
+                          - title: "Filter: (isnotnull(ca_address_sk#214) AND isnotnull(ca_county#221))"
                             operator: "filter"
                             inputs:
                             - title: "customer_address.parquet"
@@ -94,46 +94,46 @@ diagram:
                   - title: "Aggregate (unknown)"
                     operator: "Aggregate"
                     inputs:
-                    - title: "Projection: ss_ext_sales_price#12669, d_year#12683,\
-                        \ d_qoy#12687, ca_county#12712"
+                    - title: "Projection: ss_ext_sales_price#7680, d_year#7694, d_qoy#7698,\
+                        \ ca_county#7723"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((ss_addr_sk#12660 = ca_address_sk#12705))"
+                      - title: "Inner Join: Some((ss_addr_sk#7671 = ca_address_sk#7716))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ss_addr_sk#12660, ss_ext_sales_price#12669,\
-                            \ d_year#12683, d_qoy#12687"
+                        - title: "Projection: ss_addr_sk#7671, ss_ext_sales_price#7680,\
+                            \ d_year#7694, d_qoy#7698"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((ss_sold_date_sk#12654 = d_date_sk#12677))"
+                          - title: "Inner Join: Some((ss_sold_date_sk#7665 = d_date_sk#7688))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ss_sold_date_sk#12654, ss_addr_sk#12660,\
-                                \ ss_ext_sales_price#12669"
+                            - title: "Projection: ss_sold_date_sk#7665, ss_addr_sk#7671,\
+                                \ ss_ext_sales_price#7680"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ss_sold_date_sk#12654)\
-                                  \ AND isnotnull(ss_addr_sk#12660))"
+                              - title: "Filter: (isnotnull(ss_sold_date_sk#7665) AND\
+                                  \ isnotnull(ss_addr_sk#7671))"
                                 operator: "filter"
                                 inputs:
                                 - title: "store_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#12677, d_year#12683, d_qoy#12687"
+                            - title: "Projection: d_date_sk#7688, d_year#7694, d_qoy#7698"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (((isnotnull(d_qoy#12687) AND isnotnull(d_year#12683))\
-                                  \ AND ((d_qoy#12687 = 2) AND (d_year#12683 = 1998)))\
-                                  \ AND isnotnull(d_date_sk#12677))"
+                              - title: "Filter: (((isnotnull(d_qoy#7698) AND isnotnull(d_year#7694))\
+                                  \ AND ((d_qoy#7698 = 2) AND (d_year#7694 = 1998)))\
+                                  \ AND isnotnull(d_date_sk#7688))"
                                 operator: "filter"
                                 inputs:
                                 - title: "date_dim.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: ca_address_sk#12705, ca_county#12712"
+                        - title: "Projection: ca_address_sk#7716, ca_county#7723"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (isnotnull(ca_address_sk#12705) AND isnotnull(ca_county#12712))"
+                          - title: "Filter: (isnotnull(ca_address_sk#7716) AND isnotnull(ca_county#7723))"
                             operator: "filter"
                             inputs:
                             - title: "customer_address.parquet"
@@ -142,46 +142,46 @@ diagram:
                 - title: "Aggregate (unknown)"
                   operator: "Aggregate"
                   inputs:
-                  - title: "Projection: ss_ext_sales_price#12734, d_year#12748, d_qoy#12752,\
-                      \ ca_county#12777"
+                  - title: "Projection: ss_ext_sales_price#7745, d_year#7759, d_qoy#7763,\
+                      \ ca_county#7788"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((ss_addr_sk#12725 = ca_address_sk#12770))"
+                    - title: "Inner Join: Some((ss_addr_sk#7736 = ca_address_sk#7781))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ss_addr_sk#12725, ss_ext_sales_price#12734,\
-                          \ d_year#12748, d_qoy#12752"
+                      - title: "Projection: ss_addr_sk#7736, ss_ext_sales_price#7745,\
+                          \ d_year#7759, d_qoy#7763"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((ss_sold_date_sk#12719 = d_date_sk#12742))"
+                        - title: "Inner Join: Some((ss_sold_date_sk#7730 = d_date_sk#7753))"
                           operator: "join"
                           inputs:
-                          - title: "Projection: ss_sold_date_sk#12719, ss_addr_sk#12725,\
-                              \ ss_ext_sales_price#12734"
+                          - title: "Projection: ss_sold_date_sk#7730, ss_addr_sk#7736,\
+                              \ ss_ext_sales_price#7745"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: (isnotnull(ss_sold_date_sk#12719) AND\
-                                \ isnotnull(ss_addr_sk#12725))"
+                            - title: "Filter: (isnotnull(ss_sold_date_sk#7730) AND\
+                                \ isnotnull(ss_addr_sk#7736))"
                               operator: "filter"
                               inputs:
                               - title: "store_sales.parquet"
                                 operator: "scan"
                                 inputs: []
-                          - title: "Projection: d_date_sk#12742, d_year#12748, d_qoy#12752"
+                          - title: "Projection: d_date_sk#7753, d_year#7759, d_qoy#7763"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: (((isnotnull(d_qoy#12752) AND isnotnull(d_year#12748))\
-                                \ AND ((d_qoy#12752 = 3) AND (d_year#12748 = 1998)))\
-                                \ AND isnotnull(d_date_sk#12742))"
+                            - title: "Filter: (((isnotnull(d_qoy#7763) AND isnotnull(d_year#7759))\
+                                \ AND ((d_qoy#7763 = 3) AND (d_year#7759 = 1998)))\
+                                \ AND isnotnull(d_date_sk#7753))"
                               operator: "filter"
                               inputs:
                               - title: "date_dim.parquet"
                                 operator: "scan"
                                 inputs: []
-                      - title: "Projection: ca_address_sk#12770, ca_county#12777"
+                      - title: "Projection: ca_address_sk#7781, ca_county#7788"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (isnotnull(ca_address_sk#12770) AND isnotnull(ca_county#12777))"
+                        - title: "Filter: (isnotnull(ca_address_sk#7781) AND isnotnull(ca_county#7788))"
                           operator: "filter"
                           inputs:
                           - title: "customer_address.parquet"
@@ -190,45 +190,45 @@ diagram:
             - title: "Aggregate (unknown)"
               operator: "Aggregate"
               inputs:
-              - title: "Projection: ws_ext_sales_price#499, d_year#12595, d_qoy#12599,\
-                  \ ca_county#12624"
+              - title: "Projection: ws_ext_sales_price#407, d_year#7606, d_qoy#7610,\
+                  \ ca_county#7635"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((ws_bill_addr_sk#483 = ca_address_sk#12617))"
+                - title: "Inner Join: Some((ws_bill_addr_sk#391 = ca_address_sk#7628))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_bill_addr_sk#483, ws_ext_sales_price#499,\
-                      \ d_year#12595, d_qoy#12599"
+                  - title: "Projection: ws_bill_addr_sk#391, ws_ext_sales_price#407,\
+                      \ d_year#7606, d_qoy#7610"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((ws_sold_date_sk#476 = d_date_sk#12589))"
+                    - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#7600))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ws_sold_date_sk#476, ws_bill_addr_sk#483,\
-                          \ ws_ext_sales_price#499"
+                      - title: "Projection: ws_sold_date_sk#384, ws_bill_addr_sk#391,\
+                          \ ws_ext_sales_price#407"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (isnotnull(ws_sold_date_sk#476) AND isnotnull(ws_bill_addr_sk#483))"
+                        - title: "Filter: (isnotnull(ws_sold_date_sk#384) AND isnotnull(ws_bill_addr_sk#391))"
                           operator: "filter"
                           inputs:
                           - title: "web_sales.parquet"
                             operator: "scan"
                             inputs: []
-                      - title: "Projection: d_date_sk#12589, d_year#12595, d_qoy#12599"
+                      - title: "Projection: d_date_sk#7600, d_year#7606, d_qoy#7610"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (((isnotnull(d_qoy#12599) AND isnotnull(d_year#12595))\
-                            \ AND ((d_qoy#12599 = 1) AND (d_year#12595 = 1998))) AND\
-                            \ isnotnull(d_date_sk#12589))"
+                        - title: "Filter: (((isnotnull(d_qoy#7610) AND isnotnull(d_year#7606))\
+                            \ AND ((d_qoy#7610 = 1) AND (d_year#7606 = 1998))) AND\
+                            \ isnotnull(d_date_sk#7600))"
                           operator: "filter"
                           inputs:
                           - title: "date_dim.parquet"
                             operator: "scan"
                             inputs: []
-                  - title: "Projection: ca_address_sk#12617, ca_county#12624"
+                  - title: "Projection: ca_address_sk#7628, ca_county#7635"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(ca_address_sk#12617) AND isnotnull(ca_county#12624))"
+                    - title: "Filter: (isnotnull(ca_address_sk#7628) AND isnotnull(ca_county#7635))"
                       operator: "filter"
                       inputs:
                       - title: "customer_address.parquet"
@@ -237,45 +237,44 @@ diagram:
           - title: "Aggregate (unknown)"
             operator: "Aggregate"
             inputs:
-            - title: "Projection: ws_ext_sales_price#12807, d_year#12824, d_qoy#12828,\
-                \ ca_county#12853"
+            - title: "Projection: ws_ext_sales_price#7818, d_year#7835, d_qoy#7839,\
+                \ ca_county#7864"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ws_bill_addr_sk#12791 = ca_address_sk#12846))"
+              - title: "Inner Join: Some((ws_bill_addr_sk#7802 = ca_address_sk#7857))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ws_bill_addr_sk#12791, ws_ext_sales_price#12807,\
-                    \ d_year#12824, d_qoy#12828"
+                - title: "Projection: ws_bill_addr_sk#7802, ws_ext_sales_price#7818,\
+                    \ d_year#7835, d_qoy#7839"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((ws_sold_date_sk#12784 = d_date_sk#12818))"
+                  - title: "Inner Join: Some((ws_sold_date_sk#7795 = d_date_sk#7829))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ws_sold_date_sk#12784, ws_bill_addr_sk#12791,\
-                        \ ws_ext_sales_price#12807"
+                    - title: "Projection: ws_sold_date_sk#7795, ws_bill_addr_sk#7802,\
+                        \ ws_ext_sales_price#7818"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(ws_sold_date_sk#12784) AND isnotnull(ws_bill_addr_sk#12791))"
+                      - title: "Filter: (isnotnull(ws_sold_date_sk#7795) AND isnotnull(ws_bill_addr_sk#7802))"
                         operator: "filter"
                         inputs:
                         - title: "web_sales.parquet"
                           operator: "scan"
                           inputs: []
-                    - title: "Projection: d_date_sk#12818, d_year#12824, d_qoy#12828"
+                    - title: "Projection: d_date_sk#7829, d_year#7835, d_qoy#7839"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (((isnotnull(d_qoy#12828) AND isnotnull(d_year#12824))\
-                          \ AND ((d_qoy#12828 = 2) AND (d_year#12824 = 1998))) AND\
-                          \ isnotnull(d_date_sk#12818))"
+                      - title: "Filter: (((isnotnull(d_qoy#7839) AND isnotnull(d_year#7835))\
+                          \ AND ((d_qoy#7839 = 2) AND (d_year#7835 = 1998))) AND isnotnull(d_date_sk#7829))"
                         operator: "filter"
                         inputs:
                         - title: "date_dim.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: ca_address_sk#12846, ca_county#12853"
+                - title: "Projection: ca_address_sk#7857, ca_county#7864"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (isnotnull(ca_address_sk#12846) AND isnotnull(ca_county#12853))"
+                  - title: "Filter: (isnotnull(ca_address_sk#7857) AND isnotnull(ca_county#7864))"
                     operator: "filter"
                     inputs:
                     - title: "customer_address.parquet"
@@ -284,44 +283,43 @@ diagram:
       - title: "Aggregate (unknown)"
         operator: "Aggregate"
         inputs:
-        - title: "Projection: ws_ext_sales_price#12883, d_year#12900, d_qoy#12904,\
-            \ ca_county#12929"
+        - title: "Projection: ws_ext_sales_price#7894, d_year#7911, d_qoy#7915, ca_county#7940"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((ws_bill_addr_sk#12867 = ca_address_sk#12922))"
+          - title: "Inner Join: Some((ws_bill_addr_sk#7878 = ca_address_sk#7933))"
             operator: "join"
             inputs:
-            - title: "Projection: ws_bill_addr_sk#12867, ws_ext_sales_price#12883,\
-                \ d_year#12900, d_qoy#12904"
+            - title: "Projection: ws_bill_addr_sk#7878, ws_ext_sales_price#7894, d_year#7911,\
+                \ d_qoy#7915"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ws_sold_date_sk#12860 = d_date_sk#12894))"
+              - title: "Inner Join: Some((ws_sold_date_sk#7871 = d_date_sk#7905))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ws_sold_date_sk#12860, ws_bill_addr_sk#12867,\
-                    \ ws_ext_sales_price#12883"
+                - title: "Projection: ws_sold_date_sk#7871, ws_bill_addr_sk#7878,\
+                    \ ws_ext_sales_price#7894"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (isnotnull(ws_sold_date_sk#12860) AND isnotnull(ws_bill_addr_sk#12867))"
+                  - title: "Filter: (isnotnull(ws_sold_date_sk#7871) AND isnotnull(ws_bill_addr_sk#7878))"
                     operator: "filter"
                     inputs:
                     - title: "web_sales.parquet"
                       operator: "scan"
                       inputs: []
-                - title: "Projection: d_date_sk#12894, d_year#12900, d_qoy#12904"
+                - title: "Projection: d_date_sk#7905, d_year#7911, d_qoy#7915"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (((isnotnull(d_qoy#12904) AND isnotnull(d_year#12900))\
-                      \ AND ((d_qoy#12904 = 3) AND (d_year#12900 = 1998))) AND isnotnull(d_date_sk#12894))"
+                  - title: "Filter: (((isnotnull(d_qoy#7915) AND isnotnull(d_year#7911))\
+                      \ AND ((d_qoy#7915 = 3) AND (d_year#7911 = 1998))) AND isnotnull(d_date_sk#7905))"
                     operator: "filter"
                     inputs:
                     - title: "date_dim.parquet"
                       operator: "scan"
                       inputs: []
-            - title: "Projection: ca_address_sk#12922, ca_county#12929"
+            - title: "Projection: ca_address_sk#7933, ca_county#7940"
               operator: "projection"
               inputs:
-              - title: "Filter: (isnotnull(ca_address_sk#12922) AND isnotnull(ca_county#12929))"
+              - title: "Filter: (isnotnull(ca_address_sk#7933) AND isnotnull(ca_county#7940))"
                 operator: "filter"
                 inputs:
                 - title: "customer_address.parquet"

@@ -6,58 +6,58 @@ diagram:
   - title: "Projection: "
     operator: "projection"
     inputs:
-    - title: "Inner Join: Some((ss_sold_time_sk#253 = t_time_sk#456))"
+    - title: "Inner Join: Some((ss_store_sk#671 = s_store_sk#326))"
       operator: "join"
       inputs:
-      - title: "Projection: ss_sold_time_sk#253"
+      - title: "Projection: ss_store_sk#671"
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((ss_hdemo_sk#257 = hd_demo_sk#88))"
+        - title: "Inner Join: Some((ss_sold_time_sk#665 = t_time_sk#28))"
           operator: "join"
           inputs:
-          - title: "Projection: ss_sold_time_sk#253, ss_hdemo_sk#257"
+          - title: "Projection: ss_sold_time_sk#665, ss_store_sk#671"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((ss_store_sk#259 = s_store_sk#712))"
+            - title: "Inner Join: Some((ss_hdemo_sk#669 = hd_demo_sk#654))"
               operator: "join"
               inputs:
-              - title: "Projection: ss_sold_time_sk#253, ss_hdemo_sk#257, ss_store_sk#259"
+              - title: "Projection: ss_sold_time_sk#665, ss_hdemo_sk#669, ss_store_sk#671"
                 operator: "projection"
                 inputs:
-                - title: "Filter: (isnotnull(ss_store_sk#259) AND (isnotnull(ss_hdemo_sk#257)\
-                    \ AND isnotnull(ss_sold_time_sk#253)))"
+                - title: "Filter: (isnotnull(ss_hdemo_sk#669) AND (isnotnull(ss_sold_time_sk#665)\
+                    \ AND isnotnull(ss_store_sk#671)))"
                   operator: "filter"
                   inputs:
                   - title: "store_sales.parquet"
                     operator: "scan"
                     inputs: []
-              - title: "Projection: s_store_sk#712"
+              - title: "Projection: hd_demo_sk#654"
                 operator: "projection"
                 inputs:
-                - title: "Filter: ((isnotnull(s_store_name#717) AND (s_store_name#717\
-                    \ = ese)) AND isnotnull(s_store_sk#712))"
+                - title: "Filter: ((isnotnull(hd_dep_count#657) AND (hd_dep_count#657\
+                    \ = 5)) AND isnotnull(hd_demo_sk#654))"
                   operator: "filter"
                   inputs:
-                  - title: "store.parquet"
+                  - title: "household_demographics.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Projection: hd_demo_sk#88"
+          - title: "Projection: t_time_sk#28"
             operator: "projection"
             inputs:
-            - title: "Filter: ((isnotnull(hd_dep_count#91) AND (hd_dep_count#91 =\
-                \ 5)) AND isnotnull(hd_demo_sk#88))"
+            - title: "Filter: (((isnotnull(t_hour#31) AND isnotnull(t_minute#32))\
+                \ AND ((t_hour#31 = 8) AND (t_minute#32 >= 30))) AND isnotnull(t_time_sk#28))"
               operator: "filter"
               inputs:
-              - title: "household_demographics.parquet"
+              - title: "time_dim.parquet"
                 operator: "scan"
                 inputs: []
-      - title: "Projection: t_time_sk#456"
+      - title: "Projection: s_store_sk#326"
         operator: "projection"
         inputs:
-        - title: "Filter: (((isnotnull(t_hour#459) AND isnotnull(t_minute#460)) AND\
-            \ ((t_hour#459 = 8) AND (t_minute#460 >= 30))) AND isnotnull(t_time_sk#456))"
+        - title: "Filter: ((isnotnull(s_store_name#331) AND (s_store_name#331 = ese))\
+            \ AND isnotnull(s_store_sk#326))"
           operator: "filter"
           inputs:
-          - title: "time_dim.parquet"
+          - title: "store.parquet"
             operator: "scan"
             inputs: []

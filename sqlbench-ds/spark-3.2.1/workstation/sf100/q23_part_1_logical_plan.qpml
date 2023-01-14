@@ -6,257 +6,257 @@ diagram:
   - title: "Union (unknown)"
     operator: "Union"
     inputs:
-    - title: "Projection: CheckOverflow((promote_precision(cast(cast(cs_quantity#562\
-        \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(cs_list_price#564\
-        \ as decimal(12,2)))), DecimalType(18,2), true) AS sales#9261"
+    - title: "Projection: CheckOverflow((promote_precision(cast(cast(cs_quantity#136\
+        \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(cs_list_price#138\
+        \ as decimal(12,2)))), DecimalType(18,2), true) AS sales#6270"
       operator: "projection"
       inputs:
-      - title: "Inner Join: Some((cs_sold_date_sk#544 = d_date_sk#9367))"
+      - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#6376))"
         operator: "join"
         inputs:
-        - title: "Projection: cs_sold_date_sk#544, cs_quantity#562, cs_list_price#564"
+        - title: "Projection: cs_sold_date_sk#118, cs_quantity#136, cs_list_price#138"
           operator: "projection"
           inputs:
-          - title: "LeftSemi Join: Some((cs_bill_customer_sk#547 = c_customer_sk#9349))"
+          - title: "LeftSemi Join: Some((cs_bill_customer_sk#121 = c_customer_sk#6358))"
             operator: "join"
             inputs:
-            - title: "Projection: cs_sold_date_sk#544, cs_bill_customer_sk#547, cs_quantity#562,\
-                \ cs_list_price#564"
+            - title: "Projection: cs_sold_date_sk#118, cs_bill_customer_sk#121, cs_quantity#136,\
+                \ cs_list_price#138"
               operator: "projection"
               inputs:
-              - title: "LeftSemi Join: Some((cs_item_sk#559 = item_sk#9268))"
+              - title: "LeftSemi Join: Some((cs_item_sk#133 = item_sk#6277))"
                 operator: "join"
                 inputs:
-                - title: "Projection: cs_sold_date_sk#544, cs_bill_customer_sk#547,\
-                    \ cs_item_sk#559, cs_quantity#562, cs_list_price#564"
+                - title: "Projection: cs_sold_date_sk#118, cs_bill_customer_sk#121,\
+                    \ cs_item_sk#133, cs_quantity#136, cs_list_price#138"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: isnotnull(cs_sold_date_sk#544)"
+                  - title: "Filter: isnotnull(cs_sold_date_sk#118)"
                     operator: "filter"
                     inputs:
                     - title: "catalog_sales.parquet"
                       operator: "scan"
                       inputs: []
-                - title: "Projection: item_sk#9268"
+                - title: "Projection: item_sk#6277"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (cnt#9270L > 4)"
+                  - title: "Filter: (cnt#6279L > 4)"
                     operator: "filter"
                     inputs:
                     - title: "Aggregate (unknown)"
                       operator: "Aggregate"
                       inputs:
-                      - title: "Projection: d_date#614, i_item_sk#668, substr(i_item_desc#672,\
-                          \ 1, 30) AS _groupingexpression#9437"
+                      - title: "Projection: d_date#600, i_item_sk#500, substr(i_item_desc#504,\
+                          \ 1, 30) AS _groupingexpression#6446"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((ss_item_sk#254 = i_item_sk#668))"
+                        - title: "Inner Join: Some((ss_item_sk#666 = i_item_sk#500))"
                           operator: "join"
                           inputs:
-                          - title: "Projection: ss_item_sk#254, d_date#614"
+                          - title: "Projection: ss_item_sk#666, d_date#600"
                             operator: "projection"
                             inputs:
-                            - title: "Inner Join: Some((ss_sold_date_sk#252 = d_date_sk#612))"
+                            - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#598))"
                               operator: "join"
                               inputs:
-                              - title: "Projection: ss_sold_date_sk#252, ss_item_sk#254"
+                              - title: "Projection: ss_sold_date_sk#664, ss_item_sk#666"
                                 operator: "projection"
                                 inputs:
-                                - title: "Filter: (isnotnull(ss_sold_date_sk#252)\
-                                    \ AND isnotnull(ss_item_sk#254))"
+                                - title: "Filter: (isnotnull(ss_sold_date_sk#664)\
+                                    \ AND isnotnull(ss_item_sk#666))"
                                   operator: "filter"
                                   inputs:
                                   - title: "store_sales.parquet"
                                     operator: "scan"
                                     inputs: []
-                              - title: "Projection: d_date_sk#612, d_date#614"
+                              - title: "Projection: d_date_sk#598, d_date#600"
                                 operator: "projection"
                                 inputs:
-                                - title: "Filter: (d_year#618 IN (2000,2001,2002,2003)\
-                                    \ AND isnotnull(d_date_sk#612))"
+                                - title: "Filter: (d_year#604 IN (2000,2001,2002,2003)\
+                                    \ AND isnotnull(d_date_sk#598))"
                                   operator: "filter"
                                   inputs:
                                   - title: "date_dim.parquet"
                                     operator: "scan"
                                     inputs: []
-                          - title: "Projection: i_item_sk#668, i_item_desc#672"
+                          - title: "Projection: i_item_sk#500, i_item_desc#504"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: isnotnull(i_item_sk#668)"
+                            - title: "Filter: isnotnull(i_item_sk#500)"
                               operator: "filter"
                               inputs:
                               - title: "item.parquet"
                                 operator: "scan"
                                 inputs: []
-            - title: "Projection: c_customer_sk#9349"
+            - title: "Projection: c_customer_sk#6358"
               operator: "projection"
               inputs:
-              - title: "Filter: (isnotnull(ssales#9273) AND (cast(ssales#9273 as decimal(38,8))\
-                  \ > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#9274\
+              - title: "Filter: (isnotnull(ssales#6282) AND (cast(ssales#6282 as decimal(38,8))\
+                  \ > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#6283\
                   \ [] as decimal(32,6)))), DecimalType(38,8), true)))"
                 operator: "filter"
                 inputs:
                 - title: "Aggregate (unknown)"
                   operator: "Aggregate"
                   inputs:
-                  - title: "Projection: ss_quantity#9336, ss_sales_price#9339, c_customer_sk#9349"
+                  - title: "Projection: ss_quantity#6345, ss_sales_price#6348, c_customer_sk#6358"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((ss_customer_sk#9329 = c_customer_sk#9349))"
+                    - title: "Inner Join: Some((ss_customer_sk#6338 = c_customer_sk#6358))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ss_customer_sk#9329, ss_quantity#9336,\
-                          \ ss_sales_price#9339"
+                      - title: "Projection: ss_customer_sk#6338, ss_quantity#6345,\
+                          \ ss_sales_price#6348"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: isnotnull(ss_customer_sk#9329)"
+                        - title: "Filter: isnotnull(ss_customer_sk#6338)"
                           operator: "filter"
                           inputs:
                           - title: "store_sales.parquet"
                             operator: "scan"
                             inputs: []
-                      - title: "Projection: c_customer_sk#9349"
+                      - title: "Projection: c_customer_sk#6358"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: isnotnull(c_customer_sk#9349)"
+                        - title: "Filter: isnotnull(c_customer_sk#6358)"
                           operator: "filter"
                           inputs:
                           - title: "customer.parquet"
                             operator: "scan"
                             inputs: []
-        - title: "Projection: d_date_sk#9367"
+        - title: "Projection: d_date_sk#6376"
           operator: "projection"
           inputs:
-          - title: "Filter: (((isnotnull(d_year#9373) AND isnotnull(d_moy#9375)) AND\
-              \ ((d_year#9373 = 2000) AND (d_moy#9375 = 7))) AND isnotnull(d_date_sk#9367))"
+          - title: "Filter: (((isnotnull(d_year#6382) AND isnotnull(d_moy#6384)) AND\
+              \ ((d_year#6382 = 2000) AND (d_moy#6384 = 7))) AND isnotnull(d_date_sk#6376))"
             operator: "filter"
             inputs:
             - title: "date_dim.parquet"
               operator: "scan"
               inputs: []
-    - title: "Projection: CheckOverflow((promote_precision(cast(cast(ws_quantity#494\
-        \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ws_list_price#496\
-        \ as decimal(12,2)))), DecimalType(18,2), true) AS sales#9264"
+    - title: "Projection: CheckOverflow((promote_precision(cast(cast(ws_quantity#402\
+        \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ws_list_price#404\
+        \ as decimal(12,2)))), DecimalType(18,2), true) AS sales#6273"
       operator: "projection"
       inputs:
-      - title: "Inner Join: Some((ws_sold_date_sk#476 = d_date_sk#9395))"
+      - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#6404))"
         operator: "join"
         inputs:
-        - title: "Projection: ws_sold_date_sk#476, ws_quantity#494, ws_list_price#496"
+        - title: "Projection: ws_sold_date_sk#384, ws_quantity#402, ws_list_price#404"
           operator: "projection"
           inputs:
-          - title: "LeftSemi Join: Some((ws_bill_customer_sk#480 = c_customer_sk#9349))"
+          - title: "LeftSemi Join: Some((ws_bill_customer_sk#388 = c_customer_sk#6358))"
             operator: "join"
             inputs:
-            - title: "Projection: ws_sold_date_sk#476, ws_bill_customer_sk#480, ws_quantity#494,\
-                \ ws_list_price#496"
+            - title: "Projection: ws_sold_date_sk#384, ws_bill_customer_sk#388, ws_quantity#402,\
+                \ ws_list_price#404"
               operator: "projection"
               inputs:
-              - title: "LeftSemi Join: Some((ws_item_sk#479 = item_sk#9268))"
+              - title: "LeftSemi Join: Some((ws_item_sk#387 = item_sk#6277))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ws_sold_date_sk#476, ws_item_sk#479, ws_bill_customer_sk#480,\
-                    \ ws_quantity#494, ws_list_price#496"
+                - title: "Projection: ws_sold_date_sk#384, ws_item_sk#387, ws_bill_customer_sk#388,\
+                    \ ws_quantity#402, ws_list_price#404"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: isnotnull(ws_sold_date_sk#476)"
+                  - title: "Filter: isnotnull(ws_sold_date_sk#384)"
                     operator: "filter"
                     inputs:
                     - title: "web_sales.parquet"
                       operator: "scan"
                       inputs: []
-                - title: "Projection: item_sk#9268"
+                - title: "Projection: item_sk#6277"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (cnt#9270L > 4)"
+                  - title: "Filter: (cnt#6279L > 4)"
                     operator: "filter"
                     inputs:
                     - title: "Aggregate (unknown)"
                       operator: "Aggregate"
                       inputs:
-                      - title: "Projection: d_date#614, i_item_sk#668, substr(i_item_desc#672,\
-                          \ 1, 30) AS _groupingexpression#9438"
+                      - title: "Projection: d_date#600, i_item_sk#500, substr(i_item_desc#504,\
+                          \ 1, 30) AS _groupingexpression#6447"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((ss_item_sk#254 = i_item_sk#668))"
+                        - title: "Inner Join: Some((ss_item_sk#666 = i_item_sk#500))"
                           operator: "join"
                           inputs:
-                          - title: "Projection: ss_item_sk#254, d_date#614"
+                          - title: "Projection: ss_item_sk#666, d_date#600"
                             operator: "projection"
                             inputs:
-                            - title: "Inner Join: Some((ss_sold_date_sk#252 = d_date_sk#612))"
+                            - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#598))"
                               operator: "join"
                               inputs:
-                              - title: "Projection: ss_sold_date_sk#252, ss_item_sk#254"
+                              - title: "Projection: ss_sold_date_sk#664, ss_item_sk#666"
                                 operator: "projection"
                                 inputs:
-                                - title: "Filter: (isnotnull(ss_sold_date_sk#252)\
-                                    \ AND isnotnull(ss_item_sk#254))"
+                                - title: "Filter: (isnotnull(ss_sold_date_sk#664)\
+                                    \ AND isnotnull(ss_item_sk#666))"
                                   operator: "filter"
                                   inputs:
                                   - title: "store_sales.parquet"
                                     operator: "scan"
                                     inputs: []
-                              - title: "Projection: d_date_sk#612, d_date#614"
+                              - title: "Projection: d_date_sk#598, d_date#600"
                                 operator: "projection"
                                 inputs:
-                                - title: "Filter: (d_year#618 IN (2000,2001,2002,2003)\
-                                    \ AND isnotnull(d_date_sk#612))"
+                                - title: "Filter: (d_year#604 IN (2000,2001,2002,2003)\
+                                    \ AND isnotnull(d_date_sk#598))"
                                   operator: "filter"
                                   inputs:
                                   - title: "date_dim.parquet"
                                     operator: "scan"
                                     inputs: []
-                          - title: "Projection: i_item_sk#668, i_item_desc#672"
+                          - title: "Projection: i_item_sk#500, i_item_desc#504"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: isnotnull(i_item_sk#668)"
+                            - title: "Filter: isnotnull(i_item_sk#500)"
                               operator: "filter"
                               inputs:
                               - title: "item.parquet"
                                 operator: "scan"
                                 inputs: []
-            - title: "Projection: c_customer_sk#9349"
+            - title: "Projection: c_customer_sk#6358"
               operator: "projection"
               inputs:
-              - title: "Filter: (isnotnull(ssales#9273) AND (cast(ssales#9273 as decimal(38,8))\
-                  \ > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#9274\
+              - title: "Filter: (isnotnull(ssales#6282) AND (cast(ssales#6282 as decimal(38,8))\
+                  \ > CheckOverflow((0.950000 * promote_precision(cast(scalar-subquery#6283\
                   \ [] as decimal(32,6)))), DecimalType(38,8), true)))"
                 operator: "filter"
                 inputs:
                 - title: "Aggregate (unknown)"
                   operator: "Aggregate"
                   inputs:
-                  - title: "Projection: ss_quantity#9336, ss_sales_price#9339, c_customer_sk#9349"
+                  - title: "Projection: ss_quantity#6345, ss_sales_price#6348, c_customer_sk#6358"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((ss_customer_sk#9329 = c_customer_sk#9349))"
+                    - title: "Inner Join: Some((ss_customer_sk#6338 = c_customer_sk#6358))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ss_customer_sk#9329, ss_quantity#9336,\
-                          \ ss_sales_price#9339"
+                      - title: "Projection: ss_customer_sk#6338, ss_quantity#6345,\
+                          \ ss_sales_price#6348"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: isnotnull(ss_customer_sk#9329)"
+                        - title: "Filter: isnotnull(ss_customer_sk#6338)"
                           operator: "filter"
                           inputs:
                           - title: "store_sales.parquet"
                             operator: "scan"
                             inputs: []
-                      - title: "Projection: c_customer_sk#9349"
+                      - title: "Projection: c_customer_sk#6358"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: isnotnull(c_customer_sk#9349)"
+                        - title: "Filter: isnotnull(c_customer_sk#6358)"
                           operator: "filter"
                           inputs:
                           - title: "customer.parquet"
                             operator: "scan"
                             inputs: []
-        - title: "Projection: d_date_sk#9395"
+        - title: "Projection: d_date_sk#6404"
           operator: "projection"
           inputs:
-          - title: "Filter: (((isnotnull(d_year#9401) AND isnotnull(d_moy#9403)) AND\
-              \ ((d_year#9401 = 2000) AND (d_moy#9403 = 7))) AND isnotnull(d_date_sk#9395))"
+          - title: "Filter: (((isnotnull(d_year#6410) AND isnotnull(d_moy#6412)) AND\
+              \ ((d_year#6410 = 2000) AND (d_moy#6412 = 7))) AND isnotnull(d_date_sk#6404))"
             operator: "filter"
             inputs:
             - title: "date_dim.parquet"

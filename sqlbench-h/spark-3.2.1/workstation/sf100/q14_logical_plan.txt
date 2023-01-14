@@ -1,9 +1,0 @@
-Aggregate [CheckOverflow((promote_precision(CheckOverflow((100.0000 * promote_precision(sum(CASE WHEN StartsWith(p_type#18, PROMO) THEN CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true) ELSE 0.0000 END))), DecimalType(38,6), true)) / promote_precision(cast(sum(CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true)) as decimal(38,6)))), DecimalType(38,6), true) AS promo_revenue#562]
-+- Project [l_extendedprice#79, l_discount#80, p_type#18]
-   +- Join Inner, (l_partkey#75L = p_partkey#14L)
-      :- Project [l_partkey#75L, l_extendedprice#79, l_discount#80]
-      :  +- Filter ((isnotnull(l_shipdate#84) AND ((l_shipdate#84 >= 1997-06-01) AND (l_shipdate#84 < 1997-07-01))) AND isnotnull(l_partkey#75L))
-      :     +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet
-      +- Project [p_partkey#14L, p_type#18]
-         +- Filter isnotnull(p_partkey#14L)
-            +- Relation [p_partkey#14L,p_name#15,p_mfgr#16,p_brand#17,p_type#18,p_size#19,p_container#20,p_retailprice#21,p_comment#22] parquet

@@ -1,29 +1,29 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [item_sk#17511 ASC NULLS FIRST, d_date#17512 ASC NULLS FIRST], true
-      +- Filter ((isnotnull(web_cumulative#17515) AND isnotnull(store_cumulative#17516)) AND (web_cumulative#17515 > store_cumulative#17516))
-         +- Window [max(web_sales#17513) windowspecdefinition(item_sk#17511, d_date#17512 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS web_cumulative#17515, max(store_sales#17514) windowspecdefinition(item_sk#17511, d_date#17512 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS store_cumulative#17516], [item_sk#17511], [d_date#17512 ASC NULLS FIRST]
-            +- Project [CASE WHEN isnotnull(item_sk#17517) THEN item_sk#17517 ELSE item_sk#17519 END AS item_sk#17511, CASE WHEN isnotnull(d_date#614) THEN d_date#614 ELSE d_date#17523 END AS d_date#17512, cume_sales#17518 AS web_sales#17513, cume_sales#17520 AS store_sales#17514]
-               +- Join FullOuter, ((item_sk#17517 = item_sk#17519) AND (d_date#614 = d_date#17523))
-                  :- Project [item_sk#17517, d_date#614, cume_sales#17518]
-                  :  +- Window [sum(_w0#17553) windowspecdefinition(ws_item_sk#479, d_date#614 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS cume_sales#17518], [ws_item_sk#479], [d_date#614 ASC NULLS FIRST]
-                  :     +- Aggregate [ws_item_sk#479, d_date#614], [ws_item_sk#479 AS item_sk#17517, d_date#614, MakeDecimal(sum(UnscaledValue(ws_sales_price#497)),17,2) AS _w0#17553, ws_item_sk#479]
-                  :        +- Project [ws_item_sk#479, ws_sales_price#497, d_date#614]
-                  :           +- Join Inner, (ws_sold_date_sk#476 = d_date_sk#612)
-                  :              :- Project [ws_sold_date_sk#476, ws_item_sk#479, ws_sales_price#497]
-                  :              :  +- Filter (isnotnull(ws_item_sk#479) AND isnotnull(ws_sold_date_sk#476))
-                  :              :     +- Relation [ws_sold_date_sk#476,ws_sold_time_sk#477,ws_ship_date_sk#478,ws_item_sk#479,ws_bill_customer_sk#480,ws_bill_cdemo_sk#481,ws_bill_hdemo_sk#482,ws_bill_addr_sk#483,ws_ship_customer_sk#484,ws_ship_cdemo_sk#485,ws_ship_hdemo_sk#486,ws_ship_addr_sk#487,ws_web_page_sk#488,ws_web_site_sk#489,ws_ship_mode_sk#490,ws_warehouse_sk#491,ws_promo_sk#492,ws_order_number#493L,ws_quantity#494,ws_wholesale_cost#495,ws_list_price#496,ws_sales_price#497,ws_ext_discount_amt#498,ws_ext_sales_price#499,... 10 more fields] parquet
-                  :              +- Project [d_date_sk#612, d_date#614]
-                  :                 +- Filter ((isnotnull(d_month_seq#615) AND ((d_month_seq#615 >= 1212) AND (d_month_seq#615 <= 1223))) AND isnotnull(d_date_sk#612))
-                  :                    +- Relation [d_date_sk#612,d_date_id#613,d_date#614,d_month_seq#615,d_week_seq#616,d_quarter_seq#617,d_year#618,d_dow#619,d_moy#620,d_dom#621,d_qoy#622,d_fy_year#623,d_fy_quarter_seq#624,d_fy_week_seq#625,d_day_name#626,d_quarter_name#627,d_holiday#628,d_weekend#629,d_following_holiday#630,d_first_dom#631,d_last_dom#632,d_same_day_ly#633,d_same_day_lq#634,d_current_day#635,... 4 more fields] parquet
-                  +- Project [item_sk#17519, d_date#17523, cume_sales#17520]
-                     +- Window [sum(_w0#17554) windowspecdefinition(ss_item_sk#254, d_date#17523 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS cume_sales#17520], [ss_item_sk#254], [d_date#17523 ASC NULLS FIRST]
-                        +- Aggregate [ss_item_sk#254, d_date#17523], [ss_item_sk#254 AS item_sk#17519, d_date#17523, MakeDecimal(sum(UnscaledValue(ss_sales_price#265)),17,2) AS _w0#17554, ss_item_sk#254]
-                           +- Project [ss_item_sk#254, ss_sales_price#265, d_date#17523]
-                              +- Join Inner, (ss_sold_date_sk#252 = d_date_sk#17521)
-                                 :- Project [ss_sold_date_sk#252, ss_item_sk#254, ss_sales_price#265]
-                                 :  +- Filter (isnotnull(ss_item_sk#254) AND isnotnull(ss_sold_date_sk#252))
-                                 :     +- Relation [ss_sold_date_sk#252,ss_sold_time_sk#253,ss_item_sk#254,ss_customer_sk#255,ss_cdemo_sk#256,ss_hdemo_sk#257,ss_addr_sk#258,ss_store_sk#259,ss_promo_sk#260,ss_ticket_number#261L,ss_quantity#262,ss_wholesale_cost#263,ss_list_price#264,ss_sales_price#265,ss_ext_discount_amt#266,ss_ext_sales_price#267,ss_ext_wholesale_cost#268,ss_ext_list_price#269,ss_ext_tax#270,ss_coupon_amt#271,ss_net_paid#272,ss_net_paid_inc_tax#273,ss_net_profit#274] parquet
-                                 +- Project [d_date_sk#17521, d_date#17523]
-                                    +- Filter ((isnotnull(d_month_seq#17524) AND ((d_month_seq#17524 >= 1212) AND (d_month_seq#17524 <= 1223))) AND isnotnull(d_date_sk#17521))
-                                       +- Relation [d_date_sk#17521,d_date_id#17522,d_date#17523,d_month_seq#17524,d_week_seq#17525,d_quarter_seq#17526,d_year#17527,d_dow#17528,d_moy#17529,d_dom#17530,d_qoy#17531,d_fy_year#17532,d_fy_quarter_seq#17533,d_fy_week_seq#17534,d_day_name#17535,d_quarter_name#17536,d_holiday#17537,d_weekend#17538,d_following_holiday#17539,d_first_dom#17540,d_last_dom#17541,d_same_day_ly#17542,d_same_day_lq#17543,d_current_day#17544,... 4 more fields] parquet
+   +- Sort [item_sk#10699 ASC NULLS FIRST, d_date#10700 ASC NULLS FIRST], true
+      +- Filter ((isnotnull(web_cumulative#10703) AND isnotnull(store_cumulative#10704)) AND (web_cumulative#10703 > store_cumulative#10704))
+         +- Window [max(web_sales#10701) windowspecdefinition(item_sk#10699, d_date#10700 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS web_cumulative#10703, max(store_sales#10702) windowspecdefinition(item_sk#10699, d_date#10700 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS store_cumulative#10704], [item_sk#10699], [d_date#10700 ASC NULLS FIRST]
+            +- Project [CASE WHEN isnotnull(item_sk#10705) THEN item_sk#10705 ELSE item_sk#10707 END AS item_sk#10699, CASE WHEN isnotnull(d_date#600) THEN d_date#600 ELSE d_date#10711 END AS d_date#10700, cume_sales#10706 AS web_sales#10701, cume_sales#10708 AS store_sales#10702]
+               +- Join FullOuter, ((item_sk#10705 = item_sk#10707) AND (d_date#600 = d_date#10711))
+                  :- Project [item_sk#10705, d_date#600, cume_sales#10706]
+                  :  +- Window [sum(_w0#10741) windowspecdefinition(ws_item_sk#387, d_date#600 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS cume_sales#10706], [ws_item_sk#387], [d_date#600 ASC NULLS FIRST]
+                  :     +- Aggregate [ws_item_sk#387, d_date#600], [ws_item_sk#387 AS item_sk#10705, d_date#600, MakeDecimal(sum(UnscaledValue(ws_sales_price#405)),17,2) AS _w0#10741, ws_item_sk#387]
+                  :        +- Project [ws_item_sk#387, ws_sales_price#405, d_date#600]
+                  :           +- Join Inner, (ws_sold_date_sk#384 = d_date_sk#598)
+                  :              :- Project [ws_sold_date_sk#384, ws_item_sk#387, ws_sales_price#405]
+                  :              :  +- Filter (isnotnull(ws_item_sk#387) AND isnotnull(ws_sold_date_sk#384))
+                  :              :     +- Relation [ws_sold_date_sk#384,ws_sold_time_sk#385,ws_ship_date_sk#386,ws_item_sk#387,ws_bill_customer_sk#388,ws_bill_cdemo_sk#389,ws_bill_hdemo_sk#390,ws_bill_addr_sk#391,ws_ship_customer_sk#392,ws_ship_cdemo_sk#393,ws_ship_hdemo_sk#394,ws_ship_addr_sk#395,ws_web_page_sk#396,ws_web_site_sk#397,ws_ship_mode_sk#398,ws_warehouse_sk#399,ws_promo_sk#400,ws_order_number#401L,ws_quantity#402,ws_wholesale_cost#403,ws_list_price#404,ws_sales_price#405,ws_ext_discount_amt#406,ws_ext_sales_price#407,... 10 more fields] parquet
+                  :              +- Project [d_date_sk#598, d_date#600]
+                  :                 +- Filter ((isnotnull(d_month_seq#601) AND ((d_month_seq#601 >= 1212) AND (d_month_seq#601 <= 1223))) AND isnotnull(d_date_sk#598))
+                  :                    +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
+                  +- Project [item_sk#10707, d_date#10711, cume_sales#10708]
+                     +- Window [sum(_w0#10742) windowspecdefinition(ss_item_sk#666, d_date#10711 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS cume_sales#10708], [ss_item_sk#666], [d_date#10711 ASC NULLS FIRST]
+                        +- Aggregate [ss_item_sk#666, d_date#10711], [ss_item_sk#666 AS item_sk#10707, d_date#10711, MakeDecimal(sum(UnscaledValue(ss_sales_price#677)),17,2) AS _w0#10742, ss_item_sk#666]
+                           +- Project [ss_item_sk#666, ss_sales_price#677, d_date#10711]
+                              +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#10709)
+                                 :- Project [ss_sold_date_sk#664, ss_item_sk#666, ss_sales_price#677]
+                                 :  +- Filter (isnotnull(ss_item_sk#666) AND isnotnull(ss_sold_date_sk#664))
+                                 :     +- Relation [ss_sold_date_sk#664,ss_sold_time_sk#665,ss_item_sk#666,ss_customer_sk#667,ss_cdemo_sk#668,ss_hdemo_sk#669,ss_addr_sk#670,ss_store_sk#671,ss_promo_sk#672,ss_ticket_number#673L,ss_quantity#674,ss_wholesale_cost#675,ss_list_price#676,ss_sales_price#677,ss_ext_discount_amt#678,ss_ext_sales_price#679,ss_ext_wholesale_cost#680,ss_ext_list_price#681,ss_ext_tax#682,ss_coupon_amt#683,ss_net_paid#684,ss_net_paid_inc_tax#685,ss_net_profit#686] parquet
+                                 +- Project [d_date_sk#10709, d_date#10711]
+                                    +- Filter ((isnotnull(d_month_seq#10712) AND ((d_month_seq#10712 >= 1212) AND (d_month_seq#10712 <= 1223))) AND isnotnull(d_date_sk#10709))
+                                       +- Relation [d_date_sk#10709,d_date_id#10710,d_date#10711,d_month_seq#10712,d_week_seq#10713,d_quarter_seq#10714,d_year#10715,d_dow#10716,d_moy#10717,d_dom#10718,d_qoy#10719,d_fy_year#10720,d_fy_quarter_seq#10721,d_fy_week_seq#10722,d_day_name#10723,d_quarter_name#10724,d_holiday#10725,d_weekend#10726,d_following_holiday#10727,d_first_dom#10728,d_last_dom#10729,d_same_day_ly#10730,d_same_day_lq#10731,d_current_day#10732,... 4 more fields] parquet

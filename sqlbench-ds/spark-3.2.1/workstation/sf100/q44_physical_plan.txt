@@ -1,80 +1,70 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   LocalTableScan <empty>, [rnk#15604, best_performing#15610, worst_performing#15611]
+   LocalTableScan <empty>, [rnk#9138, best_performing#9144, worst_performing#9145]
 +- == Initial Plan ==
-   TakeOrderedAndProject(limit=100, orderBy=[rnk#15604 ASC NULLS FIRST], output=[rnk#15604,best_performing#15610,worst_performing#15611])
-   +- Project [rnk#15604, i_product_name#689 AS best_performing#15610, i_product_name#15656 AS worst_performing#15611]
-      +- SortMergeJoin [rnk#15604], [rnk#15609], Inner
-         :- Sort [rnk#15604 ASC NULLS FIRST], false, 0
-         :  +- Exchange hashpartitioning(rnk#15604, 200), ENSURE_REQUIREMENTS, [id=#277604]
-         :     +- Project [rnk#15604, i_product_name#689]
-         :        +- SortMergeJoin [item_sk#15600], [i_item_sk#668], Inner
-         :           :- Sort [item_sk#15600 ASC NULLS FIRST], false, 0
-         :           :  +- Exchange hashpartitioning(item_sk#15600, 200), ENSURE_REQUIREMENTS, [id=#277580]
-         :           :     +- Project [item_sk#15600, rnk#15604]
-         :           :        +- Filter ((rnk#15604 < 11) AND isnotnull(item_sk#15600))
-         :           :           +- Window [rank(rank_col#15601) windowspecdefinition(rank_col#15601 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#15604], [rank_col#15601 ASC NULLS FIRST]
-         :           :              +- Sort [rank_col#15601 ASC NULLS FIRST], false, 0
-         :           :                 +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#277572]
-         :           :                    +- Filter (isnotnull(rank_col#15601) AND (cast(rank_col#15601 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(Subquery subquery#15603, [id=#277513])), DecimalType(13,7), true)))
-         :           :                       :  +- Subquery subquery#15603, [id=#277513]
-         :           :                       :     +- AdaptiveSparkPlan isFinalPlan=true
-                                                   +- == Final Plan ==
-                                                      *(1) HashAggregate(keys=[ss_store_sk#15674], functions=[avg(UnscaledValue(ss_net_profit#15689))], output=[rank_col#15602])
-                                                      +- GpuColumnarToRow false
-                                                         +- GpuShuffleCoalesce 2147483647
-                                                            +- GpuCustomShuffleReader coalesced
-                                                               +- ShuffleQueryStage 0
-                                                                  +- GpuColumnarExchange gpuhashpartitioning(ss_store_sk#15674, 200), ENSURE_REQUIREMENTS, [id=#278798]
-                                                                     +- GpuHashAggregate(keys=[ss_store_sk#15674], functions=[partial_avg(UnscaledValue(ss_net_profit#15689), DoubleType)], output=[ss_store_sk#15674, sum#15746, count#15747L])
-                                                                        +- GpuProject [ss_store_sk#15674, ss_net_profit#15689], true
-                                                                           +- GpuCoalesceBatches targetsize(2147483647)
-                                                                              +- GpuFilter ((gpuisnotnull(ss_store_sk#15674) AND (ss_store_sk#15674 = 21)) AND gpuisnull(ss_hdemo_sk#15672)), true
-                                                                                 +- GpuFileGpuScan parquet [ss_hdemo_sk#15672,ss_store_sk#15674,ss_net_profit#15689] Batched: true, DataFilters: [isnotnull(ss_store_sk#15674), (ss_store_sk#15674 = 21), isnull(ss_hdemo_sk#15672)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21), IsNull(ss_hdemo_sk)], ReadSchema: struct<ss_hdemo_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
-                                                   +- == Initial Plan ==
-                                                      HashAggregate(keys=[ss_store_sk#15674], functions=[avg(UnscaledValue(ss_net_profit#15689))], output=[rank_col#15602])
-                                                      +- Exchange hashpartitioning(ss_store_sk#15674, 200), ENSURE_REQUIREMENTS, [id=#277493]
-                                                         +- HashAggregate(keys=[ss_store_sk#15674], functions=[partial_avg(UnscaledValue(ss_net_profit#15689))], output=[ss_store_sk#15674, sum#15746, count#15747L])
-                                                            +- Project [ss_store_sk#15674, ss_net_profit#15689]
-                                                               +- Filter ((isnotnull(ss_store_sk#15674) AND (ss_store_sk#15674 = 21)) AND isnull(ss_hdemo_sk#15672))
-                                                                  +- FileScan parquet [ss_hdemo_sk#15672,ss_store_sk#15674,ss_net_profit#15689] Batched: true, DataFilters: [isnotnull(ss_store_sk#15674), (ss_store_sk#15674 = 21), isnull(ss_hdemo_sk#15672)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21), IsNull(ss_hdemo_sk)], ReadSchema: struct<ss_hdemo_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
-         :           :                       +- HashAggregate(keys=[ss_item_sk#254], functions=[avg(UnscaledValue(ss_net_profit#274))], output=[item_sk#15600, rank_col#15601])
-         :           :                          +- Exchange hashpartitioning(ss_item_sk#254, 200), ENSURE_REQUIREMENTS, [id=#277568]
-         :           :                             +- HashAggregate(keys=[ss_item_sk#254], functions=[partial_avg(UnscaledValue(ss_net_profit#274))], output=[ss_item_sk#254, sum#15738, count#15739L])
-         :           :                                +- Project [ss_item_sk#254, ss_net_profit#274]
-         :           :                                   +- Filter (isnotnull(ss_store_sk#259) AND (ss_store_sk#259 = 21))
-         :           :                                      +- FileScan parquet [ss_item_sk#254,ss_store_sk#259,ss_net_profit#274] Batched: true, DataFilters: [isnotnull(ss_store_sk#259), (ss_store_sk#259 = 21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21)], ReadSchema: struct<ss_item_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
-         :           +- Sort [i_item_sk#668 ASC NULLS FIRST], false, 0
-         :              +- Exchange hashpartitioning(i_item_sk#668, 200), ENSURE_REQUIREMENTS, [id=#277579]
-         :                 +- Filter isnotnull(i_item_sk#668)
-         :                    +- FileScan parquet [i_item_sk#668,i_product_name#689] Batched: true, DataFilters: [isnotnull(i_item_sk#668)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk)], ReadSchema: struct<i_item_sk:int,i_product_name:string>
-         +- Sort [rnk#15609 ASC NULLS FIRST], false, 0
-            +- Exchange hashpartitioning(rnk#15609, 200), ENSURE_REQUIREMENTS, [id=#277605]
-               +- Project [rnk#15609, i_product_name#15656]
-                  +- SortMergeJoin [item_sk#15605], [i_item_sk#15635], Inner
-                     :- Sort [item_sk#15605 ASC NULLS FIRST], false, 0
-                     :  +- Exchange hashpartitioning(item_sk#15605, 200), ENSURE_REQUIREMENTS, [id=#277597]
-                     :     +- Project [item_sk#15605, rnk#15609]
-                     :        +- Filter ((rnk#15609 < 11) AND isnotnull(item_sk#15605))
-                     :           +- Window [rank(rank_col#15606) windowspecdefinition(rank_col#15606 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#15609], [rank_col#15606 DESC NULLS LAST]
-                     :              +- Sort [rank_col#15606 DESC NULLS LAST], false, 0
-                     :                 +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#277589]
-                     :                    +- Filter (isnotnull(rank_col#15606) AND (cast(rank_col#15606 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(Subquery subquery#15608, [id=#277544])), DecimalType(13,7), true)))
-                     :                       :  +- Subquery subquery#15608, [id=#277544]
-                     :                       :     +- AdaptiveSparkPlan isFinalPlan=false
-                     :                       :        +- HashAggregate(keys=[ss_store_sk#15697], functions=[avg(UnscaledValue(ss_net_profit#15712))], output=[rank_col#15607])
-                     :                       :           +- Exchange hashpartitioning(ss_store_sk#15697, 200), ENSURE_REQUIREMENTS, [id=#277524]
-                     :                       :              +- HashAggregate(keys=[ss_store_sk#15697], functions=[partial_avg(UnscaledValue(ss_net_profit#15712))], output=[ss_store_sk#15697, sum#15752, count#15753L])
-                     :                       :                 +- Project [ss_store_sk#15697, ss_net_profit#15712]
-                     :                       :                    +- Filter ((isnotnull(ss_store_sk#15697) AND (ss_store_sk#15697 = 21)) AND isnull(ss_hdemo_sk#15695))
-                     :                       :                       +- FileScan parquet [ss_hdemo_sk#15695,ss_store_sk#15697,ss_net_profit#15712] Batched: true, DataFilters: [isnotnull(ss_store_sk#15697), (ss_store_sk#15697 = 21), isnull(ss_hdemo_sk#15695)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21), IsNull(ss_hdemo_sk)], ReadSchema: struct<ss_hdemo_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
-                     :                       +- HashAggregate(keys=[ss_item_sk#15614], functions=[avg(UnscaledValue(ss_net_profit#15634))], output=[item_sk#15605, rank_col#15606])
-                     :                          +- Exchange hashpartitioning(ss_item_sk#15614, 200), ENSURE_REQUIREMENTS, [id=#277585]
-                     :                             +- HashAggregate(keys=[ss_item_sk#15614], functions=[partial_avg(UnscaledValue(ss_net_profit#15634))], output=[ss_item_sk#15614, sum#15742, count#15743L])
-                     :                                +- Project [ss_item_sk#15614, ss_net_profit#15634]
-                     :                                   +- Filter (isnotnull(ss_store_sk#15619) AND (ss_store_sk#15619 = 21))
-                     :                                      +- FileScan parquet [ss_item_sk#15614,ss_store_sk#15619,ss_net_profit#15634] Batched: true, DataFilters: [isnotnull(ss_store_sk#15619), (ss_store_sk#15619 = 21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21)], ReadSchema: struct<ss_item_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
-                     +- Sort [i_item_sk#15635 ASC NULLS FIRST], false, 0
-                        +- Exchange hashpartitioning(i_item_sk#15635, 200), ENSURE_REQUIREMENTS, [id=#277596]
-                           +- Filter isnotnull(i_item_sk#15635)
-                              +- FileScan parquet [i_item_sk#15635,i_product_name#15656] Batched: true, DataFilters: [isnotnull(i_item_sk#15635)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk)], ReadSchema: struct<i_item_sk:int,i_product_name:string>
+   TakeOrderedAndProject(limit=100, orderBy=[rnk#9138 ASC NULLS FIRST], output=[rnk#9138,best_performing#9144,worst_performing#9145])
+   +- Project [rnk#9138, i_product_name#521 AS best_performing#9144, i_product_name#9190 AS worst_performing#9145]
+      +- BroadcastHashJoin [item_sk#9139], [i_item_sk#9169], Inner, BuildRight, false
+         :- Project [rnk#9138, item_sk#9139, i_product_name#521]
+         :  +- BroadcastHashJoin [item_sk#9134], [i_item_sk#500], Inner, BuildRight, false
+         :     :- Project [item_sk#9134, rnk#9138, item_sk#9139]
+         :     :  +- SortMergeJoin [rnk#9138], [rnk#9143], Inner
+         :     :     :- Sort [rnk#9138 ASC NULLS FIRST], false, 0
+         :     :     :  +- Project [item_sk#9134, rnk#9138]
+         :     :     :     +- Filter ((rnk#9138 < 11) AND isnotnull(item_sk#9134))
+         :     :     :        +- Window [rank(rank_col#9135) windowspecdefinition(rank_col#9135 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#9138], [rank_col#9135 ASC NULLS FIRST]
+         :     :     :           +- Sort [rank_col#9135 ASC NULLS FIRST], false, 0
+         :     :     :              +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#74526]
+         :     :     :                 +- Filter (isnotnull(rank_col#9135) AND (cast(rank_col#9135 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(Subquery subquery#9137, [id=#74487])), DecimalType(13,7), true)))
+         :     :     :                    :  +- Subquery subquery#9137, [id=#74487]
+         :     :     :                    :     +- AdaptiveSparkPlan isFinalPlan=true
+                                                +- == Final Plan ==
+                                                   *(2) HashAggregate(keys=[ss_store_sk#9208], functions=[avg(UnscaledValue(ss_net_profit#9223))], output=[rank_col#9136])
+                                                   +- AQEShuffleRead coalesced
+                                                      +- ShuffleQueryStage 0
+                                                         +- Exchange hashpartitioning(ss_store_sk#9208, 200), ENSURE_REQUIREMENTS, [id=#74889]
+                                                            +- *(1) HashAggregate(keys=[ss_store_sk#9208], functions=[partial_avg(UnscaledValue(ss_net_profit#9223))], output=[ss_store_sk#9208, sum#9280, count#9281L])
+                                                               +- *(1) Project [ss_store_sk#9208, ss_net_profit#9223]
+                                                                  +- *(1) Filter ((isnotnull(ss_store_sk#9208) AND (ss_store_sk#9208 = 21)) AND isnull(ss_hdemo_sk#9206))
+                                                                     +- *(1) ColumnarToRow
+                                                                        +- FileScan parquet [ss_hdemo_sk#9206,ss_store_sk#9208,ss_net_profit#9223] Batched: true, DataFilters: [isnotnull(ss_store_sk#9208), (ss_store_sk#9208 = 21), isnull(ss_hdemo_sk#9206)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21), IsNull(ss_hdemo_sk)], ReadSchema: struct<ss_hdemo_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
+                                                +- == Initial Plan ==
+                                                   HashAggregate(keys=[ss_store_sk#9208], functions=[avg(UnscaledValue(ss_net_profit#9223))], output=[rank_col#9136])
+                                                   +- Exchange hashpartitioning(ss_store_sk#9208, 200), ENSURE_REQUIREMENTS, [id=#74485]
+                                                      +- HashAggregate(keys=[ss_store_sk#9208], functions=[partial_avg(UnscaledValue(ss_net_profit#9223))], output=[ss_store_sk#9208, sum#9280, count#9281L])
+                                                         +- Project [ss_store_sk#9208, ss_net_profit#9223]
+                                                            +- Filter ((isnotnull(ss_store_sk#9208) AND (ss_store_sk#9208 = 21)) AND isnull(ss_hdemo_sk#9206))
+                                                               +- FileScan parquet [ss_hdemo_sk#9206,ss_store_sk#9208,ss_net_profit#9223] Batched: true, DataFilters: [isnotnull(ss_store_sk#9208), (ss_store_sk#9208 = 21), isnull(ss_hdemo_sk#9206)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21), IsNull(ss_hdemo_sk)], ReadSchema: struct<ss_hdemo_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
+         :     :     :                    +- HashAggregate(keys=[ss_item_sk#666], functions=[avg(UnscaledValue(ss_net_profit#686))], output=[item_sk#9134, rank_col#9135])
+         :     :     :                       +- Exchange hashpartitioning(ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#74522]
+         :     :     :                          +- HashAggregate(keys=[ss_item_sk#666], functions=[partial_avg(UnscaledValue(ss_net_profit#686))], output=[ss_item_sk#666, sum#9272, count#9273L])
+         :     :     :                             +- Project [ss_item_sk#666, ss_net_profit#686]
+         :     :     :                                +- Filter (isnotnull(ss_store_sk#671) AND (ss_store_sk#671 = 21))
+         :     :     :                                   +- FileScan parquet [ss_item_sk#666,ss_store_sk#671,ss_net_profit#686] Batched: true, DataFilters: [isnotnull(ss_store_sk#671), (ss_store_sk#671 = 21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21)], ReadSchema: struct<ss_item_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
+         :     :     +- Sort [rnk#9143 ASC NULLS FIRST], false, 0
+         :     :        +- Project [item_sk#9139, rnk#9143]
+         :     :           +- Filter ((rnk#9143 < 11) AND isnotnull(item_sk#9139))
+         :     :              +- Window [rank(rank_col#9140) windowspecdefinition(rank_col#9140 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#9143], [rank_col#9140 DESC NULLS LAST]
+         :     :                 +- Sort [rank_col#9140 DESC NULLS LAST], false, 0
+         :     :                    +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#74535]
+         :     :                       +- Filter (isnotnull(rank_col#9140) AND (cast(rank_col#9140 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(Subquery subquery#9142, [id=#74500])), DecimalType(13,7), true)))
+         :     :                          :  +- Subquery subquery#9142, [id=#74500]
+         :     :                          :     +- AdaptiveSparkPlan isFinalPlan=false
+         :     :                          :        +- HashAggregate(keys=[ss_store_sk#9231], functions=[avg(UnscaledValue(ss_net_profit#9246))], output=[rank_col#9141])
+         :     :                          :           +- Exchange hashpartitioning(ss_store_sk#9231, 200), ENSURE_REQUIREMENTS, [id=#74498]
+         :     :                          :              +- HashAggregate(keys=[ss_store_sk#9231], functions=[partial_avg(UnscaledValue(ss_net_profit#9246))], output=[ss_store_sk#9231, sum#9284, count#9285L])
+         :     :                          :                 +- Project [ss_store_sk#9231, ss_net_profit#9246]
+         :     :                          :                    +- Filter ((isnotnull(ss_store_sk#9231) AND (ss_store_sk#9231 = 21)) AND isnull(ss_hdemo_sk#9229))
+         :     :                          :                       +- FileScan parquet [ss_hdemo_sk#9229,ss_store_sk#9231,ss_net_profit#9246] Batched: true, DataFilters: [isnotnull(ss_store_sk#9231), (ss_store_sk#9231 = 21), isnull(ss_hdemo_sk#9229)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21), IsNull(ss_hdemo_sk)], ReadSchema: struct<ss_hdemo_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
+         :     :                          +- HashAggregate(keys=[ss_item_sk#9148], functions=[avg(UnscaledValue(ss_net_profit#9168))], output=[item_sk#9139, rank_col#9140])
+         :     :                             +- Exchange hashpartitioning(ss_item_sk#9148, 200), ENSURE_REQUIREMENTS, [id=#74531]
+         :     :                                +- HashAggregate(keys=[ss_item_sk#9148], functions=[partial_avg(UnscaledValue(ss_net_profit#9168))], output=[ss_item_sk#9148, sum#9276, count#9277L])
+         :     :                                   +- Project [ss_item_sk#9148, ss_net_profit#9168]
+         :     :                                      +- Filter (isnotnull(ss_store_sk#9153) AND (ss_store_sk#9153 = 21))
+         :     :                                         +- FileScan parquet [ss_item_sk#9148,ss_store_sk#9153,ss_net_profit#9168] Batched: true, DataFilters: [isnotnull(ss_store_sk#9153), (ss_store_sk#9153 = 21)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), EqualTo(ss_store_sk,21)], ReadSchema: struct<ss_item_sk:int,ss_store_sk:int,ss_net_profit:decimal(7,2)>
+         :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#74547]
+         :        +- Filter isnotnull(i_item_sk#500)
+         :           +- FileScan parquet [i_item_sk#500,i_product_name#521] Batched: true, DataFilters: [isnotnull(i_item_sk#500)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk)], ReadSchema: struct<i_item_sk:int,i_product_name:string>
+         +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#74551]
+            +- Filter isnotnull(i_item_sk#9169)
+               +- FileScan parquet [i_item_sk#9169,i_product_name#9190] Batched: true, DataFilters: [isnotnull(i_item_sk#9169)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk)], ReadSchema: struct<i_item_sk:int,i_product_name:string>

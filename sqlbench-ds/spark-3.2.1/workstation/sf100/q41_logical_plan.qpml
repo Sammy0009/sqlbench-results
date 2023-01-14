@@ -12,61 +12,60 @@ diagram:
       - title: "Aggregate (unknown)"
         operator: "Aggregate"
         inputs:
-        - title: "Projection: i_product_name#689"
+        - title: "Projection: i_product_name#521"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((i_manufact#15346 = i_manufact#682))"
+          - title: "Inner Join: Some((i_manufact#9034 = i_manufact#514))"
             operator: "join"
             inputs:
-            - title: "Projection: i_manufact#682, i_product_name#689"
+            - title: "Projection: i_manufact#514, i_product_name#521"
               operator: "projection"
               inputs:
-              - title: "Filter: ((isnotnull(i_manufact_id#681) AND ((i_manufact_id#681\
-                  \ >= 762) AND (i_manufact_id#681 <= 802))) AND isnotnull(i_manufact#682))"
+              - title: "Filter: ((isnotnull(i_manufact_id#513) AND ((i_manufact_id#513\
+                  \ >= 762) AND (i_manufact_id#513 <= 802))) AND isnotnull(i_manufact#514))"
                 operator: "filter"
                 inputs:
                 - title: "item.parquet"
                   operator: "scan"
                   inputs: []
-            - title: "Projection: i_manufact#15346"
+            - title: "Projection: i_manufact#9034"
               operator: "projection"
               inputs:
-              - title: "Filter: (item_cnt#15329L > 0)"
+              - title: "Filter: (item_cnt#9017L > 0)"
                 operator: "filter"
                 inputs:
                 - title: "Aggregate (unknown)"
                   operator: "Aggregate"
                   inputs:
-                  - title: "Projection: i_manufact#15346"
+                  - title: "Projection: i_manufact#9034"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (((((i_category#15344 = Women) AND (((((i_color#15349\
-                        \ = blush) OR (i_color#15349 = brown)) AND ((i_units#15350\
-                        \ = Bundle) OR (i_units#15350 = Unknown))) AND ((i_size#15347\
-                        \ = extra large) OR (i_size#15347 = petite))) OR ((((i_color#15349\
-                        \ = drab) OR (i_color#15349 = purple)) AND ((i_units#15350\
-                        \ = Case) OR (i_units#15350 = Tbl))) AND ((i_size#15347 =\
-                        \ large) OR (i_size#15347 = economy))))) OR ((i_category#15344\
-                        \ = Men) AND (((((i_color#15349 = sky) OR (i_color#15349 =\
-                        \ linen)) AND ((i_units#15350 = Pound) OR (i_units#15350 =\
-                        \ Cup))) AND ((i_size#15347 = N/A) OR (i_size#15347 = medium)))\
-                        \ OR ((((i_color#15349 = lavender) OR (i_color#15349 = wheat))\
-                        \ AND ((i_units#15350 = Carton) OR (i_units#15350 = Dozen)))\
-                        \ AND ((i_size#15347 = extra large) OR (i_size#15347 = petite))))))\
-                        \ OR (((i_category#15344 = Women) AND (((((i_color#15349 =\
-                        \ puff) OR (i_color#15349 = violet)) AND ((i_units#15350 =\
-                        \ Pallet) OR (i_units#15350 = Bunch))) AND ((i_size#15347\
-                        \ = extra large) OR (i_size#15347 = petite))) OR ((((i_color#15349\
-                        \ = light) OR (i_color#15349 = bisque)) AND ((i_units#15350\
-                        \ = Each) OR (i_units#15350 = Gross))) AND ((i_size#15347\
-                        \ = large) OR (i_size#15347 = economy))))) OR ((i_category#15344\
-                        \ = Men) AND (((((i_color#15349 = mint) OR (i_color#15349\
-                        \ = royal)) AND ((i_units#15350 = Ton) OR (i_units#15350 =\
-                        \ Box))) AND ((i_size#15347 = N/A) OR (i_size#15347 = medium)))\
-                        \ OR ((((i_color#15349 = coral) OR (i_color#15349 = salmon))\
-                        \ AND ((i_units#15350 = Tsp) OR (i_units#15350 = Dram))) AND\
-                        \ ((i_size#15347 = extra large) OR (i_size#15347 = petite)))))))\
-                        \ AND isnotnull(i_manufact#15346))"
+                    - title: "Filter: (((((i_category#9032 = Women) AND (((((i_color#9037\
+                        \ = blush) OR (i_color#9037 = brown)) AND ((i_units#9038 =\
+                        \ Bundle) OR (i_units#9038 = Unknown))) AND ((i_size#9035\
+                        \ = extra large) OR (i_size#9035 = petite))) OR ((((i_color#9037\
+                        \ = drab) OR (i_color#9037 = purple)) AND ((i_units#9038 =\
+                        \ Case) OR (i_units#9038 = Tbl))) AND ((i_size#9035 = large)\
+                        \ OR (i_size#9035 = economy))))) OR ((i_category#9032 = Men)\
+                        \ AND (((((i_color#9037 = sky) OR (i_color#9037 = linen))\
+                        \ AND ((i_units#9038 = Pound) OR (i_units#9038 = Cup))) AND\
+                        \ ((i_size#9035 = N/A) OR (i_size#9035 = medium))) OR ((((i_color#9037\
+                        \ = lavender) OR (i_color#9037 = wheat)) AND ((i_units#9038\
+                        \ = Carton) OR (i_units#9038 = Dozen))) AND ((i_size#9035\
+                        \ = extra large) OR (i_size#9035 = petite)))))) OR (((i_category#9032\
+                        \ = Women) AND (((((i_color#9037 = puff) OR (i_color#9037\
+                        \ = violet)) AND ((i_units#9038 = Pallet) OR (i_units#9038\
+                        \ = Bunch))) AND ((i_size#9035 = extra large) OR (i_size#9035\
+                        \ = petite))) OR ((((i_color#9037 = light) OR (i_color#9037\
+                        \ = bisque)) AND ((i_units#9038 = Each) OR (i_units#9038 =\
+                        \ Gross))) AND ((i_size#9035 = large) OR (i_size#9035 = economy)))))\
+                        \ OR ((i_category#9032 = Men) AND (((((i_color#9037 = mint)\
+                        \ OR (i_color#9037 = royal)) AND ((i_units#9038 = Ton) OR\
+                        \ (i_units#9038 = Box))) AND ((i_size#9035 = N/A) OR (i_size#9035\
+                        \ = medium))) OR ((((i_color#9037 = coral) OR (i_color#9037\
+                        \ = salmon)) AND ((i_units#9038 = Tsp) OR (i_units#9038 =\
+                        \ Dram))) AND ((i_size#9035 = extra large) OR (i_size#9035\
+                        \ = petite))))))) AND isnotnull(i_manufact#9034))"
                       operator: "filter"
                       inputs:
                       - title: "item.parquet"

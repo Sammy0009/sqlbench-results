@@ -1,26 +1,26 @@
-Aggregate [count(distinct cs_order_number#561L) AS order count#7644L, MakeDecimal(sum(UnscaledValue(cs_ext_ship_cost#572)),17,2) AS total shipping cost#7645, MakeDecimal(sum(UnscaledValue(cs_net_profit#577)),17,2) AS total net profit#7646]
-+- Project [cs_order_number#561L, cs_ext_ship_cost#572, cs_net_profit#577]
-   +- Join Inner, (cs_ship_addr_sk#554 = ca_address_sk#62)
-      :- Project [cs_ship_addr_sk#554, cs_order_number#561L, cs_ext_ship_cost#572, cs_net_profit#577]
-      :  +- Join Inner, (cs_ship_date_sk#546 = d_date_sk#612)
-      :     :- Project [cs_ship_date_sk#546, cs_ship_addr_sk#554, cs_order_number#561L, cs_ext_ship_cost#572, cs_net_profit#577]
-      :     :  +- Join Inner, (cs_call_center_sk#555 = cc_call_center_sk#0)
-      :     :     :- Join LeftAnti, (cs_order_number#561L = cr_order_number#362L)
-      :     :     :  :- Project [cs_ship_date_sk#546, cs_ship_addr_sk#554, cs_call_center_sk#555, cs_order_number#561L, cs_ext_ship_cost#572, cs_net_profit#577]
-      :     :     :  :  +- Join LeftSemi, ((cs_order_number#561L = cs_order_number#7666L) AND NOT (cs_warehouse_sk#558 = cs_warehouse_sk#7663))
-      :     :     :  :     :- Project [cs_ship_date_sk#546, cs_ship_addr_sk#554, cs_call_center_sk#555, cs_warehouse_sk#558, cs_order_number#561L, cs_ext_ship_cost#572, cs_net_profit#577]
-      :     :     :  :     :  +- Filter ((isnotnull(cs_call_center_sk#555) AND isnotnull(cs_ship_date_sk#546)) AND isnotnull(cs_ship_addr_sk#554))
-      :     :     :  :     :     +- Relation [cs_sold_date_sk#544,cs_sold_time_sk#545,cs_ship_date_sk#546,cs_bill_customer_sk#547,cs_bill_cdemo_sk#548,cs_bill_hdemo_sk#549,cs_bill_addr_sk#550,cs_ship_customer_sk#551,cs_ship_cdemo_sk#552,cs_ship_hdemo_sk#553,cs_ship_addr_sk#554,cs_call_center_sk#555,cs_catalog_page_sk#556,cs_ship_mode_sk#557,cs_warehouse_sk#558,cs_item_sk#559,cs_promo_sk#560,cs_order_number#561L,cs_quantity#562,cs_wholesale_cost#563,cs_list_price#564,cs_sales_price#565,cs_ext_discount_amt#566,cs_ext_sales_price#567,... 10 more fields] parquet
-      :     :     :  :     +- Project [cs_warehouse_sk#7663, cs_order_number#7666L]
-      :     :     :  :        +- Relation [cs_sold_date_sk#7649,cs_sold_time_sk#7650,cs_ship_date_sk#7651,cs_bill_customer_sk#7652,cs_bill_cdemo_sk#7653,cs_bill_hdemo_sk#7654,cs_bill_addr_sk#7655,cs_ship_customer_sk#7656,cs_ship_cdemo_sk#7657,cs_ship_hdemo_sk#7658,cs_ship_addr_sk#7659,cs_call_center_sk#7660,cs_catalog_page_sk#7661,cs_ship_mode_sk#7662,cs_warehouse_sk#7663,cs_item_sk#7664,cs_promo_sk#7665,cs_order_number#7666L,cs_quantity#7667,cs_wholesale_cost#7668,cs_list_price#7669,cs_sales_price#7670,cs_ext_discount_amt#7671,cs_ext_sales_price#7672,... 10 more fields] parquet
-      :     :     :  +- Project [cr_order_number#362L]
-      :     :     :     +- Relation [cr_returned_date_sk#346,cr_returned_time_sk#347,cr_item_sk#348,cr_refunded_customer_sk#349,cr_refunded_cdemo_sk#350,cr_refunded_hdemo_sk#351,cr_refunded_addr_sk#352,cr_returning_customer_sk#353,cr_returning_cdemo_sk#354,cr_returning_hdemo_sk#355,cr_returning_addr_sk#356,cr_call_center_sk#357,cr_catalog_page_sk#358,cr_ship_mode_sk#359,cr_warehouse_sk#360,cr_reason_sk#361,cr_order_number#362L,cr_return_quantity#363,cr_return_amount#364,cr_return_tax#365,cr_return_amt_inc_tax#366,cr_fee#367,cr_return_ship_cost#368,cr_refunded_cash#369,... 3 more fields] parquet
-      :     :     +- Project [cc_call_center_sk#0]
-      :     :        +- Filter (cc_county#25 IN (Franklin Parish,Walker County,Ziebach County,Fairfield County,Daviess County) AND isnotnull(cc_call_center_sk#0))
-      :     :           +- Relation [cc_call_center_sk#0,cc_call_center_id#1,cc_rec_start_date#2,cc_rec_end_date#3,cc_closed_date_sk#4,cc_open_date_sk#5,cc_name#6,cc_class#7,cc_employees#8,cc_sq_ft#9,cc_hours#10,cc_manager#11,cc_mkt_id#12,cc_mkt_class#13,cc_mkt_desc#14,cc_market_manager#15,cc_division#16,cc_division_name#17,cc_company#18,cc_company_name#19,cc_street_number#20,cc_street_name#21,cc_street_type#22,cc_suite_number#23,... 7 more fields] parquet
-      :     +- Project [d_date_sk#612]
-      :        +- Filter ((isnotnull(d_date#614) AND ((d_date#614 >= 2001-04-01) AND (d_date#614 <= 2001-05-31))) AND isnotnull(d_date_sk#612))
-      :           +- Relation [d_date_sk#612,d_date_id#613,d_date#614,d_month_seq#615,d_week_seq#616,d_quarter_seq#617,d_year#618,d_dow#619,d_moy#620,d_dom#621,d_qoy#622,d_fy_year#623,d_fy_quarter_seq#624,d_fy_week_seq#625,d_day_name#626,d_quarter_name#627,d_holiday#628,d_weekend#629,d_following_holiday#630,d_first_dom#631,d_last_dom#632,d_same_day_ly#633,d_same_day_lq#634,d_current_day#635,... 4 more fields] parquet
-      +- Project [ca_address_sk#62]
-         +- Filter ((isnotnull(ca_state#70) AND (ca_state#70 = TX)) AND isnotnull(ca_address_sk#62))
-            +- Relation [ca_address_sk#62,ca_address_id#63,ca_street_number#64,ca_street_name#65,ca_street_type#66,ca_suite_number#67,ca_city#68,ca_county#69,ca_state#70,ca_zip#71,ca_country#72,ca_gmt_offset#73,ca_location_type#74] parquet
+Aggregate [count(distinct cs_order_number#135L) AS order count#5323L, MakeDecimal(sum(UnscaledValue(cs_ext_ship_cost#146)),17,2) AS total shipping cost#5324, MakeDecimal(sum(UnscaledValue(cs_net_profit#151)),17,2) AS total net profit#5325]
++- Project [cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
+   +- Join Inner, (cs_call_center_sk#129 = cc_call_center_sk#788)
+      :- Project [cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
+      :  +- Join Inner, (cs_ship_addr_sk#128 = ca_address_sk#214)
+      :     :- Project [cs_ship_addr_sk#128, cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
+      :     :  +- Join Inner, (cs_ship_date_sk#120 = d_date_sk#598)
+      :     :     :- Join LeftAnti, (cs_order_number#135L = cr_order_number#264L)
+      :     :     :  :- Project [cs_ship_date_sk#120, cs_ship_addr_sk#128, cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
+      :     :     :  :  +- Join LeftSemi, ((cs_order_number#135L = cs_order_number#5345L) AND NOT (cs_warehouse_sk#132 = cs_warehouse_sk#5342))
+      :     :     :  :     :- Project [cs_ship_date_sk#120, cs_ship_addr_sk#128, cs_call_center_sk#129, cs_warehouse_sk#132, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
+      :     :     :  :     :  +- Filter ((isnotnull(cs_ship_date_sk#120) AND isnotnull(cs_ship_addr_sk#128)) AND isnotnull(cs_call_center_sk#129))
+      :     :     :  :     :     +- Relation [cs_sold_date_sk#118,cs_sold_time_sk#119,cs_ship_date_sk#120,cs_bill_customer_sk#121,cs_bill_cdemo_sk#122,cs_bill_hdemo_sk#123,cs_bill_addr_sk#124,cs_ship_customer_sk#125,cs_ship_cdemo_sk#126,cs_ship_hdemo_sk#127,cs_ship_addr_sk#128,cs_call_center_sk#129,cs_catalog_page_sk#130,cs_ship_mode_sk#131,cs_warehouse_sk#132,cs_item_sk#133,cs_promo_sk#134,cs_order_number#135L,cs_quantity#136,cs_wholesale_cost#137,cs_list_price#138,cs_sales_price#139,cs_ext_discount_amt#140,cs_ext_sales_price#141,... 10 more fields] parquet
+      :     :     :  :     +- Project [cs_warehouse_sk#5342, cs_order_number#5345L]
+      :     :     :  :        +- Relation [cs_sold_date_sk#5328,cs_sold_time_sk#5329,cs_ship_date_sk#5330,cs_bill_customer_sk#5331,cs_bill_cdemo_sk#5332,cs_bill_hdemo_sk#5333,cs_bill_addr_sk#5334,cs_ship_customer_sk#5335,cs_ship_cdemo_sk#5336,cs_ship_hdemo_sk#5337,cs_ship_addr_sk#5338,cs_call_center_sk#5339,cs_catalog_page_sk#5340,cs_ship_mode_sk#5341,cs_warehouse_sk#5342,cs_item_sk#5343,cs_promo_sk#5344,cs_order_number#5345L,cs_quantity#5346,cs_wholesale_cost#5347,cs_list_price#5348,cs_sales_price#5349,cs_ext_discount_amt#5350,cs_ext_sales_price#5351,... 10 more fields] parquet
+      :     :     :  +- Project [cr_order_number#264L]
+      :     :     :     +- Relation [cr_returned_date_sk#248,cr_returned_time_sk#249,cr_item_sk#250,cr_refunded_customer_sk#251,cr_refunded_cdemo_sk#252,cr_refunded_hdemo_sk#253,cr_refunded_addr_sk#254,cr_returning_customer_sk#255,cr_returning_cdemo_sk#256,cr_returning_hdemo_sk#257,cr_returning_addr_sk#258,cr_call_center_sk#259,cr_catalog_page_sk#260,cr_ship_mode_sk#261,cr_warehouse_sk#262,cr_reason_sk#263,cr_order_number#264L,cr_return_quantity#265,cr_return_amount#266,cr_return_tax#267,cr_return_amt_inc_tax#268,cr_fee#269,cr_return_ship_cost#270,cr_refunded_cash#271,... 3 more fields] parquet
+      :     :     +- Project [d_date_sk#598]
+      :     :        +- Filter ((isnotnull(d_date#600) AND ((d_date#600 >= 2001-04-01) AND (d_date#600 <= 2001-05-31))) AND isnotnull(d_date_sk#598))
+      :     :           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
+      :     +- Project [ca_address_sk#214]
+      :        +- Filter ((isnotnull(ca_state#222) AND (ca_state#222 = TX)) AND isnotnull(ca_address_sk#214))
+      :           +- Relation [ca_address_sk#214,ca_address_id#215,ca_street_number#216,ca_street_name#217,ca_street_type#218,ca_suite_number#219,ca_city#220,ca_county#221,ca_state#222,ca_zip#223,ca_country#224,ca_gmt_offset#225,ca_location_type#226] parquet
+      +- Project [cc_call_center_sk#788]
+         +- Filter (cc_county#813 IN (Franklin Parish,Walker County,Ziebach County,Fairfield County,Daviess County) AND isnotnull(cc_call_center_sk#788))
+            +- Relation [cc_call_center_sk#788,cc_call_center_id#789,cc_rec_start_date#790,cc_rec_end_date#791,cc_closed_date_sk#792,cc_open_date_sk#793,cc_name#794,cc_class#795,cc_employees#796,cc_sq_ft#797,cc_hours#798,cc_manager#799,cc_mkt_id#800,cc_mkt_class#801,cc_mkt_desc#802,cc_market_manager#803,cc_division#804,cc_division_name#805,cc_company#806,cc_company_name#807,cc_street_number#808,cc_street_name#809,cc_street_type#810,cc_suite_number#811,... 7 more fields] parquet

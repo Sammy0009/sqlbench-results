@@ -6,94 +6,95 @@ diagram:
   - title: "LocalLimit (unknown)"
     operator: "LocalLimit"
     inputs:
-    - title: "Projection: c_last_name#409, c_first_name#408, substr(s_city, 1, 30)#29426,\
-        \ ss_ticket_number#261L, amt#29422, profit#29423"
+    - title: "Projection: c_last_name#571, c_first_name#570, substr(s_city, 1, 30)#17565,\
+        \ ss_ticket_number#673L, amt#17561, profit#17562"
       operator: "projection"
       inputs:
       - title: "Sort (unknown)"
         operator: "Sort"
         inputs:
-        - title: "Projection: c_last_name#409, c_first_name#408, substr(s_city#734,\
-            \ 1, 30) AS substr(s_city, 1, 30)#29426, ss_ticket_number#261L, amt#29422,\
-            \ profit#29423, s_city#734"
+        - title: "Projection: c_last_name#571, c_first_name#570, substr(s_city#348,\
+            \ 1, 30) AS substr(s_city, 1, 30)#17565, ss_ticket_number#673L, amt#17561,\
+            \ profit#17562, s_city#348"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((ss_customer_sk#255 = c_customer_sk#400))"
+          - title: "Inner Join: Some((ss_customer_sk#667 = c_customer_sk#562))"
             operator: "join"
             inputs:
             - title: "Aggregate (unknown)"
               operator: "Aggregate"
               inputs:
-              - title: "Projection: ss_customer_sk#255, ss_addr_sk#258, ss_ticket_number#261L,\
-                  \ ss_coupon_amt#271, ss_net_profit#274, s_city#734"
+              - title: "Projection: ss_customer_sk#667, ss_addr_sk#670, ss_ticket_number#673L,\
+                  \ ss_coupon_amt#683, ss_net_profit#686, s_city#348"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((ss_sold_date_sk#252 = d_date_sk#612))"
+                - title: "Inner Join: Some((ss_hdemo_sk#669 = hd_demo_sk#654))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ss_sold_date_sk#252, ss_customer_sk#255, ss_addr_sk#258,\
-                      \ ss_ticket_number#261L, ss_coupon_amt#271, ss_net_profit#274,\
-                      \ s_city#734"
+                  - title: "Projection: ss_customer_sk#667, ss_hdemo_sk#669, ss_addr_sk#670,\
+                      \ ss_ticket_number#673L, ss_coupon_amt#683, ss_net_profit#686,\
+                      \ s_city#348"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((ss_hdemo_sk#257 = hd_demo_sk#88))"
+                    - title: "Inner Join: Some((ss_store_sk#671 = s_store_sk#326))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ss_sold_date_sk#252, ss_customer_sk#255,\
-                          \ ss_hdemo_sk#257, ss_addr_sk#258, ss_ticket_number#261L,\
-                          \ ss_coupon_amt#271, ss_net_profit#274, s_city#734"
+                      - title: "Projection: ss_customer_sk#667, ss_hdemo_sk#669, ss_addr_sk#670,\
+                          \ ss_store_sk#671, ss_ticket_number#673L, ss_coupon_amt#683,\
+                          \ ss_net_profit#686"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((ss_store_sk#259 = s_store_sk#712))"
+                        - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#598))"
                           operator: "join"
                           inputs:
-                          - title: "Projection: ss_sold_date_sk#252, ss_customer_sk#255,\
-                              \ ss_hdemo_sk#257, ss_addr_sk#258, ss_store_sk#259,\
-                              \ ss_ticket_number#261L, ss_coupon_amt#271, ss_net_profit#274"
+                          - title: "Projection: ss_sold_date_sk#664, ss_customer_sk#667,\
+                              \ ss_hdemo_sk#669, ss_addr_sk#670, ss_store_sk#671,\
+                              \ ss_ticket_number#673L, ss_coupon_amt#683, ss_net_profit#686"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: ((isnotnull(ss_store_sk#259) AND isnotnull(ss_customer_sk#255))\
-                                \ AND (isnotnull(ss_hdemo_sk#257) AND isnotnull(ss_sold_date_sk#252)))"
+                            - title: "Filter: ((isnotnull(ss_sold_date_sk#664) AND\
+                                \ isnotnull(ss_store_sk#671)) AND (isnotnull(ss_hdemo_sk#669)\
+                                \ AND isnotnull(ss_customer_sk#667)))"
                               operator: "filter"
                               inputs:
                               - title: "store_sales.parquet"
                                 operator: "scan"
                                 inputs: []
-                          - title: "Projection: s_store_sk#712, s_city#734"
+                          - title: "Projection: d_date_sk#598"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: ((isnotnull(s_number_employees#718)\
-                                \ AND ((s_number_employees#718 >= 200) AND (s_number_employees#718\
-                                \ <= 295))) AND isnotnull(s_store_sk#712))"
+                            - title: "Filter: ((isnotnull(d_dow#605) AND ((d_dow#605\
+                                \ = 1) AND d_year#604 IN (2000,2001,2002))) AND isnotnull(d_date_sk#598))"
                               operator: "filter"
                               inputs:
-                              - title: "store.parquet"
+                              - title: "date_dim.parquet"
                                 operator: "scan"
                                 inputs: []
-                      - title: "Projection: hd_demo_sk#88"
+                      - title: "Projection: s_store_sk#326, s_city#348"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (((hd_dep_count#91 = 5) OR (hd_vehicle_count#92\
-                            \ > 1)) AND isnotnull(hd_demo_sk#88))"
+                        - title: "Filter: ((isnotnull(s_number_employees#332) AND\
+                            \ ((s_number_employees#332 >= 200) AND (s_number_employees#332\
+                            \ <= 295))) AND isnotnull(s_store_sk#326))"
                           operator: "filter"
                           inputs:
-                          - title: "household_demographics.parquet"
+                          - title: "store.parquet"
                             operator: "scan"
                             inputs: []
-                  - title: "Projection: d_date_sk#612"
+                  - title: "Projection: hd_demo_sk#654"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((isnotnull(d_dow#619) AND ((d_dow#619 = 1)\
-                        \ AND d_year#618 IN (2000,2001,2002))) AND isnotnull(d_date_sk#612))"
+                    - title: "Filter: (((hd_dep_count#657 = 5) OR (hd_vehicle_count#658\
+                        \ > 1)) AND isnotnull(hd_demo_sk#654))"
                       operator: "filter"
                       inputs:
-                      - title: "date_dim.parquet"
+                      - title: "household_demographics.parquet"
                         operator: "scan"
                         inputs: []
-            - title: "Projection: c_customer_sk#400, c_first_name#408, c_last_name#409"
+            - title: "Projection: c_customer_sk#562, c_first_name#570, c_last_name#571"
               operator: "projection"
               inputs:
-              - title: "Filter: isnotnull(c_customer_sk#400)"
+              - title: "Filter: isnotnull(c_customer_sk#562)"
                 operator: "filter"
                 inputs:
                 - title: "customer.parquet"

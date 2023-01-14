@@ -12,67 +12,66 @@ diagram:
       - title: "Aggregate (unknown)"
         operator: "Aggregate"
         inputs:
-        - title: "Projection: ss_net_profit#274, s_store_name#717"
+        - title: "Projection: ss_net_profit#686, s_store_name#331"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((substr(s_zip#737, 1, 2) = substr(ca_zip#4174,\
+          - title: "Inner Join: Some((substr(s_zip#351, 1, 2) = substr(ca_zip#3131,\
               \ 1, 2)))"
             operator: "join"
             inputs:
-            - title: "Projection: ss_net_profit#274, s_store_name#717, s_zip#737"
+            - title: "Projection: ss_net_profit#686, s_store_name#331, s_zip#351"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ss_sold_date_sk#252 = d_date_sk#612))"
+              - title: "Inner Join: Some((ss_store_sk#671 = s_store_sk#326))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ss_sold_date_sk#252, ss_net_profit#274, s_store_name#717,\
-                    \ s_zip#737"
+                - title: "Projection: ss_store_sk#671, ss_net_profit#686"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((ss_store_sk#259 = s_store_sk#712))"
+                  - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#598))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ss_sold_date_sk#252, ss_store_sk#259, ss_net_profit#274"
+                    - title: "Projection: ss_sold_date_sk#664, ss_store_sk#671, ss_net_profit#686"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(ss_store_sk#259) AND isnotnull(ss_sold_date_sk#252))"
+                      - title: "Filter: (isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_store_sk#671))"
                         operator: "filter"
                         inputs:
                         - title: "store_sales.parquet"
                           operator: "scan"
                           inputs: []
-                    - title: "Projection: s_store_sk#712, s_store_name#717, s_zip#737"
+                    - title: "Projection: d_date_sk#598"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(s_store_sk#712) AND isnotnull(s_zip#737))"
+                      - title: "Filter: (((isnotnull(d_qoy#608) AND isnotnull(d_year#604))\
+                          \ AND ((d_qoy#608 = 1) AND (d_year#604 = 2002))) AND isnotnull(d_date_sk#598))"
                         operator: "filter"
                         inputs:
-                        - title: "store.parquet"
+                        - title: "date_dim.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: d_date_sk#612"
+                - title: "Projection: s_store_sk#326, s_store_name#331, s_zip#351"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (((isnotnull(d_qoy#622) AND isnotnull(d_year#618))\
-                      \ AND ((d_qoy#622 = 1) AND (d_year#618 = 2002))) AND isnotnull(d_date_sk#612))"
+                  - title: "Filter: (isnotnull(s_store_sk#326) AND isnotnull(s_zip#351))"
                     operator: "filter"
                     inputs:
-                    - title: "date_dim.parquet"
+                    - title: "store.parquet"
                       operator: "scan"
                       inputs: []
             - title: "Aggregate (unknown)"
               operator: "Aggregate"
               inputs:
-              - title: "Projection: substr(ca_zip#71, 1, 5) AS ca_zip#4174"
+              - title: "Projection: substr(ca_zip#223, 1, 5) AS ca_zip#3131"
                 operator: "projection"
                 inputs:
-                - title: "LeftSemi Join: Some((substr(ca_zip#71, 1, 5) <=> ca_zip#4175))"
+                - title: "LeftSemi Join: Some((substr(ca_zip#223, 1, 5) <=> ca_zip#3132))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ca_zip#71"
+                  - title: "Projection: ca_zip#223"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (substr(ca_zip#71, 1, 5) INSET 10206, 10324,\
+                    - title: "Filter: (substr(ca_zip#223, 1, 5) INSET 10206, 10324,\
                         \ 10424, 10828, 11000, 11486, 11666, 11734, 12037, 12215,\
                         \ 12413, 12727, 12778, 13068, 13091, 13188, 13224, 13505,\
                         \ 13763, 13878, 13888, 14108, 14174, 14230, 14438, 14687,\
@@ -122,42 +121,42 @@ diagram:
                         \ 91575, 92398, 92467, 93072, 93783, 94180, 94255, 94296,\
                         \ 94470, 94618, 95391, 95816, 96216, 96381, 97436, 97450,\
                         \ 97475, 97613, 97644, 97683, 97692, 97779, 97884, 98320,\
-                        \ 98834, 99094, 99140, 99157, 99799, 99827 AND isnotnull(substr(ca_zip#71,\
+                        \ 98834, 99094, 99140, 99157, 99799, 99827 AND isnotnull(substr(ca_zip#223,\
                         \ 1, 5)))"
                       operator: "filter"
                       inputs:
                       - title: "customer_address.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: ca_zip#4175"
+                  - title: "Projection: ca_zip#3132"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (cnt#4176L > 10)"
+                    - title: "Filter: (cnt#3133L > 10)"
                       operator: "filter"
                       inputs:
                       - title: "Aggregate (unknown)"
                         operator: "Aggregate"
                         inputs:
-                        - title: "Projection: ca_zip#4186"
+                        - title: "Projection: ca_zip#3143"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((ca_address_sk#4177 = c_current_addr_sk#404))"
+                          - title: "Inner Join: Some((ca_address_sk#3134 = c_current_addr_sk#566))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ca_address_sk#4177, ca_zip#4186"
+                            - title: "Projection: ca_address_sk#3134, ca_zip#3143"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: isnotnull(ca_address_sk#4177)"
+                              - title: "Filter: isnotnull(ca_address_sk#3134)"
                                 operator: "filter"
                                 inputs:
                                 - title: "customer_address.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: c_current_addr_sk#404"
+                            - title: "Projection: c_current_addr_sk#566"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: ((isnotnull(c_preferred_cust_flag#410)\
-                                  \ AND (c_preferred_cust_flag#410 = Y)) AND isnotnull(c_current_addr_sk#404))"
+                              - title: "Filter: ((isnotnull(c_preferred_cust_flag#572)\
+                                  \ AND (c_preferred_cust_flag#572 = Y)) AND isnotnull(c_current_addr_sk#566))"
                                 operator: "filter"
                                 inputs:
                                 - title: "customer.parquet"

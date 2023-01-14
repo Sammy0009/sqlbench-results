@@ -1,40 +1,40 @@
-Project [CheckOverflow((promote_precision(cast(amc#32253L as decimal(15,4))) / promote_precision(cast(pmc#32254L as decimal(15,4)))), DecimalType(35,20), true) AS am_pm_ratio#32255]
+Project [CheckOverflow((promote_precision(cast(amc#19131L as decimal(15,4))) / promote_precision(cast(pmc#19132L as decimal(15,4)))), DecimalType(35,20), true) AS am_pm_ratio#19133]
 +- Join Inner
-   :- Aggregate [count(1) AS amc#32253L]
+   :- Aggregate [count(1) AS amc#19131L]
    :  +- Project
-   :     +- Join Inner, (ws_sold_time_sk#477 = t_time_sk#456)
-   :        :- Project [ws_sold_time_sk#477]
-   :        :  +- Join Inner, (ws_ship_hdemo_sk#486 = hd_demo_sk#88)
-   :        :     :- Project [ws_sold_time_sk#477, ws_ship_hdemo_sk#486]
-   :        :     :  +- Join Inner, (ws_web_page_sk#488 = wp_web_page_sk#176)
-   :        :     :     :- Project [ws_sold_time_sk#477, ws_ship_hdemo_sk#486, ws_web_page_sk#488]
-   :        :     :     :  +- Filter (isnotnull(ws_web_page_sk#488) AND (isnotnull(ws_ship_hdemo_sk#486) AND isnotnull(ws_sold_time_sk#477)))
-   :        :     :     :     +- Relation [ws_sold_date_sk#476,ws_sold_time_sk#477,ws_ship_date_sk#478,ws_item_sk#479,ws_bill_customer_sk#480,ws_bill_cdemo_sk#481,ws_bill_hdemo_sk#482,ws_bill_addr_sk#483,ws_ship_customer_sk#484,ws_ship_cdemo_sk#485,ws_ship_hdemo_sk#486,ws_ship_addr_sk#487,ws_web_page_sk#488,ws_web_site_sk#489,ws_ship_mode_sk#490,ws_warehouse_sk#491,ws_promo_sk#492,ws_order_number#493L,ws_quantity#494,ws_wholesale_cost#495,ws_list_price#496,ws_sales_price#497,ws_ext_discount_amt#498,ws_ext_sales_price#499,... 10 more fields] parquet
-   :        :     :     +- Project [wp_web_page_sk#176]
-   :        :     :        +- Filter ((isnotnull(wp_char_count#186) AND ((wp_char_count#186 >= 5000) AND (wp_char_count#186 <= 5200))) AND isnotnull(wp_web_page_sk#176))
-   :        :     :           +- Relation [wp_web_page_sk#176,wp_web_page_id#177,wp_rec_start_date#178,wp_rec_end_date#179,wp_creation_date_sk#180,wp_access_date_sk#181,wp_autogen_flag#182,wp_customer_sk#183,wp_url#184,wp_type#185,wp_char_count#186,wp_link_count#187,wp_image_count#188,wp_max_ad_count#189] parquet
-   :        :     +- Project [hd_demo_sk#88]
-   :        :        +- Filter ((isnotnull(hd_dep_count#91) AND (hd_dep_count#91 = 6)) AND isnotnull(hd_demo_sk#88))
-   :        :           +- Relation [hd_demo_sk#88,hd_income_band_sk#89,hd_buy_potential#90,hd_dep_count#91,hd_vehicle_count#92] parquet
-   :        +- Project [t_time_sk#456]
-   :           +- Filter ((isnotnull(t_hour#459) AND ((t_hour#459 >= 10) AND (t_hour#459 <= 11))) AND isnotnull(t_time_sk#456))
-   :              +- Relation [t_time_sk#456,t_time_id#457,t_time#458,t_hour#459,t_minute#460,t_second#461,t_am_pm#462,t_shift#463,t_sub_shift#464,t_meal_time#465] parquet
-   +- Aggregate [count(1) AS pmc#32254L]
+   :     +- Join Inner, (ws_web_page_sk#396 = wp_web_page_sk#0)
+   :        :- Project [ws_web_page_sk#396]
+   :        :  +- Join Inner, (ws_sold_time_sk#385 = t_time_sk#28)
+   :        :     :- Project [ws_sold_time_sk#385, ws_web_page_sk#396]
+   :        :     :  +- Join Inner, (ws_ship_hdemo_sk#394 = hd_demo_sk#654)
+   :        :     :     :- Project [ws_sold_time_sk#385, ws_ship_hdemo_sk#394, ws_web_page_sk#396]
+   :        :     :     :  +- Filter (isnotnull(ws_ship_hdemo_sk#394) AND (isnotnull(ws_sold_time_sk#385) AND isnotnull(ws_web_page_sk#396)))
+   :        :     :     :     +- Relation [ws_sold_date_sk#384,ws_sold_time_sk#385,ws_ship_date_sk#386,ws_item_sk#387,ws_bill_customer_sk#388,ws_bill_cdemo_sk#389,ws_bill_hdemo_sk#390,ws_bill_addr_sk#391,ws_ship_customer_sk#392,ws_ship_cdemo_sk#393,ws_ship_hdemo_sk#394,ws_ship_addr_sk#395,ws_web_page_sk#396,ws_web_site_sk#397,ws_ship_mode_sk#398,ws_warehouse_sk#399,ws_promo_sk#400,ws_order_number#401L,ws_quantity#402,ws_wholesale_cost#403,ws_list_price#404,ws_sales_price#405,ws_ext_discount_amt#406,ws_ext_sales_price#407,... 10 more fields] parquet
+   :        :     :     +- Project [hd_demo_sk#654]
+   :        :     :        +- Filter ((isnotnull(hd_dep_count#657) AND (hd_dep_count#657 = 6)) AND isnotnull(hd_demo_sk#654))
+   :        :     :           +- Relation [hd_demo_sk#654,hd_income_band_sk#655,hd_buy_potential#656,hd_dep_count#657,hd_vehicle_count#658] parquet
+   :        :     +- Project [t_time_sk#28]
+   :        :        +- Filter ((isnotnull(t_hour#31) AND ((t_hour#31 >= 10) AND (t_hour#31 <= 11))) AND isnotnull(t_time_sk#28))
+   :        :           +- Relation [t_time_sk#28,t_time_id#29,t_time#30,t_hour#31,t_minute#32,t_second#33,t_am_pm#34,t_shift#35,t_sub_shift#36,t_meal_time#37] parquet
+   :        +- Project [wp_web_page_sk#0]
+   :           +- Filter ((isnotnull(wp_char_count#10) AND ((wp_char_count#10 >= 5000) AND (wp_char_count#10 <= 5200))) AND isnotnull(wp_web_page_sk#0))
+   :              +- Relation [wp_web_page_sk#0,wp_web_page_id#1,wp_rec_start_date#2,wp_rec_end_date#3,wp_creation_date_sk#4,wp_access_date_sk#5,wp_autogen_flag#6,wp_customer_sk#7,wp_url#8,wp_type#9,wp_char_count#10,wp_link_count#11,wp_image_count#12,wp_max_ad_count#13] parquet
+   +- Aggregate [count(1) AS pmc#19132L]
       +- Project
-         +- Join Inner, (ws_sold_time_sk#32257 = t_time_sk#32295)
-            :- Project [ws_sold_time_sk#32257]
-            :  +- Join Inner, (ws_ship_hdemo_sk#32266 = hd_demo_sk#32290)
-            :     :- Project [ws_sold_time_sk#32257, ws_ship_hdemo_sk#32266]
-            :     :  +- Join Inner, (ws_web_page_sk#32268 = wp_web_page_sk#32305)
-            :     :     :- Project [ws_sold_time_sk#32257, ws_ship_hdemo_sk#32266, ws_web_page_sk#32268]
-            :     :     :  +- Filter (isnotnull(ws_web_page_sk#32268) AND (isnotnull(ws_ship_hdemo_sk#32266) AND isnotnull(ws_sold_time_sk#32257)))
-            :     :     :     +- Relation [ws_sold_date_sk#32256,ws_sold_time_sk#32257,ws_ship_date_sk#32258,ws_item_sk#32259,ws_bill_customer_sk#32260,ws_bill_cdemo_sk#32261,ws_bill_hdemo_sk#32262,ws_bill_addr_sk#32263,ws_ship_customer_sk#32264,ws_ship_cdemo_sk#32265,ws_ship_hdemo_sk#32266,ws_ship_addr_sk#32267,ws_web_page_sk#32268,ws_web_site_sk#32269,ws_ship_mode_sk#32270,ws_warehouse_sk#32271,ws_promo_sk#32272,ws_order_number#32273L,ws_quantity#32274,ws_wholesale_cost#32275,ws_list_price#32276,ws_sales_price#32277,ws_ext_discount_amt#32278,ws_ext_sales_price#32279,... 10 more fields] parquet
-            :     :     +- Project [wp_web_page_sk#32305]
-            :     :        +- Filter ((isnotnull(wp_char_count#32315) AND ((wp_char_count#32315 >= 5000) AND (wp_char_count#32315 <= 5200))) AND isnotnull(wp_web_page_sk#32305))
-            :     :           +- Relation [wp_web_page_sk#32305,wp_web_page_id#32306,wp_rec_start_date#32307,wp_rec_end_date#32308,wp_creation_date_sk#32309,wp_access_date_sk#32310,wp_autogen_flag#32311,wp_customer_sk#32312,wp_url#32313,wp_type#32314,wp_char_count#32315,wp_link_count#32316,wp_image_count#32317,wp_max_ad_count#32318] parquet
-            :     +- Project [hd_demo_sk#32290]
-            :        +- Filter ((isnotnull(hd_dep_count#32293) AND (hd_dep_count#32293 = 6)) AND isnotnull(hd_demo_sk#32290))
-            :           +- Relation [hd_demo_sk#32290,hd_income_band_sk#32291,hd_buy_potential#32292,hd_dep_count#32293,hd_vehicle_count#32294] parquet
-            +- Project [t_time_sk#32295]
-               +- Filter ((isnotnull(t_hour#32298) AND ((t_hour#32298 >= 18) AND (t_hour#32298 <= 19))) AND isnotnull(t_time_sk#32295))
-                  +- Relation [t_time_sk#32295,t_time_id#32296,t_time#32297,t_hour#32298,t_minute#32299,t_second#32300,t_am_pm#32301,t_shift#32302,t_sub_shift#32303,t_meal_time#32304] parquet
+         +- Join Inner, (ws_web_page_sk#19146 = wp_web_page_sk#19183)
+            :- Project [ws_web_page_sk#19146]
+            :  +- Join Inner, (ws_sold_time_sk#19135 = t_time_sk#19173)
+            :     :- Project [ws_sold_time_sk#19135, ws_web_page_sk#19146]
+            :     :  +- Join Inner, (ws_ship_hdemo_sk#19144 = hd_demo_sk#19168)
+            :     :     :- Project [ws_sold_time_sk#19135, ws_ship_hdemo_sk#19144, ws_web_page_sk#19146]
+            :     :     :  +- Filter (isnotnull(ws_ship_hdemo_sk#19144) AND (isnotnull(ws_sold_time_sk#19135) AND isnotnull(ws_web_page_sk#19146)))
+            :     :     :     +- Relation [ws_sold_date_sk#19134,ws_sold_time_sk#19135,ws_ship_date_sk#19136,ws_item_sk#19137,ws_bill_customer_sk#19138,ws_bill_cdemo_sk#19139,ws_bill_hdemo_sk#19140,ws_bill_addr_sk#19141,ws_ship_customer_sk#19142,ws_ship_cdemo_sk#19143,ws_ship_hdemo_sk#19144,ws_ship_addr_sk#19145,ws_web_page_sk#19146,ws_web_site_sk#19147,ws_ship_mode_sk#19148,ws_warehouse_sk#19149,ws_promo_sk#19150,ws_order_number#19151L,ws_quantity#19152,ws_wholesale_cost#19153,ws_list_price#19154,ws_sales_price#19155,ws_ext_discount_amt#19156,ws_ext_sales_price#19157,... 10 more fields] parquet
+            :     :     +- Project [hd_demo_sk#19168]
+            :     :        +- Filter ((isnotnull(hd_dep_count#19171) AND (hd_dep_count#19171 = 6)) AND isnotnull(hd_demo_sk#19168))
+            :     :           +- Relation [hd_demo_sk#19168,hd_income_band_sk#19169,hd_buy_potential#19170,hd_dep_count#19171,hd_vehicle_count#19172] parquet
+            :     +- Project [t_time_sk#19173]
+            :        +- Filter ((isnotnull(t_hour#19176) AND ((t_hour#19176 >= 18) AND (t_hour#19176 <= 19))) AND isnotnull(t_time_sk#19173))
+            :           +- Relation [t_time_sk#19173,t_time_id#19174,t_time#19175,t_hour#19176,t_minute#19177,t_second#19178,t_am_pm#19179,t_shift#19180,t_sub_shift#19181,t_meal_time#19182] parquet
+            +- Project [wp_web_page_sk#19183]
+               +- Filter ((isnotnull(wp_char_count#19193) AND ((wp_char_count#19193 >= 5000) AND (wp_char_count#19193 <= 5200))) AND isnotnull(wp_web_page_sk#19183))
+                  +- Relation [wp_web_page_sk#19183,wp_web_page_id#19184,wp_rec_start_date#19185,wp_rec_end_date#19186,wp_creation_date_sk#19187,wp_access_date_sk#19188,wp_autogen_flag#19189,wp_customer_sk#19190,wp_url#19191,wp_type#19192,wp_char_count#19193,wp_link_count#19194,wp_image_count#19195,wp_max_ad_count#19196] parquet

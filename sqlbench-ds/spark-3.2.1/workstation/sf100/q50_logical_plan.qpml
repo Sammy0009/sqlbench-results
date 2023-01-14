@@ -12,88 +12,89 @@ diagram:
       - title: "Aggregate (unknown)"
         operator: "Aggregate"
         inputs:
-        - title: "Projection: ss_sold_date_sk#252, sr_returned_date_sk#136, s_store_name#717,\
-            \ s_company_id#728, s_street_number#730, s_street_name#731, s_street_type#732,\
-            \ s_suite_number#733, s_city#734, s_county#735, s_state#736, s_zip#737"
+        - title: "Projection: ss_sold_date_sk#664, sr_returned_date_sk#710, s_store_name#331,\
+            \ s_company_id#342, s_street_number#344, s_street_name#345, s_street_type#346,\
+            \ s_suite_number#347, s_city#348, s_county#349, s_state#350, s_zip#351"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((sr_returned_date_sk#136 = d_date_sk#17282))"
+          - title: "Inner Join: Some((sr_returned_date_sk#710 = d_date_sk#10610))"
             operator: "join"
             inputs:
-            - title: "Projection: ss_sold_date_sk#252, sr_returned_date_sk#136, s_store_name#717,\
-                \ s_company_id#728, s_street_number#730, s_street_name#731, s_street_type#732,\
-                \ s_suite_number#733, s_city#734, s_county#735, s_state#736, s_zip#737"
+            - title: "Projection: ss_sold_date_sk#664, sr_returned_date_sk#710, s_store_name#331,\
+                \ s_company_id#342, s_street_number#344, s_street_name#345, s_street_type#346,\
+                \ s_suite_number#347, s_city#348, s_county#349, s_state#350, s_zip#351"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ss_sold_date_sk#252 = d_date_sk#612))"
+              - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#598))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ss_sold_date_sk#252, sr_returned_date_sk#136,\
-                    \ s_store_name#717, s_company_id#728, s_street_number#730, s_street_name#731,\
-                    \ s_street_type#732, s_suite_number#733, s_city#734, s_county#735,\
-                    \ s_state#736, s_zip#737"
+                - title: "Projection: ss_sold_date_sk#664, sr_returned_date_sk#710,\
+                    \ s_store_name#331, s_company_id#342, s_street_number#344, s_street_name#345,\
+                    \ s_street_type#346, s_suite_number#347, s_city#348, s_county#349,\
+                    \ s_state#350, s_zip#351"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((ss_store_sk#259 = s_store_sk#712))"
+                  - title: "Inner Join: Some((ss_store_sk#671 = s_store_sk#326))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ss_sold_date_sk#252, ss_store_sk#259, sr_returned_date_sk#136"
+                    - title: "Projection: ss_sold_date_sk#664, ss_store_sk#671, sr_returned_date_sk#710"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((((ss_customer_sk#255 = sr_customer_sk#139)\
-                          \ AND (ss_ticket_number#261L = sr_ticket_number#145L)) AND\
-                          \ (ss_item_sk#254 = sr_item_sk#138)))"
+                      - title: "Inner Join: Some((((ss_ticket_number#673L = sr_ticket_number#719L)\
+                          \ AND (ss_item_sk#666 = sr_item_sk#712)) AND (ss_customer_sk#667\
+                          \ = sr_customer_sk#713)))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ss_sold_date_sk#252, ss_item_sk#254,\
-                            \ ss_customer_sk#255, ss_store_sk#259, ss_ticket_number#261L"
+                        - title: "Projection: ss_sold_date_sk#664, ss_item_sk#666,\
+                            \ ss_customer_sk#667, ss_store_sk#671, ss_ticket_number#673L"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (((isnotnull(ss_customer_sk#255) AND isnotnull(ss_ticket_number#261L))\
-                              \ AND isnotnull(ss_item_sk#254)) AND (isnotnull(ss_store_sk#259)\
-                              \ AND isnotnull(ss_sold_date_sk#252)))"
+                          - title: "Filter: ((((isnotnull(ss_ticket_number#673L) AND\
+                              \ isnotnull(ss_item_sk#666)) AND isnotnull(ss_customer_sk#667))\
+                              \ AND isnotnull(ss_store_sk#671)) AND isnotnull(ss_sold_date_sk#664))"
                             operator: "filter"
                             inputs:
                             - title: "store_sales.parquet"
                               operator: "scan"
                               inputs: []
-                        - title: "Projection: sr_returned_date_sk#136, sr_item_sk#138,\
-                            \ sr_customer_sk#139, sr_ticket_number#145L"
+                        - title: "Projection: sr_returned_date_sk#710, sr_item_sk#712,\
+                            \ sr_customer_sk#713, sr_ticket_number#719L"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (((isnotnull(sr_customer_sk#139) AND isnotnull(sr_ticket_number#145L))\
-                              \ AND isnotnull(sr_item_sk#138)) AND isnotnull(sr_returned_date_sk#136))"
+                          - title: "Filter: (((isnotnull(sr_ticket_number#719L) AND\
+                              \ isnotnull(sr_item_sk#712)) AND isnotnull(sr_customer_sk#713))\
+                              \ AND isnotnull(sr_returned_date_sk#710))"
                             operator: "filter"
                             inputs:
                             - title: "store_returns.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: s_store_sk#712, s_store_name#717, s_company_id#728,\
-                        \ s_street_number#730, s_street_name#731, s_street_type#732,\
-                        \ s_suite_number#733, s_city#734, s_county#735, s_state#736,\
-                        \ s_zip#737"
+                    - title: "Projection: s_store_sk#326, s_store_name#331, s_company_id#342,\
+                        \ s_street_number#344, s_street_name#345, s_street_type#346,\
+                        \ s_suite_number#347, s_city#348, s_county#349, s_state#350,\
+                        \ s_zip#351"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: isnotnull(s_store_sk#712)"
+                      - title: "Filter: isnotnull(s_store_sk#326)"
                         operator: "filter"
                         inputs:
                         - title: "store.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: d_date_sk#612"
+                - title: "Projection: d_date_sk#598"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: isnotnull(d_date_sk#612)"
+                  - title: "Filter: isnotnull(d_date_sk#598)"
                     operator: "filter"
                     inputs:
                     - title: "date_dim.parquet"
                       operator: "scan"
                       inputs: []
-            - title: "Projection: d_date_sk#17282"
+            - title: "Projection: d_date_sk#10610"
               operator: "projection"
               inputs:
-              - title: "Filter: (((isnotnull(d_year#17288) AND isnotnull(d_moy#17290))\
-                  \ AND ((d_year#17288 = 1999) AND (d_moy#17290 = 10))) AND isnotnull(d_date_sk#17282))"
+              - title: "Filter: (((isnotnull(d_year#10616) AND isnotnull(d_moy#10618))\
+                  \ AND ((d_year#10616 = 1999) AND (d_moy#10618 = 10))) AND isnotnull(d_date_sk#10610))"
                 operator: "filter"
                 inputs:
                 - title: "date_dim.parquet"

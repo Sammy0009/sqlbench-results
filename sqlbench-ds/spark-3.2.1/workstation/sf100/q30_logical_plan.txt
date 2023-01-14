@@ -1,46 +1,46 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [c_customer_id#401 ASC NULLS FIRST, c_salutation#407 ASC NULLS FIRST, c_first_name#408 ASC NULLS FIRST, c_last_name#409 ASC NULLS FIRST, c_preferred_cust_flag#410 ASC NULLS FIRST, c_birth_day#411 ASC NULLS FIRST, c_birth_month#412 ASC NULLS FIRST, c_birth_year#413 ASC NULLS FIRST, c_birth_country#414 ASC NULLS FIRST, c_login#415 ASC NULLS FIRST, c_email_address#416 ASC NULLS FIRST, c_last_review_date_sk#417 ASC NULLS FIRST, ctr_total_return#12387 ASC NULLS FIRST], true
-      +- Project [c_customer_id#401, c_salutation#407, c_first_name#408, c_last_name#409, c_preferred_cust_flag#410, c_birth_day#411, c_birth_month#412, c_birth_year#413, c_birth_country#414, c_login#415, c_email_address#416, c_last_review_date_sk#417, ctr_total_return#12387]
-         +- Join Inner, (ca_address_sk#12388 = c_current_addr_sk#404)
-            :- Project [ctr_total_return#12387, c_customer_id#401, c_current_addr_sk#404, c_salutation#407, c_first_name#408, c_last_name#409, c_preferred_cust_flag#410, c_birth_day#411, c_birth_month#412, c_birth_year#413, c_birth_country#414, c_login#415, c_email_address#416, c_last_review_date_sk#417]
-            :  +- Join Inner, (ctr_customer_sk#12385 = c_customer_sk#400)
-            :     :- Project [ctr_customer_sk#12385, ctr_total_return#12387]
-            :     :  +- Join Inner, ((cast(ctr_total_return#12387 as decimal(24,7)) > (avg(ctr_total_return) * 1.2)#12403) AND (ctr_state#12386 = ctr_state#12386#12417))
-            :     :     :- Filter isnotnull(ctr_total_return#12387)
-            :     :     :  +- Aggregate [wr_returning_customer_sk#305, ca_state#70], [wr_returning_customer_sk#305 AS ctr_customer_sk#12385, ca_state#70 AS ctr_state#12386, MakeDecimal(sum(UnscaledValue(wr_return_amt#313)),17,2) AS ctr_total_return#12387]
-            :     :     :     +- Project [wr_returning_customer_sk#305, wr_return_amt#313, ca_state#70]
-            :     :     :        +- Join Inner, (wr_returning_addr_sk#308 = ca_address_sk#62)
-            :     :     :           :- Project [wr_returning_customer_sk#305, wr_returning_addr_sk#308, wr_return_amt#313]
-            :     :     :           :  +- Join Inner, (wr_returned_date_sk#298 = d_date_sk#612)
-            :     :     :           :     :- Project [wr_returned_date_sk#298, wr_returning_customer_sk#305, wr_returning_addr_sk#308, wr_return_amt#313]
-            :     :     :           :     :  +- Filter ((isnotnull(wr_returned_date_sk#298) AND isnotnull(wr_returning_addr_sk#308)) AND isnotnull(wr_returning_customer_sk#305))
-            :     :     :           :     :     +- Relation [wr_returned_date_sk#298,wr_returned_time_sk#299,wr_item_sk#300,wr_refunded_customer_sk#301,wr_refunded_cdemo_sk#302,wr_refunded_hdemo_sk#303,wr_refunded_addr_sk#304,wr_returning_customer_sk#305,wr_returning_cdemo_sk#306,wr_returning_hdemo_sk#307,wr_returning_addr_sk#308,wr_web_page_sk#309,wr_reason_sk#310,wr_order_number#311L,wr_return_quantity#312,wr_return_amt#313,wr_return_tax#314,wr_return_amt_inc_tax#315,wr_fee#316,wr_return_ship_cost#317,wr_refunded_cash#318,wr_reversed_charge#319,wr_account_credit#320,wr_net_loss#321] parquet
-            :     :     :           :     +- Project [d_date_sk#612]
-            :     :     :           :        +- Filter ((isnotnull(d_year#618) AND (d_year#618 = 2002)) AND isnotnull(d_date_sk#612))
-            :     :     :           :           +- Relation [d_date_sk#612,d_date_id#613,d_date#614,d_month_seq#615,d_week_seq#616,d_quarter_seq#617,d_year#618,d_dow#619,d_moy#620,d_dom#621,d_qoy#622,d_fy_year#623,d_fy_quarter_seq#624,d_fy_week_seq#625,d_day_name#626,d_quarter_name#627,d_holiday#628,d_weekend#629,d_following_holiday#630,d_first_dom#631,d_last_dom#632,d_same_day_ly#633,d_same_day_lq#634,d_current_day#635,... 4 more fields] parquet
-            :     :     :           +- Project [ca_address_sk#62, ca_state#70]
-            :     :     :              +- Filter (isnotnull(ca_address_sk#62) AND isnotnull(ca_state#70))
-            :     :     :                 +- Relation [ca_address_sk#62,ca_address_id#63,ca_street_number#64,ca_street_name#65,ca_street_type#66,ca_suite_number#67,ca_city#68,ca_county#69,ca_state#70,ca_zip#71,ca_country#72,ca_gmt_offset#73,ca_location_type#74] parquet
-            :     :     +- Filter isnotnull((avg(ctr_total_return) * 1.2)#12403)
-            :     :        +- Aggregate [ctr_state#12386], [CheckOverflow((promote_precision(avg(ctr_total_return#12387)) * 1.200000), DecimalType(24,7), true) AS (avg(ctr_total_return) * 1.2)#12403, ctr_state#12386 AS ctr_state#12386#12417]
-            :     :           +- Aggregate [wr_returning_customer_sk#305, ca_state#70], [ca_state#70 AS ctr_state#12386, MakeDecimal(sum(UnscaledValue(wr_return_amt#313)),17,2) AS ctr_total_return#12387]
-            :     :              +- Project [wr_returning_customer_sk#305, wr_return_amt#313, ca_state#70]
-            :     :                 +- Join Inner, (wr_returning_addr_sk#308 = ca_address_sk#62)
-            :     :                    :- Project [wr_returning_customer_sk#305, wr_returning_addr_sk#308, wr_return_amt#313]
-            :     :                    :  +- Join Inner, (wr_returned_date_sk#298 = d_date_sk#612)
-            :     :                    :     :- Project [wr_returned_date_sk#298, wr_returning_customer_sk#305, wr_returning_addr_sk#308, wr_return_amt#313]
-            :     :                    :     :  +- Filter (isnotnull(wr_returned_date_sk#298) AND isnotnull(wr_returning_addr_sk#308))
-            :     :                    :     :     +- Relation [wr_returned_date_sk#298,wr_returned_time_sk#299,wr_item_sk#300,wr_refunded_customer_sk#301,wr_refunded_cdemo_sk#302,wr_refunded_hdemo_sk#303,wr_refunded_addr_sk#304,wr_returning_customer_sk#305,wr_returning_cdemo_sk#306,wr_returning_hdemo_sk#307,wr_returning_addr_sk#308,wr_web_page_sk#309,wr_reason_sk#310,wr_order_number#311L,wr_return_quantity#312,wr_return_amt#313,wr_return_tax#314,wr_return_amt_inc_tax#315,wr_fee#316,wr_return_ship_cost#317,wr_refunded_cash#318,wr_reversed_charge#319,wr_account_credit#320,wr_net_loss#321] parquet
-            :     :                    :     +- Project [d_date_sk#612]
-            :     :                    :        +- Filter ((isnotnull(d_year#618) AND (d_year#618 = 2002)) AND isnotnull(d_date_sk#612))
-            :     :                    :           +- Relation [d_date_sk#612,d_date_id#613,d_date#614,d_month_seq#615,d_week_seq#616,d_quarter_seq#617,d_year#618,d_dow#619,d_moy#620,d_dom#621,d_qoy#622,d_fy_year#623,d_fy_quarter_seq#624,d_fy_week_seq#625,d_day_name#626,d_quarter_name#627,d_holiday#628,d_weekend#629,d_following_holiday#630,d_first_dom#631,d_last_dom#632,d_same_day_ly#633,d_same_day_lq#634,d_current_day#635,... 4 more fields] parquet
-            :     :                    +- Project [ca_address_sk#62, ca_state#70]
-            :     :                       +- Filter (isnotnull(ca_address_sk#62) AND isnotnull(ca_state#70))
-            :     :                          +- Relation [ca_address_sk#62,ca_address_id#63,ca_street_number#64,ca_street_name#65,ca_street_type#66,ca_suite_number#67,ca_city#68,ca_county#69,ca_state#70,ca_zip#71,ca_country#72,ca_gmt_offset#73,ca_location_type#74] parquet
-            :     +- Project [c_customer_sk#400, c_customer_id#401, c_current_addr_sk#404, c_salutation#407, c_first_name#408, c_last_name#409, c_preferred_cust_flag#410, c_birth_day#411, c_birth_month#412, c_birth_year#413, c_birth_country#414, c_login#415, c_email_address#416, c_last_review_date_sk#417]
-            :        +- Filter (isnotnull(c_customer_sk#400) AND isnotnull(c_current_addr_sk#404))
-            :           +- Relation [c_customer_sk#400,c_customer_id#401,c_current_cdemo_sk#402,c_current_hdemo_sk#403,c_current_addr_sk#404,c_first_shipto_date_sk#405,c_first_sales_date_sk#406,c_salutation#407,c_first_name#408,c_last_name#409,c_preferred_cust_flag#410,c_birth_day#411,c_birth_month#412,c_birth_year#413,c_birth_country#414,c_login#415,c_email_address#416,c_last_review_date_sk#417] parquet
-            +- Project [ca_address_sk#12388]
-               +- Filter ((isnotnull(ca_state#12396) AND (ca_state#12396 = NM)) AND isnotnull(ca_address_sk#12388))
-                  +- Relation [ca_address_sk#12388,ca_address_id#12389,ca_street_number#12390,ca_street_name#12391,ca_street_type#12392,ca_suite_number#12393,ca_city#12394,ca_county#12395,ca_state#12396,ca_zip#12397,ca_country#12398,ca_gmt_offset#12399,ca_location_type#12400] parquet
+   +- Sort [c_customer_id#563 ASC NULLS FIRST, c_salutation#569 ASC NULLS FIRST, c_first_name#570 ASC NULLS FIRST, c_last_name#571 ASC NULLS FIRST, c_preferred_cust_flag#572 ASC NULLS FIRST, c_birth_day#573 ASC NULLS FIRST, c_birth_month#574 ASC NULLS FIRST, c_birth_year#575 ASC NULLS FIRST, c_birth_country#576 ASC NULLS FIRST, c_login#577 ASC NULLS FIRST, c_email_address#578 ASC NULLS FIRST, c_last_review_date_sk#579 ASC NULLS FIRST, ctr_total_return#7519 ASC NULLS FIRST], true
+      +- Project [c_customer_id#563, c_salutation#569, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_day#573, c_birth_month#574, c_birth_year#575, c_birth_country#576, c_login#577, c_email_address#578, c_last_review_date_sk#579, ctr_total_return#7519]
+         +- Join Inner, (ca_address_sk#7520 = c_current_addr_sk#566)
+            :- Project [ctr_total_return#7519, c_customer_id#563, c_current_addr_sk#566, c_salutation#569, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_day#573, c_birth_month#574, c_birth_year#575, c_birth_country#576, c_login#577, c_email_address#578, c_last_review_date_sk#579]
+            :  +- Join Inner, (ctr_customer_sk#7517 = c_customer_sk#562)
+            :     :- Project [ctr_customer_sk#7517, ctr_total_return#7519]
+            :     :  +- Join Inner, ((cast(ctr_total_return#7519 as decimal(24,7)) > (avg(ctr_total_return) * 1.2)#7535) AND (ctr_state#7518 = ctr_state#7518#7549))
+            :     :     :- Filter isnotnull(ctr_total_return#7519)
+            :     :     :  +- Aggregate [wr_returning_customer_sk#459, ca_state#222], [wr_returning_customer_sk#459 AS ctr_customer_sk#7517, ca_state#222 AS ctr_state#7518, MakeDecimal(sum(UnscaledValue(wr_return_amt#467)),17,2) AS ctr_total_return#7519]
+            :     :     :     +- Project [wr_returning_customer_sk#459, wr_return_amt#467, ca_state#222]
+            :     :     :        +- Join Inner, (wr_returning_addr_sk#462 = ca_address_sk#214)
+            :     :     :           :- Project [wr_returning_customer_sk#459, wr_returning_addr_sk#462, wr_return_amt#467]
+            :     :     :           :  +- Join Inner, (wr_returned_date_sk#452 = d_date_sk#598)
+            :     :     :           :     :- Project [wr_returned_date_sk#452, wr_returning_customer_sk#459, wr_returning_addr_sk#462, wr_return_amt#467]
+            :     :     :           :     :  +- Filter ((isnotnull(wr_returned_date_sk#452) AND isnotnull(wr_returning_addr_sk#462)) AND isnotnull(wr_returning_customer_sk#459))
+            :     :     :           :     :     +- Relation [wr_returned_date_sk#452,wr_returned_time_sk#453,wr_item_sk#454,wr_refunded_customer_sk#455,wr_refunded_cdemo_sk#456,wr_refunded_hdemo_sk#457,wr_refunded_addr_sk#458,wr_returning_customer_sk#459,wr_returning_cdemo_sk#460,wr_returning_hdemo_sk#461,wr_returning_addr_sk#462,wr_web_page_sk#463,wr_reason_sk#464,wr_order_number#465L,wr_return_quantity#466,wr_return_amt#467,wr_return_tax#468,wr_return_amt_inc_tax#469,wr_fee#470,wr_return_ship_cost#471,wr_refunded_cash#472,wr_reversed_charge#473,wr_account_credit#474,wr_net_loss#475] parquet
+            :     :     :           :     +- Project [d_date_sk#598]
+            :     :     :           :        +- Filter ((isnotnull(d_year#604) AND (d_year#604 = 2002)) AND isnotnull(d_date_sk#598))
+            :     :     :           :           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
+            :     :     :           +- Project [ca_address_sk#214, ca_state#222]
+            :     :     :              +- Filter (isnotnull(ca_address_sk#214) AND isnotnull(ca_state#222))
+            :     :     :                 +- Relation [ca_address_sk#214,ca_address_id#215,ca_street_number#216,ca_street_name#217,ca_street_type#218,ca_suite_number#219,ca_city#220,ca_county#221,ca_state#222,ca_zip#223,ca_country#224,ca_gmt_offset#225,ca_location_type#226] parquet
+            :     :     +- Filter isnotnull((avg(ctr_total_return) * 1.2)#7535)
+            :     :        +- Aggregate [ctr_state#7518], [CheckOverflow((promote_precision(avg(ctr_total_return#7519)) * 1.200000), DecimalType(24,7), true) AS (avg(ctr_total_return) * 1.2)#7535, ctr_state#7518 AS ctr_state#7518#7549]
+            :     :           +- Aggregate [wr_returning_customer_sk#459, ca_state#222], [ca_state#222 AS ctr_state#7518, MakeDecimal(sum(UnscaledValue(wr_return_amt#467)),17,2) AS ctr_total_return#7519]
+            :     :              +- Project [wr_returning_customer_sk#459, wr_return_amt#467, ca_state#222]
+            :     :                 +- Join Inner, (wr_returning_addr_sk#462 = ca_address_sk#214)
+            :     :                    :- Project [wr_returning_customer_sk#459, wr_returning_addr_sk#462, wr_return_amt#467]
+            :     :                    :  +- Join Inner, (wr_returned_date_sk#452 = d_date_sk#598)
+            :     :                    :     :- Project [wr_returned_date_sk#452, wr_returning_customer_sk#459, wr_returning_addr_sk#462, wr_return_amt#467]
+            :     :                    :     :  +- Filter (isnotnull(wr_returned_date_sk#452) AND isnotnull(wr_returning_addr_sk#462))
+            :     :                    :     :     +- Relation [wr_returned_date_sk#452,wr_returned_time_sk#453,wr_item_sk#454,wr_refunded_customer_sk#455,wr_refunded_cdemo_sk#456,wr_refunded_hdemo_sk#457,wr_refunded_addr_sk#458,wr_returning_customer_sk#459,wr_returning_cdemo_sk#460,wr_returning_hdemo_sk#461,wr_returning_addr_sk#462,wr_web_page_sk#463,wr_reason_sk#464,wr_order_number#465L,wr_return_quantity#466,wr_return_amt#467,wr_return_tax#468,wr_return_amt_inc_tax#469,wr_fee#470,wr_return_ship_cost#471,wr_refunded_cash#472,wr_reversed_charge#473,wr_account_credit#474,wr_net_loss#475] parquet
+            :     :                    :     +- Project [d_date_sk#598]
+            :     :                    :        +- Filter ((isnotnull(d_year#604) AND (d_year#604 = 2002)) AND isnotnull(d_date_sk#598))
+            :     :                    :           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
+            :     :                    +- Project [ca_address_sk#214, ca_state#222]
+            :     :                       +- Filter (isnotnull(ca_address_sk#214) AND isnotnull(ca_state#222))
+            :     :                          +- Relation [ca_address_sk#214,ca_address_id#215,ca_street_number#216,ca_street_name#217,ca_street_type#218,ca_suite_number#219,ca_city#220,ca_county#221,ca_state#222,ca_zip#223,ca_country#224,ca_gmt_offset#225,ca_location_type#226] parquet
+            :     +- Project [c_customer_sk#562, c_customer_id#563, c_current_addr_sk#566, c_salutation#569, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_day#573, c_birth_month#574, c_birth_year#575, c_birth_country#576, c_login#577, c_email_address#578, c_last_review_date_sk#579]
+            :        +- Filter (isnotnull(c_customer_sk#562) AND isnotnull(c_current_addr_sk#566))
+            :           +- Relation [c_customer_sk#562,c_customer_id#563,c_current_cdemo_sk#564,c_current_hdemo_sk#565,c_current_addr_sk#566,c_first_shipto_date_sk#567,c_first_sales_date_sk#568,c_salutation#569,c_first_name#570,c_last_name#571,c_preferred_cust_flag#572,c_birth_day#573,c_birth_month#574,c_birth_year#575,c_birth_country#576,c_login#577,c_email_address#578,c_last_review_date_sk#579] parquet
+            +- Project [ca_address_sk#7520]
+               +- Filter ((isnotnull(ca_state#7528) AND (ca_state#7528 = NM)) AND isnotnull(ca_address_sk#7520))
+                  +- Relation [ca_address_sk#7520,ca_address_id#7521,ca_street_number#7522,ca_street_name#7523,ca_street_type#7524,ca_suite_number#7525,ca_city#7526,ca_county#7527,ca_state#7528,ca_zip#7529,ca_country#7530,ca_gmt_offset#7531,ca_location_type#7532] parquet

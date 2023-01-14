@@ -9,8 +9,8 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: total_sum#25212, s_state#25315, s_county#25316, lochierarchy#25213,\
-          \ rank_within_parent#25214"
+      - title: "Projection: total_sum#15037, s_state#15140, s_county#15141, lochierarchy#15038,\
+          \ rank_within_parent#15039"
         operator: "projection"
         inputs:
         - title: "Window (unknown)"
@@ -22,105 +22,103 @@ diagram:
             - title: "Expand (unknown)"
               operator: "Expand"
               inputs:
-              - title: "Projection: ss_net_profit#274, s_state#736, s_county#735"
+              - title: "Projection: ss_net_profit#686, s_state#350, s_county#349"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((d_date_sk#612 = ss_sold_date_sk#252))"
+                - title: "Inner Join: Some((s_store_sk#326 = ss_store_sk#671))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ss_sold_date_sk#252, ss_net_profit#274, s_county#735,\
-                      \ s_state#736"
+                  - title: "Projection: ss_store_sk#671, ss_net_profit#686"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((s_store_sk#712 = ss_store_sk#259))"
+                    - title: "Inner Join: Some((d_date_sk#598 = ss_sold_date_sk#664))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ss_sold_date_sk#252, ss_store_sk#259,\
-                          \ ss_net_profit#274"
+                      - title: "Projection: ss_sold_date_sk#664, ss_store_sk#671,\
+                          \ ss_net_profit#686"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (isnotnull(ss_store_sk#259) AND isnotnull(ss_sold_date_sk#252))"
+                        - title: "Filter: (isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_store_sk#671))"
                           operator: "filter"
                           inputs:
                           - title: "store_sales.parquet"
                             operator: "scan"
                             inputs: []
-                      - title: "LeftSemi Join: Some((s_state#736 = s_state#25215))"
-                        operator: "join"
+                      - title: "Projection: d_date_sk#598"
+                        operator: "projection"
                         inputs:
-                        - title: "Projection: s_store_sk#712, s_county#735, s_state#736"
-                          operator: "projection"
+                        - title: "Filter: ((isnotnull(d_month_seq#601) AND ((d_month_seq#601\
+                            \ >= 1209) AND (d_month_seq#601 <= 1220))) AND isnotnull(d_date_sk#598))"
+                          operator: "filter"
                           inputs:
-                          - title: "Filter: isnotnull(s_store_sk#712)"
-                            operator: "filter"
-                            inputs:
-                            - title: "store.parquet"
-                              operator: "scan"
-                              inputs: []
-                        - title: "Projection: s_state#25215"
-                          operator: "projection"
+                          - title: "date_dim.parquet"
+                            operator: "scan"
+                            inputs: []
+                  - title: "LeftSemi Join: Some((s_state#350 = s_state#15040))"
+                    operator: "join"
+                    inputs:
+                    - title: "Projection: s_store_sk#326, s_county#349, s_state#350"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: isnotnull(s_store_sk#326)"
+                        operator: "filter"
+                        inputs:
+                        - title: "store.parquet"
+                          operator: "scan"
+                          inputs: []
+                    - title: "Projection: s_state#15040"
+                      operator: "projection"
+                      inputs:
+                      - title: "Filter: (ranking#15041 <= 5)"
+                        operator: "filter"
+                        inputs:
+                        - title: "Window (unknown)"
+                          operator: "Window"
                           inputs:
-                          - title: "Filter: (ranking#25216 <= 5)"
-                            operator: "filter"
+                          - title: "Aggregate (unknown)"
+                            operator: "Aggregate"
                             inputs:
-                            - title: "Window (unknown)"
-                              operator: "Window"
+                            - title: "Projection: ss_net_profit#15077, s_state#15102"
+                              operator: "projection"
                               inputs:
-                              - title: "Aggregate (unknown)"
-                                operator: "Aggregate"
+                              - title: "Inner Join: Some((d_date_sk#15107 = ss_sold_date_sk#15055))"
+                                operator: "join"
                                 inputs:
-                                - title: "Projection: ss_net_profit#25252, s_state#25277"
+                                - title: "Projection: ss_sold_date_sk#15055, ss_net_profit#15077,\
+                                    \ s_state#15102"
                                   operator: "projection"
                                   inputs:
-                                  - title: "Inner Join: Some((d_date_sk#25282 = ss_sold_date_sk#25230))"
+                                  - title: "Inner Join: Some((s_store_sk#15078 = ss_store_sk#15062))"
                                     operator: "join"
                                     inputs:
-                                    - title: "Projection: ss_sold_date_sk#25230, ss_net_profit#25252,\
-                                        \ s_state#25277"
+                                    - title: "Projection: ss_sold_date_sk#15055, ss_store_sk#15062,\
+                                        \ ss_net_profit#15077"
                                       operator: "projection"
                                       inputs:
-                                      - title: "Inner Join: Some((s_store_sk#25253\
-                                          \ = ss_store_sk#25237))"
-                                        operator: "join"
-                                        inputs:
-                                        - title: "Projection: ss_sold_date_sk#25230,\
-                                            \ ss_store_sk#25237, ss_net_profit#25252"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Filter: (isnotnull(ss_store_sk#25237)\
-                                              \ AND isnotnull(ss_sold_date_sk#25230))"
-                                            operator: "filter"
-                                            inputs:
-                                            - title: "store_sales.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                                        - title: "Projection: s_store_sk#25253, s_state#25277"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Filter: isnotnull(s_store_sk#25253)"
-                                            operator: "filter"
-                                            inputs:
-                                            - title: "store.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                                    - title: "Projection: d_date_sk#25282"
-                                      operator: "projection"
-                                      inputs:
-                                      - title: "Filter: ((isnotnull(d_month_seq#25285)\
-                                          \ AND ((d_month_seq#25285 >= 1209) AND (d_month_seq#25285\
-                                          \ <= 1220))) AND isnotnull(d_date_sk#25282))"
+                                      - title: "Filter: (isnotnull(ss_store_sk#15062)\
+                                          \ AND isnotnull(ss_sold_date_sk#15055))"
                                         operator: "filter"
                                         inputs:
-                                        - title: "date_dim.parquet"
+                                        - title: "store_sales.parquet"
                                           operator: "scan"
                                           inputs: []
-                  - title: "Projection: d_date_sk#612"
-                    operator: "projection"
-                    inputs:
-                    - title: "Filter: ((isnotnull(d_month_seq#615) AND ((d_month_seq#615\
-                        \ >= 1209) AND (d_month_seq#615 <= 1220))) AND isnotnull(d_date_sk#612))"
-                      operator: "filter"
-                      inputs:
-                      - title: "date_dim.parquet"
-                        operator: "scan"
-                        inputs: []
+                                    - title: "Projection: s_store_sk#15078, s_state#15102"
+                                      operator: "projection"
+                                      inputs:
+                                      - title: "Filter: isnotnull(s_store_sk#15078)"
+                                        operator: "filter"
+                                        inputs:
+                                        - title: "store.parquet"
+                                          operator: "scan"
+                                          inputs: []
+                                - title: "Projection: d_date_sk#15107"
+                                  operator: "projection"
+                                  inputs:
+                                  - title: "Filter: ((isnotnull(d_month_seq#15110)\
+                                      \ AND ((d_month_seq#15110 >= 1209) AND (d_month_seq#15110\
+                                      \ <= 1220))) AND isnotnull(d_date_sk#15107))"
+                                    operator: "filter"
+                                    inputs:
+                                    - title: "date_dim.parquet"
+                                      operator: "scan"
+                                      inputs: []

@@ -1,39 +1,39 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [rnk#15604 ASC NULLS FIRST], true
-      +- Project [rnk#15604, i_product_name#689 AS best_performing#15610, i_product_name#15656 AS worst_performing#15611]
-         +- Join Inner, (rnk#15604 = rnk#15609)
-            :- Project [rnk#15604, i_product_name#689]
-            :  +- Join Inner, (i_item_sk#668 = item_sk#15600)
-            :     :- Project [item_sk#15600, rnk#15604]
-            :     :  +- Filter ((rnk#15604 < 11) AND isnotnull(item_sk#15600))
-            :     :     +- Window [rank(rank_col#15601) windowspecdefinition(rank_col#15601 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#15604], [rank_col#15601 ASC NULLS FIRST]
-            :     :        +- Filter (isnotnull(rank_col#15601) AND (cast(rank_col#15601 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#15603 [])), DecimalType(13,7), true)))
-            :     :           :  +- Aggregate [ss_store_sk#15674], [cast((avg(UnscaledValue(ss_net_profit#15689)) / 100.0) as decimal(11,6)) AS rank_col#15602]
-            :     :           :     +- Project [ss_store_sk#15674, ss_net_profit#15689]
-            :     :           :        +- Filter (isnotnull(ss_store_sk#15674) AND ((ss_store_sk#15674 = 21) AND isnull(ss_hdemo_sk#15672)))
-            :     :           :           +- Relation [ss_sold_date_sk#15667,ss_sold_time_sk#15668,ss_item_sk#15669,ss_customer_sk#15670,ss_cdemo_sk#15671,ss_hdemo_sk#15672,ss_addr_sk#15673,ss_store_sk#15674,ss_promo_sk#15675,ss_ticket_number#15676L,ss_quantity#15677,ss_wholesale_cost#15678,ss_list_price#15679,ss_sales_price#15680,ss_ext_discount_amt#15681,ss_ext_sales_price#15682,ss_ext_wholesale_cost#15683,ss_ext_list_price#15684,ss_ext_tax#15685,ss_coupon_amt#15686,ss_net_paid#15687,ss_net_paid_inc_tax#15688,ss_net_profit#15689] parquet
-            :     :           +- Aggregate [ss_item_sk#254], [ss_item_sk#254 AS item_sk#15600, cast((avg(UnscaledValue(ss_net_profit#274)) / 100.0) as decimal(11,6)) AS rank_col#15601]
-            :     :              +- Project [ss_item_sk#254, ss_net_profit#274]
-            :     :                 +- Filter (isnotnull(ss_store_sk#259) AND (ss_store_sk#259 = 21))
-            :     :                    +- Relation [ss_sold_date_sk#252,ss_sold_time_sk#253,ss_item_sk#254,ss_customer_sk#255,ss_cdemo_sk#256,ss_hdemo_sk#257,ss_addr_sk#258,ss_store_sk#259,ss_promo_sk#260,ss_ticket_number#261L,ss_quantity#262,ss_wholesale_cost#263,ss_list_price#264,ss_sales_price#265,ss_ext_discount_amt#266,ss_ext_sales_price#267,ss_ext_wholesale_cost#268,ss_ext_list_price#269,ss_ext_tax#270,ss_coupon_amt#271,ss_net_paid#272,ss_net_paid_inc_tax#273,ss_net_profit#274] parquet
-            :     +- Project [i_item_sk#668, i_product_name#689]
-            :        +- Filter isnotnull(i_item_sk#668)
-            :           +- Relation [i_item_sk#668,i_item_id#669,i_rec_start_date#670,i_rec_end_date#671,i_item_desc#672,i_current_price#673,i_wholesale_cost#674,i_brand_id#675,i_brand#676,i_class_id#677,i_class#678,i_category_id#679,i_category#680,i_manufact_id#681,i_manufact#682,i_size#683,i_formulation#684,i_color#685,i_units#686,i_container#687,i_manager_id#688,i_product_name#689] parquet
-            +- Project [rnk#15609, i_product_name#15656]
-               +- Join Inner, (i_item_sk#15635 = item_sk#15605)
-                  :- Project [item_sk#15605, rnk#15609]
-                  :  +- Filter ((rnk#15609 < 11) AND isnotnull(item_sk#15605))
-                  :     +- Window [rank(rank_col#15606) windowspecdefinition(rank_col#15606 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#15609], [rank_col#15606 DESC NULLS LAST]
-                  :        +- Filter (isnotnull(rank_col#15606) AND (cast(rank_col#15606 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#15608 [])), DecimalType(13,7), true)))
-                  :           :  +- Aggregate [ss_store_sk#15697], [cast((avg(UnscaledValue(ss_net_profit#15712)) / 100.0) as decimal(11,6)) AS rank_col#15607]
-                  :           :     +- Project [ss_store_sk#15697, ss_net_profit#15712]
-                  :           :        +- Filter (isnotnull(ss_store_sk#15697) AND ((ss_store_sk#15697 = 21) AND isnull(ss_hdemo_sk#15695)))
-                  :           :           +- Relation [ss_sold_date_sk#15690,ss_sold_time_sk#15691,ss_item_sk#15692,ss_customer_sk#15693,ss_cdemo_sk#15694,ss_hdemo_sk#15695,ss_addr_sk#15696,ss_store_sk#15697,ss_promo_sk#15698,ss_ticket_number#15699L,ss_quantity#15700,ss_wholesale_cost#15701,ss_list_price#15702,ss_sales_price#15703,ss_ext_discount_amt#15704,ss_ext_sales_price#15705,ss_ext_wholesale_cost#15706,ss_ext_list_price#15707,ss_ext_tax#15708,ss_coupon_amt#15709,ss_net_paid#15710,ss_net_paid_inc_tax#15711,ss_net_profit#15712] parquet
-                  :           +- Aggregate [ss_item_sk#15614], [ss_item_sk#15614 AS item_sk#15605, cast((avg(UnscaledValue(ss_net_profit#15634)) / 100.0) as decimal(11,6)) AS rank_col#15606]
-                  :              +- Project [ss_item_sk#15614, ss_net_profit#15634]
-                  :                 +- Filter (isnotnull(ss_store_sk#15619) AND (ss_store_sk#15619 = 21))
-                  :                    +- Relation [ss_sold_date_sk#15612,ss_sold_time_sk#15613,ss_item_sk#15614,ss_customer_sk#15615,ss_cdemo_sk#15616,ss_hdemo_sk#15617,ss_addr_sk#15618,ss_store_sk#15619,ss_promo_sk#15620,ss_ticket_number#15621L,ss_quantity#15622,ss_wholesale_cost#15623,ss_list_price#15624,ss_sales_price#15625,ss_ext_discount_amt#15626,ss_ext_sales_price#15627,ss_ext_wholesale_cost#15628,ss_ext_list_price#15629,ss_ext_tax#15630,ss_coupon_amt#15631,ss_net_paid#15632,ss_net_paid_inc_tax#15633,ss_net_profit#15634] parquet
-                  +- Project [i_item_sk#15635, i_product_name#15656]
-                     +- Filter isnotnull(i_item_sk#15635)
-                        +- Relation [i_item_sk#15635,i_item_id#15636,i_rec_start_date#15637,i_rec_end_date#15638,i_item_desc#15639,i_current_price#15640,i_wholesale_cost#15641,i_brand_id#15642,i_brand#15643,i_class_id#15644,i_class#15645,i_category_id#15646,i_category#15647,i_manufact_id#15648,i_manufact#15649,i_size#15650,i_formulation#15651,i_color#15652,i_units#15653,i_container#15654,i_manager_id#15655,i_product_name#15656] parquet
+   +- Sort [rnk#9138 ASC NULLS FIRST], true
+      +- Project [rnk#9138, i_product_name#521 AS best_performing#9144, i_product_name#9190 AS worst_performing#9145]
+         +- Join Inner, (i_item_sk#9169 = item_sk#9139)
+            :- Project [rnk#9138, item_sk#9139, i_product_name#521]
+            :  +- Join Inner, (i_item_sk#500 = item_sk#9134)
+            :     :- Project [item_sk#9134, rnk#9138, item_sk#9139]
+            :     :  +- Join Inner, (rnk#9138 = rnk#9143)
+            :     :     :- Project [item_sk#9134, rnk#9138]
+            :     :     :  +- Filter ((rnk#9138 < 11) AND isnotnull(item_sk#9134))
+            :     :     :     +- Window [rank(rank_col#9135) windowspecdefinition(rank_col#9135 ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#9138], [rank_col#9135 ASC NULLS FIRST]
+            :     :     :        +- Filter (isnotnull(rank_col#9135) AND (cast(rank_col#9135 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#9137 [])), DecimalType(13,7), true)))
+            :     :     :           :  +- Aggregate [ss_store_sk#9208], [cast((avg(UnscaledValue(ss_net_profit#9223)) / 100.0) as decimal(11,6)) AS rank_col#9136]
+            :     :     :           :     +- Project [ss_store_sk#9208, ss_net_profit#9223]
+            :     :     :           :        +- Filter (isnotnull(ss_store_sk#9208) AND ((ss_store_sk#9208 = 21) AND isnull(ss_hdemo_sk#9206)))
+            :     :     :           :           +- Relation [ss_sold_date_sk#9201,ss_sold_time_sk#9202,ss_item_sk#9203,ss_customer_sk#9204,ss_cdemo_sk#9205,ss_hdemo_sk#9206,ss_addr_sk#9207,ss_store_sk#9208,ss_promo_sk#9209,ss_ticket_number#9210L,ss_quantity#9211,ss_wholesale_cost#9212,ss_list_price#9213,ss_sales_price#9214,ss_ext_discount_amt#9215,ss_ext_sales_price#9216,ss_ext_wholesale_cost#9217,ss_ext_list_price#9218,ss_ext_tax#9219,ss_coupon_amt#9220,ss_net_paid#9221,ss_net_paid_inc_tax#9222,ss_net_profit#9223] parquet
+            :     :     :           +- Aggregate [ss_item_sk#666], [ss_item_sk#666 AS item_sk#9134, cast((avg(UnscaledValue(ss_net_profit#686)) / 100.0) as decimal(11,6)) AS rank_col#9135]
+            :     :     :              +- Project [ss_item_sk#666, ss_net_profit#686]
+            :     :     :                 +- Filter (isnotnull(ss_store_sk#671) AND (ss_store_sk#671 = 21))
+            :     :     :                    +- Relation [ss_sold_date_sk#664,ss_sold_time_sk#665,ss_item_sk#666,ss_customer_sk#667,ss_cdemo_sk#668,ss_hdemo_sk#669,ss_addr_sk#670,ss_store_sk#671,ss_promo_sk#672,ss_ticket_number#673L,ss_quantity#674,ss_wholesale_cost#675,ss_list_price#676,ss_sales_price#677,ss_ext_discount_amt#678,ss_ext_sales_price#679,ss_ext_wholesale_cost#680,ss_ext_list_price#681,ss_ext_tax#682,ss_coupon_amt#683,ss_net_paid#684,ss_net_paid_inc_tax#685,ss_net_profit#686] parquet
+            :     :     +- Project [item_sk#9139, rnk#9143]
+            :     :        +- Filter ((rnk#9143 < 11) AND isnotnull(item_sk#9139))
+            :     :           +- Window [rank(rank_col#9140) windowspecdefinition(rank_col#9140 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rnk#9143], [rank_col#9140 DESC NULLS LAST]
+            :     :              +- Filter (isnotnull(rank_col#9140) AND (cast(rank_col#9140 as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#9142 [])), DecimalType(13,7), true)))
+            :     :                 :  +- Aggregate [ss_store_sk#9231], [cast((avg(UnscaledValue(ss_net_profit#9246)) / 100.0) as decimal(11,6)) AS rank_col#9141]
+            :     :                 :     +- Project [ss_store_sk#9231, ss_net_profit#9246]
+            :     :                 :        +- Filter (isnotnull(ss_store_sk#9231) AND ((ss_store_sk#9231 = 21) AND isnull(ss_hdemo_sk#9229)))
+            :     :                 :           +- Relation [ss_sold_date_sk#9224,ss_sold_time_sk#9225,ss_item_sk#9226,ss_customer_sk#9227,ss_cdemo_sk#9228,ss_hdemo_sk#9229,ss_addr_sk#9230,ss_store_sk#9231,ss_promo_sk#9232,ss_ticket_number#9233L,ss_quantity#9234,ss_wholesale_cost#9235,ss_list_price#9236,ss_sales_price#9237,ss_ext_discount_amt#9238,ss_ext_sales_price#9239,ss_ext_wholesale_cost#9240,ss_ext_list_price#9241,ss_ext_tax#9242,ss_coupon_amt#9243,ss_net_paid#9244,ss_net_paid_inc_tax#9245,ss_net_profit#9246] parquet
+            :     :                 +- Aggregate [ss_item_sk#9148], [ss_item_sk#9148 AS item_sk#9139, cast((avg(UnscaledValue(ss_net_profit#9168)) / 100.0) as decimal(11,6)) AS rank_col#9140]
+            :     :                    +- Project [ss_item_sk#9148, ss_net_profit#9168]
+            :     :                       +- Filter (isnotnull(ss_store_sk#9153) AND (ss_store_sk#9153 = 21))
+            :     :                          +- Relation [ss_sold_date_sk#9146,ss_sold_time_sk#9147,ss_item_sk#9148,ss_customer_sk#9149,ss_cdemo_sk#9150,ss_hdemo_sk#9151,ss_addr_sk#9152,ss_store_sk#9153,ss_promo_sk#9154,ss_ticket_number#9155L,ss_quantity#9156,ss_wholesale_cost#9157,ss_list_price#9158,ss_sales_price#9159,ss_ext_discount_amt#9160,ss_ext_sales_price#9161,ss_ext_wholesale_cost#9162,ss_ext_list_price#9163,ss_ext_tax#9164,ss_coupon_amt#9165,ss_net_paid#9166,ss_net_paid_inc_tax#9167,ss_net_profit#9168] parquet
+            :     +- Project [i_item_sk#500, i_product_name#521]
+            :        +- Filter isnotnull(i_item_sk#500)
+            :           +- Relation [i_item_sk#500,i_item_id#501,i_rec_start_date#502,i_rec_end_date#503,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand_id#507,i_brand#508,i_class_id#509,i_class#510,i_category_id#511,i_category#512,i_manufact_id#513,i_manufact#514,i_size#515,i_formulation#516,i_color#517,i_units#518,i_container#519,i_manager_id#520,i_product_name#521] parquet
+            +- Project [i_item_sk#9169, i_product_name#9190]
+               +- Filter isnotnull(i_item_sk#9169)
+                  +- Relation [i_item_sk#9169,i_item_id#9170,i_rec_start_date#9171,i_rec_end_date#9172,i_item_desc#9173,i_current_price#9174,i_wholesale_cost#9175,i_brand_id#9176,i_brand#9177,i_class_id#9178,i_class#9179,i_category_id#9180,i_category#9181,i_manufact_id#9182,i_manufact#9183,i_size#9184,i_formulation#9185,i_color#9186,i_units#9187,i_container#9188,i_manager_id#9189,i_product_name#9190] parquet

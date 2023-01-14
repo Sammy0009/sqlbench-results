@@ -1,64 +1,49 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   GpuColumnarToRow false
-   +- GpuTopN(limit=100, orderBy=[sumsales#32567 ASC NULLS FIRST,ss_customer_sk#255 ASC NULLS FIRST], output=[ss_customer_sk#255,sumsales#32567])
-      +- GpuShuffleCoalesce 2147483647
-         +- GpuColumnarExchange gpusinglepartitioning$(), ENSURE_REQUIREMENTS, [id=#557333]
-            +- GpuTopN(limit=100, orderBy=[sumsales#32567 ASC NULLS FIRST,ss_customer_sk#255 ASC NULLS FIRST], output=[ss_customer_sk#255,sumsales#32567])
-               +- GpuHashAggregate(keys=[ss_customer_sk#255], functions=[gpudecimal128sum(act_sales#32566, DecimalType(28,2), false, false)], output=[ss_customer_sk#255, sumsales#32567])
-                  +- GpuShuffleCoalesce 2147483647
-                     +- GpuCustomShuffleReader coalesced
-                        +- ShuffleQueryStage 4
-                           +- GpuColumnarExchange gpuhashpartitioning(ss_customer_sk#255, 200), ENSURE_REQUIREMENTS, [id=#557271]
-                              +- GpuHashAggregate(keys=[ss_customer_sk#255], functions=[partial_gpudecimal128sum(act_sales#32566, DecimalType(28,2), false, false)], output=[ss_customer_sk#255, sum#32573, isEmpty#32574])
-                                 +- GpuRowToColumnar targetsize(2147483647)
-                                    +- *(1) Project [ss_customer_sk#255, CASE WHEN isnotnull(sr_return_quantity#146) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#262 - sr_return_quantity#146) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#262 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#32566]
-                                       +- GpuColumnarToRow false
-                                          +- GpuShuffledHashJoin [sr_reason_sk#144], [r_reason_sk#246], Inner, GpuBuildRight, false
-                                             :- GpuShuffleCoalesce 2147483647
-                                             :  +- GpuCustomShuffleReader coalesced
-                                             :     +- ShuffleQueryStage 3
-                                             :        +- GpuColumnarExchange gpuhashpartitioning(sr_reason_sk#144, 200), ENSURE_REQUIREMENTS, [id=#557103]
-                                             :           +- GpuProject [ss_customer_sk#255, ss_quantity#262, ss_sales_price#265, sr_reason_sk#144, sr_return_quantity#146], true
-                                             :              +- GpuShuffledHashJoin [ss_item_sk#254, ss_ticket_number#261L], [sr_item_sk#138, sr_ticket_number#145L], Inner, GpuBuildRight, false
-                                             :                 :- GpuShuffleCoalesce 2147483647
-                                             :                 :  +- GpuCustomShuffleReader coalesced
-                                             :                 :     +- ShuffleQueryStage 0
-                                             :                 :        +- GpuColumnarExchange gpuhashpartitioning(ss_item_sk#254, ss_ticket_number#261L, 200), ENSURE_REQUIREMENTS, [id=#556686]
-                                             :                 :           +- GpuFileGpuScan parquet [ss_item_sk#254,ss_customer_sk#255,ss_ticket_number#261L,ss_quantity#262,ss_sales_price#265] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<ss_item_sk:int,ss_customer_sk:int,ss_ticket_number:bigint,ss_quantity:int,ss_sales_price:d...
-                                             :                 +- GpuCustomShuffleReader coalesced
-                                             :                    +- ShuffleQueryStage 1
-                                             :                       +- GpuColumnarExchange gpuhashpartitioning(sr_item_sk#138, sr_ticket_number#145L, 200), ENSURE_REQUIREMENTS, [id=#556715]
-                                             :                          +- GpuCoalesceBatches targetsize(2147483647)
-                                             :                             +- GpuFilter ((gpuisnotnull(sr_item_sk#138) AND gpuisnotnull(sr_ticket_number#145L)) AND gpuisnotnull(sr_reason_sk#144)), true
-                                             :                                +- GpuFileGpuScan parquet [sr_item_sk#138,sr_reason_sk#144,sr_ticket_number#145L,sr_return_quantity#146] Batched: true, DataFilters: [isnotnull(sr_item_sk#138), isnotnull(sr_ticket_number#145L), isnotnull(sr_reason_sk#144)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_returns.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(sr_item_sk), IsNotNull(sr_ticket_number), IsNotNull(sr_reason_sk)], ReadSchema: struct<sr_item_sk:int,sr_reason_sk:int,sr_ticket_number:bigint,sr_return_quantity:int>
-                                             +- GpuCustomShuffleReader coalesced
-                                                +- ShuffleQueryStage 2
-                                                   +- GpuColumnarExchange gpuhashpartitioning(r_reason_sk#246, 200), ENSURE_REQUIREMENTS, [id=#556756]
-                                                      +- GpuProject [r_reason_sk#246], true
-                                                         +- GpuCoalesceBatches targetsize(2147483647)
-                                                            +- GpuFilter ((gpuisnotnull(r_reason_desc#248) AND (r_reason_desc#248 = reason 49)) AND gpuisnotnull(r_reason_sk#246)), true
-                                                               +- GpuFileGpuScan parquet [r_reason_sk#246,r_reason_desc#248] Batched: true, DataFilters: [isnotnull(r_reason_desc#248), (r_reason_desc#248 = reason 49), isnotnull(r_reason_sk#246)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/reason.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_reason_desc), EqualTo(r_reason_desc,reason 49), IsNotNull(r_reason_sk)], ReadSchema: struct<r_reason_sk:int,r_reason_desc:string>
+   TakeOrderedAndProject(limit=100, orderBy=[sumsales#19324 ASC NULLS FIRST,ss_customer_sk#667 ASC NULLS FIRST], output=[ss_customer_sk#667,sumsales#19324])
+   +- *(7) HashAggregate(keys=[ss_customer_sk#667], functions=[sum(act_sales#19323)], output=[ss_customer_sk#667, sumsales#19324])
+      +- AQEShuffleRead coalesced
+         +- ShuffleQueryStage 3
+            +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#154184]
+               +- *(6) HashAggregate(keys=[ss_customer_sk#667], functions=[partial_sum(act_sales#19323)], output=[ss_customer_sk#667, sum#19330, isEmpty#19331])
+                  +- *(6) Project [ss_customer_sk#667, CASE WHEN isnotnull(sr_return_quantity#720) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#674 - sr_return_quantity#720) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#674 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#19323]
+                     +- *(6) BroadcastHashJoin [sr_reason_sk#718], [r_reason_sk#544], Inner, BuildRight, false
+                        :- *(6) Project [ss_customer_sk#667, ss_quantity#674, ss_sales_price#677, sr_reason_sk#718, sr_return_quantity#720]
+                        :  +- *(6) SortMergeJoin [ss_item_sk#666, ss_ticket_number#673L], [sr_item_sk#712, sr_ticket_number#719L], Inner
+                        :     :- *(4) Sort [ss_item_sk#666 ASC NULLS FIRST, ss_ticket_number#673L ASC NULLS FIRST], false, 0
+                        :     :  +- ShuffleQueryStage 0
+                        :     :     +- Exchange hashpartitioning(ss_item_sk#666, ss_ticket_number#673L, 200), ENSURE_REQUIREMENTS, [id=#153993]
+                        :     :        +- *(1) ColumnarToRow
+                        :     :           +- FileScan parquet [ss_item_sk#666,ss_customer_sk#667,ss_ticket_number#673L,ss_quantity#674,ss_sales_price#677] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<ss_item_sk:int,ss_customer_sk:int,ss_ticket_number:bigint,ss_quantity:int,ss_sales_price:d...
+                        :     +- *(5) Sort [sr_item_sk#712 ASC NULLS FIRST, sr_ticket_number#719L ASC NULLS FIRST], false, 0
+                        :        +- ShuffleQueryStage 1
+                        :           +- Exchange hashpartitioning(sr_item_sk#712, sr_ticket_number#719L, 200), ENSURE_REQUIREMENTS, [id=#154008]
+                        :              +- *(2) Filter ((isnotnull(sr_item_sk#712) AND isnotnull(sr_ticket_number#719L)) AND isnotnull(sr_reason_sk#718))
+                        :                 +- *(2) ColumnarToRow
+                        :                    +- FileScan parquet [sr_item_sk#712,sr_reason_sk#718,sr_ticket_number#719L,sr_return_quantity#720] Batched: true, DataFilters: [isnotnull(sr_item_sk#712), isnotnull(sr_ticket_number#719L), isnotnull(sr_reason_sk#718)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_returns.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(sr_item_sk), IsNotNull(sr_ticket_number), IsNotNull(sr_reason_sk)], ReadSchema: struct<sr_item_sk:int,sr_reason_sk:int,sr_ticket_number:bigint,sr_return_quantity:int>
+                        +- BroadcastQueryStage 2
+                           +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#154029]
+                              +- *(3) Project [r_reason_sk#544]
+                                 +- *(3) Filter ((isnotnull(r_reason_desc#546) AND (r_reason_desc#546 = reason 49)) AND isnotnull(r_reason_sk#544))
+                                    +- *(3) ColumnarToRow
+                                       +- FileScan parquet [r_reason_sk#544,r_reason_desc#546] Batched: true, DataFilters: [isnotnull(r_reason_desc#546), (r_reason_desc#546 = reason 49), isnotnull(r_reason_sk#544)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/reason.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_reason_desc), EqualTo(r_reason_desc,reason 49), IsNotNull(r_reason_sk)], ReadSchema: struct<r_reason_sk:int,r_reason_desc:string>
 +- == Initial Plan ==
-   TakeOrderedAndProject(limit=100, orderBy=[sumsales#32567 ASC NULLS FIRST,ss_customer_sk#255 ASC NULLS FIRST], output=[ss_customer_sk#255,sumsales#32567])
-   +- HashAggregate(keys=[ss_customer_sk#255], functions=[sum(act_sales#32566)], output=[ss_customer_sk#255, sumsales#32567])
-      +- Exchange hashpartitioning(ss_customer_sk#255, 200), ENSURE_REQUIREMENTS, [id=#556395]
-         +- HashAggregate(keys=[ss_customer_sk#255], functions=[partial_sum(act_sales#32566)], output=[ss_customer_sk#255, sum#32573, isEmpty#32574])
-            +- Project [ss_customer_sk#255, CASE WHEN isnotnull(sr_return_quantity#146) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#262 - sr_return_quantity#146) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#262 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#32566]
-               +- SortMergeJoin [sr_reason_sk#144], [r_reason_sk#246], Inner
-                  :- Sort [sr_reason_sk#144 ASC NULLS FIRST], false, 0
-                  :  +- Exchange hashpartitioning(sr_reason_sk#144, 200), ENSURE_REQUIREMENTS, [id=#556387]
-                  :     +- Project [ss_customer_sk#255, ss_quantity#262, ss_sales_price#265, sr_reason_sk#144, sr_return_quantity#146]
-                  :        +- SortMergeJoin [ss_item_sk#254, ss_ticket_number#261L], [sr_item_sk#138, sr_ticket_number#145L], Inner
-                  :           :- Sort [ss_item_sk#254 ASC NULLS FIRST, ss_ticket_number#261L ASC NULLS FIRST], false, 0
-                  :           :  +- Exchange hashpartitioning(ss_item_sk#254, ss_ticket_number#261L, 200), ENSURE_REQUIREMENTS, [id=#556379]
-                  :           :     +- FileScan parquet [ss_item_sk#254,ss_customer_sk#255,ss_ticket_number#261L,ss_quantity#262,ss_sales_price#265] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<ss_item_sk:int,ss_customer_sk:int,ss_ticket_number:bigint,ss_quantity:int,ss_sales_price:d...
-                  :           +- Sort [sr_item_sk#138 ASC NULLS FIRST, sr_ticket_number#145L ASC NULLS FIRST], false, 0
-                  :              +- Exchange hashpartitioning(sr_item_sk#138, sr_ticket_number#145L, 200), ENSURE_REQUIREMENTS, [id=#556380]
-                  :                 +- Filter ((isnotnull(sr_item_sk#138) AND isnotnull(sr_ticket_number#145L)) AND isnotnull(sr_reason_sk#144))
-                  :                    +- FileScan parquet [sr_item_sk#138,sr_reason_sk#144,sr_ticket_number#145L,sr_return_quantity#146] Batched: true, DataFilters: [isnotnull(sr_item_sk#138), isnotnull(sr_ticket_number#145L), isnotnull(sr_reason_sk#144)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_returns.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(sr_item_sk), IsNotNull(sr_ticket_number), IsNotNull(sr_reason_sk)], ReadSchema: struct<sr_item_sk:int,sr_reason_sk:int,sr_ticket_number:bigint,sr_return_quantity:int>
-                  +- Sort [r_reason_sk#246 ASC NULLS FIRST], false, 0
-                     +- Exchange hashpartitioning(r_reason_sk#246, 200), ENSURE_REQUIREMENTS, [id=#556388]
-                        +- Project [r_reason_sk#246]
-                           +- Filter ((isnotnull(r_reason_desc#248) AND (r_reason_desc#248 = reason 49)) AND isnotnull(r_reason_sk#246))
-                              +- FileScan parquet [r_reason_sk#246,r_reason_desc#248] Batched: true, DataFilters: [isnotnull(r_reason_desc#248), (r_reason_desc#248 = reason 49), isnotnull(r_reason_sk#246)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/reason.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_reason_desc), EqualTo(r_reason_desc,reason 49), IsNotNull(r_reason_sk)], ReadSchema: struct<r_reason_sk:int,r_reason_desc:string>
+   TakeOrderedAndProject(limit=100, orderBy=[sumsales#19324 ASC NULLS FIRST,ss_customer_sk#667 ASC NULLS FIRST], output=[ss_customer_sk#667,sumsales#19324])
+   +- HashAggregate(keys=[ss_customer_sk#667], functions=[sum(act_sales#19323)], output=[ss_customer_sk#667, sumsales#19324])
+      +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#153955]
+         +- HashAggregate(keys=[ss_customer_sk#667], functions=[partial_sum(act_sales#19323)], output=[ss_customer_sk#667, sum#19330, isEmpty#19331])
+            +- Project [ss_customer_sk#667, CASE WHEN isnotnull(sr_return_quantity#720) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#674 - sr_return_quantity#720) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#674 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#19323]
+               +- BroadcastHashJoin [sr_reason_sk#718], [r_reason_sk#544], Inner, BuildRight, false
+                  :- Project [ss_customer_sk#667, ss_quantity#674, ss_sales_price#677, sr_reason_sk#718, sr_return_quantity#720]
+                  :  +- SortMergeJoin [ss_item_sk#666, ss_ticket_number#673L], [sr_item_sk#712, sr_ticket_number#719L], Inner
+                  :     :- Sort [ss_item_sk#666 ASC NULLS FIRST, ss_ticket_number#673L ASC NULLS FIRST], false, 0
+                  :     :  +- Exchange hashpartitioning(ss_item_sk#666, ss_ticket_number#673L, 200), ENSURE_REQUIREMENTS, [id=#153943]
+                  :     :     +- FileScan parquet [ss_item_sk#666,ss_customer_sk#667,ss_ticket_number#673L,ss_quantity#674,ss_sales_price#677] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<ss_item_sk:int,ss_customer_sk:int,ss_ticket_number:bigint,ss_quantity:int,ss_sales_price:d...
+                  :     +- Sort [sr_item_sk#712 ASC NULLS FIRST, sr_ticket_number#719L ASC NULLS FIRST], false, 0
+                  :        +- Exchange hashpartitioning(sr_item_sk#712, sr_ticket_number#719L, 200), ENSURE_REQUIREMENTS, [id=#153944]
+                  :           +- Filter ((isnotnull(sr_item_sk#712) AND isnotnull(sr_ticket_number#719L)) AND isnotnull(sr_reason_sk#718))
+                  :              +- FileScan parquet [sr_item_sk#712,sr_reason_sk#718,sr_ticket_number#719L,sr_return_quantity#720] Batched: true, DataFilters: [isnotnull(sr_item_sk#712), isnotnull(sr_ticket_number#719L), isnotnull(sr_reason_sk#718)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_returns.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(sr_item_sk), IsNotNull(sr_ticket_number), IsNotNull(sr_reason_sk)], ReadSchema: struct<sr_item_sk:int,sr_reason_sk:int,sr_ticket_number:bigint,sr_return_quantity:int>
+                  +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#153950]
+                     +- Project [r_reason_sk#544]
+                        +- Filter ((isnotnull(r_reason_desc#546) AND (r_reason_desc#546 = reason 49)) AND isnotnull(r_reason_sk#544))
+                           +- FileScan parquet [r_reason_sk#544,r_reason_desc#546] Batched: true, DataFilters: [isnotnull(r_reason_desc#546), (r_reason_desc#546 = reason 49), isnotnull(r_reason_sk#544)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/reason.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_reason_desc), EqualTo(r_reason_desc,reason 49), IsNotNull(r_reason_sk)], ReadSchema: struct<r_reason_sk:int,r_reason_desc:string>

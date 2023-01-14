@@ -1,16 +1,16 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [sumsales#32567 ASC NULLS FIRST, ss_customer_sk#255 ASC NULLS FIRST], true
-      +- Aggregate [ss_customer_sk#255], [ss_customer_sk#255, sum(act_sales#32566) AS sumsales#32567]
-         +- Project [ss_customer_sk#255, CASE WHEN isnotnull(sr_return_quantity#146) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#262 - sr_return_quantity#146) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#262 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#32566]
-            +- Join Inner, (sr_reason_sk#144 = r_reason_sk#246)
-               :- Project [ss_customer_sk#255, ss_quantity#262, ss_sales_price#265, sr_reason_sk#144, sr_return_quantity#146]
-               :  +- Join Inner, ((sr_item_sk#138 = ss_item_sk#254) AND (sr_ticket_number#145L = ss_ticket_number#261L))
-               :     :- Project [ss_item_sk#254, ss_customer_sk#255, ss_ticket_number#261L, ss_quantity#262, ss_sales_price#265]
-               :     :  +- Relation [ss_sold_date_sk#252,ss_sold_time_sk#253,ss_item_sk#254,ss_customer_sk#255,ss_cdemo_sk#256,ss_hdemo_sk#257,ss_addr_sk#258,ss_store_sk#259,ss_promo_sk#260,ss_ticket_number#261L,ss_quantity#262,ss_wholesale_cost#263,ss_list_price#264,ss_sales_price#265,ss_ext_discount_amt#266,ss_ext_sales_price#267,ss_ext_wholesale_cost#268,ss_ext_list_price#269,ss_ext_tax#270,ss_coupon_amt#271,ss_net_paid#272,ss_net_paid_inc_tax#273,ss_net_profit#274] parquet
-               :     +- Project [sr_item_sk#138, sr_reason_sk#144, sr_ticket_number#145L, sr_return_quantity#146]
-               :        +- Filter ((isnotnull(sr_item_sk#138) AND isnotnull(sr_ticket_number#145L)) AND isnotnull(sr_reason_sk#144))
-               :           +- Relation [sr_returned_date_sk#136,sr_return_time_sk#137,sr_item_sk#138,sr_customer_sk#139,sr_cdemo_sk#140,sr_hdemo_sk#141,sr_addr_sk#142,sr_store_sk#143,sr_reason_sk#144,sr_ticket_number#145L,sr_return_quantity#146,sr_return_amt#147,sr_return_tax#148,sr_return_amt_inc_tax#149,sr_fee#150,sr_return_ship_cost#151,sr_refunded_cash#152,sr_reversed_charge#153,sr_store_credit#154,sr_net_loss#155] parquet
-               +- Project [r_reason_sk#246]
-                  +- Filter ((isnotnull(r_reason_desc#248) AND (r_reason_desc#248 = reason 49)) AND isnotnull(r_reason_sk#246))
-                     +- Relation [r_reason_sk#246,r_reason_id#247,r_reason_desc#248] parquet
+   +- Sort [sumsales#19324 ASC NULLS FIRST, ss_customer_sk#667 ASC NULLS FIRST], true
+      +- Aggregate [ss_customer_sk#667], [ss_customer_sk#667, sum(act_sales#19323) AS sumsales#19324]
+         +- Project [ss_customer_sk#667, CASE WHEN isnotnull(sr_return_quantity#720) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#674 - sr_return_quantity#720) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#674 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#19323]
+            +- Join Inner, (sr_reason_sk#718 = r_reason_sk#544)
+               :- Project [ss_customer_sk#667, ss_quantity#674, ss_sales_price#677, sr_reason_sk#718, sr_return_quantity#720]
+               :  +- Join Inner, ((sr_item_sk#712 = ss_item_sk#666) AND (sr_ticket_number#719L = ss_ticket_number#673L))
+               :     :- Project [ss_item_sk#666, ss_customer_sk#667, ss_ticket_number#673L, ss_quantity#674, ss_sales_price#677]
+               :     :  +- Relation [ss_sold_date_sk#664,ss_sold_time_sk#665,ss_item_sk#666,ss_customer_sk#667,ss_cdemo_sk#668,ss_hdemo_sk#669,ss_addr_sk#670,ss_store_sk#671,ss_promo_sk#672,ss_ticket_number#673L,ss_quantity#674,ss_wholesale_cost#675,ss_list_price#676,ss_sales_price#677,ss_ext_discount_amt#678,ss_ext_sales_price#679,ss_ext_wholesale_cost#680,ss_ext_list_price#681,ss_ext_tax#682,ss_coupon_amt#683,ss_net_paid#684,ss_net_paid_inc_tax#685,ss_net_profit#686] parquet
+               :     +- Project [sr_item_sk#712, sr_reason_sk#718, sr_ticket_number#719L, sr_return_quantity#720]
+               :        +- Filter ((isnotnull(sr_item_sk#712) AND isnotnull(sr_ticket_number#719L)) AND isnotnull(sr_reason_sk#718))
+               :           +- Relation [sr_returned_date_sk#710,sr_return_time_sk#711,sr_item_sk#712,sr_customer_sk#713,sr_cdemo_sk#714,sr_hdemo_sk#715,sr_addr_sk#716,sr_store_sk#717,sr_reason_sk#718,sr_ticket_number#719L,sr_return_quantity#720,sr_return_amt#721,sr_return_tax#722,sr_return_amt_inc_tax#723,sr_fee#724,sr_return_ship_cost#725,sr_refunded_cash#726,sr_reversed_charge#727,sr_store_credit#728,sr_net_loss#729] parquet
+               +- Project [r_reason_sk#544]
+                  +- Filter ((isnotnull(r_reason_desc#546) AND (r_reason_desc#546 = reason 49)) AND isnotnull(r_reason_sk#544))
+                     +- Relation [r_reason_sk#544,r_reason_id#545,r_reason_desc#546] parquet

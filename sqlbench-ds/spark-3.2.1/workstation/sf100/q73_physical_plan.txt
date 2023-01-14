@@ -1,115 +1,87 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   GpuColumnarToRow false
-   +- GpuSort [cnt#25837L DESC NULLS LAST, c_last_name#409 ASC NULLS FIRST], true, com.nvidia.spark.rapids.OutOfCoreSort$@59d99269
-      +- GpuShuffleCoalesce 2147483647
-         +- GpuCustomShuffleReader coalesced
-            +- ShuffleQueryStage 9
-               +- GpuColumnarExchange gpurangepartitioning(cnt#25837L DESC NULLS LAST, c_last_name#409 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#443958]
-                  +- GpuProject [c_last_name#409, c_first_name#408, c_salutation#407, c_preferred_cust_flag#410, ss_ticket_number#261L, cnt#25837L], true
-                     +- GpuShuffledHashJoin [ss_customer_sk#255], [c_customer_sk#400], Inner, GpuBuildRight, false
-                        :- GpuShuffleCoalesce 2147483647
-                        :  +- GpuCustomShuffleReader coalesced
-                        :     +- ShuffleQueryStage 8
-                        :        +- GpuColumnarExchange gpuhashpartitioning(ss_customer_sk#255, 200), ENSURE_REQUIREMENTS, [id=#443843]
-                        :           +- GpuCoalesceBatches targetsize(2147483647)
-                        :              +- GpuFilter ((cnt#25837L >= 1) AND (cnt#25837L <= 5)), true
-                        :                 +- GpuHashAggregate(keys=[ss_ticket_number#261L, ss_customer_sk#255], functions=[gpucount(1, false)], output=[ss_ticket_number#261L, ss_customer_sk#255, cnt#25837L])
-                        :                    +- GpuShuffleCoalesce 2147483647
-                        :                       +- GpuCustomShuffleReader coalesced
-                        :                          +- ShuffleQueryStage 7
-                        :                             +- GpuColumnarExchange gpuhashpartitioning(ss_ticket_number#261L, ss_customer_sk#255, 200), ENSURE_REQUIREMENTS, [id=#443721]
-                        :                                +- GpuHashAggregate(keys=[ss_ticket_number#261L, ss_customer_sk#255], functions=[partial_gpucount(1, false)], output=[ss_ticket_number#261L, ss_customer_sk#255, count#25846L])
-                        :                                   +- GpuProject [ss_customer_sk#255, ss_ticket_number#261L], true
-                        :                                      +- GpuShuffledHashJoin [ss_sold_date_sk#252], [d_date_sk#612], Inner, GpuBuildRight, false
-                        :                                         :- GpuShuffleCoalesce 2147483647
-                        :                                         :  +- GpuCustomShuffleReader coalesced
-                        :                                         :     +- ShuffleQueryStage 6
-                        :                                         :        +- GpuColumnarExchange gpuhashpartitioning(ss_sold_date_sk#252, 200), ENSURE_REQUIREMENTS, [id=#443520]
-                        :                                         :           +- GpuProject [ss_sold_date_sk#252, ss_customer_sk#255, ss_ticket_number#261L], true
-                        :                                         :              +- GpuShuffledHashJoin [ss_hdemo_sk#257], [hd_demo_sk#88], Inner, GpuBuildRight, false
-                        :                                         :                 :- GpuShuffleCoalesce 2147483647
-                        :                                         :                 :  +- GpuCustomShuffleReader coalesced
-                        :                                         :                 :     +- ShuffleQueryStage 5
-                        :                                         :                 :        +- GpuColumnarExchange gpuhashpartitioning(ss_hdemo_sk#257, 200), ENSURE_REQUIREMENTS, [id=#443284]
-                        :                                         :                 :           +- GpuProject [ss_sold_date_sk#252, ss_customer_sk#255, ss_hdemo_sk#257, ss_ticket_number#261L], true
-                        :                                         :                 :              +- GpuShuffledHashJoin [ss_store_sk#259], [s_store_sk#712], Inner, GpuBuildRight, false
-                        :                                         :                 :                 :- GpuShuffleCoalesce 2147483647
-                        :                                         :                 :                 :  +- GpuCustomShuffleReader coalesced
-                        :                                         :                 :                 :     +- ShuffleQueryStage 0
-                        :                                         :                 :                 :        +- GpuColumnarExchange gpuhashpartitioning(ss_store_sk#259, 200), ENSURE_REQUIREMENTS, [id=#442213]
-                        :                                         :                 :                 :           +- GpuCoalesceBatches targetsize(2147483647)
-                        :                                         :                 :                 :              +- GpuFilter (((gpuisnotnull(ss_store_sk#259) AND gpuisnotnull(ss_hdemo_sk#257)) AND gpuisnotnull(ss_sold_date_sk#252)) AND gpuisnotnull(ss_customer_sk#255)), true
-                        :                                         :                 :                 :                 +- GpuFileGpuScan parquet [ss_sold_date_sk#252,ss_customer_sk#255,ss_hdemo_sk#257,ss_store_sk#259,ss_ticket_number#261L] Batched: true, DataFilters: [isnotnull(ss_store_sk#259), isnotnull(ss_hdemo_sk#257), isnotnull(ss_sold_date_sk#252), isnotnul..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), IsNotNull(ss_hdemo_sk), IsNotNull(ss_sold_date_sk), IsNotNull(ss_custome..., ReadSchema: struct<ss_sold_date_sk:int,ss_customer_sk:int,ss_hdemo_sk:int,ss_store_sk:int,ss_ticket_number:bi...
-                        :                                         :                 :                 +- GpuCustomShuffleReader coalesced
-                        :                                         :                 :                    +- ShuffleQueryStage 1
-                        :                                         :                 :                       +- GpuColumnarExchange gpuhashpartitioning(s_store_sk#712, 200), ENSURE_REQUIREMENTS, [id=#442250]
-                        :                                         :                 :                          +- GpuProject [s_store_sk#712], true
-                        :                                         :                 :                             +- GpuCoalesceBatches targetsize(2147483647)
-                        :                                         :                 :                                +- GpuFilter (s_county#735 INSET Daviess County, Fairfield County, Luce County, Richland County AND gpuisnotnull(s_store_sk#712)), true
-                        :                                         :                 :                                   +- GpuFileGpuScan parquet [s_store_sk#712,s_county#735] Batched: true, DataFilters: [s_county#735 IN (Fairfield County,Daviess County,Richland County,Luce County), isnotnull(s_store..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/store.parquet], PartitionFilters: [], PushedFilters: [In(s_county, [Daviess County,Fairfield County,Luce County,Richland County]), IsNotNull(s_store_sk)], ReadSchema: struct<s_store_sk:int,s_county:string>
-                        :                                         :                 +- GpuCustomShuffleReader coalesced
-                        :                                         :                    +- ShuffleQueryStage 2
-                        :                                         :                       +- GpuColumnarExchange gpuhashpartitioning(hd_demo_sk#88, 200), ENSURE_REQUIREMENTS, [id=#442313]
-                        :                                         :                          +- GpuProject [hd_demo_sk#88], true
-                        :                                         :                             +- GpuRowToColumnar targetsize(2147483647)
-                        :                                         :                                +- *(1) Filter (((((isnotnull(hd_vehicle_count#92) AND isnotnull(hd_dep_count#91)) AND ((hd_buy_potential#90 = 1001-5000) OR (hd_buy_potential#90 = Unknown))) AND (hd_vehicle_count#92 > 0)) AND ((cast(hd_dep_count#91 as double) / cast(hd_vehicle_count#92 as double)) > 1.0)) AND isnotnull(hd_demo_sk#88))
-                        :                                         :                                   +- GpuColumnarToRow false
-                        :                                         :                                      +- GpuFileGpuScan parquet [hd_demo_sk#88,hd_buy_potential#90,hd_dep_count#91,hd_vehicle_count#92] Batched: true, DataFilters: [isnotnull(hd_vehicle_count#92), isnotnull(hd_dep_count#91), ((hd_buy_potential#90 = 1001-5000) O..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/household_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(hd_vehicle_count), IsNotNull(hd_dep_count), Or(EqualTo(hd_buy_potential,1001-5000),Equ..., ReadSchema: struct<hd_demo_sk:int,hd_buy_potential:string,hd_dep_count:int,hd_vehicle_count:int>
-                        :                                         +- GpuCustomShuffleReader coalesced
-                        :                                            +- ShuffleQueryStage 3
-                        :                                               +- GpuColumnarExchange gpuhashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#442354]
-                        :                                                  +- GpuProject [d_date_sk#612], true
-                        :                                                     +- GpuCoalesceBatches targetsize(2147483647)
-                        :                                                        +- GpuFilter ((((gpuisnotnull(d_dom#621) AND (d_dom#621 >= 1)) AND (d_dom#621 <= 2)) AND d_year#618 INSET 1999, 2000, 2001) AND gpuisnotnull(d_date_sk#612)), true
-                        :                                                           +- GpuFileGpuScan parquet [d_date_sk#612,d_year#618,d_dom#621] Batched: true, DataFilters: [isnotnull(d_dom#621), (d_dom#621 >= 1), (d_dom#621 <= 2), d_year#618 IN (1999,2000,2001), isnotn..., Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_dom), GreaterThanOrEqual(d_dom,1), LessThanOrEqual(d_dom,2), In(d_year, [1999,2000,2..., ReadSchema: struct<d_date_sk:int,d_year:int,d_dom:int>
-                        +- GpuCustomShuffleReader coalesced
-                           +- ShuffleQueryStage 4
-                              +- GpuColumnarExchange gpuhashpartitioning(c_customer_sk#400, 200), ENSURE_REQUIREMENTS, [id=#442392]
-                                 +- GpuCoalesceBatches targetsize(2147483647)
-                                    +- GpuFilter gpuisnotnull(c_customer_sk#400), true
-                                       +- GpuFileGpuScan parquet [c_customer_sk#400,c_salutation#407,c_first_name#408,c_last_name#409,c_preferred_cust_flag#410] Batched: true, DataFilters: [isnotnull(c_customer_sk#400)], Format: Parquet, Location: InMemoryFileIndex[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk)], ReadSchema: struct<c_customer_sk:int,c_salutation:string,c_first_name:string,c_last_name:string,c_preferred_c...
+   *(8) Sort [cnt#15409L DESC NULLS LAST, c_last_name#571 ASC NULLS FIRST], true, 0
+   +- AQEShuffleRead coalesced
+      +- ShuffleQueryStage 7
+         +- Exchange rangepartitioning(cnt#15409L DESC NULLS LAST, c_last_name#571 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#121226]
+            +- *(7) Project [c_last_name#571, c_first_name#570, c_salutation#569, c_preferred_cust_flag#572, ss_ticket_number#673L, cnt#15409L]
+               +- *(7) BroadcastHashJoin [ss_customer_sk#667], [c_customer_sk#562], Inner, BuildLeft, false
+                  :- BroadcastQueryStage 6
+                  :  +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[1, int, true] as bigint)),false), [id=#121186]
+                  :     +- AQEShuffleRead local
+                  :        +- ShuffleQueryStage 5
+                  :           +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#121143]
+                  :              +- *(6) Filter ((cnt#15409L >= 1) AND (cnt#15409L <= 5))
+                  :                 +- *(6) HashAggregate(keys=[ss_ticket_number#673L, ss_customer_sk#667], functions=[count(1)], output=[ss_ticket_number#673L, ss_customer_sk#667, cnt#15409L])
+                  :                    +- AQEShuffleRead coalesced
+                  :                       +- ShuffleQueryStage 4
+                  :                          +- Exchange hashpartitioning(ss_ticket_number#673L, ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#121039]
+                  :                             +- *(5) HashAggregate(keys=[ss_ticket_number#673L, ss_customer_sk#667], functions=[partial_count(1)], output=[ss_ticket_number#673L, ss_customer_sk#667, count#15418L])
+                  :                                +- *(5) Project [ss_customer_sk#667, ss_ticket_number#673L]
+                  :                                   +- *(5) BroadcastHashJoin [ss_hdemo_sk#669], [hd_demo_sk#654], Inner, BuildRight, false
+                  :                                      :- *(5) Project [ss_customer_sk#667, ss_hdemo_sk#669, ss_ticket_number#673L]
+                  :                                      :  +- *(5) BroadcastHashJoin [ss_store_sk#671], [s_store_sk#326], Inner, BuildRight, false
+                  :                                      :     :- *(5) Project [ss_customer_sk#667, ss_hdemo_sk#669, ss_store_sk#671, ss_ticket_number#673L]
+                  :                                      :     :  +- *(5) BroadcastHashJoin [ss_sold_date_sk#664], [d_date_sk#598], Inner, BuildRight, false
+                  :                                      :     :     :- *(5) Filter (((isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_store_sk#671)) AND isnotnull(ss_hdemo_sk#669)) AND isnotnull(ss_customer_sk#667))
+                  :                                      :     :     :  +- *(5) ColumnarToRow
+                  :                                      :     :     :     +- FileScan parquet [ss_sold_date_sk#664,ss_customer_sk#667,ss_hdemo_sk#669,ss_store_sk#671,ss_ticket_number#673L] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#664), isnotnull(ss_store_sk#671), isnotnull(ss_hdemo_sk#669), isnotnul..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk), IsNotNull(ss_hdemo_sk), IsNotNull(ss_custome..., ReadSchema: struct<ss_sold_date_sk:int,ss_customer_sk:int,ss_hdemo_sk:int,ss_store_sk:int,ss_ticket_number:bi...
+                  :                                      :     :     +- BroadcastQueryStage 0
+                  :                                      :     :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#120686]
+                  :                                      :     :           +- *(1) Project [d_date_sk#598]
+                  :                                      :     :              +- *(1) Filter ((((isnotnull(d_dom#607) AND (d_dom#607 >= 1)) AND (d_dom#607 <= 2)) AND d_year#604 IN (1999,2000,2001)) AND isnotnull(d_date_sk#598))
+                  :                                      :     :                 +- *(1) ColumnarToRow
+                  :                                      :     :                    +- FileScan parquet [d_date_sk#598,d_year#604,d_dom#607] Batched: true, DataFilters: [isnotnull(d_dom#607), (d_dom#607 >= 1), (d_dom#607 <= 2), d_year#604 IN (1999,2000,2001), isnotn..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_dom), GreaterThanOrEqual(d_dom,1), LessThanOrEqual(d_dom,2), In(d_year, [1999,2000,2..., ReadSchema: struct<d_date_sk:int,d_year:int,d_dom:int>
+                  :                                      :     +- BroadcastQueryStage 1
+                  :                                      :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#120707]
+                  :                                      :           +- *(2) Project [s_store_sk#326]
+                  :                                      :              +- *(2) Filter (s_county#349 IN (Fairfield County,Daviess County,Richland County,Luce County) AND isnotnull(s_store_sk#326))
+                  :                                      :                 +- *(2) ColumnarToRow
+                  :                                      :                    +- FileScan parquet [s_store_sk#326,s_county#349] Batched: true, DataFilters: [s_county#349 IN (Fairfield County,Daviess County,Richland County,Luce County), isnotnull(s_store..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store.parquet], PartitionFilters: [], PushedFilters: [In(s_county, [Daviess County,Fairfield County,Luce County,Richland County]), IsNotNull(s_store_sk)], ReadSchema: struct<s_store_sk:int,s_county:string>
+                  :                                      +- BroadcastQueryStage 2
+                  :                                         +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#120728]
+                  :                                            +- *(3) Project [hd_demo_sk#654]
+                  :                                               +- *(3) Filter (((((isnotnull(hd_vehicle_count#658) AND isnotnull(hd_dep_count#657)) AND ((hd_buy_potential#656 = 1001-5000) OR (hd_buy_potential#656 = Unknown))) AND (hd_vehicle_count#658 > 0)) AND ((cast(hd_dep_count#657 as double) / cast(hd_vehicle_count#658 as double)) > 1.0)) AND isnotnull(hd_demo_sk#654))
+                  :                                                  +- *(3) ColumnarToRow
+                  :                                                     +- FileScan parquet [hd_demo_sk#654,hd_buy_potential#656,hd_dep_count#657,hd_vehicle_count#658] Batched: true, DataFilters: [isnotnull(hd_vehicle_count#658), isnotnull(hd_dep_count#657), ((hd_buy_potential#656 = 1001-5000..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/household_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(hd_vehicle_count), IsNotNull(hd_dep_count), Or(EqualTo(hd_buy_potential,1001-5000),Equ..., ReadSchema: struct<hd_demo_sk:int,hd_buy_potential:string,hd_dep_count:int,hd_vehicle_count:int>
+                  +- AQEShuffleRead local
+                     +- ShuffleQueryStage 3
+                        +- Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#120753]
+                           +- *(4) Filter isnotnull(c_customer_sk#562)
+                              +- *(4) ColumnarToRow
+                                 +- FileScan parquet [c_customer_sk#562,c_salutation#569,c_first_name#570,c_last_name#571,c_preferred_cust_flag#572] Batched: true, DataFilters: [isnotnull(c_customer_sk#562)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk)], ReadSchema: struct<c_customer_sk:int,c_salutation:string,c_first_name:string,c_last_name:string,c_preferred_c...
 +- == Initial Plan ==
-   Sort [cnt#25837L DESC NULLS LAST, c_last_name#409 ASC NULLS FIRST], true, 0
-   +- Exchange rangepartitioning(cnt#25837L DESC NULLS LAST, c_last_name#409 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#441651]
-      +- Project [c_last_name#409, c_first_name#408, c_salutation#407, c_preferred_cust_flag#410, ss_ticket_number#261L, cnt#25837L]
-         +- SortMergeJoin [ss_customer_sk#255], [c_customer_sk#400], Inner
-            :- Sort [ss_customer_sk#255 ASC NULLS FIRST], false, 0
-            :  +- Exchange hashpartitioning(ss_customer_sk#255, 200), ENSURE_REQUIREMENTS, [id=#441644]
-            :     +- Filter ((cnt#25837L >= 1) AND (cnt#25837L <= 5))
-            :        +- HashAggregate(keys=[ss_ticket_number#261L, ss_customer_sk#255], functions=[count(1)], output=[ss_ticket_number#261L, ss_customer_sk#255, cnt#25837L])
-            :           +- Exchange hashpartitioning(ss_ticket_number#261L, ss_customer_sk#255, 200), ENSURE_REQUIREMENTS, [id=#441639]
-            :              +- HashAggregate(keys=[ss_ticket_number#261L, ss_customer_sk#255], functions=[partial_count(1)], output=[ss_ticket_number#261L, ss_customer_sk#255, count#25846L])
-            :                 +- Project [ss_customer_sk#255, ss_ticket_number#261L]
-            :                    +- SortMergeJoin [ss_sold_date_sk#252], [d_date_sk#612], Inner
-            :                       :- Sort [ss_sold_date_sk#252 ASC NULLS FIRST], false, 0
-            :                       :  +- Exchange hashpartitioning(ss_sold_date_sk#252, 200), ENSURE_REQUIREMENTS, [id=#441631]
-            :                       :     +- Project [ss_sold_date_sk#252, ss_customer_sk#255, ss_ticket_number#261L]
-            :                       :        +- SortMergeJoin [ss_hdemo_sk#257], [hd_demo_sk#88], Inner
-            :                       :           :- Sort [ss_hdemo_sk#257 ASC NULLS FIRST], false, 0
-            :                       :           :  +- Exchange hashpartitioning(ss_hdemo_sk#257, 200), ENSURE_REQUIREMENTS, [id=#441623]
-            :                       :           :     +- Project [ss_sold_date_sk#252, ss_customer_sk#255, ss_hdemo_sk#257, ss_ticket_number#261L]
-            :                       :           :        +- SortMergeJoin [ss_store_sk#259], [s_store_sk#712], Inner
-            :                       :           :           :- Sort [ss_store_sk#259 ASC NULLS FIRST], false, 0
-            :                       :           :           :  +- Exchange hashpartitioning(ss_store_sk#259, 200), ENSURE_REQUIREMENTS, [id=#441615]
-            :                       :           :           :     +- Filter (((isnotnull(ss_store_sk#259) AND isnotnull(ss_hdemo_sk#257)) AND isnotnull(ss_sold_date_sk#252)) AND isnotnull(ss_customer_sk#255))
-            :                       :           :           :        +- FileScan parquet [ss_sold_date_sk#252,ss_customer_sk#255,ss_hdemo_sk#257,ss_store_sk#259,ss_ticket_number#261L] Batched: true, DataFilters: [isnotnull(ss_store_sk#259), isnotnull(ss_hdemo_sk#257), isnotnull(ss_sold_date_sk#252), isnotnul..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_store_sk), IsNotNull(ss_hdemo_sk), IsNotNull(ss_sold_date_sk), IsNotNull(ss_custome..., ReadSchema: struct<ss_sold_date_sk:int,ss_customer_sk:int,ss_hdemo_sk:int,ss_store_sk:int,ss_ticket_number:bi...
-            :                       :           :           +- Sort [s_store_sk#712 ASC NULLS FIRST], false, 0
-            :                       :           :              +- Exchange hashpartitioning(s_store_sk#712, 200), ENSURE_REQUIREMENTS, [id=#441616]
-            :                       :           :                 +- Project [s_store_sk#712]
-            :                       :           :                    +- Filter (s_county#735 IN (Fairfield County,Daviess County,Richland County,Luce County) AND isnotnull(s_store_sk#712))
-            :                       :           :                       +- FileScan parquet [s_store_sk#712,s_county#735] Batched: true, DataFilters: [s_county#735 IN (Fairfield County,Daviess County,Richland County,Luce County), isnotnull(s_store..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store.parquet], PartitionFilters: [], PushedFilters: [In(s_county, [Daviess County,Fairfield County,Luce County,Richland County]), IsNotNull(s_store_sk)], ReadSchema: struct<s_store_sk:int,s_county:string>
-            :                       :           +- Sort [hd_demo_sk#88 ASC NULLS FIRST], false, 0
-            :                       :              +- Exchange hashpartitioning(hd_demo_sk#88, 200), ENSURE_REQUIREMENTS, [id=#441624]
-            :                       :                 +- Project [hd_demo_sk#88]
-            :                       :                    +- Filter (((((isnotnull(hd_vehicle_count#92) AND isnotnull(hd_dep_count#91)) AND ((hd_buy_potential#90 = 1001-5000) OR (hd_buy_potential#90 = Unknown))) AND (hd_vehicle_count#92 > 0)) AND ((cast(hd_dep_count#91 as double) / cast(hd_vehicle_count#92 as double)) > 1.0)) AND isnotnull(hd_demo_sk#88))
-            :                       :                       +- FileScan parquet [hd_demo_sk#88,hd_buy_potential#90,hd_dep_count#91,hd_vehicle_count#92] Batched: true, DataFilters: [isnotnull(hd_vehicle_count#92), isnotnull(hd_dep_count#91), ((hd_buy_potential#90 = 1001-5000) O..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/household_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(hd_vehicle_count), IsNotNull(hd_dep_count), Or(EqualTo(hd_buy_potential,1001-5000),Equ..., ReadSchema: struct<hd_demo_sk:int,hd_buy_potential:string,hd_dep_count:int,hd_vehicle_count:int>
-            :                       +- Sort [d_date_sk#612 ASC NULLS FIRST], false, 0
-            :                          +- Exchange hashpartitioning(d_date_sk#612, 200), ENSURE_REQUIREMENTS, [id=#441632]
-            :                             +- Project [d_date_sk#612]
-            :                                +- Filter ((((isnotnull(d_dom#621) AND (d_dom#621 >= 1)) AND (d_dom#621 <= 2)) AND d_year#618 IN (1999,2000,2001)) AND isnotnull(d_date_sk#612))
-            :                                   +- FileScan parquet [d_date_sk#612,d_year#618,d_dom#621] Batched: true, DataFilters: [isnotnull(d_dom#621), (d_dom#621 >= 1), (d_dom#621 <= 2), d_year#618 IN (1999,2000,2001), isnotn..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_dom), GreaterThanOrEqual(d_dom,1), LessThanOrEqual(d_dom,2), In(d_year, [1999,2000,2..., ReadSchema: struct<d_date_sk:int,d_year:int,d_dom:int>
-            +- Sort [c_customer_sk#400 ASC NULLS FIRST], false, 0
-               +- Exchange hashpartitioning(c_customer_sk#400, 200), ENSURE_REQUIREMENTS, [id=#441645]
-                  +- Filter isnotnull(c_customer_sk#400)
-                     +- FileScan parquet [c_customer_sk#400,c_salutation#407,c_first_name#408,c_last_name#409,c_preferred_cust_flag#410] Batched: true, DataFilters: [isnotnull(c_customer_sk#400)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk)], ReadSchema: struct<c_customer_sk:int,c_salutation:string,c_first_name:string,c_last_name:string,c_preferred_c...
+   Sort [cnt#15409L DESC NULLS LAST, c_last_name#571 ASC NULLS FIRST], true, 0
+   +- Exchange rangepartitioning(cnt#15409L DESC NULLS LAST, c_last_name#571 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#120617]
+      +- Project [c_last_name#571, c_first_name#570, c_salutation#569, c_preferred_cust_flag#572, ss_ticket_number#673L, cnt#15409L]
+         +- SortMergeJoin [ss_customer_sk#667], [c_customer_sk#562], Inner
+            :- Sort [ss_customer_sk#667 ASC NULLS FIRST], false, 0
+            :  +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#120610]
+            :     +- Filter ((cnt#15409L >= 1) AND (cnt#15409L <= 5))
+            :        +- HashAggregate(keys=[ss_ticket_number#673L, ss_customer_sk#667], functions=[count(1)], output=[ss_ticket_number#673L, ss_customer_sk#667, cnt#15409L])
+            :           +- Exchange hashpartitioning(ss_ticket_number#673L, ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#120605]
+            :              +- HashAggregate(keys=[ss_ticket_number#673L, ss_customer_sk#667], functions=[partial_count(1)], output=[ss_ticket_number#673L, ss_customer_sk#667, count#15418L])
+            :                 +- Project [ss_customer_sk#667, ss_ticket_number#673L]
+            :                    +- BroadcastHashJoin [ss_hdemo_sk#669], [hd_demo_sk#654], Inner, BuildRight, false
+            :                       :- Project [ss_customer_sk#667, ss_hdemo_sk#669, ss_ticket_number#673L]
+            :                       :  +- BroadcastHashJoin [ss_store_sk#671], [s_store_sk#326], Inner, BuildRight, false
+            :                       :     :- Project [ss_customer_sk#667, ss_hdemo_sk#669, ss_store_sk#671, ss_ticket_number#673L]
+            :                       :     :  +- BroadcastHashJoin [ss_sold_date_sk#664], [d_date_sk#598], Inner, BuildRight, false
+            :                       :     :     :- Filter (((isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_store_sk#671)) AND isnotnull(ss_hdemo_sk#669)) AND isnotnull(ss_customer_sk#667))
+            :                       :     :     :  +- FileScan parquet [ss_sold_date_sk#664,ss_customer_sk#667,ss_hdemo_sk#669,ss_store_sk#671,ss_ticket_number#673L] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#664), isnotnull(ss_store_sk#671), isnotnull(ss_hdemo_sk#669), isnotnul..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk), IsNotNull(ss_hdemo_sk), IsNotNull(ss_custome..., ReadSchema: struct<ss_sold_date_sk:int,ss_customer_sk:int,ss_hdemo_sk:int,ss_store_sk:int,ss_ticket_number:bi...
+            :                       :     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#120592]
+            :                       :     :        +- Project [d_date_sk#598]
+            :                       :     :           +- Filter ((((isnotnull(d_dom#607) AND (d_dom#607 >= 1)) AND (d_dom#607 <= 2)) AND d_year#604 IN (1999,2000,2001)) AND isnotnull(d_date_sk#598))
+            :                       :     :              +- FileScan parquet [d_date_sk#598,d_year#604,d_dom#607] Batched: true, DataFilters: [isnotnull(d_dom#607), (d_dom#607 >= 1), (d_dom#607 <= 2), d_year#604 IN (1999,2000,2001), isnotn..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_dom), GreaterThanOrEqual(d_dom,1), LessThanOrEqual(d_dom,2), In(d_year, [1999,2000,2..., ReadSchema: struct<d_date_sk:int,d_year:int,d_dom:int>
+            :                       :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#120596]
+            :                       :        +- Project [s_store_sk#326]
+            :                       :           +- Filter (s_county#349 IN (Fairfield County,Daviess County,Richland County,Luce County) AND isnotnull(s_store_sk#326))
+            :                       :              +- FileScan parquet [s_store_sk#326,s_county#349] Batched: true, DataFilters: [s_county#349 IN (Fairfield County,Daviess County,Richland County,Luce County), isnotnull(s_store..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store.parquet], PartitionFilters: [], PushedFilters: [In(s_county, [Daviess County,Fairfield County,Luce County,Richland County]), IsNotNull(s_store_sk)], ReadSchema: struct<s_store_sk:int,s_county:string>
+            :                       +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#120600]
+            :                          +- Project [hd_demo_sk#654]
+            :                             +- Filter (((((isnotnull(hd_vehicle_count#658) AND isnotnull(hd_dep_count#657)) AND ((hd_buy_potential#656 = 1001-5000) OR (hd_buy_potential#656 = Unknown))) AND (hd_vehicle_count#658 > 0)) AND ((cast(hd_dep_count#657 as double) / cast(hd_vehicle_count#658 as double)) > 1.0)) AND isnotnull(hd_demo_sk#654))
+            :                                +- FileScan parquet [hd_demo_sk#654,hd_buy_potential#656,hd_dep_count#657,hd_vehicle_count#658] Batched: true, DataFilters: [isnotnull(hd_vehicle_count#658), isnotnull(hd_dep_count#657), ((hd_buy_potential#656 = 1001-5000..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/household_demographics.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(hd_vehicle_count), IsNotNull(hd_dep_count), Or(EqualTo(hd_buy_potential,1001-5000),Equ..., ReadSchema: struct<hd_demo_sk:int,hd_buy_potential:string,hd_dep_count:int,hd_vehicle_count:int>
+            +- Sort [c_customer_sk#562 ASC NULLS FIRST], false, 0
+               +- Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#120611]
+                  +- Filter isnotnull(c_customer_sk#562)
+                     +- FileScan parquet [c_customer_sk#562,c_salutation#569,c_first_name#570,c_last_name#571,c_preferred_cust_flag#572] Batched: true, DataFilters: [isnotnull(c_customer_sk#562)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk)], ReadSchema: struct<c_customer_sk:int,c_salutation:string,c_first_name:string,c_last_name:string,c_preferred_c...

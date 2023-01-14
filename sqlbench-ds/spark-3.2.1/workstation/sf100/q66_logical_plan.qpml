@@ -18,182 +18,183 @@ diagram:
           - title: "Aggregate (unknown)"
             operator: "Aggregate"
             inputs:
-            - title: "Projection: ws_quantity#494, ws_sales_price#497, ws_net_paid_inc_tax#506,\
-                \ w_warehouse_name#772, w_warehouse_sq_ft#773, w_city#778, w_county#779,\
-                \ w_state#780, w_country#782, d_year#618, d_moy#620"
+            - title: "Projection: ws_quantity#402, ws_sales_price#405, ws_net_paid_inc_tax#414,\
+                \ w_warehouse_name#188, w_warehouse_sq_ft#189, w_city#194, w_county#195,\
+                \ w_state#196, w_country#198, d_year#604, d_moy#606"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ws_sold_time_sk#477 = t_time_sk#456))"
+              - title: "Inner Join: Some((ws_ship_mode_sk#398 = sm_ship_mode_sk#550))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ws_sold_time_sk#477, ws_quantity#494, ws_sales_price#497,\
-                    \ ws_net_paid_inc_tax#506, w_warehouse_name#772, w_warehouse_sq_ft#773,\
-                    \ w_city#778, w_county#779, w_state#780, w_country#782, d_year#618,\
-                    \ d_moy#620"
+                - title: "Projection: ws_ship_mode_sk#398, ws_quantity#402, ws_sales_price#405,\
+                    \ ws_net_paid_inc_tax#414, w_warehouse_name#188, w_warehouse_sq_ft#189,\
+                    \ w_city#194, w_county#195, w_state#196, w_country#198, d_year#604,\
+                    \ d_moy#606"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((ws_sold_date_sk#476 = d_date_sk#612))"
+                  - title: "Inner Join: Some((ws_sold_time_sk#385 = t_time_sk#28))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ws_sold_date_sk#476, ws_sold_time_sk#477,\
-                        \ ws_quantity#494, ws_sales_price#497, ws_net_paid_inc_tax#506,\
-                        \ w_warehouse_name#772, w_warehouse_sq_ft#773, w_city#778,\
-                        \ w_county#779, w_state#780, w_country#782"
+                    - title: "Projection: ws_sold_time_sk#385, ws_ship_mode_sk#398,\
+                        \ ws_quantity#402, ws_sales_price#405, ws_net_paid_inc_tax#414,\
+                        \ w_warehouse_name#188, w_warehouse_sq_ft#189, w_city#194,\
+                        \ w_county#195, w_state#196, w_country#198, d_year#604, d_moy#606"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((ws_ship_mode_sk#490 = sm_ship_mode_sk#444))"
+                      - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#598))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ws_sold_date_sk#476, ws_sold_time_sk#477,\
-                            \ ws_ship_mode_sk#490, ws_quantity#494, ws_sales_price#497,\
-                            \ ws_net_paid_inc_tax#506, w_warehouse_name#772, w_warehouse_sq_ft#773,\
-                            \ w_city#778, w_county#779, w_state#780, w_country#782"
+                        - title: "Projection: ws_sold_date_sk#384, ws_sold_time_sk#385,\
+                            \ ws_ship_mode_sk#398, ws_quantity#402, ws_sales_price#405,\
+                            \ ws_net_paid_inc_tax#414, w_warehouse_name#188, w_warehouse_sq_ft#189,\
+                            \ w_city#194, w_county#195, w_state#196, w_country#198"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((ws_warehouse_sk#491 = w_warehouse_sk#770))"
+                          - title: "Inner Join: Some((ws_warehouse_sk#399 = w_warehouse_sk#186))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ws_sold_date_sk#476, ws_sold_time_sk#477,\
-                                \ ws_ship_mode_sk#490, ws_warehouse_sk#491, ws_quantity#494,\
-                                \ ws_sales_price#497, ws_net_paid_inc_tax#506"
+                            - title: "Projection: ws_sold_date_sk#384, ws_sold_time_sk#385,\
+                                \ ws_ship_mode_sk#398, ws_warehouse_sk#399, ws_quantity#402,\
+                                \ ws_sales_price#405, ws_net_paid_inc_tax#414"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ws_warehouse_sk#491) AND\
-                                  \ ((isnotnull(ws_ship_mode_sk#490) AND isnotnull(ws_sold_date_sk#476))\
-                                  \ AND isnotnull(ws_sold_time_sk#477)))"
+                              - title: "Filter: ((isnotnull(ws_warehouse_sk#399) AND\
+                                  \ isnotnull(ws_sold_date_sk#384)) AND (isnotnull(ws_sold_time_sk#385)\
+                                  \ AND isnotnull(ws_ship_mode_sk#398)))"
                                 operator: "filter"
                                 inputs:
                                 - title: "web_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: w_warehouse_sk#770, w_warehouse_name#772,\
-                                \ w_warehouse_sq_ft#773, w_city#778, w_county#779,\
-                                \ w_state#780, w_country#782"
+                            - title: "Projection: w_warehouse_sk#186, w_warehouse_name#188,\
+                                \ w_warehouse_sq_ft#189, w_city#194, w_county#195,\
+                                \ w_state#196, w_country#198"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: isnotnull(w_warehouse_sk#770)"
+                              - title: "Filter: isnotnull(w_warehouse_sk#186)"
                                 operator: "filter"
                                 inputs:
                                 - title: "warehouse.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: sm_ship_mode_sk#444"
+                        - title: "Projection: d_date_sk#598, d_year#604, d_moy#606"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (sm_carrier#448 IN (ZHOU,MSC) AND isnotnull(sm_ship_mode_sk#444))"
+                          - title: "Filter: ((isnotnull(d_year#604) AND (d_year#604\
+                              \ = 2000)) AND isnotnull(d_date_sk#598))"
                             operator: "filter"
                             inputs:
-                            - title: "ship_mode.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: d_date_sk#612, d_year#618, d_moy#620"
+                    - title: "Projection: t_time_sk#28"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: ((isnotnull(d_year#618) AND (d_year#618 =\
-                          \ 2000)) AND isnotnull(d_date_sk#612))"
+                      - title: "Filter: ((isnotnull(t_time#30) AND ((t_time#30 >=\
+                          \ 12143) AND (t_time#30 <= 40943))) AND isnotnull(t_time_sk#28))"
                         operator: "filter"
                         inputs:
-                        - title: "date_dim.parquet"
+                        - title: "time_dim.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: t_time_sk#456"
+                - title: "Projection: sm_ship_mode_sk#550"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: ((isnotnull(t_time#458) AND ((t_time#458 >= 12143)\
-                      \ AND (t_time#458 <= 40943))) AND isnotnull(t_time_sk#456))"
+                  - title: "Filter: (sm_carrier#554 IN (ZHOU,MSC) AND isnotnull(sm_ship_mode_sk#550))"
                     operator: "filter"
                     inputs:
-                    - title: "time_dim.parquet"
+                    - title: "ship_mode.parquet"
                       operator: "scan"
                       inputs: []
           - title: "Aggregate (unknown)"
             operator: "Aggregate"
             inputs:
-            - title: "Projection: cs_quantity#562, cs_ext_list_price#569, cs_net_paid_inc_tax#574,\
-                \ w_warehouse_name#22735, w_warehouse_sq_ft#22736, w_city#22741, w_county#22742,\
-                \ w_state#22743, w_country#22745, d_year#22753, d_moy#22755"
+            - title: "Projection: cs_quantity#136, cs_ext_list_price#143, cs_net_paid_inc_tax#148,\
+                \ w_warehouse_name#13499, w_warehouse_sq_ft#13500, w_city#13505, w_county#13506,\
+                \ w_state#13507, w_country#13509, d_year#13517, d_moy#13519"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((cs_sold_time_sk#545 = t_time_sk#22775))"
+              - title: "Inner Join: Some((cs_ship_mode_sk#131 = sm_ship_mode_sk#13549))"
                 operator: "join"
                 inputs:
-                - title: "Projection: cs_sold_time_sk#545, cs_quantity#562, cs_ext_list_price#569,\
-                    \ cs_net_paid_inc_tax#574, w_warehouse_name#22735, w_warehouse_sq_ft#22736,\
-                    \ w_city#22741, w_county#22742, w_state#22743, w_country#22745,\
-                    \ d_year#22753, d_moy#22755"
+                - title: "Projection: cs_ship_mode_sk#131, cs_quantity#136, cs_ext_list_price#143,\
+                    \ cs_net_paid_inc_tax#148, w_warehouse_name#13499, w_warehouse_sq_ft#13500,\
+                    \ w_city#13505, w_county#13506, w_state#13507, w_country#13509,\
+                    \ d_year#13517, d_moy#13519"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((cs_sold_date_sk#544 = d_date_sk#22747))"
+                  - title: "Inner Join: Some((cs_sold_time_sk#119 = t_time_sk#13539))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: cs_sold_date_sk#544, cs_sold_time_sk#545,\
-                        \ cs_quantity#562, cs_ext_list_price#569, cs_net_paid_inc_tax#574,\
-                        \ w_warehouse_name#22735, w_warehouse_sq_ft#22736, w_city#22741,\
-                        \ w_county#22742, w_state#22743, w_country#22745"
+                    - title: "Projection: cs_sold_time_sk#119, cs_ship_mode_sk#131,\
+                        \ cs_quantity#136, cs_ext_list_price#143, cs_net_paid_inc_tax#148,\
+                        \ w_warehouse_name#13499, w_warehouse_sq_ft#13500, w_city#13505,\
+                        \ w_county#13506, w_state#13507, w_country#13509, d_year#13517,\
+                        \ d_moy#13519"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((cs_ship_mode_sk#557 = sm_ship_mode_sk#22785))"
+                      - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#13511))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: cs_sold_date_sk#544, cs_sold_time_sk#545,\
-                            \ cs_ship_mode_sk#557, cs_quantity#562, cs_ext_list_price#569,\
-                            \ cs_net_paid_inc_tax#574, w_warehouse_name#22735, w_warehouse_sq_ft#22736,\
-                            \ w_city#22741, w_county#22742, w_state#22743, w_country#22745"
+                        - title: "Projection: cs_sold_date_sk#118, cs_sold_time_sk#119,\
+                            \ cs_ship_mode_sk#131, cs_quantity#136, cs_ext_list_price#143,\
+                            \ cs_net_paid_inc_tax#148, w_warehouse_name#13499, w_warehouse_sq_ft#13500,\
+                            \ w_city#13505, w_county#13506, w_state#13507, w_country#13509"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((cs_warehouse_sk#558 = w_warehouse_sk#22733))"
+                          - title: "Inner Join: Some((cs_warehouse_sk#132 = w_warehouse_sk#13497))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: cs_sold_date_sk#544, cs_sold_time_sk#545,\
-                                \ cs_ship_mode_sk#557, cs_warehouse_sk#558, cs_quantity#562,\
-                                \ cs_ext_list_price#569, cs_net_paid_inc_tax#574"
+                            - title: "Projection: cs_sold_date_sk#118, cs_sold_time_sk#119,\
+                                \ cs_ship_mode_sk#131, cs_warehouse_sk#132, cs_quantity#136,\
+                                \ cs_ext_list_price#143, cs_net_paid_inc_tax#148"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(cs_warehouse_sk#558) AND\
-                                  \ ((isnotnull(cs_ship_mode_sk#557) AND isnotnull(cs_sold_date_sk#544))\
-                                  \ AND isnotnull(cs_sold_time_sk#545)))"
+                              - title: "Filter: ((isnotnull(cs_warehouse_sk#132) AND\
+                                  \ isnotnull(cs_sold_date_sk#118)) AND (isnotnull(cs_sold_time_sk#119)\
+                                  \ AND isnotnull(cs_ship_mode_sk#131)))"
                                 operator: "filter"
                                 inputs:
                                 - title: "catalog_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: w_warehouse_sk#22733, w_warehouse_name#22735,\
-                                \ w_warehouse_sq_ft#22736, w_city#22741, w_county#22742,\
-                                \ w_state#22743, w_country#22745"
+                            - title: "Projection: w_warehouse_sk#13497, w_warehouse_name#13499,\
+                                \ w_warehouse_sq_ft#13500, w_city#13505, w_county#13506,\
+                                \ w_state#13507, w_country#13509"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: isnotnull(w_warehouse_sk#22733)"
+                              - title: "Filter: isnotnull(w_warehouse_sk#13497)"
                                 operator: "filter"
                                 inputs:
                                 - title: "warehouse.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: sm_ship_mode_sk#22785"
+                        - title: "Projection: d_date_sk#13511, d_year#13517, d_moy#13519"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (sm_carrier#22789 IN (ZHOU,MSC) AND isnotnull(sm_ship_mode_sk#22785))"
+                          - title: "Filter: ((isnotnull(d_year#13517) AND (d_year#13517\
+                              \ = 2000)) AND isnotnull(d_date_sk#13511))"
                             operator: "filter"
                             inputs:
-                            - title: "ship_mode.parquet"
+                            - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: d_date_sk#22747, d_year#22753, d_moy#22755"
+                    - title: "Projection: t_time_sk#13539"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: ((isnotnull(d_year#22753) AND (d_year#22753\
-                          \ = 2000)) AND isnotnull(d_date_sk#22747))"
+                      - title: "Filter: ((isnotnull(t_time#13541) AND ((t_time#13541\
+                          \ >= 12143) AND (t_time#13541 <= 40943))) AND isnotnull(t_time_sk#13539))"
                         operator: "filter"
                         inputs:
-                        - title: "date_dim.parquet"
+                        - title: "time_dim.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: t_time_sk#22775"
+                - title: "Projection: sm_ship_mode_sk#13549"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: ((isnotnull(t_time#22777) AND ((t_time#22777 >=\
-                      \ 12143) AND (t_time#22777 <= 40943))) AND isnotnull(t_time_sk#22775))"
+                  - title: "Filter: (sm_carrier#13553 IN (ZHOU,MSC) AND isnotnull(sm_ship_mode_sk#13549))"
                     operator: "filter"
                     inputs:
-                    - title: "time_dim.parquet"
+                    - title: "ship_mode.parquet"
                       operator: "scan"
                       inputs: []

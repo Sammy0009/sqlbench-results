@@ -6,24 +6,24 @@ diagram:
   - title: "Aggregate (unknown)"
     operator: "Aggregate"
     inputs:
-    - title: "Projection: i_brand_id#675, i_brand#676, ext_price#25467, t_hour#459,\
-        \ t_minute#460"
+    - title: "Projection: i_brand_id#507, i_brand#508, ext_price#15230, t_hour#31,\
+        \ t_minute#32"
       operator: "projection"
       inputs:
-      - title: "Inner Join: Some((time_sk#25470 = t_time_sk#456))"
+      - title: "Inner Join: Some((time_sk#15233 = t_time_sk#28))"
         operator: "join"
         inputs:
-        - title: "Projection: i_brand_id#675, i_brand#676, ext_price#25467, time_sk#25470"
+        - title: "Projection: i_brand_id#507, i_brand#508, ext_price#15230, time_sk#15233"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((sold_item_sk#25469 = i_item_sk#668))"
+          - title: "Inner Join: Some((sold_item_sk#15232 = i_item_sk#500))"
             operator: "join"
             inputs:
-            - title: "Projection: i_item_sk#668, i_brand_id#675, i_brand#676"
+            - title: "Projection: i_item_sk#500, i_brand_id#507, i_brand#508"
               operator: "projection"
               inputs:
-              - title: "Filter: ((isnotnull(i_manager_id#688) AND (i_manager_id#688\
-                  \ = 1)) AND isnotnull(i_item_sk#668))"
+              - title: "Filter: ((isnotnull(i_manager_id#520) AND (i_manager_id#520\
+                  \ = 1)) AND isnotnull(i_item_sk#500))"
                 operator: "filter"
                 inputs:
                 - title: "item.parquet"
@@ -32,97 +32,97 @@ diagram:
             - title: "Union (unknown)"
               operator: "Union"
               inputs:
-              - title: "Projection: ws_ext_sales_price#499 AS ext_price#25467, ws_item_sk#479\
-                  \ AS sold_item_sk#25469, ws_sold_time_sk#477 AS time_sk#25470"
+              - title: "Projection: ws_ext_sales_price#407 AS ext_price#15230, ws_item_sk#387\
+                  \ AS sold_item_sk#15232, ws_sold_time_sk#385 AS time_sk#15233"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((d_date_sk#612 = ws_sold_date_sk#476))"
+                - title: "Inner Join: Some((d_date_sk#598 = ws_sold_date_sk#384))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_sold_date_sk#476, ws_sold_time_sk#477,\
-                      \ ws_item_sk#479, ws_ext_sales_price#499"
+                  - title: "Projection: ws_sold_date_sk#384, ws_sold_time_sk#385,\
+                      \ ws_item_sk#387, ws_ext_sales_price#407"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(ws_sold_date_sk#476) AND (isnotnull(ws_item_sk#479)\
-                        \ AND isnotnull(ws_sold_time_sk#477)))"
+                    - title: "Filter: (isnotnull(ws_sold_date_sk#384) AND (isnotnull(ws_item_sk#387)\
+                        \ AND isnotnull(ws_sold_time_sk#385)))"
                       operator: "filter"
                       inputs:
                       - title: "web_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: d_date_sk#612"
+                  - title: "Projection: d_date_sk#598"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (((isnotnull(d_moy#620) AND isnotnull(d_year#618))\
-                        \ AND ((d_moy#620 = 11) AND (d_year#618 = 2001))) AND isnotnull(d_date_sk#612))"
+                    - title: "Filter: (((isnotnull(d_moy#606) AND isnotnull(d_year#604))\
+                        \ AND ((d_moy#606 = 11) AND (d_year#604 = 2001))) AND isnotnull(d_date_sk#598))"
                       operator: "filter"
                       inputs:
                       - title: "date_dim.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: cs_ext_sales_price#567 AS ext_price#25471, cs_item_sk#559\
-                  \ AS sold_item_sk#25473, cs_sold_time_sk#545 AS time_sk#25474"
+              - title: "Projection: cs_ext_sales_price#141 AS ext_price#15234, cs_item_sk#133\
+                  \ AS sold_item_sk#15236, cs_sold_time_sk#119 AS time_sk#15237"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((d_date_sk#25482 = cs_sold_date_sk#544))"
+                - title: "Inner Join: Some((d_date_sk#15245 = cs_sold_date_sk#118))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: cs_sold_date_sk#544, cs_sold_time_sk#545,\
-                      \ cs_item_sk#559, cs_ext_sales_price#567"
+                  - title: "Projection: cs_sold_date_sk#118, cs_sold_time_sk#119,\
+                      \ cs_item_sk#133, cs_ext_sales_price#141"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(cs_sold_date_sk#544) AND (isnotnull(cs_item_sk#559)\
-                        \ AND isnotnull(cs_sold_time_sk#545)))"
+                    - title: "Filter: (isnotnull(cs_sold_date_sk#118) AND (isnotnull(cs_item_sk#133)\
+                        \ AND isnotnull(cs_sold_time_sk#119)))"
                       operator: "filter"
                       inputs:
                       - title: "catalog_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: d_date_sk#25482"
+                  - title: "Projection: d_date_sk#15245"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (((isnotnull(d_moy#25490) AND isnotnull(d_year#25488))\
-                        \ AND ((d_moy#25490 = 11) AND (d_year#25488 = 2001))) AND\
-                        \ isnotnull(d_date_sk#25482))"
+                    - title: "Filter: (((isnotnull(d_moy#15253) AND isnotnull(d_year#15251))\
+                        \ AND ((d_moy#15253 = 11) AND (d_year#15251 = 2001))) AND\
+                        \ isnotnull(d_date_sk#15245))"
                       operator: "filter"
                       inputs:
                       - title: "date_dim.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: ss_ext_sales_price#267 AS ext_price#25475, ss_item_sk#254\
-                  \ AS sold_item_sk#25477, ss_sold_time_sk#253 AS time_sk#25478"
+              - title: "Projection: ss_ext_sales_price#679 AS ext_price#15238, ss_item_sk#666\
+                  \ AS sold_item_sk#15240, ss_sold_time_sk#665 AS time_sk#15241"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((d_date_sk#25510 = ss_sold_date_sk#252))"
+                - title: "Inner Join: Some((d_date_sk#15273 = ss_sold_date_sk#664))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ss_sold_date_sk#252, ss_sold_time_sk#253,\
-                      \ ss_item_sk#254, ss_ext_sales_price#267"
+                  - title: "Projection: ss_sold_date_sk#664, ss_sold_time_sk#665,\
+                      \ ss_item_sk#666, ss_ext_sales_price#679"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(ss_sold_date_sk#252) AND (isnotnull(ss_item_sk#254)\
-                        \ AND isnotnull(ss_sold_time_sk#253)))"
+                    - title: "Filter: (isnotnull(ss_sold_date_sk#664) AND (isnotnull(ss_item_sk#666)\
+                        \ AND isnotnull(ss_sold_time_sk#665)))"
                       operator: "filter"
                       inputs:
                       - title: "store_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: d_date_sk#25510"
+                  - title: "Projection: d_date_sk#15273"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (((isnotnull(d_moy#25518) AND isnotnull(d_year#25516))\
-                        \ AND ((d_moy#25518 = 11) AND (d_year#25516 = 2001))) AND\
-                        \ isnotnull(d_date_sk#25510))"
+                    - title: "Filter: (((isnotnull(d_moy#15281) AND isnotnull(d_year#15279))\
+                        \ AND ((d_moy#15281 = 11) AND (d_year#15279 = 2001))) AND\
+                        \ isnotnull(d_date_sk#15273))"
                       operator: "filter"
                       inputs:
                       - title: "date_dim.parquet"
                         operator: "scan"
                         inputs: []
-        - title: "Projection: t_time_sk#456, t_hour#459, t_minute#460"
+        - title: "Projection: t_time_sk#28, t_hour#31, t_minute#32"
           operator: "projection"
           inputs:
-          - title: "Filter: (((t_meal_time#465 = breakfast) OR (t_meal_time#465 =\
-              \ dinner)) AND isnotnull(t_time_sk#456))"
+          - title: "Filter: (((t_meal_time#37 = breakfast) OR (t_meal_time#37 = dinner))\
+              \ AND isnotnull(t_time_sk#28))"
             operator: "filter"
             inputs:
             - title: "time_dim.parquet"

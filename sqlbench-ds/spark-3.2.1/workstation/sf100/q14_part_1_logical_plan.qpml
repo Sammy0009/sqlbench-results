@@ -18,58 +18,59 @@ diagram:
           - title: "Union (unknown)"
             operator: "Union"
             inputs:
-            - title: "Projection: sales#5866, number_sales#5867L, store AS channel#6455,\
-                \ i_brand_id#6218, i_class_id#6220, i_category_id#6222"
+            - title: "Projection: sales#4511, number_sales#4512L, store AS channel#5100,\
+                \ i_brand_id#4863, i_class_id#4865, i_category_id#4867"
               operator: "projection"
               inputs:
-              - title: "Filter: (isnotnull(sales#5866) AND (cast(sales#5866 as decimal(32,6))\
-                  \ > cast(scalar-subquery#5869 [] as decimal(32,6))))"
+              - title: "Filter: (isnotnull(sales#4511) AND (cast(sales#4511 as decimal(32,6))\
+                  \ > cast(scalar-subquery#4514 [] as decimal(32,6))))"
                 operator: "filter"
                 inputs:
                 - title: "Aggregate (unknown)"
                   operator: "Aggregate"
                   inputs:
-                  - title: "Projection: ss_quantity#6198, ss_list_price#6200, i_brand_id#6218,\
-                      \ i_class_id#6220, i_category_id#6222"
+                  - title: "Projection: ss_quantity#4843, ss_list_price#4845, i_brand_id#4863,\
+                      \ i_class_id#4865, i_category_id#4867"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((ss_item_sk#6190 = i_item_sk#6211))"
+                    - title: "Inner Join: Some((ss_sold_date_sk#4833 = d_date_sk#4878))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ss_item_sk#6190, ss_quantity#6198, ss_list_price#6200"
+                      - title: "Projection: ss_sold_date_sk#4833, ss_quantity#4843,\
+                          \ ss_list_price#4845, i_brand_id#4863, i_class_id#4865,\
+                          \ i_category_id#4867"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((ss_sold_date_sk#6188 = d_date_sk#6233))"
+                        - title: "Inner Join: Some((ss_item_sk#4835 = i_item_sk#4856))"
                           operator: "join"
                           inputs:
-                          - title: "LeftSemi Join: Some((ss_item_sk#6190 = ss_item_sk#5883))"
+                          - title: "LeftSemi Join: Some((ss_item_sk#4835 = ss_item_sk#4528))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ss_sold_date_sk#6188, ss_item_sk#6190,\
-                                \ ss_quantity#6198, ss_list_price#6200"
+                            - title: "Projection: ss_sold_date_sk#4833, ss_item_sk#4835,\
+                                \ ss_quantity#4843, ss_list_price#4845"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ss_sold_date_sk#6188) AND\
-                                  \ isnotnull(ss_item_sk#6190))"
+                              - title: "Filter: (isnotnull(ss_item_sk#4835) AND isnotnull(ss_sold_date_sk#4833))"
                                 operator: "filter"
                                 inputs:
                                 - title: "store_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: i_item_sk#668 AS ss_item_sk#5883"
+                            - title: "Projection: i_item_sk#500 AS ss_item_sk#4528"
                               operator: "projection"
                               inputs:
-                              - title: "Inner Join: Some((((i_brand_id#675 = brand_id#5880)\
-                                  \ AND (i_class_id#677 = class_id#5881)) AND (i_category_id#679\
-                                  \ = category_id#5882)))"
+                              - title: "Inner Join: Some((((i_brand_id#507 = brand_id#4525)\
+                                  \ AND (i_class_id#509 = class_id#4526)) AND (i_category_id#511\
+                                  \ = category_id#4527)))"
                                 operator: "join"
                                 inputs:
-                                - title: "Projection: i_item_sk#668, i_brand_id#675,\
-                                    \ i_class_id#677, i_category_id#679"
+                                - title: "Projection: i_item_sk#500, i_brand_id#507,\
+                                    \ i_class_id#509, i_category_id#511"
                                   operator: "projection"
                                   inputs:
-                                  - title: "Filter: ((isnotnull(i_brand_id#675) AND\
-                                      \ isnotnull(i_class_id#677)) AND isnotnull(i_category_id#679))"
+                                  - title: "Filter: ((isnotnull(i_brand_id#507) AND\
+                                      \ isnotnull(i_class_id#509)) AND isnotnull(i_category_id#511))"
                                     operator: "filter"
                                     inputs:
                                     - title: "item.parquet"
@@ -78,430 +79,441 @@ diagram:
                                 - title: "Aggregate (unknown)"
                                   operator: "Aggregate"
                                   inputs:
-                                  - title: "LeftSemi Join: Some((((brand_id#5880 <=>\
-                                      \ i_brand_id#5970) AND (class_id#5881 <=> i_class_id#5972))\
-                                      \ AND (category_id#5882 <=> i_category_id#5974)))"
+                                  - title: "LeftSemi Join: Some((((brand_id#4525 <=>\
+                                      \ i_brand_id#4615) AND (class_id#4526 <=> i_class_id#4617))\
+                                      \ AND (category_id#4527 <=> i_category_id#4619)))"
                                     operator: "join"
                                     inputs:
                                     - title: "Aggregate (unknown)"
                                       operator: "Aggregate"
                                       inputs:
-                                      - title: "Projection: i_brand_id#5898 AS brand_id#5880,\
-                                          \ i_class_id#5900 AS class_id#5881, i_category_id#5902\
-                                          \ AS category_id#5882"
+                                      - title: "Projection: i_brand_id#4543 AS brand_id#4525,\
+                                          \ i_class_id#4545 AS class_id#4526, i_category_id#4547\
+                                          \ AS category_id#4527"
                                         operator: "projection"
                                         inputs:
-                                        - title: "Inner Join: Some((ss_sold_date_sk#252\
-                                            \ = d_date_sk#612))"
+                                        - title: "Inner Join: Some((ss_sold_date_sk#664\
+                                            \ = d_date_sk#598))"
                                           operator: "join"
                                           inputs:
-                                          - title: "Projection: ss_sold_date_sk#252,\
-                                              \ i_brand_id#5898, i_class_id#5900,\
-                                              \ i_category_id#5902"
+                                          - title: "Projection: ss_sold_date_sk#664,\
+                                              \ i_brand_id#4543, i_class_id#4545,\
+                                              \ i_category_id#4547"
                                             operator: "projection"
                                             inputs:
-                                            - title: "Inner Join: Some((ss_item_sk#254\
-                                                \ = i_item_sk#5891))"
+                                            - title: "Inner Join: Some((ss_item_sk#666\
+                                                \ = i_item_sk#4536))"
                                               operator: "join"
                                               inputs:
-                                              - title: "Projection: ss_sold_date_sk#252,\
-                                                  \ ss_item_sk#254"
+                                              - title: "Projection: ss_sold_date_sk#664,\
+                                                  \ ss_item_sk#666"
                                                 operator: "projection"
                                                 inputs:
-                                                - title: "Filter: (isnotnull(ss_item_sk#254)\
-                                                    \ AND isnotnull(ss_sold_date_sk#252))"
+                                                - title: "Filter: (isnotnull(ss_item_sk#666)\
+                                                    \ AND isnotnull(ss_sold_date_sk#664))"
                                                   operator: "filter"
                                                   inputs:
                                                   - title: "store_sales.parquet"
                                                     operator: "scan"
                                                     inputs: []
-                                              - title: "LeftSemi Join: Some((((i_brand_id#5898\
-                                                  \ <=> i_brand_id#5920) AND (i_class_id#5900\
-                                                  \ <=> i_class_id#5922)) AND (i_category_id#5902\
-                                                  \ <=> i_category_id#5924)))"
+                                              - title: "LeftSemi Join: Some((((i_brand_id#4543\
+                                                  \ <=> i_brand_id#4565) AND (i_class_id#4545\
+                                                  \ <=> i_class_id#4567)) AND (i_category_id#4547\
+                                                  \ <=> i_category_id#4569)))"
                                                 operator: "join"
                                                 inputs:
-                                                - title: "Projection: i_item_sk#5891,\
-                                                    \ i_brand_id#5898, i_class_id#5900,\
-                                                    \ i_category_id#5902"
+                                                - title: "Projection: i_item_sk#4536,\
+                                                    \ i_brand_id#4543, i_class_id#4545,\
+                                                    \ i_category_id#4547"
                                                   operator: "projection"
                                                   inputs:
-                                                  - title: "Filter: (isnotnull(i_item_sk#5891)\
-                                                      \ AND ((isnotnull(i_brand_id#5898)\
-                                                      \ AND isnotnull(i_class_id#5900))\
-                                                      \ AND isnotnull(i_category_id#5902)))"
+                                                  - title: "Filter: (isnotnull(i_item_sk#4536)\
+                                                      \ AND ((isnotnull(i_brand_id#4543)\
+                                                      \ AND isnotnull(i_class_id#4545))\
+                                                      \ AND isnotnull(i_category_id#4547)))"
                                                     operator: "filter"
                                                     inputs:
                                                     - title: "item.parquet"
                                                       operator: "scan"
                                                       inputs: []
-                                                - title: "Projection: i_brand_id#5920,\
-                                                    \ i_class_id#5922, i_category_id#5924"
+                                                - title: "Projection: i_brand_id#4565,\
+                                                    \ i_class_id#4567, i_category_id#4569"
                                                   operator: "projection"
                                                   inputs:
-                                                  - title: "Inner Join: Some((cs_item_sk#559\
-                                                      \ = i_item_sk#5913))"
+                                                  - title: "Inner Join: Some((cs_sold_date_sk#118\
+                                                      \ = d_date_sk#4580))"
                                                     operator: "join"
                                                     inputs:
-                                                    - title: "Projection: cs_item_sk#559"
+                                                    - title: "Projection: cs_sold_date_sk#118,\
+                                                        \ i_brand_id#4565, i_class_id#4567,\
+                                                        \ i_category_id#4569"
                                                       operator: "projection"
                                                       inputs:
-                                                      - title: "Inner Join: Some((cs_sold_date_sk#544\
-                                                          \ = d_date_sk#5935))"
+                                                      - title: "Inner Join: Some((cs_item_sk#133\
+                                                          \ = i_item_sk#4558))"
                                                         operator: "join"
                                                         inputs:
-                                                        - title: "Projection: cs_sold_date_sk#544,\
-                                                            \ cs_item_sk#559"
+                                                        - title: "Projection: cs_sold_date_sk#118,\
+                                                            \ cs_item_sk#133"
                                                           operator: "projection"
                                                           inputs:
-                                                          - title: "Filter: (isnotnull(cs_sold_date_sk#544)\
-                                                              \ AND isnotnull(cs_item_sk#559))"
+                                                          - title: "Filter: (isnotnull(cs_item_sk#133)\
+                                                              \ AND isnotnull(cs_sold_date_sk#118))"
                                                             operator: "filter"
                                                             inputs:
                                                             - title: "catalog_sales.parquet"
                                                               operator: "scan"
                                                               inputs: []
-                                                        - title: "Projection: d_date_sk#5935"
+                                                        - title: "Projection: i_item_sk#4558,\
+                                                            \ i_brand_id#4565, i_class_id#4567,\
+                                                            \ i_category_id#4569"
                                                           operator: "projection"
                                                           inputs:
-                                                          - title: "Filter: ((isnotnull(d_year#5941)\
-                                                              \ AND ((d_year#5941\
-                                                              \ >= 1999) AND (d_year#5941\
-                                                              \ <= 2001))) AND isnotnull(d_date_sk#5935))"
+                                                          - title: "Filter: isnotnull(i_item_sk#4558)"
                                                             operator: "filter"
                                                             inputs:
-                                                            - title: "date_dim.parquet"
+                                                            - title: "item.parquet"
                                                               operator: "scan"
                                                               inputs: []
-                                                    - title: "Projection: i_item_sk#5913,\
-                                                        \ i_brand_id#5920, i_class_id#5922,\
-                                                        \ i_category_id#5924"
+                                                    - title: "Projection: d_date_sk#4580"
                                                       operator: "projection"
                                                       inputs:
-                                                      - title: "Filter: isnotnull(i_item_sk#5913)"
-                                                        operator: "filter"
-                                                        inputs:
-                                                        - title: "item.parquet"
-                                                          operator: "scan"
-                                                          inputs: []
-                                          - title: "Projection: d_date_sk#612"
-                                            operator: "projection"
-                                            inputs:
-                                            - title: "Filter: ((isnotnull(d_year#618)\
-                                                \ AND ((d_year#618 >= 1999) AND (d_year#618\
-                                                \ <= 2001))) AND isnotnull(d_date_sk#612))"
-                                              operator: "filter"
-                                              inputs:
-                                              - title: "date_dim.parquet"
-                                                operator: "scan"
-                                                inputs: []
-                                    - title: "Projection: i_brand_id#5970, i_class_id#5972,\
-                                        \ i_category_id#5974"
-                                      operator: "projection"
-                                      inputs:
-                                      - title: "Inner Join: Some((ws_item_sk#479 =\
-                                          \ i_item_sk#5963))"
-                                        operator: "join"
-                                        inputs:
-                                        - title: "Projection: ws_item_sk#479"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Inner Join: Some((ws_sold_date_sk#476\
-                                              \ = d_date_sk#5985))"
-                                            operator: "join"
-                                            inputs:
-                                            - title: "Projection: ws_sold_date_sk#476,\
-                                                \ ws_item_sk#479"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: (isnotnull(ws_sold_date_sk#476)\
-                                                  \ AND isnotnull(ws_item_sk#479))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "web_sales.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                            - title: "Projection: d_date_sk#5985"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: ((isnotnull(d_year#5991)\
-                                                  \ AND ((d_year#5991 >= 1999) AND\
-                                                  \ (d_year#5991 <= 2001))) AND isnotnull(d_date_sk#5985))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "date_dim.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                        - title: "Projection: i_item_sk#5963, i_brand_id#5970,\
-                                            \ i_class_id#5972, i_category_id#5974"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Filter: isnotnull(i_item_sk#5963)"
-                                            operator: "filter"
-                                            inputs:
-                                            - title: "item.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                          - title: "Projection: d_date_sk#6233"
-                            operator: "projection"
-                            inputs:
-                            - title: "Filter: (((isnotnull(d_year#6239) AND isnotnull(d_moy#6241))\
-                                \ AND ((d_year#6239 = 2001) AND (d_moy#6241 = 11)))\
-                                \ AND isnotnull(d_date_sk#6233))"
-                              operator: "filter"
-                              inputs:
-                              - title: "date_dim.parquet"
-                                operator: "scan"
-                                inputs: []
-                      - title: "LeftSemi Join: Some((i_item_sk#6211 = ss_item_sk#5883))"
-                        operator: "join"
-                        inputs:
-                        - title: "Projection: i_item_sk#6211, i_brand_id#6218, i_class_id#6220,\
-                            \ i_category_id#6222"
-                          operator: "projection"
-                          inputs:
-                          - title: "Filter: isnotnull(i_item_sk#6211)"
-                            operator: "filter"
-                            inputs:
-                            - title: "item.parquet"
-                              operator: "scan"
-                              inputs: []
-                        - title: "Projection: i_item_sk#668 AS ss_item_sk#5883"
-                          operator: "projection"
-                          inputs:
-                          - title: "Inner Join: Some((((i_brand_id#675 = brand_id#5880)\
-                              \ AND (i_class_id#677 = class_id#5881)) AND (i_category_id#679\
-                              \ = category_id#5882)))"
-                            operator: "join"
-                            inputs:
-                            - title: "Projection: i_item_sk#668, i_brand_id#675, i_class_id#677,\
-                                \ i_category_id#679"
-                              operator: "projection"
-                              inputs:
-                              - title: "Filter: ((isnotnull(i_brand_id#675) AND isnotnull(i_class_id#677))\
-                                  \ AND isnotnull(i_category_id#679))"
-                                operator: "filter"
-                                inputs:
-                                - title: "item.parquet"
-                                  operator: "scan"
-                                  inputs: []
-                            - title: "Aggregate (unknown)"
-                              operator: "Aggregate"
-                              inputs:
-                              - title: "LeftSemi Join: Some((((brand_id#5880 <=> i_brand_id#5970)\
-                                  \ AND (class_id#5881 <=> i_class_id#5972)) AND (category_id#5882\
-                                  \ <=> i_category_id#5974)))"
-                                operator: "join"
-                                inputs:
-                                - title: "Aggregate (unknown)"
-                                  operator: "Aggregate"
-                                  inputs:
-                                  - title: "Projection: i_brand_id#5898 AS brand_id#5880,\
-                                      \ i_class_id#5900 AS class_id#5881, i_category_id#5902\
-                                      \ AS category_id#5882"
-                                    operator: "projection"
-                                    inputs:
-                                    - title: "Inner Join: Some((ss_sold_date_sk#252\
-                                        \ = d_date_sk#612))"
-                                      operator: "join"
-                                      inputs:
-                                      - title: "Projection: ss_sold_date_sk#252, i_brand_id#5898,\
-                                          \ i_class_id#5900, i_category_id#5902"
-                                        operator: "projection"
-                                        inputs:
-                                        - title: "Inner Join: Some((ss_item_sk#254\
-                                            \ = i_item_sk#5891))"
-                                          operator: "join"
-                                          inputs:
-                                          - title: "Projection: ss_sold_date_sk#252,\
-                                              \ ss_item_sk#254"
-                                            operator: "projection"
-                                            inputs:
-                                            - title: "Filter: (isnotnull(ss_item_sk#254)\
-                                                \ AND isnotnull(ss_sold_date_sk#252))"
-                                              operator: "filter"
-                                              inputs:
-                                              - title: "store_sales.parquet"
-                                                operator: "scan"
-                                                inputs: []
-                                          - title: "LeftSemi Join: Some((((i_brand_id#5898\
-                                              \ <=> i_brand_id#5920) AND (i_class_id#5900\
-                                              \ <=> i_class_id#5922)) AND (i_category_id#5902\
-                                              \ <=> i_category_id#5924)))"
-                                            operator: "join"
-                                            inputs:
-                                            - title: "Projection: i_item_sk#5891,\
-                                                \ i_brand_id#5898, i_class_id#5900,\
-                                                \ i_category_id#5902"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: (isnotnull(i_item_sk#5891)\
-                                                  \ AND ((isnotnull(i_brand_id#5898)\
-                                                  \ AND isnotnull(i_class_id#5900))\
-                                                  \ AND isnotnull(i_category_id#5902)))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "item.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                            - title: "Projection: i_brand_id#5920,\
-                                                \ i_class_id#5922, i_category_id#5924"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Inner Join: Some((cs_item_sk#559\
-                                                  \ = i_item_sk#5913))"
-                                                operator: "join"
-                                                inputs:
-                                                - title: "Projection: cs_item_sk#559"
-                                                  operator: "projection"
-                                                  inputs:
-                                                  - title: "Inner Join: Some((cs_sold_date_sk#544\
-                                                      \ = d_date_sk#5935))"
-                                                    operator: "join"
-                                                    inputs:
-                                                    - title: "Projection: cs_sold_date_sk#544,\
-                                                        \ cs_item_sk#559"
-                                                      operator: "projection"
-                                                      inputs:
-                                                      - title: "Filter: (isnotnull(cs_sold_date_sk#544)\
-                                                          \ AND isnotnull(cs_item_sk#559))"
-                                                        operator: "filter"
-                                                        inputs:
-                                                        - title: "catalog_sales.parquet"
-                                                          operator: "scan"
-                                                          inputs: []
-                                                    - title: "Projection: d_date_sk#5935"
-                                                      operator: "projection"
-                                                      inputs:
-                                                      - title: "Filter: ((isnotnull(d_year#5941)\
-                                                          \ AND ((d_year#5941 >= 1999)\
-                                                          \ AND (d_year#5941 <= 2001)))\
-                                                          \ AND isnotnull(d_date_sk#5935))"
+                                                      - title: "Filter: ((isnotnull(d_year#4586)\
+                                                          \ AND ((d_year#4586 >= 1999)\
+                                                          \ AND (d_year#4586 <= 2001)))\
+                                                          \ AND isnotnull(d_date_sk#4580))"
                                                         operator: "filter"
                                                         inputs:
                                                         - title: "date_dim.parquet"
                                                           operator: "scan"
                                                           inputs: []
-                                                - title: "Projection: i_item_sk#5913,\
-                                                    \ i_brand_id#5920, i_class_id#5922,\
-                                                    \ i_category_id#5924"
-                                                  operator: "projection"
-                                                  inputs:
-                                                  - title: "Filter: isnotnull(i_item_sk#5913)"
-                                                    operator: "filter"
-                                                    inputs:
-                                                    - title: "item.parquet"
-                                                      operator: "scan"
-                                                      inputs: []
-                                      - title: "Projection: d_date_sk#612"
-                                        operator: "projection"
-                                        inputs:
-                                        - title: "Filter: ((isnotnull(d_year#618)\
-                                            \ AND ((d_year#618 >= 1999) AND (d_year#618\
-                                            \ <= 2001))) AND isnotnull(d_date_sk#612))"
-                                          operator: "filter"
-                                          inputs:
-                                          - title: "date_dim.parquet"
-                                            operator: "scan"
-                                            inputs: []
-                                - title: "Projection: i_brand_id#5970, i_class_id#5972,\
-                                    \ i_category_id#5974"
-                                  operator: "projection"
-                                  inputs:
-                                  - title: "Inner Join: Some((ws_item_sk#479 = i_item_sk#5963))"
-                                    operator: "join"
-                                    inputs:
-                                    - title: "Projection: ws_item_sk#479"
+                                          - title: "Projection: d_date_sk#598"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: ((isnotnull(d_year#604)\
+                                                \ AND ((d_year#604 >= 1999) AND (d_year#604\
+                                                \ <= 2001))) AND isnotnull(d_date_sk#598))"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "date_dim.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                    - title: "Projection: i_brand_id#4615, i_class_id#4617,\
+                                        \ i_category_id#4619"
                                       operator: "projection"
                                       inputs:
-                                      - title: "Inner Join: Some((ws_sold_date_sk#476\
-                                          \ = d_date_sk#5985))"
+                                      - title: "Inner Join: Some((ws_sold_date_sk#384\
+                                          \ = d_date_sk#4630))"
                                         operator: "join"
                                         inputs:
-                                        - title: "Projection: ws_sold_date_sk#476,\
-                                            \ ws_item_sk#479"
+                                        - title: "Projection: ws_sold_date_sk#384,\
+                                            \ i_brand_id#4615, i_class_id#4617, i_category_id#4619"
                                           operator: "projection"
                                           inputs:
-                                          - title: "Filter: (isnotnull(ws_sold_date_sk#476)\
-                                              \ AND isnotnull(ws_item_sk#479))"
-                                            operator: "filter"
+                                          - title: "Inner Join: Some((ws_item_sk#387\
+                                              \ = i_item_sk#4608))"
+                                            operator: "join"
                                             inputs:
-                                            - title: "web_sales.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                                        - title: "Projection: d_date_sk#5985"
+                                            - title: "Projection: ws_sold_date_sk#384,\
+                                                \ ws_item_sk#387"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: (isnotnull(ws_item_sk#387)\
+                                                  \ AND isnotnull(ws_sold_date_sk#384))"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "web_sales.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                            - title: "Projection: i_item_sk#4608,\
+                                                \ i_brand_id#4615, i_class_id#4617,\
+                                                \ i_category_id#4619"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: isnotnull(i_item_sk#4608)"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "item.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                        - title: "Projection: d_date_sk#4630"
                                           operator: "projection"
                                           inputs:
-                                          - title: "Filter: ((isnotnull(d_year#5991)\
-                                              \ AND ((d_year#5991 >= 1999) AND (d_year#5991\
-                                              \ <= 2001))) AND isnotnull(d_date_sk#5985))"
+                                          - title: "Filter: ((isnotnull(d_year#4636)\
+                                              \ AND ((d_year#4636 >= 1999) AND (d_year#4636\
+                                              \ <= 2001))) AND isnotnull(d_date_sk#4630))"
                                             operator: "filter"
                                             inputs:
                                             - title: "date_dim.parquet"
                                               operator: "scan"
                                               inputs: []
-                                    - title: "Projection: i_item_sk#5963, i_brand_id#5970,\
-                                        \ i_class_id#5972, i_category_id#5974"
+                          - title: "LeftSemi Join: Some((i_item_sk#4856 = ss_item_sk#4528))"
+                            operator: "join"
+                            inputs:
+                            - title: "Projection: i_item_sk#4856, i_brand_id#4863,\
+                                \ i_class_id#4865, i_category_id#4867"
+                              operator: "projection"
+                              inputs:
+                              - title: "Filter: isnotnull(i_item_sk#4856)"
+                                operator: "filter"
+                                inputs:
+                                - title: "item.parquet"
+                                  operator: "scan"
+                                  inputs: []
+                            - title: "Projection: i_item_sk#500 AS ss_item_sk#4528"
+                              operator: "projection"
+                              inputs:
+                              - title: "Inner Join: Some((((i_brand_id#507 = brand_id#4525)\
+                                  \ AND (i_class_id#509 = class_id#4526)) AND (i_category_id#511\
+                                  \ = category_id#4527)))"
+                                operator: "join"
+                                inputs:
+                                - title: "Projection: i_item_sk#500, i_brand_id#507,\
+                                    \ i_class_id#509, i_category_id#511"
+                                  operator: "projection"
+                                  inputs:
+                                  - title: "Filter: ((isnotnull(i_brand_id#507) AND\
+                                      \ isnotnull(i_class_id#509)) AND isnotnull(i_category_id#511))"
+                                    operator: "filter"
+                                    inputs:
+                                    - title: "item.parquet"
+                                      operator: "scan"
+                                      inputs: []
+                                - title: "Aggregate (unknown)"
+                                  operator: "Aggregate"
+                                  inputs:
+                                  - title: "LeftSemi Join: Some((((brand_id#4525 <=>\
+                                      \ i_brand_id#4615) AND (class_id#4526 <=> i_class_id#4617))\
+                                      \ AND (category_id#4527 <=> i_category_id#4619)))"
+                                    operator: "join"
+                                    inputs:
+                                    - title: "Aggregate (unknown)"
+                                      operator: "Aggregate"
+                                      inputs:
+                                      - title: "Projection: i_brand_id#4543 AS brand_id#4525,\
+                                          \ i_class_id#4545 AS class_id#4526, i_category_id#4547\
+                                          \ AS category_id#4527"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Inner Join: Some((ss_sold_date_sk#664\
+                                            \ = d_date_sk#598))"
+                                          operator: "join"
+                                          inputs:
+                                          - title: "Projection: ss_sold_date_sk#664,\
+                                              \ i_brand_id#4543, i_class_id#4545,\
+                                              \ i_category_id#4547"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Inner Join: Some((ss_item_sk#666\
+                                                \ = i_item_sk#4536))"
+                                              operator: "join"
+                                              inputs:
+                                              - title: "Projection: ss_sold_date_sk#664,\
+                                                  \ ss_item_sk#666"
+                                                operator: "projection"
+                                                inputs:
+                                                - title: "Filter: (isnotnull(ss_item_sk#666)\
+                                                    \ AND isnotnull(ss_sold_date_sk#664))"
+                                                  operator: "filter"
+                                                  inputs:
+                                                  - title: "store_sales.parquet"
+                                                    operator: "scan"
+                                                    inputs: []
+                                              - title: "LeftSemi Join: Some((((i_brand_id#4543\
+                                                  \ <=> i_brand_id#4565) AND (i_class_id#4545\
+                                                  \ <=> i_class_id#4567)) AND (i_category_id#4547\
+                                                  \ <=> i_category_id#4569)))"
+                                                operator: "join"
+                                                inputs:
+                                                - title: "Projection: i_item_sk#4536,\
+                                                    \ i_brand_id#4543, i_class_id#4545,\
+                                                    \ i_category_id#4547"
+                                                  operator: "projection"
+                                                  inputs:
+                                                  - title: "Filter: (isnotnull(i_item_sk#4536)\
+                                                      \ AND ((isnotnull(i_brand_id#4543)\
+                                                      \ AND isnotnull(i_class_id#4545))\
+                                                      \ AND isnotnull(i_category_id#4547)))"
+                                                    operator: "filter"
+                                                    inputs:
+                                                    - title: "item.parquet"
+                                                      operator: "scan"
+                                                      inputs: []
+                                                - title: "Projection: i_brand_id#4565,\
+                                                    \ i_class_id#4567, i_category_id#4569"
+                                                  operator: "projection"
+                                                  inputs:
+                                                  - title: "Inner Join: Some((cs_sold_date_sk#118\
+                                                      \ = d_date_sk#4580))"
+                                                    operator: "join"
+                                                    inputs:
+                                                    - title: "Projection: cs_sold_date_sk#118,\
+                                                        \ i_brand_id#4565, i_class_id#4567,\
+                                                        \ i_category_id#4569"
+                                                      operator: "projection"
+                                                      inputs:
+                                                      - title: "Inner Join: Some((cs_item_sk#133\
+                                                          \ = i_item_sk#4558))"
+                                                        operator: "join"
+                                                        inputs:
+                                                        - title: "Projection: cs_sold_date_sk#118,\
+                                                            \ cs_item_sk#133"
+                                                          operator: "projection"
+                                                          inputs:
+                                                          - title: "Filter: (isnotnull(cs_item_sk#133)\
+                                                              \ AND isnotnull(cs_sold_date_sk#118))"
+                                                            operator: "filter"
+                                                            inputs:
+                                                            - title: "catalog_sales.parquet"
+                                                              operator: "scan"
+                                                              inputs: []
+                                                        - title: "Projection: i_item_sk#4558,\
+                                                            \ i_brand_id#4565, i_class_id#4567,\
+                                                            \ i_category_id#4569"
+                                                          operator: "projection"
+                                                          inputs:
+                                                          - title: "Filter: isnotnull(i_item_sk#4558)"
+                                                            operator: "filter"
+                                                            inputs:
+                                                            - title: "item.parquet"
+                                                              operator: "scan"
+                                                              inputs: []
+                                                    - title: "Projection: d_date_sk#4580"
+                                                      operator: "projection"
+                                                      inputs:
+                                                      - title: "Filter: ((isnotnull(d_year#4586)\
+                                                          \ AND ((d_year#4586 >= 1999)\
+                                                          \ AND (d_year#4586 <= 2001)))\
+                                                          \ AND isnotnull(d_date_sk#4580))"
+                                                        operator: "filter"
+                                                        inputs:
+                                                        - title: "date_dim.parquet"
+                                                          operator: "scan"
+                                                          inputs: []
+                                          - title: "Projection: d_date_sk#598"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: ((isnotnull(d_year#604)\
+                                                \ AND ((d_year#604 >= 1999) AND (d_year#604\
+                                                \ <= 2001))) AND isnotnull(d_date_sk#598))"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "date_dim.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                    - title: "Projection: i_brand_id#4615, i_class_id#4617,\
+                                        \ i_category_id#4619"
                                       operator: "projection"
                                       inputs:
-                                      - title: "Filter: isnotnull(i_item_sk#5963)"
-                                        operator: "filter"
+                                      - title: "Inner Join: Some((ws_sold_date_sk#384\
+                                          \ = d_date_sk#4630))"
+                                        operator: "join"
                                         inputs:
-                                        - title: "item.parquet"
-                                          operator: "scan"
-                                          inputs: []
-            - title: "Projection: sales#5871, number_sales#5872L, catalog AS channel#6473,\
-                \ i_brand_id#6302, i_class_id#6304, i_category_id#6306"
+                                        - title: "Projection: ws_sold_date_sk#384,\
+                                            \ i_brand_id#4615, i_class_id#4617, i_category_id#4619"
+                                          operator: "projection"
+                                          inputs:
+                                          - title: "Inner Join: Some((ws_item_sk#387\
+                                              \ = i_item_sk#4608))"
+                                            operator: "join"
+                                            inputs:
+                                            - title: "Projection: ws_sold_date_sk#384,\
+                                                \ ws_item_sk#387"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: (isnotnull(ws_item_sk#387)\
+                                                  \ AND isnotnull(ws_sold_date_sk#384))"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "web_sales.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                            - title: "Projection: i_item_sk#4608,\
+                                                \ i_brand_id#4615, i_class_id#4617,\
+                                                \ i_category_id#4619"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: isnotnull(i_item_sk#4608)"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "item.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                        - title: "Projection: d_date_sk#4630"
+                                          operator: "projection"
+                                          inputs:
+                                          - title: "Filter: ((isnotnull(d_year#4636)\
+                                              \ AND ((d_year#4636 >= 1999) AND (d_year#4636\
+                                              \ <= 2001))) AND isnotnull(d_date_sk#4630))"
+                                            operator: "filter"
+                                            inputs:
+                                            - title: "date_dim.parquet"
+                                              operator: "scan"
+                                              inputs: []
+                      - title: "Projection: d_date_sk#4878"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: (((isnotnull(d_year#4884) AND isnotnull(d_moy#4886))\
+                            \ AND ((d_year#4884 = 2001) AND (d_moy#4886 = 11))) AND\
+                            \ isnotnull(d_date_sk#4878))"
+                          operator: "filter"
+                          inputs:
+                          - title: "date_dim.parquet"
+                            operator: "scan"
+                            inputs: []
+            - title: "Projection: sales#4516, number_sales#4517L, catalog AS channel#5118,\
+                \ i_brand_id#4947, i_class_id#4949, i_category_id#4951"
               operator: "projection"
               inputs:
-              - title: "Filter: (isnotnull(sales#5871) AND (cast(sales#5871 as decimal(32,6))\
-                  \ > cast(scalar-subquery#5874 [] as decimal(32,6))))"
+              - title: "Filter: (isnotnull(sales#4516) AND (cast(sales#4516 as decimal(32,6))\
+                  \ > cast(scalar-subquery#4519 [] as decimal(32,6))))"
                 operator: "filter"
                 inputs:
                 - title: "Aggregate (unknown)"
                   operator: "Aggregate"
                   inputs:
-                  - title: "Projection: cs_quantity#6279, cs_list_price#6281, i_brand_id#6302,\
-                      \ i_class_id#6304, i_category_id#6306"
+                  - title: "Projection: cs_quantity#4924, cs_list_price#4926, i_brand_id#4947,\
+                      \ i_class_id#4949, i_category_id#4951"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((cs_item_sk#6276 = i_item_sk#6295))"
+                    - title: "Inner Join: Some((cs_sold_date_sk#4906 = d_date_sk#4962))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: cs_item_sk#6276, cs_quantity#6279, cs_list_price#6281"
+                      - title: "Projection: cs_sold_date_sk#4906, cs_quantity#4924,\
+                          \ cs_list_price#4926, i_brand_id#4947, i_class_id#4949,\
+                          \ i_category_id#4951"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((cs_sold_date_sk#6261 = d_date_sk#6317))"
+                        - title: "Inner Join: Some((cs_item_sk#4921 = i_item_sk#4940))"
                           operator: "join"
                           inputs:
-                          - title: "LeftSemi Join: Some((cs_item_sk#6276 = ss_item_sk#5883))"
+                          - title: "LeftSemi Join: Some((cs_item_sk#4921 = ss_item_sk#4528))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: cs_sold_date_sk#6261, cs_item_sk#6276,\
-                                \ cs_quantity#6279, cs_list_price#6281"
+                            - title: "Projection: cs_sold_date_sk#4906, cs_item_sk#4921,\
+                                \ cs_quantity#4924, cs_list_price#4926"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(cs_sold_date_sk#6261) AND\
-                                  \ isnotnull(cs_item_sk#6276))"
+                              - title: "Filter: (isnotnull(cs_item_sk#4921) AND isnotnull(cs_sold_date_sk#4906))"
                                 operator: "filter"
                                 inputs:
                                 - title: "catalog_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: i_item_sk#668 AS ss_item_sk#5883"
+                            - title: "Projection: i_item_sk#500 AS ss_item_sk#4528"
                               operator: "projection"
                               inputs:
-                              - title: "Inner Join: Some((((i_brand_id#675 = brand_id#5880)\
-                                  \ AND (i_class_id#677 = class_id#5881)) AND (i_category_id#679\
-                                  \ = category_id#5882)))"
+                              - title: "Inner Join: Some((((i_brand_id#507 = brand_id#4525)\
+                                  \ AND (i_class_id#509 = class_id#4526)) AND (i_category_id#511\
+                                  \ = category_id#4527)))"
                                 operator: "join"
                                 inputs:
-                                - title: "Projection: i_item_sk#668, i_brand_id#675,\
-                                    \ i_class_id#677, i_category_id#679"
+                                - title: "Projection: i_item_sk#500, i_brand_id#507,\
+                                    \ i_class_id#509, i_category_id#511"
                                   operator: "projection"
                                   inputs:
-                                  - title: "Filter: ((isnotnull(i_brand_id#675) AND\
-                                      \ isnotnull(i_class_id#677)) AND isnotnull(i_category_id#679))"
+                                  - title: "Filter: ((isnotnull(i_brand_id#507) AND\
+                                      \ isnotnull(i_class_id#509)) AND isnotnull(i_category_id#511))"
                                     operator: "filter"
                                     inputs:
                                     - title: "item.parquet"
@@ -510,430 +522,441 @@ diagram:
                                 - title: "Aggregate (unknown)"
                                   operator: "Aggregate"
                                   inputs:
-                                  - title: "LeftSemi Join: Some((((brand_id#5880 <=>\
-                                      \ i_brand_id#5970) AND (class_id#5881 <=> i_class_id#5972))\
-                                      \ AND (category_id#5882 <=> i_category_id#5974)))"
+                                  - title: "LeftSemi Join: Some((((brand_id#4525 <=>\
+                                      \ i_brand_id#4615) AND (class_id#4526 <=> i_class_id#4617))\
+                                      \ AND (category_id#4527 <=> i_category_id#4619)))"
                                     operator: "join"
                                     inputs:
                                     - title: "Aggregate (unknown)"
                                       operator: "Aggregate"
                                       inputs:
-                                      - title: "Projection: i_brand_id#5898 AS brand_id#5880,\
-                                          \ i_class_id#5900 AS class_id#5881, i_category_id#5902\
-                                          \ AS category_id#5882"
+                                      - title: "Projection: i_brand_id#4543 AS brand_id#4525,\
+                                          \ i_class_id#4545 AS class_id#4526, i_category_id#4547\
+                                          \ AS category_id#4527"
                                         operator: "projection"
                                         inputs:
-                                        - title: "Inner Join: Some((ss_sold_date_sk#252\
-                                            \ = d_date_sk#612))"
+                                        - title: "Inner Join: Some((ss_sold_date_sk#664\
+                                            \ = d_date_sk#598))"
                                           operator: "join"
                                           inputs:
-                                          - title: "Projection: ss_sold_date_sk#252,\
-                                              \ i_brand_id#5898, i_class_id#5900,\
-                                              \ i_category_id#5902"
+                                          - title: "Projection: ss_sold_date_sk#664,\
+                                              \ i_brand_id#4543, i_class_id#4545,\
+                                              \ i_category_id#4547"
                                             operator: "projection"
                                             inputs:
-                                            - title: "Inner Join: Some((ss_item_sk#254\
-                                                \ = i_item_sk#5891))"
+                                            - title: "Inner Join: Some((ss_item_sk#666\
+                                                \ = i_item_sk#4536))"
                                               operator: "join"
                                               inputs:
-                                              - title: "Projection: ss_sold_date_sk#252,\
-                                                  \ ss_item_sk#254"
+                                              - title: "Projection: ss_sold_date_sk#664,\
+                                                  \ ss_item_sk#666"
                                                 operator: "projection"
                                                 inputs:
-                                                - title: "Filter: (isnotnull(ss_item_sk#254)\
-                                                    \ AND isnotnull(ss_sold_date_sk#252))"
+                                                - title: "Filter: (isnotnull(ss_item_sk#666)\
+                                                    \ AND isnotnull(ss_sold_date_sk#664))"
                                                   operator: "filter"
                                                   inputs:
                                                   - title: "store_sales.parquet"
                                                     operator: "scan"
                                                     inputs: []
-                                              - title: "LeftSemi Join: Some((((i_brand_id#5898\
-                                                  \ <=> i_brand_id#5920) AND (i_class_id#5900\
-                                                  \ <=> i_class_id#5922)) AND (i_category_id#5902\
-                                                  \ <=> i_category_id#5924)))"
+                                              - title: "LeftSemi Join: Some((((i_brand_id#4543\
+                                                  \ <=> i_brand_id#4565) AND (i_class_id#4545\
+                                                  \ <=> i_class_id#4567)) AND (i_category_id#4547\
+                                                  \ <=> i_category_id#4569)))"
                                                 operator: "join"
                                                 inputs:
-                                                - title: "Projection: i_item_sk#5891,\
-                                                    \ i_brand_id#5898, i_class_id#5900,\
-                                                    \ i_category_id#5902"
+                                                - title: "Projection: i_item_sk#4536,\
+                                                    \ i_brand_id#4543, i_class_id#4545,\
+                                                    \ i_category_id#4547"
                                                   operator: "projection"
                                                   inputs:
-                                                  - title: "Filter: (isnotnull(i_item_sk#5891)\
-                                                      \ AND ((isnotnull(i_brand_id#5898)\
-                                                      \ AND isnotnull(i_class_id#5900))\
-                                                      \ AND isnotnull(i_category_id#5902)))"
+                                                  - title: "Filter: (isnotnull(i_item_sk#4536)\
+                                                      \ AND ((isnotnull(i_brand_id#4543)\
+                                                      \ AND isnotnull(i_class_id#4545))\
+                                                      \ AND isnotnull(i_category_id#4547)))"
                                                     operator: "filter"
                                                     inputs:
                                                     - title: "item.parquet"
                                                       operator: "scan"
                                                       inputs: []
-                                                - title: "Projection: i_brand_id#5920,\
-                                                    \ i_class_id#5922, i_category_id#5924"
+                                                - title: "Projection: i_brand_id#4565,\
+                                                    \ i_class_id#4567, i_category_id#4569"
                                                   operator: "projection"
                                                   inputs:
-                                                  - title: "Inner Join: Some((cs_item_sk#559\
-                                                      \ = i_item_sk#5913))"
+                                                  - title: "Inner Join: Some((cs_sold_date_sk#118\
+                                                      \ = d_date_sk#4580))"
                                                     operator: "join"
                                                     inputs:
-                                                    - title: "Projection: cs_item_sk#559"
+                                                    - title: "Projection: cs_sold_date_sk#118,\
+                                                        \ i_brand_id#4565, i_class_id#4567,\
+                                                        \ i_category_id#4569"
                                                       operator: "projection"
                                                       inputs:
-                                                      - title: "Inner Join: Some((cs_sold_date_sk#544\
-                                                          \ = d_date_sk#5935))"
+                                                      - title: "Inner Join: Some((cs_item_sk#133\
+                                                          \ = i_item_sk#4558))"
                                                         operator: "join"
                                                         inputs:
-                                                        - title: "Projection: cs_sold_date_sk#544,\
-                                                            \ cs_item_sk#559"
+                                                        - title: "Projection: cs_sold_date_sk#118,\
+                                                            \ cs_item_sk#133"
                                                           operator: "projection"
                                                           inputs:
-                                                          - title: "Filter: (isnotnull(cs_sold_date_sk#544)\
-                                                              \ AND isnotnull(cs_item_sk#559))"
+                                                          - title: "Filter: (isnotnull(cs_item_sk#133)\
+                                                              \ AND isnotnull(cs_sold_date_sk#118))"
                                                             operator: "filter"
                                                             inputs:
                                                             - title: "catalog_sales.parquet"
                                                               operator: "scan"
                                                               inputs: []
-                                                        - title: "Projection: d_date_sk#5935"
+                                                        - title: "Projection: i_item_sk#4558,\
+                                                            \ i_brand_id#4565, i_class_id#4567,\
+                                                            \ i_category_id#4569"
                                                           operator: "projection"
                                                           inputs:
-                                                          - title: "Filter: ((isnotnull(d_year#5941)\
-                                                              \ AND ((d_year#5941\
-                                                              \ >= 1999) AND (d_year#5941\
-                                                              \ <= 2001))) AND isnotnull(d_date_sk#5935))"
+                                                          - title: "Filter: isnotnull(i_item_sk#4558)"
                                                             operator: "filter"
                                                             inputs:
-                                                            - title: "date_dim.parquet"
+                                                            - title: "item.parquet"
                                                               operator: "scan"
                                                               inputs: []
-                                                    - title: "Projection: i_item_sk#5913,\
-                                                        \ i_brand_id#5920, i_class_id#5922,\
-                                                        \ i_category_id#5924"
+                                                    - title: "Projection: d_date_sk#4580"
                                                       operator: "projection"
                                                       inputs:
-                                                      - title: "Filter: isnotnull(i_item_sk#5913)"
-                                                        operator: "filter"
-                                                        inputs:
-                                                        - title: "item.parquet"
-                                                          operator: "scan"
-                                                          inputs: []
-                                          - title: "Projection: d_date_sk#612"
-                                            operator: "projection"
-                                            inputs:
-                                            - title: "Filter: ((isnotnull(d_year#618)\
-                                                \ AND ((d_year#618 >= 1999) AND (d_year#618\
-                                                \ <= 2001))) AND isnotnull(d_date_sk#612))"
-                                              operator: "filter"
-                                              inputs:
-                                              - title: "date_dim.parquet"
-                                                operator: "scan"
-                                                inputs: []
-                                    - title: "Projection: i_brand_id#5970, i_class_id#5972,\
-                                        \ i_category_id#5974"
-                                      operator: "projection"
-                                      inputs:
-                                      - title: "Inner Join: Some((ws_item_sk#479 =\
-                                          \ i_item_sk#5963))"
-                                        operator: "join"
-                                        inputs:
-                                        - title: "Projection: ws_item_sk#479"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Inner Join: Some((ws_sold_date_sk#476\
-                                              \ = d_date_sk#5985))"
-                                            operator: "join"
-                                            inputs:
-                                            - title: "Projection: ws_sold_date_sk#476,\
-                                                \ ws_item_sk#479"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: (isnotnull(ws_sold_date_sk#476)\
-                                                  \ AND isnotnull(ws_item_sk#479))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "web_sales.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                            - title: "Projection: d_date_sk#5985"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: ((isnotnull(d_year#5991)\
-                                                  \ AND ((d_year#5991 >= 1999) AND\
-                                                  \ (d_year#5991 <= 2001))) AND isnotnull(d_date_sk#5985))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "date_dim.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                        - title: "Projection: i_item_sk#5963, i_brand_id#5970,\
-                                            \ i_class_id#5972, i_category_id#5974"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Filter: isnotnull(i_item_sk#5963)"
-                                            operator: "filter"
-                                            inputs:
-                                            - title: "item.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                          - title: "Projection: d_date_sk#6317"
-                            operator: "projection"
-                            inputs:
-                            - title: "Filter: (((isnotnull(d_year#6323) AND isnotnull(d_moy#6325))\
-                                \ AND ((d_year#6323 = 2001) AND (d_moy#6325 = 11)))\
-                                \ AND isnotnull(d_date_sk#6317))"
-                              operator: "filter"
-                              inputs:
-                              - title: "date_dim.parquet"
-                                operator: "scan"
-                                inputs: []
-                      - title: "LeftSemi Join: Some((i_item_sk#6295 = ss_item_sk#5883))"
-                        operator: "join"
-                        inputs:
-                        - title: "Projection: i_item_sk#6295, i_brand_id#6302, i_class_id#6304,\
-                            \ i_category_id#6306"
-                          operator: "projection"
-                          inputs:
-                          - title: "Filter: isnotnull(i_item_sk#6295)"
-                            operator: "filter"
-                            inputs:
-                            - title: "item.parquet"
-                              operator: "scan"
-                              inputs: []
-                        - title: "Projection: i_item_sk#668 AS ss_item_sk#5883"
-                          operator: "projection"
-                          inputs:
-                          - title: "Inner Join: Some((((i_brand_id#675 = brand_id#5880)\
-                              \ AND (i_class_id#677 = class_id#5881)) AND (i_category_id#679\
-                              \ = category_id#5882)))"
-                            operator: "join"
-                            inputs:
-                            - title: "Projection: i_item_sk#668, i_brand_id#675, i_class_id#677,\
-                                \ i_category_id#679"
-                              operator: "projection"
-                              inputs:
-                              - title: "Filter: ((isnotnull(i_brand_id#675) AND isnotnull(i_class_id#677))\
-                                  \ AND isnotnull(i_category_id#679))"
-                                operator: "filter"
-                                inputs:
-                                - title: "item.parquet"
-                                  operator: "scan"
-                                  inputs: []
-                            - title: "Aggregate (unknown)"
-                              operator: "Aggregate"
-                              inputs:
-                              - title: "LeftSemi Join: Some((((brand_id#5880 <=> i_brand_id#5970)\
-                                  \ AND (class_id#5881 <=> i_class_id#5972)) AND (category_id#5882\
-                                  \ <=> i_category_id#5974)))"
-                                operator: "join"
-                                inputs:
-                                - title: "Aggregate (unknown)"
-                                  operator: "Aggregate"
-                                  inputs:
-                                  - title: "Projection: i_brand_id#5898 AS brand_id#5880,\
-                                      \ i_class_id#5900 AS class_id#5881, i_category_id#5902\
-                                      \ AS category_id#5882"
-                                    operator: "projection"
-                                    inputs:
-                                    - title: "Inner Join: Some((ss_sold_date_sk#252\
-                                        \ = d_date_sk#612))"
-                                      operator: "join"
-                                      inputs:
-                                      - title: "Projection: ss_sold_date_sk#252, i_brand_id#5898,\
-                                          \ i_class_id#5900, i_category_id#5902"
-                                        operator: "projection"
-                                        inputs:
-                                        - title: "Inner Join: Some((ss_item_sk#254\
-                                            \ = i_item_sk#5891))"
-                                          operator: "join"
-                                          inputs:
-                                          - title: "Projection: ss_sold_date_sk#252,\
-                                              \ ss_item_sk#254"
-                                            operator: "projection"
-                                            inputs:
-                                            - title: "Filter: (isnotnull(ss_item_sk#254)\
-                                                \ AND isnotnull(ss_sold_date_sk#252))"
-                                              operator: "filter"
-                                              inputs:
-                                              - title: "store_sales.parquet"
-                                                operator: "scan"
-                                                inputs: []
-                                          - title: "LeftSemi Join: Some((((i_brand_id#5898\
-                                              \ <=> i_brand_id#5920) AND (i_class_id#5900\
-                                              \ <=> i_class_id#5922)) AND (i_category_id#5902\
-                                              \ <=> i_category_id#5924)))"
-                                            operator: "join"
-                                            inputs:
-                                            - title: "Projection: i_item_sk#5891,\
-                                                \ i_brand_id#5898, i_class_id#5900,\
-                                                \ i_category_id#5902"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: (isnotnull(i_item_sk#5891)\
-                                                  \ AND ((isnotnull(i_brand_id#5898)\
-                                                  \ AND isnotnull(i_class_id#5900))\
-                                                  \ AND isnotnull(i_category_id#5902)))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "item.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                            - title: "Projection: i_brand_id#5920,\
-                                                \ i_class_id#5922, i_category_id#5924"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Inner Join: Some((cs_item_sk#559\
-                                                  \ = i_item_sk#5913))"
-                                                operator: "join"
-                                                inputs:
-                                                - title: "Projection: cs_item_sk#559"
-                                                  operator: "projection"
-                                                  inputs:
-                                                  - title: "Inner Join: Some((cs_sold_date_sk#544\
-                                                      \ = d_date_sk#5935))"
-                                                    operator: "join"
-                                                    inputs:
-                                                    - title: "Projection: cs_sold_date_sk#544,\
-                                                        \ cs_item_sk#559"
-                                                      operator: "projection"
-                                                      inputs:
-                                                      - title: "Filter: (isnotnull(cs_sold_date_sk#544)\
-                                                          \ AND isnotnull(cs_item_sk#559))"
-                                                        operator: "filter"
-                                                        inputs:
-                                                        - title: "catalog_sales.parquet"
-                                                          operator: "scan"
-                                                          inputs: []
-                                                    - title: "Projection: d_date_sk#5935"
-                                                      operator: "projection"
-                                                      inputs:
-                                                      - title: "Filter: ((isnotnull(d_year#5941)\
-                                                          \ AND ((d_year#5941 >= 1999)\
-                                                          \ AND (d_year#5941 <= 2001)))\
-                                                          \ AND isnotnull(d_date_sk#5935))"
+                                                      - title: "Filter: ((isnotnull(d_year#4586)\
+                                                          \ AND ((d_year#4586 >= 1999)\
+                                                          \ AND (d_year#4586 <= 2001)))\
+                                                          \ AND isnotnull(d_date_sk#4580))"
                                                         operator: "filter"
                                                         inputs:
                                                         - title: "date_dim.parquet"
                                                           operator: "scan"
                                                           inputs: []
-                                                - title: "Projection: i_item_sk#5913,\
-                                                    \ i_brand_id#5920, i_class_id#5922,\
-                                                    \ i_category_id#5924"
-                                                  operator: "projection"
-                                                  inputs:
-                                                  - title: "Filter: isnotnull(i_item_sk#5913)"
-                                                    operator: "filter"
-                                                    inputs:
-                                                    - title: "item.parquet"
-                                                      operator: "scan"
-                                                      inputs: []
-                                      - title: "Projection: d_date_sk#612"
-                                        operator: "projection"
-                                        inputs:
-                                        - title: "Filter: ((isnotnull(d_year#618)\
-                                            \ AND ((d_year#618 >= 1999) AND (d_year#618\
-                                            \ <= 2001))) AND isnotnull(d_date_sk#612))"
-                                          operator: "filter"
-                                          inputs:
-                                          - title: "date_dim.parquet"
-                                            operator: "scan"
-                                            inputs: []
-                                - title: "Projection: i_brand_id#5970, i_class_id#5972,\
-                                    \ i_category_id#5974"
-                                  operator: "projection"
-                                  inputs:
-                                  - title: "Inner Join: Some((ws_item_sk#479 = i_item_sk#5963))"
-                                    operator: "join"
-                                    inputs:
-                                    - title: "Projection: ws_item_sk#479"
+                                          - title: "Projection: d_date_sk#598"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: ((isnotnull(d_year#604)\
+                                                \ AND ((d_year#604 >= 1999) AND (d_year#604\
+                                                \ <= 2001))) AND isnotnull(d_date_sk#598))"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "date_dim.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                    - title: "Projection: i_brand_id#4615, i_class_id#4617,\
+                                        \ i_category_id#4619"
                                       operator: "projection"
                                       inputs:
-                                      - title: "Inner Join: Some((ws_sold_date_sk#476\
-                                          \ = d_date_sk#5985))"
+                                      - title: "Inner Join: Some((ws_sold_date_sk#384\
+                                          \ = d_date_sk#4630))"
                                         operator: "join"
                                         inputs:
-                                        - title: "Projection: ws_sold_date_sk#476,\
-                                            \ ws_item_sk#479"
+                                        - title: "Projection: ws_sold_date_sk#384,\
+                                            \ i_brand_id#4615, i_class_id#4617, i_category_id#4619"
                                           operator: "projection"
                                           inputs:
-                                          - title: "Filter: (isnotnull(ws_sold_date_sk#476)\
-                                              \ AND isnotnull(ws_item_sk#479))"
-                                            operator: "filter"
+                                          - title: "Inner Join: Some((ws_item_sk#387\
+                                              \ = i_item_sk#4608))"
+                                            operator: "join"
                                             inputs:
-                                            - title: "web_sales.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                                        - title: "Projection: d_date_sk#5985"
+                                            - title: "Projection: ws_sold_date_sk#384,\
+                                                \ ws_item_sk#387"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: (isnotnull(ws_item_sk#387)\
+                                                  \ AND isnotnull(ws_sold_date_sk#384))"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "web_sales.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                            - title: "Projection: i_item_sk#4608,\
+                                                \ i_brand_id#4615, i_class_id#4617,\
+                                                \ i_category_id#4619"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: isnotnull(i_item_sk#4608)"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "item.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                        - title: "Projection: d_date_sk#4630"
                                           operator: "projection"
                                           inputs:
-                                          - title: "Filter: ((isnotnull(d_year#5991)\
-                                              \ AND ((d_year#5991 >= 1999) AND (d_year#5991\
-                                              \ <= 2001))) AND isnotnull(d_date_sk#5985))"
+                                          - title: "Filter: ((isnotnull(d_year#4636)\
+                                              \ AND ((d_year#4636 >= 1999) AND (d_year#4636\
+                                              \ <= 2001))) AND isnotnull(d_date_sk#4630))"
                                             operator: "filter"
                                             inputs:
                                             - title: "date_dim.parquet"
                                               operator: "scan"
                                               inputs: []
-                                    - title: "Projection: i_item_sk#5963, i_brand_id#5970,\
-                                        \ i_class_id#5972, i_category_id#5974"
+                          - title: "LeftSemi Join: Some((i_item_sk#4940 = ss_item_sk#4528))"
+                            operator: "join"
+                            inputs:
+                            - title: "Projection: i_item_sk#4940, i_brand_id#4947,\
+                                \ i_class_id#4949, i_category_id#4951"
+                              operator: "projection"
+                              inputs:
+                              - title: "Filter: isnotnull(i_item_sk#4940)"
+                                operator: "filter"
+                                inputs:
+                                - title: "item.parquet"
+                                  operator: "scan"
+                                  inputs: []
+                            - title: "Projection: i_item_sk#500 AS ss_item_sk#4528"
+                              operator: "projection"
+                              inputs:
+                              - title: "Inner Join: Some((((i_brand_id#507 = brand_id#4525)\
+                                  \ AND (i_class_id#509 = class_id#4526)) AND (i_category_id#511\
+                                  \ = category_id#4527)))"
+                                operator: "join"
+                                inputs:
+                                - title: "Projection: i_item_sk#500, i_brand_id#507,\
+                                    \ i_class_id#509, i_category_id#511"
+                                  operator: "projection"
+                                  inputs:
+                                  - title: "Filter: ((isnotnull(i_brand_id#507) AND\
+                                      \ isnotnull(i_class_id#509)) AND isnotnull(i_category_id#511))"
+                                    operator: "filter"
+                                    inputs:
+                                    - title: "item.parquet"
+                                      operator: "scan"
+                                      inputs: []
+                                - title: "Aggregate (unknown)"
+                                  operator: "Aggregate"
+                                  inputs:
+                                  - title: "LeftSemi Join: Some((((brand_id#4525 <=>\
+                                      \ i_brand_id#4615) AND (class_id#4526 <=> i_class_id#4617))\
+                                      \ AND (category_id#4527 <=> i_category_id#4619)))"
+                                    operator: "join"
+                                    inputs:
+                                    - title: "Aggregate (unknown)"
+                                      operator: "Aggregate"
+                                      inputs:
+                                      - title: "Projection: i_brand_id#4543 AS brand_id#4525,\
+                                          \ i_class_id#4545 AS class_id#4526, i_category_id#4547\
+                                          \ AS category_id#4527"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Inner Join: Some((ss_sold_date_sk#664\
+                                            \ = d_date_sk#598))"
+                                          operator: "join"
+                                          inputs:
+                                          - title: "Projection: ss_sold_date_sk#664,\
+                                              \ i_brand_id#4543, i_class_id#4545,\
+                                              \ i_category_id#4547"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Inner Join: Some((ss_item_sk#666\
+                                                \ = i_item_sk#4536))"
+                                              operator: "join"
+                                              inputs:
+                                              - title: "Projection: ss_sold_date_sk#664,\
+                                                  \ ss_item_sk#666"
+                                                operator: "projection"
+                                                inputs:
+                                                - title: "Filter: (isnotnull(ss_item_sk#666)\
+                                                    \ AND isnotnull(ss_sold_date_sk#664))"
+                                                  operator: "filter"
+                                                  inputs:
+                                                  - title: "store_sales.parquet"
+                                                    operator: "scan"
+                                                    inputs: []
+                                              - title: "LeftSemi Join: Some((((i_brand_id#4543\
+                                                  \ <=> i_brand_id#4565) AND (i_class_id#4545\
+                                                  \ <=> i_class_id#4567)) AND (i_category_id#4547\
+                                                  \ <=> i_category_id#4569)))"
+                                                operator: "join"
+                                                inputs:
+                                                - title: "Projection: i_item_sk#4536,\
+                                                    \ i_brand_id#4543, i_class_id#4545,\
+                                                    \ i_category_id#4547"
+                                                  operator: "projection"
+                                                  inputs:
+                                                  - title: "Filter: (isnotnull(i_item_sk#4536)\
+                                                      \ AND ((isnotnull(i_brand_id#4543)\
+                                                      \ AND isnotnull(i_class_id#4545))\
+                                                      \ AND isnotnull(i_category_id#4547)))"
+                                                    operator: "filter"
+                                                    inputs:
+                                                    - title: "item.parquet"
+                                                      operator: "scan"
+                                                      inputs: []
+                                                - title: "Projection: i_brand_id#4565,\
+                                                    \ i_class_id#4567, i_category_id#4569"
+                                                  operator: "projection"
+                                                  inputs:
+                                                  - title: "Inner Join: Some((cs_sold_date_sk#118\
+                                                      \ = d_date_sk#4580))"
+                                                    operator: "join"
+                                                    inputs:
+                                                    - title: "Projection: cs_sold_date_sk#118,\
+                                                        \ i_brand_id#4565, i_class_id#4567,\
+                                                        \ i_category_id#4569"
+                                                      operator: "projection"
+                                                      inputs:
+                                                      - title: "Inner Join: Some((cs_item_sk#133\
+                                                          \ = i_item_sk#4558))"
+                                                        operator: "join"
+                                                        inputs:
+                                                        - title: "Projection: cs_sold_date_sk#118,\
+                                                            \ cs_item_sk#133"
+                                                          operator: "projection"
+                                                          inputs:
+                                                          - title: "Filter: (isnotnull(cs_item_sk#133)\
+                                                              \ AND isnotnull(cs_sold_date_sk#118))"
+                                                            operator: "filter"
+                                                            inputs:
+                                                            - title: "catalog_sales.parquet"
+                                                              operator: "scan"
+                                                              inputs: []
+                                                        - title: "Projection: i_item_sk#4558,\
+                                                            \ i_brand_id#4565, i_class_id#4567,\
+                                                            \ i_category_id#4569"
+                                                          operator: "projection"
+                                                          inputs:
+                                                          - title: "Filter: isnotnull(i_item_sk#4558)"
+                                                            operator: "filter"
+                                                            inputs:
+                                                            - title: "item.parquet"
+                                                              operator: "scan"
+                                                              inputs: []
+                                                    - title: "Projection: d_date_sk#4580"
+                                                      operator: "projection"
+                                                      inputs:
+                                                      - title: "Filter: ((isnotnull(d_year#4586)\
+                                                          \ AND ((d_year#4586 >= 1999)\
+                                                          \ AND (d_year#4586 <= 2001)))\
+                                                          \ AND isnotnull(d_date_sk#4580))"
+                                                        operator: "filter"
+                                                        inputs:
+                                                        - title: "date_dim.parquet"
+                                                          operator: "scan"
+                                                          inputs: []
+                                          - title: "Projection: d_date_sk#598"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: ((isnotnull(d_year#604)\
+                                                \ AND ((d_year#604 >= 1999) AND (d_year#604\
+                                                \ <= 2001))) AND isnotnull(d_date_sk#598))"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "date_dim.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                    - title: "Projection: i_brand_id#4615, i_class_id#4617,\
+                                        \ i_category_id#4619"
                                       operator: "projection"
                                       inputs:
-                                      - title: "Filter: isnotnull(i_item_sk#5963)"
-                                        operator: "filter"
+                                      - title: "Inner Join: Some((ws_sold_date_sk#384\
+                                          \ = d_date_sk#4630))"
+                                        operator: "join"
                                         inputs:
-                                        - title: "item.parquet"
-                                          operator: "scan"
-                                          inputs: []
-            - title: "Projection: sales#5876, number_sales#5877L, web AS channel#6477,\
-                \ i_brand_id#6386, i_class_id#6388, i_category_id#6390"
+                                        - title: "Projection: ws_sold_date_sk#384,\
+                                            \ i_brand_id#4615, i_class_id#4617, i_category_id#4619"
+                                          operator: "projection"
+                                          inputs:
+                                          - title: "Inner Join: Some((ws_item_sk#387\
+                                              \ = i_item_sk#4608))"
+                                            operator: "join"
+                                            inputs:
+                                            - title: "Projection: ws_sold_date_sk#384,\
+                                                \ ws_item_sk#387"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: (isnotnull(ws_item_sk#387)\
+                                                  \ AND isnotnull(ws_sold_date_sk#384))"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "web_sales.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                            - title: "Projection: i_item_sk#4608,\
+                                                \ i_brand_id#4615, i_class_id#4617,\
+                                                \ i_category_id#4619"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: isnotnull(i_item_sk#4608)"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "item.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                        - title: "Projection: d_date_sk#4630"
+                                          operator: "projection"
+                                          inputs:
+                                          - title: "Filter: ((isnotnull(d_year#4636)\
+                                              \ AND ((d_year#4636 >= 1999) AND (d_year#4636\
+                                              \ <= 2001))) AND isnotnull(d_date_sk#4630))"
+                                            operator: "filter"
+                                            inputs:
+                                            - title: "date_dim.parquet"
+                                              operator: "scan"
+                                              inputs: []
+                      - title: "Projection: d_date_sk#4962"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: (((isnotnull(d_year#4968) AND isnotnull(d_moy#4970))\
+                            \ AND ((d_year#4968 = 2001) AND (d_moy#4970 = 11))) AND\
+                            \ isnotnull(d_date_sk#4962))"
+                          operator: "filter"
+                          inputs:
+                          - title: "date_dim.parquet"
+                            operator: "scan"
+                            inputs: []
+            - title: "Projection: sales#4521, number_sales#4522L, web AS channel#5122,\
+                \ i_brand_id#5031, i_class_id#5033, i_category_id#5035"
               operator: "projection"
               inputs:
-              - title: "Filter: (isnotnull(sales#5876) AND (cast(sales#5876 as decimal(32,6))\
-                  \ > cast(scalar-subquery#5879 [] as decimal(32,6))))"
+              - title: "Filter: (isnotnull(sales#4521) AND (cast(sales#4521 as decimal(32,6))\
+                  \ > cast(scalar-subquery#4524 [] as decimal(32,6))))"
                 operator: "filter"
                 inputs:
                 - title: "Aggregate (unknown)"
                   operator: "Aggregate"
                   inputs:
-                  - title: "Projection: ws_quantity#6363, ws_list_price#6365, i_brand_id#6386,\
-                      \ i_class_id#6388, i_category_id#6390"
+                  - title: "Projection: ws_quantity#5008, ws_list_price#5010, i_brand_id#5031,\
+                      \ i_class_id#5033, i_category_id#5035"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some((ws_item_sk#6348 = i_item_sk#6379))"
+                    - title: "Inner Join: Some((ws_sold_date_sk#4990 = d_date_sk#5046))"
                       operator: "join"
                       inputs:
-                      - title: "Projection: ws_item_sk#6348, ws_quantity#6363, ws_list_price#6365"
+                      - title: "Projection: ws_sold_date_sk#4990, ws_quantity#5008,\
+                          \ ws_list_price#5010, i_brand_id#5031, i_class_id#5033,\
+                          \ i_category_id#5035"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((ws_sold_date_sk#6345 = d_date_sk#6401))"
+                        - title: "Inner Join: Some((ws_item_sk#4993 = i_item_sk#5024))"
                           operator: "join"
                           inputs:
-                          - title: "LeftSemi Join: Some((ws_item_sk#6348 = ss_item_sk#5883))"
+                          - title: "LeftSemi Join: Some((ws_item_sk#4993 = ss_item_sk#4528))"
                             operator: "join"
                             inputs:
-                            - title: "Projection: ws_sold_date_sk#6345, ws_item_sk#6348,\
-                                \ ws_quantity#6363, ws_list_price#6365"
+                            - title: "Projection: ws_sold_date_sk#4990, ws_item_sk#4993,\
+                                \ ws_quantity#5008, ws_list_price#5010"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ws_sold_date_sk#6345) AND\
-                                  \ isnotnull(ws_item_sk#6348))"
+                              - title: "Filter: (isnotnull(ws_item_sk#4993) AND isnotnull(ws_sold_date_sk#4990))"
                                 operator: "filter"
                                 inputs:
                                 - title: "web_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: i_item_sk#668 AS ss_item_sk#5883"
+                            - title: "Projection: i_item_sk#500 AS ss_item_sk#4528"
                               operator: "projection"
                               inputs:
-                              - title: "Inner Join: Some((((i_brand_id#675 = brand_id#5880)\
-                                  \ AND (i_class_id#677 = class_id#5881)) AND (i_category_id#679\
-                                  \ = category_id#5882)))"
+                              - title: "Inner Join: Some((((i_brand_id#507 = brand_id#4525)\
+                                  \ AND (i_class_id#509 = class_id#4526)) AND (i_category_id#511\
+                                  \ = category_id#4527)))"
                                 operator: "join"
                                 inputs:
-                                - title: "Projection: i_item_sk#668, i_brand_id#675,\
-                                    \ i_class_id#677, i_category_id#679"
+                                - title: "Projection: i_item_sk#500, i_brand_id#507,\
+                                    \ i_class_id#509, i_category_id#511"
                                   operator: "projection"
                                   inputs:
-                                  - title: "Filter: ((isnotnull(i_brand_id#675) AND\
-                                      \ isnotnull(i_class_id#677)) AND isnotnull(i_category_id#679))"
+                                  - title: "Filter: ((isnotnull(i_brand_id#507) AND\
+                                      \ isnotnull(i_class_id#509)) AND isnotnull(i_category_id#511))"
                                     operator: "filter"
                                     inputs:
                                     - title: "item.parquet"
@@ -942,375 +965,385 @@ diagram:
                                 - title: "Aggregate (unknown)"
                                   operator: "Aggregate"
                                   inputs:
-                                  - title: "LeftSemi Join: Some((((brand_id#5880 <=>\
-                                      \ i_brand_id#5970) AND (class_id#5881 <=> i_class_id#5972))\
-                                      \ AND (category_id#5882 <=> i_category_id#5974)))"
+                                  - title: "LeftSemi Join: Some((((brand_id#4525 <=>\
+                                      \ i_brand_id#4615) AND (class_id#4526 <=> i_class_id#4617))\
+                                      \ AND (category_id#4527 <=> i_category_id#4619)))"
                                     operator: "join"
                                     inputs:
                                     - title: "Aggregate (unknown)"
                                       operator: "Aggregate"
                                       inputs:
-                                      - title: "Projection: i_brand_id#5898 AS brand_id#5880,\
-                                          \ i_class_id#5900 AS class_id#5881, i_category_id#5902\
-                                          \ AS category_id#5882"
+                                      - title: "Projection: i_brand_id#4543 AS brand_id#4525,\
+                                          \ i_class_id#4545 AS class_id#4526, i_category_id#4547\
+                                          \ AS category_id#4527"
                                         operator: "projection"
                                         inputs:
-                                        - title: "Inner Join: Some((ss_sold_date_sk#252\
-                                            \ = d_date_sk#612))"
+                                        - title: "Inner Join: Some((ss_sold_date_sk#664\
+                                            \ = d_date_sk#598))"
                                           operator: "join"
                                           inputs:
-                                          - title: "Projection: ss_sold_date_sk#252,\
-                                              \ i_brand_id#5898, i_class_id#5900,\
-                                              \ i_category_id#5902"
+                                          - title: "Projection: ss_sold_date_sk#664,\
+                                              \ i_brand_id#4543, i_class_id#4545,\
+                                              \ i_category_id#4547"
                                             operator: "projection"
                                             inputs:
-                                            - title: "Inner Join: Some((ss_item_sk#254\
-                                                \ = i_item_sk#5891))"
+                                            - title: "Inner Join: Some((ss_item_sk#666\
+                                                \ = i_item_sk#4536))"
                                               operator: "join"
                                               inputs:
-                                              - title: "Projection: ss_sold_date_sk#252,\
-                                                  \ ss_item_sk#254"
+                                              - title: "Projection: ss_sold_date_sk#664,\
+                                                  \ ss_item_sk#666"
                                                 operator: "projection"
                                                 inputs:
-                                                - title: "Filter: (isnotnull(ss_item_sk#254)\
-                                                    \ AND isnotnull(ss_sold_date_sk#252))"
+                                                - title: "Filter: (isnotnull(ss_item_sk#666)\
+                                                    \ AND isnotnull(ss_sold_date_sk#664))"
                                                   operator: "filter"
                                                   inputs:
                                                   - title: "store_sales.parquet"
                                                     operator: "scan"
                                                     inputs: []
-                                              - title: "LeftSemi Join: Some((((i_brand_id#5898\
-                                                  \ <=> i_brand_id#5920) AND (i_class_id#5900\
-                                                  \ <=> i_class_id#5922)) AND (i_category_id#5902\
-                                                  \ <=> i_category_id#5924)))"
+                                              - title: "LeftSemi Join: Some((((i_brand_id#4543\
+                                                  \ <=> i_brand_id#4565) AND (i_class_id#4545\
+                                                  \ <=> i_class_id#4567)) AND (i_category_id#4547\
+                                                  \ <=> i_category_id#4569)))"
                                                 operator: "join"
                                                 inputs:
-                                                - title: "Projection: i_item_sk#5891,\
-                                                    \ i_brand_id#5898, i_class_id#5900,\
-                                                    \ i_category_id#5902"
+                                                - title: "Projection: i_item_sk#4536,\
+                                                    \ i_brand_id#4543, i_class_id#4545,\
+                                                    \ i_category_id#4547"
                                                   operator: "projection"
                                                   inputs:
-                                                  - title: "Filter: (isnotnull(i_item_sk#5891)\
-                                                      \ AND ((isnotnull(i_brand_id#5898)\
-                                                      \ AND isnotnull(i_class_id#5900))\
-                                                      \ AND isnotnull(i_category_id#5902)))"
+                                                  - title: "Filter: (isnotnull(i_item_sk#4536)\
+                                                      \ AND ((isnotnull(i_brand_id#4543)\
+                                                      \ AND isnotnull(i_class_id#4545))\
+                                                      \ AND isnotnull(i_category_id#4547)))"
                                                     operator: "filter"
                                                     inputs:
                                                     - title: "item.parquet"
                                                       operator: "scan"
                                                       inputs: []
-                                                - title: "Projection: i_brand_id#5920,\
-                                                    \ i_class_id#5922, i_category_id#5924"
+                                                - title: "Projection: i_brand_id#4565,\
+                                                    \ i_class_id#4567, i_category_id#4569"
                                                   operator: "projection"
                                                   inputs:
-                                                  - title: "Inner Join: Some((cs_item_sk#559\
-                                                      \ = i_item_sk#5913))"
+                                                  - title: "Inner Join: Some((cs_sold_date_sk#118\
+                                                      \ = d_date_sk#4580))"
                                                     operator: "join"
                                                     inputs:
-                                                    - title: "Projection: cs_item_sk#559"
+                                                    - title: "Projection: cs_sold_date_sk#118,\
+                                                        \ i_brand_id#4565, i_class_id#4567,\
+                                                        \ i_category_id#4569"
                                                       operator: "projection"
                                                       inputs:
-                                                      - title: "Inner Join: Some((cs_sold_date_sk#544\
-                                                          \ = d_date_sk#5935))"
+                                                      - title: "Inner Join: Some((cs_item_sk#133\
+                                                          \ = i_item_sk#4558))"
                                                         operator: "join"
                                                         inputs:
-                                                        - title: "Projection: cs_sold_date_sk#544,\
-                                                            \ cs_item_sk#559"
+                                                        - title: "Projection: cs_sold_date_sk#118,\
+                                                            \ cs_item_sk#133"
                                                           operator: "projection"
                                                           inputs:
-                                                          - title: "Filter: (isnotnull(cs_sold_date_sk#544)\
-                                                              \ AND isnotnull(cs_item_sk#559))"
+                                                          - title: "Filter: (isnotnull(cs_item_sk#133)\
+                                                              \ AND isnotnull(cs_sold_date_sk#118))"
                                                             operator: "filter"
                                                             inputs:
                                                             - title: "catalog_sales.parquet"
                                                               operator: "scan"
                                                               inputs: []
-                                                        - title: "Projection: d_date_sk#5935"
+                                                        - title: "Projection: i_item_sk#4558,\
+                                                            \ i_brand_id#4565, i_class_id#4567,\
+                                                            \ i_category_id#4569"
                                                           operator: "projection"
                                                           inputs:
-                                                          - title: "Filter: ((isnotnull(d_year#5941)\
-                                                              \ AND ((d_year#5941\
-                                                              \ >= 1999) AND (d_year#5941\
-                                                              \ <= 2001))) AND isnotnull(d_date_sk#5935))"
+                                                          - title: "Filter: isnotnull(i_item_sk#4558)"
                                                             operator: "filter"
                                                             inputs:
-                                                            - title: "date_dim.parquet"
+                                                            - title: "item.parquet"
                                                               operator: "scan"
                                                               inputs: []
-                                                    - title: "Projection: i_item_sk#5913,\
-                                                        \ i_brand_id#5920, i_class_id#5922,\
-                                                        \ i_category_id#5924"
+                                                    - title: "Projection: d_date_sk#4580"
                                                       operator: "projection"
                                                       inputs:
-                                                      - title: "Filter: isnotnull(i_item_sk#5913)"
-                                                        operator: "filter"
-                                                        inputs:
-                                                        - title: "item.parquet"
-                                                          operator: "scan"
-                                                          inputs: []
-                                          - title: "Projection: d_date_sk#612"
-                                            operator: "projection"
-                                            inputs:
-                                            - title: "Filter: ((isnotnull(d_year#618)\
-                                                \ AND ((d_year#618 >= 1999) AND (d_year#618\
-                                                \ <= 2001))) AND isnotnull(d_date_sk#612))"
-                                              operator: "filter"
-                                              inputs:
-                                              - title: "date_dim.parquet"
-                                                operator: "scan"
-                                                inputs: []
-                                    - title: "Projection: i_brand_id#5970, i_class_id#5972,\
-                                        \ i_category_id#5974"
-                                      operator: "projection"
-                                      inputs:
-                                      - title: "Inner Join: Some((ws_item_sk#479 =\
-                                          \ i_item_sk#5963))"
-                                        operator: "join"
-                                        inputs:
-                                        - title: "Projection: ws_item_sk#479"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Inner Join: Some((ws_sold_date_sk#476\
-                                              \ = d_date_sk#5985))"
-                                            operator: "join"
-                                            inputs:
-                                            - title: "Projection: ws_sold_date_sk#476,\
-                                                \ ws_item_sk#479"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: (isnotnull(ws_sold_date_sk#476)\
-                                                  \ AND isnotnull(ws_item_sk#479))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "web_sales.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                            - title: "Projection: d_date_sk#5985"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: ((isnotnull(d_year#5991)\
-                                                  \ AND ((d_year#5991 >= 1999) AND\
-                                                  \ (d_year#5991 <= 2001))) AND isnotnull(d_date_sk#5985))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "date_dim.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                        - title: "Projection: i_item_sk#5963, i_brand_id#5970,\
-                                            \ i_class_id#5972, i_category_id#5974"
-                                          operator: "projection"
-                                          inputs:
-                                          - title: "Filter: isnotnull(i_item_sk#5963)"
-                                            operator: "filter"
-                                            inputs:
-                                            - title: "item.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                          - title: "Projection: d_date_sk#6401"
-                            operator: "projection"
-                            inputs:
-                            - title: "Filter: (((isnotnull(d_year#6407) AND isnotnull(d_moy#6409))\
-                                \ AND ((d_year#6407 = 2001) AND (d_moy#6409 = 11)))\
-                                \ AND isnotnull(d_date_sk#6401))"
-                              operator: "filter"
-                              inputs:
-                              - title: "date_dim.parquet"
-                                operator: "scan"
-                                inputs: []
-                      - title: "LeftSemi Join: Some((i_item_sk#6379 = ss_item_sk#5883))"
-                        operator: "join"
-                        inputs:
-                        - title: "Projection: i_item_sk#6379, i_brand_id#6386, i_class_id#6388,\
-                            \ i_category_id#6390"
-                          operator: "projection"
-                          inputs:
-                          - title: "Filter: isnotnull(i_item_sk#6379)"
-                            operator: "filter"
-                            inputs:
-                            - title: "item.parquet"
-                              operator: "scan"
-                              inputs: []
-                        - title: "Projection: i_item_sk#668 AS ss_item_sk#5883"
-                          operator: "projection"
-                          inputs:
-                          - title: "Inner Join: Some((((i_brand_id#675 = brand_id#5880)\
-                              \ AND (i_class_id#677 = class_id#5881)) AND (i_category_id#679\
-                              \ = category_id#5882)))"
-                            operator: "join"
-                            inputs:
-                            - title: "Projection: i_item_sk#668, i_brand_id#675, i_class_id#677,\
-                                \ i_category_id#679"
-                              operator: "projection"
-                              inputs:
-                              - title: "Filter: ((isnotnull(i_brand_id#675) AND isnotnull(i_class_id#677))\
-                                  \ AND isnotnull(i_category_id#679))"
-                                operator: "filter"
-                                inputs:
-                                - title: "item.parquet"
-                                  operator: "scan"
-                                  inputs: []
-                            - title: "Aggregate (unknown)"
-                              operator: "Aggregate"
-                              inputs:
-                              - title: "LeftSemi Join: Some((((brand_id#5880 <=> i_brand_id#5970)\
-                                  \ AND (class_id#5881 <=> i_class_id#5972)) AND (category_id#5882\
-                                  \ <=> i_category_id#5974)))"
-                                operator: "join"
-                                inputs:
-                                - title: "Aggregate (unknown)"
-                                  operator: "Aggregate"
-                                  inputs:
-                                  - title: "Projection: i_brand_id#5898 AS brand_id#5880,\
-                                      \ i_class_id#5900 AS class_id#5881, i_category_id#5902\
-                                      \ AS category_id#5882"
-                                    operator: "projection"
-                                    inputs:
-                                    - title: "Inner Join: Some((ss_sold_date_sk#252\
-                                        \ = d_date_sk#612))"
-                                      operator: "join"
-                                      inputs:
-                                      - title: "Projection: ss_sold_date_sk#252, i_brand_id#5898,\
-                                          \ i_class_id#5900, i_category_id#5902"
-                                        operator: "projection"
-                                        inputs:
-                                        - title: "Inner Join: Some((ss_item_sk#254\
-                                            \ = i_item_sk#5891))"
-                                          operator: "join"
-                                          inputs:
-                                          - title: "Projection: ss_sold_date_sk#252,\
-                                              \ ss_item_sk#254"
-                                            operator: "projection"
-                                            inputs:
-                                            - title: "Filter: (isnotnull(ss_item_sk#254)\
-                                                \ AND isnotnull(ss_sold_date_sk#252))"
-                                              operator: "filter"
-                                              inputs:
-                                              - title: "store_sales.parquet"
-                                                operator: "scan"
-                                                inputs: []
-                                          - title: "LeftSemi Join: Some((((i_brand_id#5898\
-                                              \ <=> i_brand_id#5920) AND (i_class_id#5900\
-                                              \ <=> i_class_id#5922)) AND (i_category_id#5902\
-                                              \ <=> i_category_id#5924)))"
-                                            operator: "join"
-                                            inputs:
-                                            - title: "Projection: i_item_sk#5891,\
-                                                \ i_brand_id#5898, i_class_id#5900,\
-                                                \ i_category_id#5902"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Filter: (isnotnull(i_item_sk#5891)\
-                                                  \ AND ((isnotnull(i_brand_id#5898)\
-                                                  \ AND isnotnull(i_class_id#5900))\
-                                                  \ AND isnotnull(i_category_id#5902)))"
-                                                operator: "filter"
-                                                inputs:
-                                                - title: "item.parquet"
-                                                  operator: "scan"
-                                                  inputs: []
-                                            - title: "Projection: i_brand_id#5920,\
-                                                \ i_class_id#5922, i_category_id#5924"
-                                              operator: "projection"
-                                              inputs:
-                                              - title: "Inner Join: Some((cs_item_sk#559\
-                                                  \ = i_item_sk#5913))"
-                                                operator: "join"
-                                                inputs:
-                                                - title: "Projection: cs_item_sk#559"
-                                                  operator: "projection"
-                                                  inputs:
-                                                  - title: "Inner Join: Some((cs_sold_date_sk#544\
-                                                      \ = d_date_sk#5935))"
-                                                    operator: "join"
-                                                    inputs:
-                                                    - title: "Projection: cs_sold_date_sk#544,\
-                                                        \ cs_item_sk#559"
-                                                      operator: "projection"
-                                                      inputs:
-                                                      - title: "Filter: (isnotnull(cs_sold_date_sk#544)\
-                                                          \ AND isnotnull(cs_item_sk#559))"
-                                                        operator: "filter"
-                                                        inputs:
-                                                        - title: "catalog_sales.parquet"
-                                                          operator: "scan"
-                                                          inputs: []
-                                                    - title: "Projection: d_date_sk#5935"
-                                                      operator: "projection"
-                                                      inputs:
-                                                      - title: "Filter: ((isnotnull(d_year#5941)\
-                                                          \ AND ((d_year#5941 >= 1999)\
-                                                          \ AND (d_year#5941 <= 2001)))\
-                                                          \ AND isnotnull(d_date_sk#5935))"
+                                                      - title: "Filter: ((isnotnull(d_year#4586)\
+                                                          \ AND ((d_year#4586 >= 1999)\
+                                                          \ AND (d_year#4586 <= 2001)))\
+                                                          \ AND isnotnull(d_date_sk#4580))"
                                                         operator: "filter"
                                                         inputs:
                                                         - title: "date_dim.parquet"
                                                           operator: "scan"
                                                           inputs: []
-                                                - title: "Projection: i_item_sk#5913,\
-                                                    \ i_brand_id#5920, i_class_id#5922,\
-                                                    \ i_category_id#5924"
-                                                  operator: "projection"
-                                                  inputs:
-                                                  - title: "Filter: isnotnull(i_item_sk#5913)"
-                                                    operator: "filter"
-                                                    inputs:
-                                                    - title: "item.parquet"
-                                                      operator: "scan"
-                                                      inputs: []
-                                      - title: "Projection: d_date_sk#612"
-                                        operator: "projection"
-                                        inputs:
-                                        - title: "Filter: ((isnotnull(d_year#618)\
-                                            \ AND ((d_year#618 >= 1999) AND (d_year#618\
-                                            \ <= 2001))) AND isnotnull(d_date_sk#612))"
-                                          operator: "filter"
-                                          inputs:
-                                          - title: "date_dim.parquet"
-                                            operator: "scan"
-                                            inputs: []
-                                - title: "Projection: i_brand_id#5970, i_class_id#5972,\
-                                    \ i_category_id#5974"
-                                  operator: "projection"
-                                  inputs:
-                                  - title: "Inner Join: Some((ws_item_sk#479 = i_item_sk#5963))"
-                                    operator: "join"
-                                    inputs:
-                                    - title: "Projection: ws_item_sk#479"
+                                          - title: "Projection: d_date_sk#598"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: ((isnotnull(d_year#604)\
+                                                \ AND ((d_year#604 >= 1999) AND (d_year#604\
+                                                \ <= 2001))) AND isnotnull(d_date_sk#598))"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "date_dim.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                    - title: "Projection: i_brand_id#4615, i_class_id#4617,\
+                                        \ i_category_id#4619"
                                       operator: "projection"
                                       inputs:
-                                      - title: "Inner Join: Some((ws_sold_date_sk#476\
-                                          \ = d_date_sk#5985))"
+                                      - title: "Inner Join: Some((ws_sold_date_sk#384\
+                                          \ = d_date_sk#4630))"
                                         operator: "join"
                                         inputs:
-                                        - title: "Projection: ws_sold_date_sk#476,\
-                                            \ ws_item_sk#479"
+                                        - title: "Projection: ws_sold_date_sk#384,\
+                                            \ i_brand_id#4615, i_class_id#4617, i_category_id#4619"
                                           operator: "projection"
                                           inputs:
-                                          - title: "Filter: (isnotnull(ws_sold_date_sk#476)\
-                                              \ AND isnotnull(ws_item_sk#479))"
-                                            operator: "filter"
+                                          - title: "Inner Join: Some((ws_item_sk#387\
+                                              \ = i_item_sk#4608))"
+                                            operator: "join"
                                             inputs:
-                                            - title: "web_sales.parquet"
-                                              operator: "scan"
-                                              inputs: []
-                                        - title: "Projection: d_date_sk#5985"
+                                            - title: "Projection: ws_sold_date_sk#384,\
+                                                \ ws_item_sk#387"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: (isnotnull(ws_item_sk#387)\
+                                                  \ AND isnotnull(ws_sold_date_sk#384))"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "web_sales.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                            - title: "Projection: i_item_sk#4608,\
+                                                \ i_brand_id#4615, i_class_id#4617,\
+                                                \ i_category_id#4619"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: isnotnull(i_item_sk#4608)"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "item.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                        - title: "Projection: d_date_sk#4630"
                                           operator: "projection"
                                           inputs:
-                                          - title: "Filter: ((isnotnull(d_year#5991)\
-                                              \ AND ((d_year#5991 >= 1999) AND (d_year#5991\
-                                              \ <= 2001))) AND isnotnull(d_date_sk#5985))"
+                                          - title: "Filter: ((isnotnull(d_year#4636)\
+                                              \ AND ((d_year#4636 >= 1999) AND (d_year#4636\
+                                              \ <= 2001))) AND isnotnull(d_date_sk#4630))"
                                             operator: "filter"
                                             inputs:
                                             - title: "date_dim.parquet"
                                               operator: "scan"
                                               inputs: []
-                                    - title: "Projection: i_item_sk#5963, i_brand_id#5970,\
-                                        \ i_class_id#5972, i_category_id#5974"
+                          - title: "LeftSemi Join: Some((i_item_sk#5024 = ss_item_sk#4528))"
+                            operator: "join"
+                            inputs:
+                            - title: "Projection: i_item_sk#5024, i_brand_id#5031,\
+                                \ i_class_id#5033, i_category_id#5035"
+                              operator: "projection"
+                              inputs:
+                              - title: "Filter: isnotnull(i_item_sk#5024)"
+                                operator: "filter"
+                                inputs:
+                                - title: "item.parquet"
+                                  operator: "scan"
+                                  inputs: []
+                            - title: "Projection: i_item_sk#500 AS ss_item_sk#4528"
+                              operator: "projection"
+                              inputs:
+                              - title: "Inner Join: Some((((i_brand_id#507 = brand_id#4525)\
+                                  \ AND (i_class_id#509 = class_id#4526)) AND (i_category_id#511\
+                                  \ = category_id#4527)))"
+                                operator: "join"
+                                inputs:
+                                - title: "Projection: i_item_sk#500, i_brand_id#507,\
+                                    \ i_class_id#509, i_category_id#511"
+                                  operator: "projection"
+                                  inputs:
+                                  - title: "Filter: ((isnotnull(i_brand_id#507) AND\
+                                      \ isnotnull(i_class_id#509)) AND isnotnull(i_category_id#511))"
+                                    operator: "filter"
+                                    inputs:
+                                    - title: "item.parquet"
+                                      operator: "scan"
+                                      inputs: []
+                                - title: "Aggregate (unknown)"
+                                  operator: "Aggregate"
+                                  inputs:
+                                  - title: "LeftSemi Join: Some((((brand_id#4525 <=>\
+                                      \ i_brand_id#4615) AND (class_id#4526 <=> i_class_id#4617))\
+                                      \ AND (category_id#4527 <=> i_category_id#4619)))"
+                                    operator: "join"
+                                    inputs:
+                                    - title: "Aggregate (unknown)"
+                                      operator: "Aggregate"
+                                      inputs:
+                                      - title: "Projection: i_brand_id#4543 AS brand_id#4525,\
+                                          \ i_class_id#4545 AS class_id#4526, i_category_id#4547\
+                                          \ AS category_id#4527"
+                                        operator: "projection"
+                                        inputs:
+                                        - title: "Inner Join: Some((ss_sold_date_sk#664\
+                                            \ = d_date_sk#598))"
+                                          operator: "join"
+                                          inputs:
+                                          - title: "Projection: ss_sold_date_sk#664,\
+                                              \ i_brand_id#4543, i_class_id#4545,\
+                                              \ i_category_id#4547"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Inner Join: Some((ss_item_sk#666\
+                                                \ = i_item_sk#4536))"
+                                              operator: "join"
+                                              inputs:
+                                              - title: "Projection: ss_sold_date_sk#664,\
+                                                  \ ss_item_sk#666"
+                                                operator: "projection"
+                                                inputs:
+                                                - title: "Filter: (isnotnull(ss_item_sk#666)\
+                                                    \ AND isnotnull(ss_sold_date_sk#664))"
+                                                  operator: "filter"
+                                                  inputs:
+                                                  - title: "store_sales.parquet"
+                                                    operator: "scan"
+                                                    inputs: []
+                                              - title: "LeftSemi Join: Some((((i_brand_id#4543\
+                                                  \ <=> i_brand_id#4565) AND (i_class_id#4545\
+                                                  \ <=> i_class_id#4567)) AND (i_category_id#4547\
+                                                  \ <=> i_category_id#4569)))"
+                                                operator: "join"
+                                                inputs:
+                                                - title: "Projection: i_item_sk#4536,\
+                                                    \ i_brand_id#4543, i_class_id#4545,\
+                                                    \ i_category_id#4547"
+                                                  operator: "projection"
+                                                  inputs:
+                                                  - title: "Filter: (isnotnull(i_item_sk#4536)\
+                                                      \ AND ((isnotnull(i_brand_id#4543)\
+                                                      \ AND isnotnull(i_class_id#4545))\
+                                                      \ AND isnotnull(i_category_id#4547)))"
+                                                    operator: "filter"
+                                                    inputs:
+                                                    - title: "item.parquet"
+                                                      operator: "scan"
+                                                      inputs: []
+                                                - title: "Projection: i_brand_id#4565,\
+                                                    \ i_class_id#4567, i_category_id#4569"
+                                                  operator: "projection"
+                                                  inputs:
+                                                  - title: "Inner Join: Some((cs_sold_date_sk#118\
+                                                      \ = d_date_sk#4580))"
+                                                    operator: "join"
+                                                    inputs:
+                                                    - title: "Projection: cs_sold_date_sk#118,\
+                                                        \ i_brand_id#4565, i_class_id#4567,\
+                                                        \ i_category_id#4569"
+                                                      operator: "projection"
+                                                      inputs:
+                                                      - title: "Inner Join: Some((cs_item_sk#133\
+                                                          \ = i_item_sk#4558))"
+                                                        operator: "join"
+                                                        inputs:
+                                                        - title: "Projection: cs_sold_date_sk#118,\
+                                                            \ cs_item_sk#133"
+                                                          operator: "projection"
+                                                          inputs:
+                                                          - title: "Filter: (isnotnull(cs_item_sk#133)\
+                                                              \ AND isnotnull(cs_sold_date_sk#118))"
+                                                            operator: "filter"
+                                                            inputs:
+                                                            - title: "catalog_sales.parquet"
+                                                              operator: "scan"
+                                                              inputs: []
+                                                        - title: "Projection: i_item_sk#4558,\
+                                                            \ i_brand_id#4565, i_class_id#4567,\
+                                                            \ i_category_id#4569"
+                                                          operator: "projection"
+                                                          inputs:
+                                                          - title: "Filter: isnotnull(i_item_sk#4558)"
+                                                            operator: "filter"
+                                                            inputs:
+                                                            - title: "item.parquet"
+                                                              operator: "scan"
+                                                              inputs: []
+                                                    - title: "Projection: d_date_sk#4580"
+                                                      operator: "projection"
+                                                      inputs:
+                                                      - title: "Filter: ((isnotnull(d_year#4586)\
+                                                          \ AND ((d_year#4586 >= 1999)\
+                                                          \ AND (d_year#4586 <= 2001)))\
+                                                          \ AND isnotnull(d_date_sk#4580))"
+                                                        operator: "filter"
+                                                        inputs:
+                                                        - title: "date_dim.parquet"
+                                                          operator: "scan"
+                                                          inputs: []
+                                          - title: "Projection: d_date_sk#598"
+                                            operator: "projection"
+                                            inputs:
+                                            - title: "Filter: ((isnotnull(d_year#604)\
+                                                \ AND ((d_year#604 >= 1999) AND (d_year#604\
+                                                \ <= 2001))) AND isnotnull(d_date_sk#598))"
+                                              operator: "filter"
+                                              inputs:
+                                              - title: "date_dim.parquet"
+                                                operator: "scan"
+                                                inputs: []
+                                    - title: "Projection: i_brand_id#4615, i_class_id#4617,\
+                                        \ i_category_id#4619"
                                       operator: "projection"
                                       inputs:
-                                      - title: "Filter: isnotnull(i_item_sk#5963)"
-                                        operator: "filter"
+                                      - title: "Inner Join: Some((ws_sold_date_sk#384\
+                                          \ = d_date_sk#4630))"
+                                        operator: "join"
                                         inputs:
-                                        - title: "item.parquet"
-                                          operator: "scan"
-                                          inputs: []
+                                        - title: "Projection: ws_sold_date_sk#384,\
+                                            \ i_brand_id#4615, i_class_id#4617, i_category_id#4619"
+                                          operator: "projection"
+                                          inputs:
+                                          - title: "Inner Join: Some((ws_item_sk#387\
+                                              \ = i_item_sk#4608))"
+                                            operator: "join"
+                                            inputs:
+                                            - title: "Projection: ws_sold_date_sk#384,\
+                                                \ ws_item_sk#387"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: (isnotnull(ws_item_sk#387)\
+                                                  \ AND isnotnull(ws_sold_date_sk#384))"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "web_sales.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                            - title: "Projection: i_item_sk#4608,\
+                                                \ i_brand_id#4615, i_class_id#4617,\
+                                                \ i_category_id#4619"
+                                              operator: "projection"
+                                              inputs:
+                                              - title: "Filter: isnotnull(i_item_sk#4608)"
+                                                operator: "filter"
+                                                inputs:
+                                                - title: "item.parquet"
+                                                  operator: "scan"
+                                                  inputs: []
+                                        - title: "Projection: d_date_sk#4630"
+                                          operator: "projection"
+                                          inputs:
+                                          - title: "Filter: ((isnotnull(d_year#4636)\
+                                              \ AND ((d_year#4636 >= 1999) AND (d_year#4636\
+                                              \ <= 2001))) AND isnotnull(d_date_sk#4630))"
+                                            operator: "filter"
+                                            inputs:
+                                            - title: "date_dim.parquet"
+                                              operator: "scan"
+                                              inputs: []
+                      - title: "Projection: d_date_sk#5046"
+                        operator: "projection"
+                        inputs:
+                        - title: "Filter: (((isnotnull(d_year#5052) AND isnotnull(d_moy#5054))\
+                            \ AND ((d_year#5052 = 2001) AND (d_moy#5054 = 11))) AND\
+                            \ isnotnull(d_date_sk#5046))"
+                          operator: "filter"
+                          inputs:
+                          - title: "date_dim.parquet"
+                            operator: "scan"
+                            inputs: []

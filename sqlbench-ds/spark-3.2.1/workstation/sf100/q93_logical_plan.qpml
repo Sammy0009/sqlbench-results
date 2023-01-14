@@ -12,48 +12,48 @@ diagram:
       - title: "Aggregate (unknown)"
         operator: "Aggregate"
         inputs:
-        - title: "Projection: ss_customer_sk#255, CASE WHEN isnotnull(sr_return_quantity#146)\
-            \ THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#262 - sr_return_quantity#146)\
-            \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265\
-            \ as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#262\
-            \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#265\
-            \ as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#32566"
+        - title: "Projection: ss_customer_sk#667, CASE WHEN isnotnull(sr_return_quantity#720)\
+            \ THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#674 - sr_return_quantity#720)\
+            \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677\
+            \ as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#674\
+            \ as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677\
+            \ as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#19323"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((sr_reason_sk#144 = r_reason_sk#246))"
+          - title: "Inner Join: Some((sr_reason_sk#718 = r_reason_sk#544))"
             operator: "join"
             inputs:
-            - title: "Projection: ss_customer_sk#255, ss_quantity#262, ss_sales_price#265,\
-                \ sr_reason_sk#144, sr_return_quantity#146"
+            - title: "Projection: ss_customer_sk#667, ss_quantity#674, ss_sales_price#677,\
+                \ sr_reason_sk#718, sr_return_quantity#720"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some(((sr_item_sk#138 = ss_item_sk#254) AND (sr_ticket_number#145L\
-                  \ = ss_ticket_number#261L)))"
+              - title: "Inner Join: Some(((sr_item_sk#712 = ss_item_sk#666) AND (sr_ticket_number#719L\
+                  \ = ss_ticket_number#673L)))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ss_item_sk#254, ss_customer_sk#255, ss_ticket_number#261L,\
-                    \ ss_quantity#262, ss_sales_price#265"
+                - title: "Projection: ss_item_sk#666, ss_customer_sk#667, ss_ticket_number#673L,\
+                    \ ss_quantity#674, ss_sales_price#677"
                   operator: "projection"
                   inputs:
                   - title: "store_sales.parquet"
                     operator: "scan"
                     inputs: []
-                - title: "Projection: sr_item_sk#138, sr_reason_sk#144, sr_ticket_number#145L,\
-                    \ sr_return_quantity#146"
+                - title: "Projection: sr_item_sk#712, sr_reason_sk#718, sr_ticket_number#719L,\
+                    \ sr_return_quantity#720"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: ((isnotnull(sr_item_sk#138) AND isnotnull(sr_ticket_number#145L))\
-                      \ AND isnotnull(sr_reason_sk#144))"
+                  - title: "Filter: ((isnotnull(sr_item_sk#712) AND isnotnull(sr_ticket_number#719L))\
+                      \ AND isnotnull(sr_reason_sk#718))"
                     operator: "filter"
                     inputs:
                     - title: "store_returns.parquet"
                       operator: "scan"
                       inputs: []
-            - title: "Projection: r_reason_sk#246"
+            - title: "Projection: r_reason_sk#544"
               operator: "projection"
               inputs:
-              - title: "Filter: ((isnotnull(r_reason_desc#248) AND (r_reason_desc#248\
-                  \ = reason 49)) AND isnotnull(r_reason_sk#246))"
+              - title: "Filter: ((isnotnull(r_reason_desc#546) AND (r_reason_desc#546\
+                  \ = reason 49)) AND isnotnull(r_reason_sk#544))"
                 operator: "filter"
                 inputs:
                 - title: "reason.parquet"

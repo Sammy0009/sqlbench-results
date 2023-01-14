@@ -12,77 +12,77 @@ diagram:
       - title: "Aggregate (unknown)"
         operator: "Aggregate"
         inputs:
-        - title: "Projection: ws_sold_date_sk#476, ws_ship_date_sk#478, sm_type#446,\
-            \ web_name#802, substr(w_warehouse_name#772, 1, 20) AS _groupingexpression#20716"
+        - title: "Projection: ws_sold_date_sk#384, ws_ship_date_sk#386, sm_type#552,\
+            \ web_name#70, substr(w_warehouse_name#188, 1, 20) AS _groupingexpression#12612"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((ws_ship_date_sk#478 = d_date_sk#612))"
+          - title: "Inner Join: Some((ws_ship_date_sk#386 = d_date_sk#598))"
             operator: "join"
             inputs:
-            - title: "Projection: ws_sold_date_sk#476, ws_ship_date_sk#478, w_warehouse_name#772,\
-                \ sm_type#446, web_name#802"
+            - title: "Projection: ws_sold_date_sk#384, ws_ship_date_sk#386, w_warehouse_name#188,\
+                \ sm_type#552, web_name#70"
               operator: "projection"
               inputs:
-              - title: "Inner Join: Some((ws_web_site_sk#489 = web_site_sk#798))"
+              - title: "Inner Join: Some((ws_web_site_sk#397 = web_site_sk#66))"
                 operator: "join"
                 inputs:
-                - title: "Projection: ws_sold_date_sk#476, ws_ship_date_sk#478, ws_web_site_sk#489,\
-                    \ w_warehouse_name#772, sm_type#446"
+                - title: "Projection: ws_sold_date_sk#384, ws_ship_date_sk#386, ws_web_site_sk#397,\
+                    \ w_warehouse_name#188, sm_type#552"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((ws_ship_mode_sk#490 = sm_ship_mode_sk#444))"
+                  - title: "Inner Join: Some((ws_ship_mode_sk#398 = sm_ship_mode_sk#550))"
                     operator: "join"
                     inputs:
-                    - title: "Projection: ws_sold_date_sk#476, ws_ship_date_sk#478,\
-                        \ ws_web_site_sk#489, ws_ship_mode_sk#490, w_warehouse_name#772"
+                    - title: "Projection: ws_sold_date_sk#384, ws_ship_date_sk#386,\
+                        \ ws_web_site_sk#397, ws_ship_mode_sk#398, w_warehouse_name#188"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((ws_warehouse_sk#491 = w_warehouse_sk#770))"
+                      - title: "Inner Join: Some((ws_warehouse_sk#399 = w_warehouse_sk#186))"
                         operator: "join"
                         inputs:
-                        - title: "Projection: ws_sold_date_sk#476, ws_ship_date_sk#478,\
-                            \ ws_web_site_sk#489, ws_ship_mode_sk#490, ws_warehouse_sk#491"
+                        - title: "Projection: ws_sold_date_sk#384, ws_ship_date_sk#386,\
+                            \ ws_web_site_sk#397, ws_ship_mode_sk#398, ws_warehouse_sk#399"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (isnotnull(ws_warehouse_sk#491) AND ((isnotnull(ws_ship_mode_sk#490)\
-                              \ AND isnotnull(ws_web_site_sk#489)) AND isnotnull(ws_ship_date_sk#478)))"
+                          - title: "Filter: ((isnotnull(ws_warehouse_sk#399) AND isnotnull(ws_ship_mode_sk#398))\
+                              \ AND (isnotnull(ws_web_site_sk#397) AND isnotnull(ws_ship_date_sk#386)))"
                             operator: "filter"
                             inputs:
                             - title: "web_sales.parquet"
                               operator: "scan"
                               inputs: []
-                        - title: "Projection: w_warehouse_sk#770, w_warehouse_name#772"
+                        - title: "Projection: w_warehouse_sk#186, w_warehouse_name#188"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: isnotnull(w_warehouse_sk#770)"
+                          - title: "Filter: isnotnull(w_warehouse_sk#186)"
                             operator: "filter"
                             inputs:
                             - title: "warehouse.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: sm_ship_mode_sk#444, sm_type#446"
+                    - title: "Projection: sm_ship_mode_sk#550, sm_type#552"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: isnotnull(sm_ship_mode_sk#444)"
+                      - title: "Filter: isnotnull(sm_ship_mode_sk#550)"
                         operator: "filter"
                         inputs:
                         - title: "ship_mode.parquet"
                           operator: "scan"
                           inputs: []
-                - title: "Projection: web_site_sk#798, web_name#802"
+                - title: "Projection: web_site_sk#66, web_name#70"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: isnotnull(web_site_sk#798)"
+                  - title: "Filter: isnotnull(web_site_sk#66)"
                     operator: "filter"
                     inputs:
                     - title: "web_site.parquet"
                       operator: "scan"
                       inputs: []
-            - title: "Projection: d_date_sk#612"
+            - title: "Projection: d_date_sk#598"
               operator: "projection"
               inputs:
-              - title: "Filter: ((isnotnull(d_month_seq#615) AND ((d_month_seq#615\
-                  \ >= 1217) AND (d_month_seq#615 <= 1228))) AND isnotnull(d_date_sk#612))"
+              - title: "Filter: ((isnotnull(d_month_seq#601) AND ((d_month_seq#601\
+                  \ >= 1217) AND (d_month_seq#601 <= 1228))) AND isnotnull(d_date_sk#598))"
                 operator: "filter"
                 inputs:
                 - title: "date_dim.parquet"

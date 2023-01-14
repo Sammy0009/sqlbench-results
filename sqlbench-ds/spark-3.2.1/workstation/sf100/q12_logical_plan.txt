@@ -1,19 +1,19 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [i_category#680 ASC NULLS FIRST, i_class#678 ASC NULLS FIRST, i_item_id#669 ASC NULLS FIRST, i_item_desc#672 ASC NULLS FIRST, revenueratio#5628 ASC NULLS FIRST], true
-      +- Project [i_item_id#669, i_item_desc#672, i_category#680, i_class#678, i_current_price#673, itemrevenue#5627, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#5633) * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#5635)), DecimalType(38,17), true) AS revenueratio#5628]
-         +- Window [sum(_w1#5634) windowspecdefinition(i_class#678, specifiedwindowframe(RowFrame, unboundedpreceding$(), unboundedfollowing$())) AS _we0#5635], [i_class#678]
-            +- Aggregate [i_item_id#669, i_item_desc#672, i_category#680, i_class#678, i_current_price#673], [i_item_id#669, i_item_desc#672, i_category#680, i_class#678, i_current_price#673, MakeDecimal(sum(UnscaledValue(ws_ext_sales_price#499)),17,2) AS itemrevenue#5627, MakeDecimal(sum(UnscaledValue(ws_ext_sales_price#499)),17,2) AS _w0#5633, MakeDecimal(sum(UnscaledValue(ws_ext_sales_price#499)),17,2) AS _w1#5634]
-               +- Project [ws_ext_sales_price#499, i_item_id#669, i_item_desc#672, i_current_price#673, i_class#678, i_category#680]
-                  +- Join Inner, (ws_item_sk#479 = i_item_sk#668)
-                     :- Project [ws_item_sk#479, ws_ext_sales_price#499]
-                     :  +- Join Inner, (ws_sold_date_sk#476 = d_date_sk#612)
-                     :     :- Project [ws_sold_date_sk#476, ws_item_sk#479, ws_ext_sales_price#499]
-                     :     :  +- Filter (isnotnull(ws_sold_date_sk#476) AND isnotnull(ws_item_sk#479))
-                     :     :     +- Relation [ws_sold_date_sk#476,ws_sold_time_sk#477,ws_ship_date_sk#478,ws_item_sk#479,ws_bill_customer_sk#480,ws_bill_cdemo_sk#481,ws_bill_hdemo_sk#482,ws_bill_addr_sk#483,ws_ship_customer_sk#484,ws_ship_cdemo_sk#485,ws_ship_hdemo_sk#486,ws_ship_addr_sk#487,ws_web_page_sk#488,ws_web_site_sk#489,ws_ship_mode_sk#490,ws_warehouse_sk#491,ws_promo_sk#492,ws_order_number#493L,ws_quantity#494,ws_wholesale_cost#495,ws_list_price#496,ws_sales_price#497,ws_ext_discount_amt#498,ws_ext_sales_price#499,... 10 more fields] parquet
-                     :     +- Project [d_date_sk#612]
-                     :        +- Filter ((isnotnull(d_date#614) AND ((d_date#614 >= 2000-03-01) AND (d_date#614 <= 2000-03-31))) AND isnotnull(d_date_sk#612))
-                     :           +- Relation [d_date_sk#612,d_date_id#613,d_date#614,d_month_seq#615,d_week_seq#616,d_quarter_seq#617,d_year#618,d_dow#619,d_moy#620,d_dom#621,d_qoy#622,d_fy_year#623,d_fy_quarter_seq#624,d_fy_week_seq#625,d_day_name#626,d_quarter_name#627,d_holiday#628,d_weekend#629,d_following_holiday#630,d_first_dom#631,d_last_dom#632,d_same_day_ly#633,d_same_day_lq#634,d_current_day#635,... 4 more fields] parquet
-                     +- Project [i_item_sk#668, i_item_id#669, i_item_desc#672, i_current_price#673, i_class#678, i_category#680]
-                        +- Filter (i_category#680 IN (Home,Children,Shoes) AND isnotnull(i_item_sk#668))
-                           +- Relation [i_item_sk#668,i_item_id#669,i_rec_start_date#670,i_rec_end_date#671,i_item_desc#672,i_current_price#673,i_wholesale_cost#674,i_brand_id#675,i_brand#676,i_class_id#677,i_class#678,i_category_id#679,i_category#680,i_manufact_id#681,i_manufact#682,i_size#683,i_formulation#684,i_color#685,i_units#686,i_container#687,i_manager_id#688,i_product_name#689] parquet
+   +- Sort [i_category#512 ASC NULLS FIRST, i_class#510 ASC NULLS FIRST, i_item_id#501 ASC NULLS FIRST, i_item_desc#504 ASC NULLS FIRST, revenueratio#4428 ASC NULLS FIRST], true
+      +- Project [i_item_id#501, i_item_desc#504, i_category#512, i_class#510, i_current_price#505, itemrevenue#4427, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#4433) * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#4435)), DecimalType(38,17), true) AS revenueratio#4428]
+         +- Window [sum(_w1#4434) windowspecdefinition(i_class#510, specifiedwindowframe(RowFrame, unboundedpreceding$(), unboundedfollowing$())) AS _we0#4435], [i_class#510]
+            +- Aggregate [i_item_id#501, i_item_desc#504, i_category#512, i_class#510, i_current_price#505], [i_item_id#501, i_item_desc#504, i_category#512, i_class#510, i_current_price#505, MakeDecimal(sum(UnscaledValue(ws_ext_sales_price#407)),17,2) AS itemrevenue#4427, MakeDecimal(sum(UnscaledValue(ws_ext_sales_price#407)),17,2) AS _w0#4433, MakeDecimal(sum(UnscaledValue(ws_ext_sales_price#407)),17,2) AS _w1#4434]
+               +- Project [ws_ext_sales_price#407, i_item_id#501, i_item_desc#504, i_current_price#505, i_class#510, i_category#512]
+                  +- Join Inner, (ws_sold_date_sk#384 = d_date_sk#598)
+                     :- Project [ws_sold_date_sk#384, ws_ext_sales_price#407, i_item_id#501, i_item_desc#504, i_current_price#505, i_class#510, i_category#512]
+                     :  +- Join Inner, (ws_item_sk#387 = i_item_sk#500)
+                     :     :- Project [ws_sold_date_sk#384, ws_item_sk#387, ws_ext_sales_price#407]
+                     :     :  +- Filter (isnotnull(ws_item_sk#387) AND isnotnull(ws_sold_date_sk#384))
+                     :     :     +- Relation [ws_sold_date_sk#384,ws_sold_time_sk#385,ws_ship_date_sk#386,ws_item_sk#387,ws_bill_customer_sk#388,ws_bill_cdemo_sk#389,ws_bill_hdemo_sk#390,ws_bill_addr_sk#391,ws_ship_customer_sk#392,ws_ship_cdemo_sk#393,ws_ship_hdemo_sk#394,ws_ship_addr_sk#395,ws_web_page_sk#396,ws_web_site_sk#397,ws_ship_mode_sk#398,ws_warehouse_sk#399,ws_promo_sk#400,ws_order_number#401L,ws_quantity#402,ws_wholesale_cost#403,ws_list_price#404,ws_sales_price#405,ws_ext_discount_amt#406,ws_ext_sales_price#407,... 10 more fields] parquet
+                     :     +- Project [i_item_sk#500, i_item_id#501, i_item_desc#504, i_current_price#505, i_class#510, i_category#512]
+                     :        +- Filter (i_category#512 IN (Home,Children,Shoes) AND isnotnull(i_item_sk#500))
+                     :           +- Relation [i_item_sk#500,i_item_id#501,i_rec_start_date#502,i_rec_end_date#503,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand_id#507,i_brand#508,i_class_id#509,i_class#510,i_category_id#511,i_category#512,i_manufact_id#513,i_manufact#514,i_size#515,i_formulation#516,i_color#517,i_units#518,i_container#519,i_manager_id#520,i_product_name#521] parquet
+                     +- Project [d_date_sk#598]
+                        +- Filter ((isnotnull(d_date#600) AND ((d_date#600 >= 2000-03-01) AND (d_date#600 <= 2000-03-31))) AND isnotnull(d_date_sk#598))
+                           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
