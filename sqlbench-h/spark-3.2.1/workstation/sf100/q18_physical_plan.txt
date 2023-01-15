@@ -1,0 +1,98 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   TakeOrderedAndProject(limit=100, orderBy=[o_totalprice#59 DESC NULLS LAST,o_orderdate#60 ASC NULLS FIRST], output=[c_name#107,c_custkey#106L,o_orderkey#56L,o_orderdate#60,o_totalprice#59,sum(l_quantity)#780])
+   +- *(12) HashAggregate(keys=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59], functions=[sum(l_quantity#78)], output=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59, sum(l_quantity)#780])
+      +- *(12) HashAggregate(keys=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59], functions=[partial_sum(l_quantity#78)], output=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59, sum#789, isEmpty#790])
+         +- *(12) Project [c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59, o_orderdate#60, l_quantity#78]
+            +- *(12) BroadcastHashJoin [o_orderkey#56L], [l_orderkey#74L], Inner, BuildLeft, false
+               :- BroadcastQueryStage 9
+               :  +- BroadcastExchange HashedRelationBroadcastMode(List(input[2, bigint, true]),false), [id=#6804]
+               :     +- AQEShuffleRead local
+               :        +- ShuffleQueryStage 8
+               :           +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#6745]
+               :              +- *(9) Project [c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59, o_orderdate#60]
+               :                 +- *(9) BroadcastHashJoin [c_custkey#106L], [o_custkey#57L], Inner, BuildRight, false
+               :                    :- AQEShuffleRead local
+               :                    :  +- ShuffleQueryStage 0
+               :                    :     +- Exchange hashpartitioning(c_custkey#106L, 200), ENSURE_REQUIREMENTS, [id=#6092]
+               :                    :        +- *(1) Filter isnotnull(c_custkey#106L)
+               :                    :           +- *(1) ColumnarToRow
+               :                    :              +- FileScan parquet [c_custkey#106L,c_name#107] Batched: true, DataFilters: [isnotnull(c_custkey#106L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_custkey)], ReadSchema: struct<c_custkey:bigint,c_name:string>
+               :                    +- BroadcastQueryStage 7
+               :                       +- BroadcastExchange HashedRelationBroadcastMode(List(input[1, bigint, false]),false), [id=#6666]
+               :                          +- AQEShuffleRead local
+               :                             +- ShuffleQueryStage 6
+               :                                +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#6457]
+               :                                   +- *(8) SortMergeJoin [o_orderkey#56L], [l_orderkey#763L], LeftSemi
+               :                                      :- *(6) Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+               :                                      :  +- AQEShuffleRead coalesced
+               :                                      :     +- ShuffleQueryStage 1
+               :                                      :        +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#6109]
+               :                                      :           +- *(2) Filter (isnotnull(o_custkey#57L) AND isnotnull(o_orderkey#56L))
+               :                                      :              +- *(2) ColumnarToRow
+               :                                      :                 +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_totalprice#59,o_orderdate#60] Batched: true, DataFilters: [isnotnull(o_custkey#57L), isnotnull(o_orderkey#56L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_custkey), IsNotNull(o_orderkey)], ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_totalprice:decimal(11,2),o_orderdate:date>
+               :                                      +- *(7) Sort [l_orderkey#763L ASC NULLS FIRST], false, 0
+               :                                         +- *(7) Project [l_orderkey#763L]
+               :                                            +- *(7) Filter (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762 > 313.00))
+               :                                               +- *(7) HashAggregate(keys=[l_orderkey#763L], functions=[sum(l_quantity#767)], output=[l_orderkey#763L, sum(l_quantity#78)#762])
+               :                                                  +- AQEShuffleRead coalesced
+               :                                                     +- ShuffleQueryStage 2
+               :                                                        +- Exchange hashpartitioning(l_orderkey#763L, 200), ENSURE_REQUIREMENTS, [id=#6126]
+               :                                                           +- *(3) HashAggregate(keys=[l_orderkey#763L], functions=[partial_sum(l_quantity#767)], output=[l_orderkey#763L, sum#793, isEmpty#794])
+               :                                                              +- *(3) ColumnarToRow
+               :                                                                 +- FileScan parquet [l_orderkey#763L,l_quantity#767] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<l_orderkey:bigint,l_quantity:decimal(11,2)>
+               +- *(12) SortMergeJoin [l_orderkey#74L], [l_orderkey#763L], LeftSemi
+                  :- *(10) Sort [l_orderkey#74L ASC NULLS FIRST], false, 0
+                  :  +- AQEShuffleRead coalesced
+                  :     +- ShuffleQueryStage 3
+                  :        +- Exchange hashpartitioning(l_orderkey#74L, 200), ENSURE_REQUIREMENTS, [id=#6158]
+                  :           +- *(4) Filter isnotnull(l_orderkey#74L)
+                  :              +- *(4) ColumnarToRow
+                  :                 +- FileScan parquet [l_orderkey#74L,l_quantity#78] Batched: true, DataFilters: [isnotnull(l_orderkey#74L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_orderkey)], ReadSchema: struct<l_orderkey:bigint,l_quantity:decimal(11,2)>
+                  +- *(11) Sort [l_orderkey#763L ASC NULLS FIRST], false, 0
+                     +- *(11) Project [l_orderkey#763L]
+                        +- *(11) Filter (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762 > 313.00))
+                           +- *(11) HashAggregate(keys=[l_orderkey#763L], functions=[sum(l_quantity#767)], output=[l_orderkey#763L, sum(l_quantity#78)#762])
+                              +- AQEShuffleRead coalesced
+                                 +- ShuffleQueryStage 5
+                                    +- ReusedExchange [l_orderkey#763L, sum#793, isEmpty#794], Exchange hashpartitioning(l_orderkey#763L, 200), ENSURE_REQUIREMENTS, [id=#6126]
++- == Initial Plan ==
+   TakeOrderedAndProject(limit=100, orderBy=[o_totalprice#59 DESC NULLS LAST,o_orderdate#60 ASC NULLS FIRST], output=[c_name#107,c_custkey#106L,o_orderkey#56L,o_orderdate#60,o_totalprice#59,sum(l_quantity)#780])
+   +- HashAggregate(keys=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59], functions=[sum(l_quantity#78)], output=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59, sum(l_quantity)#780])
+      +- HashAggregate(keys=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59], functions=[partial_sum(l_quantity#78)], output=[c_name#107, c_custkey#106L, o_orderkey#56L, o_orderdate#60, o_totalprice#59, sum#789, isEmpty#790])
+         +- Project [c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59, o_orderdate#60, l_quantity#78]
+            +- SortMergeJoin [o_orderkey#56L], [l_orderkey#74L], Inner
+               :- Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+               :  +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#6039]
+               :     +- Project [c_custkey#106L, c_name#107, o_orderkey#56L, o_totalprice#59, o_orderdate#60]
+               :        +- SortMergeJoin [c_custkey#106L], [o_custkey#57L], Inner
+               :           :- Sort [c_custkey#106L ASC NULLS FIRST], false, 0
+               :           :  +- Exchange hashpartitioning(c_custkey#106L, 200), ENSURE_REQUIREMENTS, [id=#6021]
+               :           :     +- Filter isnotnull(c_custkey#106L)
+               :           :        +- FileScan parquet [c_custkey#106L,c_name#107] Batched: true, DataFilters: [isnotnull(c_custkey#106L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_custkey)], ReadSchema: struct<c_custkey:bigint,c_name:string>
+               :           +- Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+               :              +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#6022]
+               :                 +- SortMergeJoin [o_orderkey#56L], [l_orderkey#763L], LeftSemi
+               :                    :- Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+               :                    :  +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#6015]
+               :                    :     +- Filter (isnotnull(o_custkey#57L) AND isnotnull(o_orderkey#56L))
+               :                    :        +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_totalprice#59,o_orderdate#60] Batched: true, DataFilters: [isnotnull(o_custkey#57L), isnotnull(o_orderkey#56L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_custkey), IsNotNull(o_orderkey)], ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_totalprice:decimal(11,2),o_orderdate:date>
+               :                    +- Sort [l_orderkey#763L ASC NULLS FIRST], false, 0
+               :                       +- Project [l_orderkey#763L]
+               :                          +- Filter (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762 > 313.00))
+               :                             +- HashAggregate(keys=[l_orderkey#763L], functions=[sum(l_quantity#767)], output=[l_orderkey#763L, sum(l_quantity#78)#762])
+               :                                +- Exchange hashpartitioning(l_orderkey#763L, 200), ENSURE_REQUIREMENTS, [id=#6009]
+               :                                   +- HashAggregate(keys=[l_orderkey#763L], functions=[partial_sum(l_quantity#767)], output=[l_orderkey#763L, sum#793, isEmpty#794])
+               :                                      +- FileScan parquet [l_orderkey#763L,l_quantity#767] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<l_orderkey:bigint,l_quantity:decimal(11,2)>
+               +- SortMergeJoin [l_orderkey#74L], [l_orderkey#763L], LeftSemi
+                  :- Sort [l_orderkey#74L ASC NULLS FIRST], false, 0
+                  :  +- Exchange hashpartitioning(l_orderkey#74L, 200), ENSURE_REQUIREMENTS, [id=#6033]
+                  :     +- Filter isnotnull(l_orderkey#74L)
+                  :        +- FileScan parquet [l_orderkey#74L,l_quantity#78] Batched: true, DataFilters: [isnotnull(l_orderkey#74L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_orderkey)], ReadSchema: struct<l_orderkey:bigint,l_quantity:decimal(11,2)>
+                  +- Sort [l_orderkey#763L ASC NULLS FIRST], false, 0
+                     +- Project [l_orderkey#763L]
+                        +- Filter (isnotnull(sum(l_quantity#78)#762) AND (sum(l_quantity#78)#762 > 313.00))
+                           +- HashAggregate(keys=[l_orderkey#763L], functions=[sum(l_quantity#767)], output=[l_orderkey#763L, sum(l_quantity#78)#762])
+                              +- Exchange hashpartitioning(l_orderkey#763L, 200), ENSURE_REQUIREMENTS, [id=#6027]
+                                 +- HashAggregate(keys=[l_orderkey#763L], functions=[partial_sum(l_quantity#767)], output=[l_orderkey#763L, sum#793, isEmpty#794])
+                                    +- FileScan parquet [l_orderkey#763L,l_quantity#767] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<l_orderkey:bigint,l_quantity:decimal(11,2)>

@@ -1,0 +1,10 @@
+Sort [custdist#542L DESC NULLS LAST, c_count#547L DESC NULLS LAST], true
++- Aggregate [c_count#547L], [c_count#547L, count(1) AS custdist#542L]
+   +- Aggregate [c_custkey#106L], [count(o_orderkey#56L) AS c_count#547L]
+      +- Project [c_custkey#106L, o_orderkey#56L]
+         +- Join LeftOuter, (c_custkey#106L = o_custkey#57L)
+            :- Project [c_custkey#106L]
+            :  +- Relation [c_custkey#106L,c_name#107,c_address#108,c_nationkey#109L,c_phone#110,c_acctbal#111,c_mktsegment#112,c_comment#113] parquet
+            +- Project [o_orderkey#56L, o_custkey#57L]
+               +- Filter ((isnotnull(o_comment#64) AND NOT o_comment#64 LIKE %unusual%deposits%) AND isnotnull(o_custkey#57L))
+                  +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet

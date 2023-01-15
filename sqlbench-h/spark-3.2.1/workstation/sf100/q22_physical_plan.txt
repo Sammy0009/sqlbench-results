@@ -1,0 +1,77 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   *(7) Sort [cntrycode#896 ASC NULLS FIRST], true, 0
+   +- AQEShuffleRead coalesced
+      +- ShuffleQueryStage 3
+         +- Exchange rangepartitioning(cntrycode#896 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#8126]
+            +- *(6) HashAggregate(keys=[cntrycode#896], functions=[count(1), sum(c_acctbal#111)], output=[cntrycode#896, numcust#899L, totacctbal#900])
+               +- AQEShuffleRead coalesced
+                  +- ShuffleQueryStage 2
+                     +- Exchange hashpartitioning(cntrycode#896, 200), ENSURE_REQUIREMENTS, [id=#8084]
+                        +- *(5) HashAggregate(keys=[cntrycode#896], functions=[partial_count(1), partial_sum(c_acctbal#111)], output=[cntrycode#896, count#919L, sum#920, isEmpty#921])
+                           +- *(5) Project [substring(c_phone#110, 1, 2) AS cntrycode#896, c_acctbal#111]
+                              +- *(5) SortMergeJoin [c_custkey#106L], [o_custkey#57L], LeftAnti
+                                 :- *(3) Sort [c_custkey#106L ASC NULLS FIRST], false, 0
+                                 :  +- AQEShuffleRead coalesced
+                                 :     +- ShuffleQueryStage 0
+                                 :        +- Exchange hashpartitioning(c_custkey#106L, 200), ENSURE_REQUIREMENTS, [id=#7931]
+                                 :           +- *(1) Filter ((isnotnull(c_acctbal#111) AND substring(c_phone#110, 1, 2) IN (26,32,23,24,20,27,19)) AND (cast(c_acctbal#111 as decimal(15,6)) > Subquery subquery#897, [id=#7862]))
+                                 :              :  +- Subquery subquery#897, [id=#7862]
+                                 :              :     +- AdaptiveSparkPlan isFinalPlan=true
+                                                      +- == Final Plan ==
+                                                         *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(c_acctbal#909))], output=[avg(c_acctbal)#903])
+                                                         +- ShuffleQueryStage 0
+                                                            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#7973]
+                                                               +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(c_acctbal#909))], output=[sum#924, count#925L])
+                                                                  +- *(1) Project [c_acctbal#909]
+                                                                     +- *(1) Filter ((isnotnull(c_acctbal#909) AND (c_acctbal#909 > 0.00)) AND substring(c_phone#908, 1, 2) IN (26,32,23,24,20,27,19))
+                                                                        +- *(1) ColumnarToRow
+                                                                           +- FileScan parquet [c_phone#908,c_acctbal#909] Batched: true, DataFilters: [isnotnull(c_acctbal#909), (c_acctbal#909 > 0.00), substring(c_phone#908, 1, 2) IN (26,32,23,24,2..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_acctbal), GreaterThan(c_acctbal,0.00)], ReadSchema: struct<c_phone:string,c_acctbal:decimal(11,2)>
+                                                      +- == Initial Plan ==
+                                                         HashAggregate(keys=[], functions=[avg(UnscaledValue(c_acctbal#909))], output=[avg(c_acctbal)#903])
+                                                         +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#7860]
+                                                            +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(c_acctbal#909))], output=[sum#924, count#925L])
+                                                               +- Project [c_acctbal#909]
+                                                                  +- Filter ((isnotnull(c_acctbal#909) AND (c_acctbal#909 > 0.00)) AND substring(c_phone#908, 1, 2) IN (26,32,23,24,20,27,19))
+                                                                     +- FileScan parquet [c_phone#908,c_acctbal#909] Batched: true, DataFilters: [isnotnull(c_acctbal#909), (c_acctbal#909 > 0.00), substring(c_phone#908, 1, 2) IN (26,32,23,24,2..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_acctbal), GreaterThan(c_acctbal,0.00)], ReadSchema: struct<c_phone:string,c_acctbal:decimal(11,2)>
+                                 :              +- *(1) ColumnarToRow
+                                 :                 +- FileScan parquet [c_custkey#106L,c_phone#110,c_acctbal#111] Batched: true, DataFilters: [isnotnull(c_acctbal#111), substring(c_phone#110, 1, 2) IN (26,32,23,24,20,27,19)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_acctbal)], ReadSchema: struct<c_custkey:bigint,c_phone:string,c_acctbal:decimal(11,2)>
+                                 +- *(4) Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+                                    +- AQEShuffleRead coalesced
+                                       +- ShuffleQueryStage 1
+                                          +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#7946]
+                                             +- *(2) ColumnarToRow
+                                                +- FileScan parquet [o_custkey#57L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<o_custkey:bigint>
++- == Initial Plan ==
+   Sort [cntrycode#896 ASC NULLS FIRST], true, 0
+   +- Exchange rangepartitioning(cntrycode#896 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#7888]
+      +- HashAggregate(keys=[cntrycode#896], functions=[count(1), sum(c_acctbal#111)], output=[cntrycode#896, numcust#899L, totacctbal#900])
+         +- Exchange hashpartitioning(cntrycode#896, 200), ENSURE_REQUIREMENTS, [id=#7885]
+            +- HashAggregate(keys=[cntrycode#896], functions=[partial_count(1), partial_sum(c_acctbal#111)], output=[cntrycode#896, count#919L, sum#920, isEmpty#921])
+               +- Project [substring(c_phone#110, 1, 2) AS cntrycode#896, c_acctbal#111]
+                  +- SortMergeJoin [c_custkey#106L], [o_custkey#57L], LeftAnti
+                     :- Sort [c_custkey#106L ASC NULLS FIRST], false, 0
+                     :  +- Exchange hashpartitioning(c_custkey#106L, 200), ENSURE_REQUIREMENTS, [id=#7877]
+                     :     +- Filter ((isnotnull(c_acctbal#111) AND substring(c_phone#110, 1, 2) IN (26,32,23,24,20,27,19)) AND (cast(c_acctbal#111 as decimal(15,6)) > Subquery subquery#897, [id=#7862]))
+                     :        :  +- Subquery subquery#897, [id=#7862]
+                     :        :     +- AdaptiveSparkPlan isFinalPlan=true
+                                    +- == Final Plan ==
+                                       *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(c_acctbal#909))], output=[avg(c_acctbal)#903])
+                                       +- ShuffleQueryStage 0
+                                          +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#7973]
+                                             +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(c_acctbal#909))], output=[sum#924, count#925L])
+                                                +- *(1) Project [c_acctbal#909]
+                                                   +- *(1) Filter ((isnotnull(c_acctbal#909) AND (c_acctbal#909 > 0.00)) AND substring(c_phone#908, 1, 2) IN (26,32,23,24,20,27,19))
+                                                      +- *(1) ColumnarToRow
+                                                         +- FileScan parquet [c_phone#908,c_acctbal#909] Batched: true, DataFilters: [isnotnull(c_acctbal#909), (c_acctbal#909 > 0.00), substring(c_phone#908, 1, 2) IN (26,32,23,24,2..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_acctbal), GreaterThan(c_acctbal,0.00)], ReadSchema: struct<c_phone:string,c_acctbal:decimal(11,2)>
+                                    +- == Initial Plan ==
+                                       HashAggregate(keys=[], functions=[avg(UnscaledValue(c_acctbal#909))], output=[avg(c_acctbal)#903])
+                                       +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#7860]
+                                          +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(c_acctbal#909))], output=[sum#924, count#925L])
+                                             +- Project [c_acctbal#909]
+                                                +- Filter ((isnotnull(c_acctbal#909) AND (c_acctbal#909 > 0.00)) AND substring(c_phone#908, 1, 2) IN (26,32,23,24,20,27,19))
+                                                   +- FileScan parquet [c_phone#908,c_acctbal#909] Batched: true, DataFilters: [isnotnull(c_acctbal#909), (c_acctbal#909 > 0.00), substring(c_phone#908, 1, 2) IN (26,32,23,24,2..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_acctbal), GreaterThan(c_acctbal,0.00)], ReadSchema: struct<c_phone:string,c_acctbal:decimal(11,2)>
+                     :        +- FileScan parquet [c_custkey#106L,c_phone#110,c_acctbal#111] Batched: true, DataFilters: [isnotnull(c_acctbal#111), substring(c_phone#110, 1, 2) IN (26,32,23,24,20,27,19)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_acctbal)], ReadSchema: struct<c_custkey:bigint,c_phone:string,c_acctbal:decimal(11,2)>
+                     +- Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+                        +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#7878]
+                           +- FileScan parquet [o_custkey#57L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<o_custkey:bigint>

@@ -1,0 +1,29 @@
+Sort [s_name#1 ASC NULLS FIRST], true
++- Project [s_name#1, s_address#2]
+   +- Join Inner, (s_nationkey#3L = n_nationkey#42L)
+      :- Project [s_name#1, s_address#2, s_nationkey#3L]
+      :  +- Join LeftSemi, (s_suppkey#0L = ps_suppkey#33L)
+      :     :- Project [s_suppkey#0L, s_name#1, s_address#2, s_nationkey#3L]
+      :     :  +- Filter isnotnull(s_nationkey#3L)
+      :     :     +- Relation [s_suppkey#0L,s_name#1,s_address#2,s_nationkey#3L,s_phone#4,s_acctbal#5,s_comment#6] parquet
+      :     +- Project [ps_suppkey#33L]
+      :        +- Join Inner, (((cast(cast(ps_availqty#34 as decimal(10,0)) as decimal(23,3)) > (0.5 * sum(l_quantity))#837) AND (l_partkey#75L = ps_partkey#32L)) AND (l_suppkey#76L = ps_suppkey#33L))
+      :           :- Join LeftSemi, (ps_partkey#32L = p_partkey#14L)
+      :           :  :- Project [ps_partkey#32L, ps_suppkey#33L, ps_availqty#34]
+      :           :  :  +- Filter ((isnotnull(ps_availqty#34) AND isnotnull(ps_partkey#32L)) AND isnotnull(ps_suppkey#33L))
+      :           :  :     +- Relation [ps_partkey#32L,ps_suppkey#33L,ps_availqty#34,ps_supplycost#35,ps_comment#36] parquet
+      :           :  +- Project [p_partkey#14L]
+      :           :     +- Filter (isnotnull(p_name#15) AND StartsWith(p_name#15, papaya))
+      :           :        +- Relation [p_partkey#14L,p_name#15,p_mfgr#16,p_brand#17,p_type#18,p_size#19,p_container#20,p_retailprice#21,p_comment#22] parquet
+      :           +- Filter isnotnull((0.5 * sum(l_quantity))#837)
+      :              +- Aggregate [l_partkey#75L, l_suppkey#76L], [CheckOverflow((0.50 * promote_precision(sum(l_quantity#78))), DecimalType(23,3), true) AS (0.5 * sum(l_quantity))#837, l_partkey#75L, l_suppkey#76L]
+      :                 +- Join LeftSemi, (l_partkey#75L = p_partkey#14L)
+      :                    :- Project [l_partkey#75L, l_suppkey#76L, l_quantity#78]
+      :                    :  +- Filter ((((isnotnull(l_shipdate#84) AND (l_shipdate#84 >= 1993-01-01)) AND (l_shipdate#84 < 1994-01-01)) AND isnotnull(l_partkey#75L)) AND isnotnull(l_suppkey#76L))
+      :                    :     +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet
+      :                    +- Project [p_partkey#14L]
+      :                       +- Filter (isnotnull(p_name#15) AND StartsWith(p_name#15, papaya))
+      :                          +- Relation [p_partkey#14L,p_name#15,p_mfgr#16,p_brand#17,p_type#18,p_size#19,p_container#20,p_retailprice#21,p_comment#22] parquet
+      +- Project [n_nationkey#42L]
+         +- Filter ((isnotnull(n_name#43) AND (n_name#43 = MOZAMBIQUE)) AND isnotnull(n_nationkey#42L))
+            +- Relation [n_nationkey#42L,n_name#43,n_regionkey#44L,n_comment#45] parquet

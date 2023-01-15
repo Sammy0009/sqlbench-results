@@ -1,0 +1,40 @@
+Sort [o_year#373 ASC NULLS FIRST], true
++- Aggregate [o_year#373], [o_year#373, CheckOverflow((promote_precision(sum(CASE WHEN (nation#375 = CHINA) THEN volume#374 ELSE 0.0000 END)) / promote_precision(sum(volume#374))), DecimalType(38,6), true) AS mkt_share#376]
+   +- Project [year(o_orderdate#60) AS o_year#373, CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true) AS volume#374, n_name#378 AS nation#375]
+      +- Join Inner, (n_regionkey#44L = r_regionkey#50L)
+         :- Project [l_extendedprice#79, l_discount#80, o_orderdate#60, n_regionkey#44L, n_name#378]
+         :  +- Join Inner, (s_nationkey#3L = n_nationkey#377L)
+         :     :- Project [l_extendedprice#79, l_discount#80, s_nationkey#3L, o_orderdate#60, n_regionkey#44L]
+         :     :  +- Join Inner, (c_nationkey#109L = n_nationkey#42L)
+         :     :     :- Project [l_extendedprice#79, l_discount#80, s_nationkey#3L, o_orderdate#60, c_nationkey#109L]
+         :     :     :  +- Join Inner, (o_custkey#57L = c_custkey#106L)
+         :     :     :     :- Project [l_extendedprice#79, l_discount#80, s_nationkey#3L, o_custkey#57L, o_orderdate#60]
+         :     :     :     :  +- Join Inner, (l_orderkey#74L = o_orderkey#56L)
+         :     :     :     :     :- Project [l_orderkey#74L, l_extendedprice#79, l_discount#80, s_nationkey#3L]
+         :     :     :     :     :  +- Join Inner, (s_suppkey#0L = l_suppkey#76L)
+         :     :     :     :     :     :- Project [l_orderkey#74L, l_suppkey#76L, l_extendedprice#79, l_discount#80]
+         :     :     :     :     :     :  +- Join Inner, (p_partkey#14L = l_partkey#75L)
+         :     :     :     :     :     :     :- Project [p_partkey#14L]
+         :     :     :     :     :     :     :  +- Filter ((isnotnull(p_type#18) AND (p_type#18 = PROMO PLATED STEEL)) AND isnotnull(p_partkey#14L))
+         :     :     :     :     :     :     :     +- Relation [p_partkey#14L,p_name#15,p_mfgr#16,p_brand#17,p_type#18,p_size#19,p_container#20,p_retailprice#21,p_comment#22] parquet
+         :     :     :     :     :     :     +- Project [l_orderkey#74L, l_partkey#75L, l_suppkey#76L, l_extendedprice#79, l_discount#80]
+         :     :     :     :     :     :        +- Filter (isnotnull(l_partkey#75L) AND (isnotnull(l_suppkey#76L) AND isnotnull(l_orderkey#74L)))
+         :     :     :     :     :     :           +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet
+         :     :     :     :     :     +- Project [s_suppkey#0L, s_nationkey#3L]
+         :     :     :     :     :        +- Filter (isnotnull(s_suppkey#0L) AND isnotnull(s_nationkey#3L))
+         :     :     :     :     :           +- Relation [s_suppkey#0L,s_name#1,s_address#2,s_nationkey#3L,s_phone#4,s_acctbal#5,s_comment#6] parquet
+         :     :     :     :     +- Project [o_orderkey#56L, o_custkey#57L, o_orderdate#60]
+         :     :     :     :        +- Filter ((isnotnull(o_orderdate#60) AND ((o_orderdate#60 >= 1995-01-01) AND (o_orderdate#60 <= 1996-12-31))) AND (isnotnull(o_orderkey#56L) AND isnotnull(o_custkey#57L)))
+         :     :     :     :           +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet
+         :     :     :     +- Project [c_custkey#106L, c_nationkey#109L]
+         :     :     :        +- Filter (isnotnull(c_custkey#106L) AND isnotnull(c_nationkey#109L))
+         :     :     :           +- Relation [c_custkey#106L,c_name#107,c_address#108,c_nationkey#109L,c_phone#110,c_acctbal#111,c_mktsegment#112,c_comment#113] parquet
+         :     :     +- Project [n_nationkey#42L, n_regionkey#44L]
+         :     :        +- Filter (isnotnull(n_nationkey#42L) AND isnotnull(n_regionkey#44L))
+         :     :           +- Relation [n_nationkey#42L,n_name#43,n_regionkey#44L,n_comment#45] parquet
+         :     +- Project [n_nationkey#377L, n_name#378]
+         :        +- Filter isnotnull(n_nationkey#377L)
+         :           +- Relation [n_nationkey#377L,n_name#378,n_regionkey#379L,n_comment#380] parquet
+         +- Project [r_regionkey#50L]
+            +- Filter ((isnotnull(r_name#51) AND (r_name#51 = ASIA)) AND isnotnull(r_regionkey#50L))
+               +- Relation [r_regionkey#50L,r_name#51,r_comment#52] parquet

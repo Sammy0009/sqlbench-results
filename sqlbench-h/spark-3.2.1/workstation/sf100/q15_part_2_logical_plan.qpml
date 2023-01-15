@@ -1,0 +1,42 @@
+---
+diagram:
+  title: "Sort (unknown)"
+  operator: "Sort"
+  inputs:
+  - title: "Projection: s_suppkey#0L, s_name#1, s_address#2, s_phone#4, total_revenue#595"
+    operator: "projection"
+    inputs:
+    - title: "Inner Join: Some((s_suppkey#0L = supplier_no#594L))"
+      operator: "join"
+      inputs:
+      - title: "Projection: s_suppkey#0L, s_name#1, s_address#2, s_phone#4"
+        operator: "projection"
+        inputs:
+        - title: "Filter: isnotnull(s_suppkey#0L)"
+          operator: "filter"
+          inputs:
+          - title: "supplier.parquet"
+            operator: "scan"
+            inputs: []
+      - title: "Projection: l_suppkey#76L AS supplier_no#594L, sum((l_extendedprice\
+          \ * (1 - l_discount)))#597 AS total_revenue#595"
+        operator: "projection"
+        inputs:
+        - title: "Filter: (isnotnull(sum((l_extendedprice * (1 - l_discount)))#597)\
+            \ AND (sum((l_extendedprice * (1 - l_discount)))#597 = scalar-subquery#593\
+            \ []))"
+          operator: "filter"
+          inputs:
+          - title: "Aggregate (unknown)"
+            operator: "Aggregate"
+            inputs:
+            - title: "Projection: l_suppkey#76L, l_extendedprice#79, l_discount#80"
+              operator: "projection"
+              inputs:
+              - title: "Filter: ((isnotnull(l_shipdate#84) AND ((l_shipdate#84 >=\
+                  \ 1996-09-01) AND (l_shipdate#84 < 1996-12-01))) AND isnotnull(l_suppkey#76L))"
+                operator: "filter"
+                inputs:
+                - title: "lineitem.parquet"
+                  operator: "scan"
+                  inputs: []

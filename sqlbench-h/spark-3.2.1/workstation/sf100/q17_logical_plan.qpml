@@ -1,0 +1,53 @@
+---
+diagram:
+  title: "Aggregate (unknown)"
+  operator: "Aggregate"
+  inputs:
+  - title: "Projection: l_extendedprice#79"
+    operator: "projection"
+    inputs:
+    - title: "Inner Join: Some(((cast(l_quantity#78 as decimal(17,7)) < (0.2 * avg(l_quantity))#715)\
+        \ AND (l_partkey#717L = p_partkey#14L)))"
+      operator: "join"
+      inputs:
+      - title: "Projection: l_quantity#78, l_extendedprice#79, p_partkey#14L"
+        operator: "projection"
+        inputs:
+        - title: "Inner Join: Some((p_partkey#14L = l_partkey#75L))"
+          operator: "join"
+          inputs:
+          - title: "Projection: l_partkey#75L, l_quantity#78, l_extendedprice#79"
+            operator: "projection"
+            inputs:
+            - title: "Filter: (isnotnull(l_partkey#75L) AND isnotnull(l_quantity#78))"
+              operator: "filter"
+              inputs:
+              - title: "lineitem.parquet"
+                operator: "scan"
+                inputs: []
+          - title: "Projection: p_partkey#14L"
+            operator: "projection"
+            inputs:
+            - title: "Filter: (((isnotnull(p_brand#17) AND isnotnull(p_container#20))\
+                \ AND ((p_brand#17 = Brand#32) AND (p_container#20 = SM JAR))) AND\
+                \ isnotnull(p_partkey#14L))"
+              operator: "filter"
+              inputs:
+              - title: "part.parquet"
+                operator: "scan"
+                inputs: []
+      - title: "Filter: isnotnull((0.2 * avg(l_quantity))#715)"
+        operator: "filter"
+        inputs:
+        - title: "Aggregate (unknown)"
+          operator: "Aggregate"
+          inputs:
+          - title: "Projection: l_partkey#717L, l_quantity#720"
+            operator: "projection"
+            inputs:
+            - title: "Filter: isnotnull(l_partkey#717L)"
+              operator: "filter"
+              inputs:
+              - title: "lineitem.parquet"
+                operator: "scan"
+                inputs: []

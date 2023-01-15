@@ -1,0 +1,60 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   LocalTableScan <empty>, [o_year#373, mkt_share#376]
++- == Initial Plan ==
+   Sort [o_year#373 ASC NULLS FIRST], true, 0
+   +- Exchange rangepartitioning(o_year#373 ASC NULLS FIRST, 200), ENSURE_REQUIREMENTS, [id=#2230]
+      +- HashAggregate(keys=[o_year#373], functions=[sum(CASE WHEN (nation#375 = CHINA) THEN volume#374 ELSE 0.0000 END), sum(volume#374)], output=[o_year#373, mkt_share#376])
+         +- Exchange hashpartitioning(o_year#373, 200), ENSURE_REQUIREMENTS, [id=#2227]
+            +- HashAggregate(keys=[o_year#373], functions=[partial_sum(CASE WHEN (nation#375 = CHINA) THEN volume#374 ELSE 0.0000 END), partial_sum(volume#374)], output=[o_year#373, sum#389, isEmpty#390, sum#391, isEmpty#392])
+               +- Project [year(o_orderdate#60) AS o_year#373, CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true) AS volume#374, n_name#378 AS nation#375]
+                  +- BroadcastHashJoin [n_regionkey#44L], [r_regionkey#50L], Inner, BuildRight, false
+                     :- Project [l_extendedprice#79, l_discount#80, o_orderdate#60, n_regionkey#44L, n_name#378]
+                     :  +- BroadcastHashJoin [s_nationkey#3L], [n_nationkey#377L], Inner, BuildRight, false
+                     :     :- Project [l_extendedprice#79, l_discount#80, s_nationkey#3L, o_orderdate#60, n_regionkey#44L]
+                     :     :  +- BroadcastHashJoin [c_nationkey#109L], [n_nationkey#42L], Inner, BuildRight, false
+                     :     :     :- Project [l_extendedprice#79, l_discount#80, s_nationkey#3L, o_orderdate#60, c_nationkey#109L]
+                     :     :     :  +- SortMergeJoin [o_custkey#57L], [c_custkey#106L], Inner
+                     :     :     :     :- Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+                     :     :     :     :  +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#2207]
+                     :     :     :     :     +- Project [l_extendedprice#79, l_discount#80, s_nationkey#3L, o_custkey#57L, o_orderdate#60]
+                     :     :     :     :        +- SortMergeJoin [l_orderkey#74L], [o_orderkey#56L], Inner
+                     :     :     :     :           :- Sort [l_orderkey#74L ASC NULLS FIRST], false, 0
+                     :     :     :     :           :  +- Exchange hashpartitioning(l_orderkey#74L, 200), ENSURE_REQUIREMENTS, [id=#2199]
+                     :     :     :     :           :     +- Project [l_orderkey#74L, l_extendedprice#79, l_discount#80, s_nationkey#3L]
+                     :     :     :     :           :        +- SortMergeJoin [l_suppkey#76L], [s_suppkey#0L], Inner
+                     :     :     :     :           :           :- Sort [l_suppkey#76L ASC NULLS FIRST], false, 0
+                     :     :     :     :           :           :  +- Exchange hashpartitioning(l_suppkey#76L, 200), ENSURE_REQUIREMENTS, [id=#2191]
+                     :     :     :     :           :           :     +- Project [l_orderkey#74L, l_suppkey#76L, l_extendedprice#79, l_discount#80]
+                     :     :     :     :           :           :        +- SortMergeJoin [p_partkey#14L], [l_partkey#75L], Inner
+                     :     :     :     :           :           :           :- Sort [p_partkey#14L ASC NULLS FIRST], false, 0
+                     :     :     :     :           :           :           :  +- Exchange hashpartitioning(p_partkey#14L, 200), ENSURE_REQUIREMENTS, [id=#2183]
+                     :     :     :     :           :           :           :     +- Project [p_partkey#14L]
+                     :     :     :     :           :           :           :        +- Filter ((isnotnull(p_type#18) AND (p_type#18 = PROMO PLATED STEEL)) AND isnotnull(p_partkey#14L))
+                     :     :     :     :           :           :           :           +- FileScan parquet [p_partkey#14L,p_type#18] Batched: true, DataFilters: [isnotnull(p_type#18), (p_type#18 = PROMO PLATED STEEL), isnotnull(p_partkey#14L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/part.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(p_type), EqualTo(p_type,PROMO PLATED STEEL), IsNotNull(p_partkey)], ReadSchema: struct<p_partkey:bigint,p_type:string>
+                     :     :     :     :           :           :           +- Sort [l_partkey#75L ASC NULLS FIRST], false, 0
+                     :     :     :     :           :           :              +- Exchange hashpartitioning(l_partkey#75L, 200), ENSURE_REQUIREMENTS, [id=#2184]
+                     :     :     :     :           :           :                 +- Filter ((isnotnull(l_partkey#75L) AND isnotnull(l_suppkey#76L)) AND isnotnull(l_orderkey#74L))
+                     :     :     :     :           :           :                    +- FileScan parquet [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_extendedprice#79,l_discount#80] Batched: true, DataFilters: [isnotnull(l_partkey#75L), isnotnull(l_suppkey#76L), isnotnull(l_orderkey#74L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_partkey), IsNotNull(l_suppkey), IsNotNull(l_orderkey)], ReadSchema: struct<l_orderkey:bigint,l_partkey:bigint,l_suppkey:bigint,l_extendedprice:decimal(11,2),l_discou...
+                     :     :     :     :           :           +- Sort [s_suppkey#0L ASC NULLS FIRST], false, 0
+                     :     :     :     :           :              +- Exchange hashpartitioning(s_suppkey#0L, 200), ENSURE_REQUIREMENTS, [id=#2192]
+                     :     :     :     :           :                 +- Filter (isnotnull(s_suppkey#0L) AND isnotnull(s_nationkey#3L))
+                     :     :     :     :           :                    +- FileScan parquet [s_suppkey#0L,s_nationkey#3L] Batched: true, DataFilters: [isnotnull(s_suppkey#0L), isnotnull(s_nationkey#3L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/supplier.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(s_suppkey), IsNotNull(s_nationkey)], ReadSchema: struct<s_suppkey:bigint,s_nationkey:bigint>
+                     :     :     :     :           +- Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+                     :     :     :     :              +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#2200]
+                     :     :     :     :                 +- Filter ((((isnotnull(o_orderdate#60) AND (o_orderdate#60 >= 1995-01-01)) AND (o_orderdate#60 <= 1996-12-31)) AND isnotnull(o_orderkey#56L)) AND isnotnull(o_custkey#57L))
+                     :     :     :     :                    +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_orderdate#60] Batched: true, DataFilters: [isnotnull(o_orderdate#60), (o_orderdate#60 >= 1995-01-01), (o_orderdate#60 <= 1996-12-31), isnot..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_orderdate), GreaterThanOrEqual(o_orderdate,1995-01-01), LessThanOrEqual(o_orderdate,..., ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_orderdate:date>
+                     :     :     :     +- Sort [c_custkey#106L ASC NULLS FIRST], false, 0
+                     :     :     :        +- Exchange hashpartitioning(c_custkey#106L, 200), ENSURE_REQUIREMENTS, [id=#2208]
+                     :     :     :           +- Filter (isnotnull(c_custkey#106L) AND isnotnull(c_nationkey#109L))
+                     :     :     :              +- FileScan parquet [c_custkey#106L,c_nationkey#109L] Batched: true, DataFilters: [isnotnull(c_custkey#106L), isnotnull(c_nationkey#109L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_custkey), IsNotNull(c_nationkey)], ReadSchema: struct<c_custkey:bigint,c_nationkey:bigint>
+                     :     :     +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [id=#2214]
+                     :     :        +- Filter (isnotnull(n_nationkey#42L) AND isnotnull(n_regionkey#44L))
+                     :     :           +- FileScan parquet [n_nationkey#42L,n_regionkey#44L] Batched: true, DataFilters: [isnotnull(n_nationkey#42L), isnotnull(n_regionkey#44L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/nation.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(n_nationkey), IsNotNull(n_regionkey)], ReadSchema: struct<n_nationkey:bigint,n_regionkey:bigint>
+                     :     +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [id=#2218]
+                     :        +- Filter isnotnull(n_nationkey#377L)
+                     :           +- FileScan parquet [n_nationkey#377L,n_name#378] Batched: true, DataFilters: [isnotnull(n_nationkey#377L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/nation.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(n_nationkey)], ReadSchema: struct<n_nationkey:bigint,n_name:string>
+                     +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, true]),false), [id=#2222]
+                        +- Project [r_regionkey#50L]
+                           +- Filter ((isnotnull(r_name#51) AND (r_name#51 = ASIA)) AND isnotnull(r_regionkey#50L))
+                              +- FileScan parquet [r_regionkey#50L,r_name#51] Batched: true, DataFilters: [isnotnull(r_name#51), (r_name#51 = ASIA), isnotnull(r_regionkey#50L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/region.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_name), EqualTo(r_name,ASIA), IsNotNull(r_regionkey)], ReadSchema: struct<r_regionkey:bigint,r_name:string>

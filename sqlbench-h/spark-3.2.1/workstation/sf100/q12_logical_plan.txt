@@ -1,0 +1,10 @@
+Sort [l_shipmode#88 ASC NULLS FIRST], true
++- Aggregate [l_shipmode#88], [l_shipmode#88, sum(CASE WHEN ((o_orderpriority#61 = 1-URGENT) OR (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END) AS high_line_count#517L, sum(CASE WHEN (NOT (o_orderpriority#61 = 1-URGENT) AND NOT (o_orderpriority#61 = 2-HIGH)) THEN 1 ELSE 0 END) AS low_line_count#518L]
+   +- Project [o_orderpriority#61, l_shipmode#88]
+      +- Join Inner, (o_orderkey#56L = l_orderkey#74L)
+         :- Project [o_orderkey#56L, o_orderpriority#61]
+         :  +- Filter isnotnull(o_orderkey#56L)
+         :     +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet
+         +- Project [l_orderkey#74L, l_shipmode#88]
+            +- Filter ((((isnotnull(l_commitdate#85) AND isnotnull(l_receiptdate#86)) AND isnotnull(l_shipdate#84)) AND ((((l_shipmode#88 IN (MAIL,TRUCK) AND (l_commitdate#85 < l_receiptdate#86)) AND (l_shipdate#84 < l_commitdate#85)) AND (l_receiptdate#86 >= 1997-01-01)) AND (l_receiptdate#86 < 1998-01-01))) AND isnotnull(l_orderkey#74L))
+               +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet

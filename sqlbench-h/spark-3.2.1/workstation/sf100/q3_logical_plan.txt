@@ -1,0 +1,17 @@
+GlobalLimit 10
++- LocalLimit 10
+   +- Sort [revenue#289 DESC NULLS LAST, o_orderdate#60 ASC NULLS FIRST], true
+      +- Aggregate [l_orderkey#74L, o_orderdate#60, o_shippriority#63], [l_orderkey#74L, sum(CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true)) AS revenue#289, o_orderdate#60, o_shippriority#63]
+         +- Project [o_orderdate#60, o_shippriority#63, l_orderkey#74L, l_extendedprice#79, l_discount#80]
+            +- Join Inner, (l_orderkey#74L = o_orderkey#56L)
+               :- Project [o_orderkey#56L, o_orderdate#60, o_shippriority#63]
+               :  +- Join Inner, (c_custkey#106L = o_custkey#57L)
+               :     :- Project [c_custkey#106L]
+               :     :  +- Filter ((isnotnull(c_mktsegment#112) AND (c_mktsegment#112 = MACHINERY)) AND isnotnull(c_custkey#106L))
+               :     :     +- Relation [c_custkey#106L,c_name#107,c_address#108,c_nationkey#109L,c_phone#110,c_acctbal#111,c_mktsegment#112,c_comment#113] parquet
+               :     +- Project [o_orderkey#56L, o_custkey#57L, o_orderdate#60, o_shippriority#63]
+               :        +- Filter ((isnotnull(o_orderdate#60) AND (o_orderdate#60 < 1995-03-26)) AND (isnotnull(o_custkey#57L) AND isnotnull(o_orderkey#56L)))
+               :           +- Relation [o_orderkey#56L,o_custkey#57L,o_orderstatus#58,o_totalprice#59,o_orderdate#60,o_orderpriority#61,o_clerk#62,o_shippriority#63,o_comment#64] parquet
+               +- Project [l_orderkey#74L, l_extendedprice#79, l_discount#80]
+                  +- Filter ((isnotnull(l_shipdate#84) AND (l_shipdate#84 > 1995-03-26)) AND isnotnull(l_orderkey#74L))
+                     +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet

@@ -1,0 +1,47 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- Sort [s_acctbal#5 DESC NULLS LAST, n_name#43 ASC NULLS FIRST, s_name#1 ASC NULLS FIRST, p_partkey#14L ASC NULLS FIRST], true
+      +- Project [s_acctbal#5, s_name#1, n_name#43, p_partkey#14L, p_mfgr#16, s_address#2, s_phone#4, s_comment#6]
+         +- Join Inner, (n_regionkey#44L = r_regionkey#50L)
+            :- Project [p_partkey#14L, p_mfgr#16, s_name#1, s_address#2, s_phone#4, s_acctbal#5, s_comment#6, n_name#43, n_regionkey#44L]
+            :  +- Join Inner, (s_nationkey#3L = n_nationkey#42L)
+            :     :- Project [p_partkey#14L, p_mfgr#16, s_name#1, s_address#2, s_nationkey#3L, s_phone#4, s_acctbal#5, s_comment#6]
+            :     :  +- Join Inner, (s_suppkey#0L = ps_suppkey#33L)
+            :     :     :- Project [p_partkey#14L, p_mfgr#16, ps_suppkey#33L]
+            :     :     :  +- Join Inner, ((ps_supplycost#35 = min(ps_supplycost)#247) AND (p_partkey#14L = ps_partkey#248L))
+            :     :     :     :- Project [p_partkey#14L, p_mfgr#16, ps_suppkey#33L, ps_supplycost#35]
+            :     :     :     :  +- Join Inner, (p_partkey#14L = ps_partkey#32L)
+            :     :     :     :     :- Project [p_partkey#14L, p_mfgr#16]
+            :     :     :     :     :  +- Filter (((isnotnull(p_size#19) AND isnotnull(p_type#18)) AND ((p_size#19 = 2) AND EndsWith(p_type#18, STEEL))) AND isnotnull(p_partkey#14L))
+            :     :     :     :     :     +- Relation [p_partkey#14L,p_name#15,p_mfgr#16,p_brand#17,p_type#18,p_size#19,p_container#20,p_retailprice#21,p_comment#22] parquet
+            :     :     :     :     +- Project [ps_partkey#32L, ps_suppkey#33L, ps_supplycost#35]
+            :     :     :     :        +- Filter (isnotnull(ps_partkey#32L) AND (isnotnull(ps_supplycost#35) AND isnotnull(ps_suppkey#33L)))
+            :     :     :     :           +- Relation [ps_partkey#32L,ps_suppkey#33L,ps_availqty#34,ps_supplycost#35,ps_comment#36] parquet
+            :     :     :     +- Filter isnotnull(min(ps_supplycost)#247)
+            :     :     :        +- Aggregate [ps_partkey#248L], [min(ps_supplycost#251) AS min(ps_supplycost)#247, ps_partkey#248L]
+            :     :     :           +- Project [ps_partkey#248L, ps_supplycost#251]
+            :     :     :              +- Join Inner, (n_regionkey#262L = r_regionkey#264L)
+            :     :     :                 :- Project [ps_partkey#248L, ps_supplycost#251, n_regionkey#262L]
+            :     :     :                 :  +- Join Inner, (s_nationkey#256L = n_nationkey#260L)
+            :     :     :                 :     :- Project [ps_partkey#248L, ps_supplycost#251, s_nationkey#256L]
+            :     :     :                 :     :  +- Join Inner, (s_suppkey#253L = ps_suppkey#249L)
+            :     :     :                 :     :     :- Project [ps_partkey#248L, ps_suppkey#249L, ps_supplycost#251]
+            :     :     :                 :     :     :  +- Filter (isnotnull(ps_suppkey#249L) AND isnotnull(ps_partkey#248L))
+            :     :     :                 :     :     :     +- Relation [ps_partkey#248L,ps_suppkey#249L,ps_availqty#250,ps_supplycost#251,ps_comment#252] parquet
+            :     :     :                 :     :     +- Project [s_suppkey#253L, s_nationkey#256L]
+            :     :     :                 :     :        +- Filter (isnotnull(s_suppkey#253L) AND isnotnull(s_nationkey#256L))
+            :     :     :                 :     :           +- Relation [s_suppkey#253L,s_name#254,s_address#255,s_nationkey#256L,s_phone#257,s_acctbal#258,s_comment#259] parquet
+            :     :     :                 :     +- Project [n_nationkey#260L, n_regionkey#262L]
+            :     :     :                 :        +- Filter (isnotnull(n_nationkey#260L) AND isnotnull(n_regionkey#262L))
+            :     :     :                 :           +- Relation [n_nationkey#260L,n_name#261,n_regionkey#262L,n_comment#263] parquet
+            :     :     :                 +- Project [r_regionkey#264L]
+            :     :     :                    +- Filter ((isnotnull(r_name#265) AND (r_name#265 = MIDDLE EAST)) AND isnotnull(r_regionkey#264L))
+            :     :     :                       +- Relation [r_regionkey#264L,r_name#265,r_comment#266] parquet
+            :     :     +- Filter (isnotnull(s_suppkey#0L) AND isnotnull(s_nationkey#3L))
+            :     :        +- Relation [s_suppkey#0L,s_name#1,s_address#2,s_nationkey#3L,s_phone#4,s_acctbal#5,s_comment#6] parquet
+            :     +- Project [n_nationkey#42L, n_name#43, n_regionkey#44L]
+            :        +- Filter (isnotnull(n_nationkey#42L) AND isnotnull(n_regionkey#44L))
+            :           +- Relation [n_nationkey#42L,n_name#43,n_regionkey#44L,n_comment#45] parquet
+            +- Project [r_regionkey#50L]
+               +- Filter ((isnotnull(r_name#51) AND (r_name#51 = MIDDLE EAST)) AND isnotnull(r_regionkey#50L))
+                  +- Relation [r_regionkey#50L,r_name#51,r_comment#52] parquet

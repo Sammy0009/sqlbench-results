@@ -1,0 +1,60 @@
+AdaptiveSparkPlan isFinalPlan=true
++- == Final Plan ==
+   TakeOrderedAndProject(limit=10, orderBy=[revenue#289 DESC NULLS LAST,o_orderdate#60 ASC NULLS FIRST], output=[l_orderkey#74L,revenue#289,o_orderdate#60,o_shippriority#63])
+   +- *(9) HashAggregate(keys=[l_orderkey#74L, o_orderdate#60, o_shippriority#63], functions=[sum(CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true))], output=[l_orderkey#74L, revenue#289, o_orderdate#60, o_shippriority#63])
+      +- *(9) HashAggregate(keys=[l_orderkey#74L, o_orderdate#60, o_shippriority#63], functions=[partial_sum(CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true))], output=[l_orderkey#74L, o_orderdate#60, o_shippriority#63, sum#297, isEmpty#298])
+         +- *(9) Project [o_orderdate#60, o_shippriority#63, l_orderkey#74L, l_extendedprice#79, l_discount#80]
+            +- *(9) SortMergeJoin [o_orderkey#56L], [l_orderkey#74L], Inner
+               :- *(7) Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+               :  +- AQEShuffleRead coalesced
+               :     +- ShuffleQueryStage 3
+               :        +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#904]
+               :           +- *(6) Project [o_orderkey#56L, o_orderdate#60, o_shippriority#63]
+               :              +- *(6) SortMergeJoin [c_custkey#106L], [o_custkey#57L], Inner
+               :                 :- *(4) Sort [c_custkey#106L ASC NULLS FIRST], false, 0
+               :                 :  +- AQEShuffleRead coalesced
+               :                 :     +- ShuffleQueryStage 0
+               :                 :        +- Exchange hashpartitioning(c_custkey#106L, 200), ENSURE_REQUIREMENTS, [id=#732]
+               :                 :           +- *(1) Project [c_custkey#106L]
+               :                 :              +- *(1) Filter ((isnotnull(c_mktsegment#112) AND (c_mktsegment#112 = MACHINERY)) AND isnotnull(c_custkey#106L))
+               :                 :                 +- *(1) ColumnarToRow
+               :                 :                    +- FileScan parquet [c_custkey#106L,c_mktsegment#112] Batched: true, DataFilters: [isnotnull(c_mktsegment#112), (c_mktsegment#112 = MACHINERY), isnotnull(c_custkey#106L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_mktsegment), EqualTo(c_mktsegment,MACHINERY), IsNotNull(c_custkey)], ReadSchema: struct<c_custkey:bigint,c_mktsegment:string>
+               :                 +- *(5) Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+               :                    +- AQEShuffleRead coalesced
+               :                       +- ShuffleQueryStage 1
+               :                          +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#751]
+               :                             +- *(2) Filter (((isnotnull(o_orderdate#60) AND (o_orderdate#60 < 1995-03-26)) AND isnotnull(o_custkey#57L)) AND isnotnull(o_orderkey#56L))
+               :                                +- *(2) ColumnarToRow
+               :                                   +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_orderdate#60,o_shippriority#63] Batched: true, DataFilters: [isnotnull(o_orderdate#60), (o_orderdate#60 < 1995-03-26), isnotnull(o_custkey#57L), isnotnull(o_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_orderdate), LessThan(o_orderdate,1995-03-26), IsNotNull(o_custkey), IsNotNull(o_orde..., ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_orderdate:date,o_shippriority:int>
+               +- *(8) Sort [l_orderkey#74L ASC NULLS FIRST], false, 0
+                  +- AQEShuffleRead coalesced
+                     +- ShuffleQueryStage 2
+                        +- Exchange hashpartitioning(l_orderkey#74L, 200), ENSURE_REQUIREMENTS, [id=#781]
+                           +- *(3) Project [l_orderkey#74L, l_extendedprice#79, l_discount#80]
+                              +- *(3) Filter ((isnotnull(l_shipdate#84) AND (l_shipdate#84 > 1995-03-26)) AND isnotnull(l_orderkey#74L))
+                                 +- *(3) ColumnarToRow
+                                    +- FileScan parquet [l_orderkey#74L,l_extendedprice#79,l_discount#80,l_shipdate#84] Batched: true, DataFilters: [isnotnull(l_shipdate#84), (l_shipdate#84 > 1995-03-26), isnotnull(l_orderkey#74L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_shipdate), GreaterThan(l_shipdate,1995-03-26), IsNotNull(l_orderkey)], ReadSchema: struct<l_orderkey:bigint,l_extendedprice:decimal(11,2),l_discount:decimal(11,2),l_shipdate:date>
++- == Initial Plan ==
+   TakeOrderedAndProject(limit=10, orderBy=[revenue#289 DESC NULLS LAST,o_orderdate#60 ASC NULLS FIRST], output=[l_orderkey#74L,revenue#289,o_orderdate#60,o_shippriority#63])
+   +- HashAggregate(keys=[l_orderkey#74L, o_orderdate#60, o_shippriority#63], functions=[sum(CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true))], output=[l_orderkey#74L, revenue#289, o_orderdate#60, o_shippriority#63])
+      +- HashAggregate(keys=[l_orderkey#74L, o_orderdate#60, o_shippriority#63], functions=[partial_sum(CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(CheckOverflow((1.00 - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true))), DecimalType(24,4), true))], output=[l_orderkey#74L, o_orderdate#60, o_shippriority#63, sum#297, isEmpty#298])
+         +- Project [o_orderdate#60, o_shippriority#63, l_orderkey#74L, l_extendedprice#79, l_discount#80]
+            +- SortMergeJoin [o_orderkey#56L], [l_orderkey#74L], Inner
+               :- Sort [o_orderkey#56L ASC NULLS FIRST], false, 0
+               :  +- Exchange hashpartitioning(o_orderkey#56L, 200), ENSURE_REQUIREMENTS, [id=#692]
+               :     +- Project [o_orderkey#56L, o_orderdate#60, o_shippriority#63]
+               :        +- SortMergeJoin [c_custkey#106L], [o_custkey#57L], Inner
+               :           :- Sort [c_custkey#106L ASC NULLS FIRST], false, 0
+               :           :  +- Exchange hashpartitioning(c_custkey#106L, 200), ENSURE_REQUIREMENTS, [id=#684]
+               :           :     +- Project [c_custkey#106L]
+               :           :        +- Filter ((isnotnull(c_mktsegment#112) AND (c_mktsegment#112 = MACHINERY)) AND isnotnull(c_custkey#106L))
+               :           :           +- FileScan parquet [c_custkey#106L,c_mktsegment#112] Batched: true, DataFilters: [isnotnull(c_mktsegment#112), (c_mktsegment#112 = MACHINERY), isnotnull(c_custkey#106L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_mktsegment), EqualTo(c_mktsegment,MACHINERY), IsNotNull(c_custkey)], ReadSchema: struct<c_custkey:bigint,c_mktsegment:string>
+               :           +- Sort [o_custkey#57L ASC NULLS FIRST], false, 0
+               :              +- Exchange hashpartitioning(o_custkey#57L, 200), ENSURE_REQUIREMENTS, [id=#685]
+               :                 +- Filter (((isnotnull(o_orderdate#60) AND (o_orderdate#60 < 1995-03-26)) AND isnotnull(o_custkey#57L)) AND isnotnull(o_orderkey#56L))
+               :                    +- FileScan parquet [o_orderkey#56L,o_custkey#57L,o_orderdate#60,o_shippriority#63] Batched: true, DataFilters: [isnotnull(o_orderdate#60), (o_orderdate#60 < 1995-03-26), isnotnull(o_custkey#57L), isnotnull(o_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/orders.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(o_orderdate), LessThan(o_orderdate,1995-03-26), IsNotNull(o_custkey), IsNotNull(o_orde..., ReadSchema: struct<o_orderkey:bigint,o_custkey:bigint,o_orderdate:date,o_shippriority:int>
+               +- Sort [l_orderkey#74L ASC NULLS FIRST], false, 0
+                  +- Exchange hashpartitioning(l_orderkey#74L, 200), ENSURE_REQUIREMENTS, [id=#693]
+                     +- Project [l_orderkey#74L, l_extendedprice#79, l_discount#80]
+                        +- Filter ((isnotnull(l_shipdate#84) AND (l_shipdate#84 > 1995-03-26)) AND isnotnull(l_orderkey#74L))
+                           +- FileScan parquet [l_orderkey#74L,l_extendedprice#79,l_discount#80,l_shipdate#84] Batched: true, DataFilters: [isnotnull(l_shipdate#84), (l_shipdate#84 > 1995-03-26), isnotnull(l_orderkey#74L)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpch/sf100-parquet/lineitem.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(l_shipdate), GreaterThan(l_shipdate,1995-03-26), IsNotNull(l_orderkey)], ReadSchema: struct<l_orderkey:bigint,l_extendedprice:decimal(11,2),l_discount:decimal(11,2),l_shipdate:date>

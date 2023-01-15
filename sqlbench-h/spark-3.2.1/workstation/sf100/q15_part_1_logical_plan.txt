@@ -1,0 +1,16 @@
+CommandResult Execute CreateViewCommand
+   +- CreateViewCommand `revenue0`, [(supplier_no,None), (total_revenue,None)], select
+		l_suppkey,
+		sum(l_extendedprice * (1 - l_discount))
+	from
+		lineitem
+	where
+		l_shipdate >= date '1996-09-01'
+		and l_shipdate < date '1996-09-01' + interval '3' month
+	group by
+		l_suppkey, false, false, LocalTempView, true
+         +- Aggregate [l_suppkey#76L], [l_suppkey#76L, sum(CheckOverflow((promote_precision(cast(l_extendedprice#79 as decimal(12,2))) * promote_precision(cast(CheckOverflow((promote_precision(cast(cast(1 as decimal(1,0)) as decimal(12,2))) - promote_precision(cast(l_discount#80 as decimal(12,2)))), DecimalType(12,2), true) as decimal(12,2)))), DecimalType(24,4), true)) AS sum((l_extendedprice * (1 - l_discount)))#589]
+            +- Filter ((l_shipdate#84 >= 1996-09-01) AND (l_shipdate#84 < 1996-09-01 + INTERVAL '3' MONTH))
+               +- SubqueryAlias lineitem
+                  +- View (`lineitem`, [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89])
+                     +- Relation [l_orderkey#74L,l_partkey#75L,l_suppkey#76L,l_linenumber#77,l_quantity#78,l_extendedprice#79,l_discount#80,l_tax#81,l_returnflag#82,l_linestatus#83,l_shipdate#84,l_commitdate#85,l_receiptdate#86,l_shipinstruct#87,l_shipmode#88,l_comment#89] parquet
