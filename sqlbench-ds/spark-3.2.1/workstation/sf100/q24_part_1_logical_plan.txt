@@ -1,7 +1,7 @@
 Sort [c_last_name#571 ASC NULLS FIRST, c_first_name#570 ASC NULLS FIRST, s_store_name#331 ASC NULLS FIRST], true
-+- Filter (isnotnull(paid#6525) AND (cast(paid#6525 as decimal(33,8)) > cast(scalar-subquery#6526 [] as decimal(33,8))))
-   :  +- Aggregate [CheckOverflow((0.050000 * promote_precision(avg(netpaid#6527))), DecimalType(24,8), true) AS (0.05 * avg(netpaid))#6531]
-   :     +- Aggregate [c_last_name#571, c_first_name#570, s_store_name#331, ca_state#222, s_state#350, i_color#517, i_current_price#505, i_manager_id#520, i_units#518, i_size#515], [MakeDecimal(sum(UnscaledValue(ss_net_profit#686)),17,2) AS netpaid#6527]
++- Filter (isnotnull(paid#7525) AND (cast(paid#7525 as decimal(33,8)) > cast(scalar-subquery#7526 [] as decimal(33,8))))
+   :  +- Aggregate [CheckOverflow((0.050000 * promote_precision(avg(netpaid#7527))), DecimalType(24,8), true) AS (0.05 * avg(netpaid))#7531]
+   :     +- Aggregate [c_last_name#571, c_first_name#570, s_store_name#331, ca_state#222, s_state#350, i_color#517, i_current_price#505, i_manager_id#520, i_units#518, i_size#515], [MakeDecimal(sum(UnscaledValue(ss_net_profit#686)),17,2) AS netpaid#7527]
    :        +- Project [ss_net_profit#686, s_store_name#331, s_state#350, i_current_price#505, i_size#515, i_color#517, i_units#518, i_manager_id#520, c_first_name#570, c_last_name#571, ca_state#222]
    :           +- Join Inner, (((c_current_addr_sk#566 = ca_address_sk#214) AND NOT (c_birth_country#576 = upper(ca_country#224))) AND (s_zip#351 = ca_zip#223))
    :              :- Project [ss_net_profit#686, s_store_name#331, s_state#350, s_zip#351, i_current_price#505, i_size#515, i_color#517, i_units#518, i_manager_id#520, c_current_addr_sk#566, c_first_name#570, c_last_name#571, c_birth_country#576]
@@ -30,8 +30,8 @@ Sort [c_last_name#571 ASC NULLS FIRST, c_first_name#570 ASC NULLS FIRST, s_store
    :              +- Project [ca_address_sk#214, ca_state#222, ca_zip#223, ca_country#224]
    :                 +- Filter ((isnotnull(ca_address_sk#214) AND isnotnull(ca_country#224)) AND isnotnull(ca_zip#223))
    :                    +- Relation [ca_address_sk#214,ca_address_id#215,ca_street_number#216,ca_street_name#217,ca_street_type#218,ca_suite_number#219,ca_city#220,ca_county#221,ca_state#222,ca_zip#223,ca_country#224,ca_gmt_offset#225,ca_location_type#226] parquet
-   +- Aggregate [c_last_name#571, c_first_name#570, s_store_name#331], [c_last_name#571, c_first_name#570, s_store_name#331, sum(netpaid#6527) AS paid#6525]
-      +- Aggregate [c_last_name#571, c_first_name#570, s_store_name#331, ca_state#222, s_state#350, i_color#517, i_current_price#505, i_manager_id#520, i_units#518, i_size#515], [c_last_name#571, c_first_name#570, s_store_name#331, MakeDecimal(sum(UnscaledValue(ss_net_profit#686)),17,2) AS netpaid#6527]
+   +- Aggregate [c_last_name#571, c_first_name#570, s_store_name#331], [c_last_name#571, c_first_name#570, s_store_name#331, sum(netpaid#7527) AS paid#7525]
+      +- Aggregate [c_last_name#571, c_first_name#570, s_store_name#331, ca_state#222, s_state#350, i_color#517, i_current_price#505, i_manager_id#520, i_units#518, i_size#515], [c_last_name#571, c_first_name#570, s_store_name#331, MakeDecimal(sum(UnscaledValue(ss_net_profit#686)),17,2) AS netpaid#7527]
          +- Project [ss_net_profit#686, s_store_name#331, s_state#350, i_current_price#505, i_size#515, i_color#517, i_units#518, i_manager_id#520, c_first_name#570, c_last_name#571, ca_state#222]
             +- Join Inner, (((c_current_addr_sk#566 = ca_address_sk#214) AND NOT (c_birth_country#576 = upper(ca_country#224))) AND (s_zip#351 = ca_zip#223))
                :- Project [ss_net_profit#686, s_store_name#331, s_state#350, s_zip#351, i_current_price#505, i_size#515, i_color#517, i_units#518, i_manager_id#520, c_current_addr_sk#566, c_first_name#570, c_last_name#571, c_birth_country#576]

@@ -3,39 +3,39 @@ diagram:
   title: "Aggregate (unknown)"
   operator: "Aggregate"
   inputs:
-  - title: "Projection: ws_order_number#19549L, ws_ext_ship_cost#19560, ws_net_profit#19565"
+  - title: "Projection: ws_order_number#20926L, ws_ext_ship_cost#20937, ws_net_profit#20942"
     operator: "projection"
     inputs:
-    - title: "Inner Join: Some((ws_web_site_sk#19545 = web_site_sk#66))"
+    - title: "Inner Join: Some((ws_web_site_sk#20922 = web_site_sk#66))"
       operator: "join"
       inputs:
-      - title: "Projection: ws_web_site_sk#19545, ws_order_number#19549L, ws_ext_ship_cost#19560,\
-          \ ws_net_profit#19565"
+      - title: "Projection: ws_web_site_sk#20922, ws_order_number#20926L, ws_ext_ship_cost#20937,\
+          \ ws_net_profit#20942"
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((ws_ship_addr_sk#19543 = ca_address_sk#214))"
+        - title: "Inner Join: Some((ws_ship_addr_sk#20920 = ca_address_sk#214))"
           operator: "join"
           inputs:
-          - title: "Projection: ws_ship_addr_sk#19543, ws_web_site_sk#19545, ws_order_number#19549L,\
-              \ ws_ext_ship_cost#19560, ws_net_profit#19565"
+          - title: "Projection: ws_ship_addr_sk#20920, ws_web_site_sk#20922, ws_order_number#20926L,\
+              \ ws_ext_ship_cost#20937, ws_net_profit#20942"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((ws_ship_date_sk#19534 = d_date_sk#598))"
+            - title: "Inner Join: Some((ws_ship_date_sk#20911 = d_date_sk#598))"
               operator: "join"
               inputs:
-              - title: "LeftSemi Join: Some((ws_order_number#19549L = wr_order_number#465L))"
+              - title: "LeftSemi Join: Some((ws_order_number#20926L = wr_order_number#465L))"
                 operator: "join"
                 inputs:
-                - title: "LeftSemi Join: Some((ws_order_number#19549L = ws_order_number#401L))"
+                - title: "LeftSemi Join: Some((ws_order_number#20926L = ws_order_number#401L))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_ship_date_sk#19534, ws_ship_addr_sk#19543,\
-                      \ ws_web_site_sk#19545, ws_order_number#19549L, ws_ext_ship_cost#19560,\
-                      \ ws_net_profit#19565"
+                  - title: "Projection: ws_ship_date_sk#20911, ws_ship_addr_sk#20920,\
+                      \ ws_web_site_sk#20922, ws_order_number#20926L, ws_ext_ship_cost#20937,\
+                      \ ws_net_profit#20942"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((isnotnull(ws_ship_date_sk#19534) AND isnotnull(ws_ship_addr_sk#19543))\
-                        \ AND isnotnull(ws_web_site_sk#19545))"
+                    - title: "Filter: ((isnotnull(ws_ship_date_sk#20911) AND isnotnull(ws_ship_addr_sk#20920))\
+                        \ AND isnotnull(ws_web_site_sk#20922))"
                       operator: "filter"
                       inputs:
                       - title: "web_sales.parquet"
@@ -44,8 +44,8 @@ diagram:
                   - title: "Projection: ws_order_number#401L"
                     operator: "projection"
                     inputs:
-                    - title: "Inner Join: Some(((ws_order_number#401L = ws_order_number#19515L)\
-                        \ AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#19513)))"
+                    - title: "Inner Join: Some(((ws_order_number#401L = ws_order_number#20892L)\
+                        \ AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#20890)))"
                       operator: "join"
                       inputs:
                       - title: "Projection: ws_warehouse_sk#399, ws_order_number#401L"
@@ -57,10 +57,10 @@ diagram:
                           - title: "web_sales.parquet"
                             operator: "scan"
                             inputs: []
-                      - title: "Projection: ws_warehouse_sk#19513, ws_order_number#19515L"
+                      - title: "Projection: ws_warehouse_sk#20890, ws_order_number#20892L"
                         operator: "projection"
                         inputs:
-                        - title: "Filter: (isnotnull(ws_order_number#19515L) AND isnotnull(ws_warehouse_sk#19513))"
+                        - title: "Filter: (isnotnull(ws_order_number#20892L) AND isnotnull(ws_warehouse_sk#20890))"
                           operator: "filter"
                           inputs:
                           - title: "web_sales.parquet"
@@ -84,8 +84,8 @@ diagram:
                     - title: "Projection: ws_order_number#401L"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some(((ws_order_number#401L = ws_order_number#19515L)\
-                          \ AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#19513)))"
+                      - title: "Inner Join: Some(((ws_order_number#401L = ws_order_number#20892L)\
+                          \ AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#20890)))"
                         operator: "join"
                         inputs:
                         - title: "Projection: ws_warehouse_sk#399, ws_order_number#401L"
@@ -97,11 +97,11 @@ diagram:
                             - title: "web_sales.parquet"
                               operator: "scan"
                               inputs: []
-                        - title: "Projection: ws_warehouse_sk#19513, ws_order_number#19515L"
+                        - title: "Projection: ws_warehouse_sk#20890, ws_order_number#20892L"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (isnotnull(ws_order_number#19515L) AND\
-                              \ isnotnull(ws_warehouse_sk#19513))"
+                          - title: "Filter: (isnotnull(ws_order_number#20892L) AND\
+                              \ isnotnull(ws_warehouse_sk#20890))"
                             operator: "filter"
                             inputs:
                             - title: "web_sales.parquet"

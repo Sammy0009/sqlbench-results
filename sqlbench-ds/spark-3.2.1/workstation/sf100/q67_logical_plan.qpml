@@ -9,7 +9,7 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Filter: (rk#14833 <= 100)"
+      - title: "Filter: (rk#16216 <= 100)"
         operator: "filter"
         inputs:
         - title: "Window (unknown)"

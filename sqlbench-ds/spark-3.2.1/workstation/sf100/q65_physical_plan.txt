@@ -1,101 +1,101 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   TakeOrderedAndProject(limit=100, orderBy=[s_store_name#331 ASC NULLS FIRST,i_item_desc#504 ASC NULLS FIRST], output=[s_store_name#331,i_item_desc#504,revenue#13311,i_current_price#505,i_wholesale_cost#506,i_brand#508])
-   +- *(10) Project [s_store_name#331, i_item_desc#504, revenue#13311, i_current_price#505, i_wholesale_cost#506, i_brand#508]
-      +- *(10) BroadcastHashJoin [ss_store_sk#13319], [ss_store_sk#671], Inner, BuildRight, (cast(revenue#13311 as decimal(23,7)) <= CheckOverflow((0.100000 * promote_precision(ave#13310)), DecimalType(23,7), true)), false
+   TakeOrderedAndProject(limit=100, orderBy=[s_store_name#331 ASC NULLS FIRST,i_item_desc#504 ASC NULLS FIRST], output=[s_store_name#331,i_item_desc#504,revenue#14694,i_current_price#505,i_wholesale_cost#506,i_brand#508])
+   +- *(10) Project [s_store_name#331, i_item_desc#504, revenue#14694, i_current_price#505, i_wholesale_cost#506, i_brand#508]
+      +- *(10) BroadcastHashJoin [ss_store_sk#14702], [ss_store_sk#671], Inner, BuildRight, (cast(revenue#14694 as decimal(23,7)) <= CheckOverflow((0.100000 * promote_precision(ave#14693)), DecimalType(23,7), true)), false
          :- AQEShuffleRead local
          :  +- ShuffleQueryStage 7
-         :     +- Exchange hashpartitioning(ss_store_sk#13319, 200), ENSURE_REQUIREMENTS, [id=#112169]
-         :        +- *(7) Project [s_store_name#331, ss_store_sk#13319, revenue#13311, i_item_desc#504, i_current_price#505, i_wholesale_cost#506, i_brand#508]
-         :           +- *(7) BroadcastHashJoin [ss_item_sk#13314], [i_item_sk#500], Inner, BuildRight, false
-         :              :- *(7) Project [s_store_name#331, ss_store_sk#13319, ss_item_sk#13314, revenue#13311]
-         :              :  +- *(7) BroadcastHashJoin [s_store_sk#326], [ss_store_sk#13319], Inner, BuildLeft, false
+         :     +- Exchange hashpartitioning(ss_store_sk#14702, 200), ENSURE_REQUIREMENTS, [id=#134607]
+         :        +- *(7) Project [s_store_name#331, ss_store_sk#14702, revenue#14694, i_item_desc#504, i_current_price#505, i_wholesale_cost#506, i_brand#508]
+         :           +- *(7) BroadcastHashJoin [ss_item_sk#14697], [i_item_sk#500], Inner, BuildRight, false
+         :              :- *(7) Project [s_store_name#331, ss_store_sk#14702, ss_item_sk#14697, revenue#14694]
+         :              :  +- *(7) BroadcastHashJoin [s_store_sk#326], [ss_store_sk#14702], Inner, BuildLeft, false
          :              :     :- BroadcastQueryStage 0
-         :              :     :  +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#111607]
+         :              :     :  +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#134045]
          :              :     :     +- *(1) Filter isnotnull(s_store_sk#326)
          :              :     :        +- *(1) ColumnarToRow
          :              :     :           +- FileScan parquet [s_store_sk#326,s_store_name#331] Batched: true, DataFilters: [isnotnull(s_store_sk#326)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(s_store_sk)], ReadSchema: struct<s_store_sk:int,s_store_name:string>
-         :              :     +- *(7) Filter isnotnull(revenue#13311)
-         :              :        +- *(7) HashAggregate(keys=[ss_store_sk#13319, ss_item_sk#13314], functions=[sum(UnscaledValue(ss_sales_price#13325))], output=[ss_store_sk#13319, ss_item_sk#13314, revenue#13311])
+         :              :     +- *(7) Filter isnotnull(revenue#14694)
+         :              :        +- *(7) HashAggregate(keys=[ss_store_sk#14702, ss_item_sk#14697], functions=[sum(UnscaledValue(ss_sales_price#14708))], output=[ss_store_sk#14702, ss_item_sk#14697, revenue#14694])
          :              :           +- AQEShuffleRead coalesced
          :              :              +- ShuffleQueryStage 5
-         :              :                 +- Exchange hashpartitioning(ss_store_sk#13319, ss_item_sk#13314, 200), ENSURE_REQUIREMENTS, [id=#111979]
-         :              :                    +- *(5) HashAggregate(keys=[ss_store_sk#13319, ss_item_sk#13314], functions=[partial_sum(UnscaledValue(ss_sales_price#13325))], output=[ss_store_sk#13319, ss_item_sk#13314, sum#13373L])
-         :              :                       +- *(5) Project [ss_item_sk#13314, ss_store_sk#13319, ss_sales_price#13325]
-         :              :                          +- *(5) BroadcastHashJoin [ss_sold_date_sk#13312], [d_date_sk#13335], Inner, BuildRight, false
-         :              :                             :- *(5) Filter ((isnotnull(ss_sold_date_sk#13312) AND isnotnull(ss_store_sk#13319)) AND isnotnull(ss_item_sk#13314))
+         :              :                 +- Exchange hashpartitioning(ss_store_sk#14702, ss_item_sk#14697, 200), ENSURE_REQUIREMENTS, [id=#134417]
+         :              :                    +- *(5) HashAggregate(keys=[ss_store_sk#14702, ss_item_sk#14697], functions=[partial_sum(UnscaledValue(ss_sales_price#14708))], output=[ss_store_sk#14702, ss_item_sk#14697, sum#14756L])
+         :              :                       +- *(5) Project [ss_item_sk#14697, ss_store_sk#14702, ss_sales_price#14708]
+         :              :                          +- *(5) BroadcastHashJoin [ss_sold_date_sk#14695], [d_date_sk#14718], Inner, BuildRight, false
+         :              :                             :- *(5) Filter ((isnotnull(ss_sold_date_sk#14695) AND isnotnull(ss_store_sk#14702)) AND isnotnull(ss_item_sk#14697))
          :              :                             :  +- *(5) ColumnarToRow
-         :              :                             :     +- FileScan parquet [ss_sold_date_sk#13312,ss_item_sk#13314,ss_store_sk#13319,ss_sales_price#13325] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#13312), isnotnull(ss_store_sk#13319), isnotnull(ss_item_sk#13314)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk), IsNotNull(ss_item_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_store_sk:int,ss_sales_price:decimal(7,2)>
+         :              :                             :     +- FileScan parquet [ss_sold_date_sk#14695,ss_item_sk#14697,ss_store_sk#14702,ss_sales_price#14708] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#14695), isnotnull(ss_store_sk#14702), isnotnull(ss_item_sk#14697)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk), IsNotNull(ss_item_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_store_sk:int,ss_sales_price:decimal(7,2)>
          :              :                             +- BroadcastQueryStage 1
-         :              :                                +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#111624]
-         :              :                                   +- *(2) Project [d_date_sk#13335]
-         :              :                                      +- *(2) Filter (((isnotnull(d_month_seq#13338) AND (d_month_seq#13338 >= 1191)) AND (d_month_seq#13338 <= 1202)) AND isnotnull(d_date_sk#13335))
+         :              :                                +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#134062]
+         :              :                                   +- *(2) Project [d_date_sk#14718]
+         :              :                                      +- *(2) Filter (((isnotnull(d_month_seq#14721) AND (d_month_seq#14721 >= 1191)) AND (d_month_seq#14721 <= 1202)) AND isnotnull(d_date_sk#14718))
          :              :                                         +- *(2) ColumnarToRow
-         :              :                                            +- FileScan parquet [d_date_sk#13335,d_month_seq#13338] Batched: true, DataFilters: [isnotnull(d_month_seq#13338), (d_month_seq#13338 >= 1191), (d_month_seq#13338 <= 1202), isnotnul..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_month_seq), GreaterThanOrEqual(d_month_seq,1191), LessThanOrEqual(d_month_seq,1202),..., ReadSchema: struct<d_date_sk:int,d_month_seq:int>
+         :              :                                            +- FileScan parquet [d_date_sk#14718,d_month_seq#14721] Batched: true, DataFilters: [isnotnull(d_month_seq#14721), (d_month_seq#14721 >= 1191), (d_month_seq#14721 <= 1202), isnotnul..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_month_seq), GreaterThanOrEqual(d_month_seq,1191), LessThanOrEqual(d_month_seq,1202),..., ReadSchema: struct<d_date_sk:int,d_month_seq:int>
          :              +- BroadcastQueryStage 2
-         :                 +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#111649]
+         :                 +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#134087]
          :                    +- *(3) Filter isnotnull(i_item_sk#500)
          :                       +- *(3) ColumnarToRow
          :                          +- FileScan parquet [i_item_sk#500,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand#508] Batched: true, DataFilters: [isnotnull(i_item_sk#500)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk)], ReadSchema: struct<i_item_sk:int,i_item_desc:string,i_current_price:decimal(7,2),i_wholesale_cost:decimal(7,2...
          +- BroadcastQueryStage 9
-            +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#112284]
-               +- *(9) HashAggregate(keys=[ss_store_sk#671], functions=[avg(revenue#13309)], output=[ss_store_sk#671, ave#13310])
+            +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#134722]
+               +- *(9) HashAggregate(keys=[ss_store_sk#671], functions=[avg(revenue#14692)], output=[ss_store_sk#671, ave#14693])
                   +- AQEShuffleRead coalesced
                      +- ShuffleQueryStage 8
-                        +- Exchange hashpartitioning(ss_store_sk#671, 200), ENSURE_REQUIREMENTS, [id=#112227]
-                           +- *(8) HashAggregate(keys=[ss_store_sk#671], functions=[partial_avg(revenue#13309)], output=[ss_store_sk#671, sum#13376, count#13377L])
-                              +- *(8) HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, revenue#13309])
+                        +- Exchange hashpartitioning(ss_store_sk#671, 200), ENSURE_REQUIREMENTS, [id=#134665]
+                           +- *(8) HashAggregate(keys=[ss_store_sk#671], functions=[partial_avg(revenue#14692)], output=[ss_store_sk#671, sum#14759, count#14760L])
+                              +- *(8) HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, revenue#14692])
                                  +- AQEShuffleRead coalesced
                                     +- ShuffleQueryStage 6
-                                       +- Exchange hashpartitioning(ss_store_sk#671, ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#112017]
-                                          +- *(6) HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[partial_sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, ss_item_sk#666, sum#13379L])
+                                       +- Exchange hashpartitioning(ss_store_sk#671, ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#134455]
+                                          +- *(6) HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[partial_sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, ss_item_sk#666, sum#14762L])
                                              +- *(6) Project [ss_item_sk#666, ss_store_sk#671, ss_sales_price#677]
                                                 +- *(6) BroadcastHashJoin [ss_sold_date_sk#664], [d_date_sk#598], Inner, BuildRight, false
                                                    :- *(6) Filter (isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_store_sk#671))
                                                    :  +- *(6) ColumnarToRow
                                                    :     +- FileScan parquet [ss_sold_date_sk#664,ss_item_sk#666,ss_store_sk#671,ss_sales_price#677] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#664), isnotnull(ss_store_sk#671)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_store_sk:int,ss_sales_price:decimal(7,2)>
                                                    +- BroadcastQueryStage 4
-                                                      +- ReusedExchange [d_date_sk#598], BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#111624]
+                                                      +- ReusedExchange [d_date_sk#598], BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#134062]
 +- == Initial Plan ==
-   TakeOrderedAndProject(limit=100, orderBy=[s_store_name#331 ASC NULLS FIRST,i_item_desc#504 ASC NULLS FIRST], output=[s_store_name#331,i_item_desc#504,revenue#13311,i_current_price#505,i_wholesale_cost#506,i_brand#508])
-   +- Project [s_store_name#331, i_item_desc#504, revenue#13311, i_current_price#505, i_wholesale_cost#506, i_brand#508]
-      +- SortMergeJoin [ss_store_sk#13319], [ss_store_sk#671], Inner, (cast(revenue#13311 as decimal(23,7)) <= CheckOverflow((0.100000 * promote_precision(ave#13310)), DecimalType(23,7), true))
-         :- Sort [ss_store_sk#13319 ASC NULLS FIRST], false, 0
-         :  +- Exchange hashpartitioning(ss_store_sk#13319, 200), ENSURE_REQUIREMENTS, [id=#111555]
-         :     +- Project [s_store_name#331, ss_store_sk#13319, revenue#13311, i_item_desc#504, i_current_price#505, i_wholesale_cost#506, i_brand#508]
-         :        +- BroadcastHashJoin [ss_item_sk#13314], [i_item_sk#500], Inner, BuildRight, false
-         :           :- Project [s_store_name#331, ss_store_sk#13319, ss_item_sk#13314, revenue#13311]
-         :           :  +- BroadcastHashJoin [s_store_sk#326], [ss_store_sk#13319], Inner, BuildLeft, false
-         :           :     :- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#111535]
+   TakeOrderedAndProject(limit=100, orderBy=[s_store_name#331 ASC NULLS FIRST,i_item_desc#504 ASC NULLS FIRST], output=[s_store_name#331,i_item_desc#504,revenue#14694,i_current_price#505,i_wholesale_cost#506,i_brand#508])
+   +- Project [s_store_name#331, i_item_desc#504, revenue#14694, i_current_price#505, i_wholesale_cost#506, i_brand#508]
+      +- SortMergeJoin [ss_store_sk#14702], [ss_store_sk#671], Inner, (cast(revenue#14694 as decimal(23,7)) <= CheckOverflow((0.100000 * promote_precision(ave#14693)), DecimalType(23,7), true))
+         :- Sort [ss_store_sk#14702 ASC NULLS FIRST], false, 0
+         :  +- Exchange hashpartitioning(ss_store_sk#14702, 200), ENSURE_REQUIREMENTS, [id=#133993]
+         :     +- Project [s_store_name#331, ss_store_sk#14702, revenue#14694, i_item_desc#504, i_current_price#505, i_wholesale_cost#506, i_brand#508]
+         :        +- BroadcastHashJoin [ss_item_sk#14697], [i_item_sk#500], Inner, BuildRight, false
+         :           :- Project [s_store_name#331, ss_store_sk#14702, ss_item_sk#14697, revenue#14694]
+         :           :  +- BroadcastHashJoin [s_store_sk#326], [ss_store_sk#14702], Inner, BuildLeft, false
+         :           :     :- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#133973]
          :           :     :  +- Filter isnotnull(s_store_sk#326)
          :           :     :     +- FileScan parquet [s_store_sk#326,s_store_name#331] Batched: true, DataFilters: [isnotnull(s_store_sk#326)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(s_store_sk)], ReadSchema: struct<s_store_sk:int,s_store_name:string>
-         :           :     +- Filter isnotnull(revenue#13311)
-         :           :        +- HashAggregate(keys=[ss_store_sk#13319, ss_item_sk#13314], functions=[sum(UnscaledValue(ss_sales_price#13325))], output=[ss_store_sk#13319, ss_item_sk#13314, revenue#13311])
-         :           :           +- Exchange hashpartitioning(ss_store_sk#13319, ss_item_sk#13314, 200), ENSURE_REQUIREMENTS, [id=#111531]
-         :           :              +- HashAggregate(keys=[ss_store_sk#13319, ss_item_sk#13314], functions=[partial_sum(UnscaledValue(ss_sales_price#13325))], output=[ss_store_sk#13319, ss_item_sk#13314, sum#13373L])
-         :           :                 +- Project [ss_item_sk#13314, ss_store_sk#13319, ss_sales_price#13325]
-         :           :                    +- BroadcastHashJoin [ss_sold_date_sk#13312], [d_date_sk#13335], Inner, BuildRight, false
-         :           :                       :- Filter ((isnotnull(ss_sold_date_sk#13312) AND isnotnull(ss_store_sk#13319)) AND isnotnull(ss_item_sk#13314))
-         :           :                       :  +- FileScan parquet [ss_sold_date_sk#13312,ss_item_sk#13314,ss_store_sk#13319,ss_sales_price#13325] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#13312), isnotnull(ss_store_sk#13319), isnotnull(ss_item_sk#13314)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk), IsNotNull(ss_item_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_store_sk:int,ss_sales_price:decimal(7,2)>
-         :           :                       +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#111526]
-         :           :                          +- Project [d_date_sk#13335]
-         :           :                             +- Filter (((isnotnull(d_month_seq#13338) AND (d_month_seq#13338 >= 1191)) AND (d_month_seq#13338 <= 1202)) AND isnotnull(d_date_sk#13335))
-         :           :                                +- FileScan parquet [d_date_sk#13335,d_month_seq#13338] Batched: true, DataFilters: [isnotnull(d_month_seq#13338), (d_month_seq#13338 >= 1191), (d_month_seq#13338 <= 1202), isnotnul..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_month_seq), GreaterThanOrEqual(d_month_seq,1191), LessThanOrEqual(d_month_seq,1202),..., ReadSchema: struct<d_date_sk:int,d_month_seq:int>
-         :           +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#111539]
+         :           :     +- Filter isnotnull(revenue#14694)
+         :           :        +- HashAggregate(keys=[ss_store_sk#14702, ss_item_sk#14697], functions=[sum(UnscaledValue(ss_sales_price#14708))], output=[ss_store_sk#14702, ss_item_sk#14697, revenue#14694])
+         :           :           +- Exchange hashpartitioning(ss_store_sk#14702, ss_item_sk#14697, 200), ENSURE_REQUIREMENTS, [id=#133969]
+         :           :              +- HashAggregate(keys=[ss_store_sk#14702, ss_item_sk#14697], functions=[partial_sum(UnscaledValue(ss_sales_price#14708))], output=[ss_store_sk#14702, ss_item_sk#14697, sum#14756L])
+         :           :                 +- Project [ss_item_sk#14697, ss_store_sk#14702, ss_sales_price#14708]
+         :           :                    +- BroadcastHashJoin [ss_sold_date_sk#14695], [d_date_sk#14718], Inner, BuildRight, false
+         :           :                       :- Filter ((isnotnull(ss_sold_date_sk#14695) AND isnotnull(ss_store_sk#14702)) AND isnotnull(ss_item_sk#14697))
+         :           :                       :  +- FileScan parquet [ss_sold_date_sk#14695,ss_item_sk#14697,ss_store_sk#14702,ss_sales_price#14708] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#14695), isnotnull(ss_store_sk#14702), isnotnull(ss_item_sk#14697)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk), IsNotNull(ss_item_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_store_sk:int,ss_sales_price:decimal(7,2)>
+         :           :                       +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#133964]
+         :           :                          +- Project [d_date_sk#14718]
+         :           :                             +- Filter (((isnotnull(d_month_seq#14721) AND (d_month_seq#14721 >= 1191)) AND (d_month_seq#14721 <= 1202)) AND isnotnull(d_date_sk#14718))
+         :           :                                +- FileScan parquet [d_date_sk#14718,d_month_seq#14721] Batched: true, DataFilters: [isnotnull(d_month_seq#14721), (d_month_seq#14721 >= 1191), (d_month_seq#14721 <= 1202), isnotnul..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_month_seq), GreaterThanOrEqual(d_month_seq,1191), LessThanOrEqual(d_month_seq,1202),..., ReadSchema: struct<d_date_sk:int,d_month_seq:int>
+         :           +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#133977]
          :              +- Filter isnotnull(i_item_sk#500)
          :                 +- FileScan parquet [i_item_sk#500,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand#508] Batched: true, DataFilters: [isnotnull(i_item_sk#500)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_item_sk)], ReadSchema: struct<i_item_sk:int,i_item_desc:string,i_current_price:decimal(7,2),i_wholesale_cost:decimal(7,2...
          +- Sort [ss_store_sk#671 ASC NULLS FIRST], false, 0
-            +- HashAggregate(keys=[ss_store_sk#671], functions=[avg(revenue#13309)], output=[ss_store_sk#671, ave#13310])
-               +- Exchange hashpartitioning(ss_store_sk#671, 200), ENSURE_REQUIREMENTS, [id=#111551]
-                  +- HashAggregate(keys=[ss_store_sk#671], functions=[partial_avg(revenue#13309)], output=[ss_store_sk#671, sum#13376, count#13377L])
-                     +- HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, revenue#13309])
-                        +- Exchange hashpartitioning(ss_store_sk#671, ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#111547]
-                           +- HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[partial_sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, ss_item_sk#666, sum#13379L])
+            +- HashAggregate(keys=[ss_store_sk#671], functions=[avg(revenue#14692)], output=[ss_store_sk#671, ave#14693])
+               +- Exchange hashpartitioning(ss_store_sk#671, 200), ENSURE_REQUIREMENTS, [id=#133989]
+                  +- HashAggregate(keys=[ss_store_sk#671], functions=[partial_avg(revenue#14692)], output=[ss_store_sk#671, sum#14759, count#14760L])
+                     +- HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, revenue#14692])
+                        +- Exchange hashpartitioning(ss_store_sk#671, ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#133985]
+                           +- HashAggregate(keys=[ss_store_sk#671, ss_item_sk#666], functions=[partial_sum(UnscaledValue(ss_sales_price#677))], output=[ss_store_sk#671, ss_item_sk#666, sum#14762L])
                               +- Project [ss_item_sk#666, ss_store_sk#671, ss_sales_price#677]
                                  +- BroadcastHashJoin [ss_sold_date_sk#664], [d_date_sk#598], Inner, BuildRight, false
                                     :- Filter (isnotnull(ss_sold_date_sk#664) AND isnotnull(ss_store_sk#671))
                                     :  +- FileScan parquet [ss_sold_date_sk#664,ss_item_sk#666,ss_store_sk#671,ss_sales_price#677] Batched: true, DataFilters: [isnotnull(ss_sold_date_sk#664), isnotnull(ss_store_sk#671)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_sold_date_sk), IsNotNull(ss_store_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_item_sk:int,ss_store_sk:int,ss_sales_price:decimal(7,2)>
-                                    +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#111542]
+                                    +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#133980]
                                        +- Project [d_date_sk#598]
                                           +- Filter (((isnotnull(d_month_seq#601) AND (d_month_seq#601 >= 1191)) AND (d_month_seq#601 <= 1202)) AND isnotnull(d_date_sk#598))
                                              +- FileScan parquet [d_date_sk#598,d_month_seq#601] Batched: true, DataFilters: [isnotnull(d_month_seq#601), (d_month_seq#601 >= 1191), (d_month_seq#601 <= 1202), isnotnull(d_da..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_month_seq), GreaterThanOrEqual(d_month_seq,1191), LessThanOrEqual(d_month_seq,1202),..., ReadSchema: struct<d_date_sk:int,d_month_seq:int>

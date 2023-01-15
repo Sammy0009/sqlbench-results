@@ -1,10 +1,10 @@
 GlobalLimit 100
 +- LocalLimit 100
    +- Sort [ca_zip#223 ASC NULLS FIRST, ca_city#220 ASC NULLS FIRST], true
-      +- Aggregate [ca_zip#223, ca_city#220], [ca_zip#223, ca_city#220, MakeDecimal(sum(UnscaledValue(ws_sales_price#405)),17,2) AS sum(ws_sales_price)#9362]
+      +- Aggregate [ca_zip#223, ca_city#220], [ca_zip#223, ca_city#220, MakeDecimal(sum(UnscaledValue(ws_sales_price#405)),17,2) AS sum(ws_sales_price)#10744]
          +- Project [ws_sales_price#405, ca_city#220, ca_zip#223]
-            +- Filter (substr(ca_zip#223, 1, 5) IN (85669,86197,88274,83405,86475,85392,85460,80348,81792) OR exists#9366)
-               +- Join ExistenceJoin(exists#9366), (i_item_id#501 = i_item_id#9340)
+            +- Filter (substr(ca_zip#223, 1, 5) IN (85669,86197,88274,83405,86475,85392,85460,80348,81792) OR exists#10748)
+               +- Join ExistenceJoin(exists#10748), (i_item_id#501 = i_item_id#10722)
                   :- Project [ws_sales_price#405, ca_city#220, ca_zip#223, i_item_id#501]
                   :  +- Join Inner, (ws_item_sk#387 = i_item_sk#500)
                   :     :- Project [ws_item_sk#387, ws_sales_price#405, ca_city#220, ca_zip#223]
@@ -28,6 +28,6 @@ GlobalLimit 100
                   :     +- Project [i_item_sk#500, i_item_id#501]
                   :        +- Filter isnotnull(i_item_sk#500)
                   :           +- Relation [i_item_sk#500,i_item_id#501,i_rec_start_date#502,i_rec_end_date#503,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand_id#507,i_brand#508,i_class_id#509,i_class#510,i_category_id#511,i_category#512,i_manufact_id#513,i_manufact#514,i_size#515,i_formulation#516,i_color#517,i_units#518,i_container#519,i_manager_id#520,i_product_name#521] parquet
-                  +- Project [i_item_id#9340]
-                     +- Filter i_item_sk#9339 IN (2,3,5,7,11,13,17,19,23,29)
-                        +- Relation [i_item_sk#9339,i_item_id#9340,i_rec_start_date#9341,i_rec_end_date#9342,i_item_desc#9343,i_current_price#9344,i_wholesale_cost#9345,i_brand_id#9346,i_brand#9347,i_class_id#9348,i_class#9349,i_category_id#9350,i_category#9351,i_manufact_id#9352,i_manufact#9353,i_size#9354,i_formulation#9355,i_color#9356,i_units#9357,i_container#9358,i_manager_id#9359,i_product_name#9360] parquet
+                  +- Project [i_item_id#10722]
+                     +- Filter i_item_sk#10721 IN (2,3,5,7,11,13,17,19,23,29)
+                        +- Relation [i_item_sk#10721,i_item_id#10722,i_rec_start_date#10723,i_rec_end_date#10724,i_item_desc#10725,i_current_price#10726,i_wholesale_cost#10727,i_brand_id#10728,i_brand#10729,i_class_id#10730,i_class#10731,i_category_id#10732,i_category#10733,i_manufact_id#10734,i_manufact#10735,i_size#10736,i_formulation#10737,i_color#10738,i_units#10739,i_container#10740,i_manager_id#10741,i_product_name#10742] parquet

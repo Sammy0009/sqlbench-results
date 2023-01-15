@@ -30,14 +30,14 @@ diagram:
                     \ sr_net_loss#729, cs_net_profit#151"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#6644))"
+                  - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#7720))"
                     operator: "join"
                     inputs:
                     - title: "Projection: ss_item_sk#666, ss_store_sk#671, ss_net_profit#686,\
                         \ sr_net_loss#729, cs_sold_date_sk#118, cs_net_profit#151"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((sr_returned_date_sk#710 = d_date_sk#6616))"
+                      - title: "Inner Join: Some((sr_returned_date_sk#710 = d_date_sk#7692))"
                         operator: "join"
                         inputs:
                         - title: "Projection: ss_item_sk#666, ss_store_sk#671, ss_net_profit#686,\
@@ -117,23 +117,23 @@ diagram:
                                 - title: "date_dim.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: d_date_sk#6616"
+                        - title: "Projection: d_date_sk#7692"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (((isnotnull(d_moy#6624) AND isnotnull(d_year#6622))\
-                              \ AND (((d_moy#6624 >= 4) AND (d_moy#6624 <= 10)) AND\
-                              \ (d_year#6622 = 2002))) AND isnotnull(d_date_sk#6616))"
+                          - title: "Filter: (((isnotnull(d_moy#7700) AND isnotnull(d_year#7698))\
+                              \ AND (((d_moy#7700 >= 4) AND (d_moy#7700 <= 10)) AND\
+                              \ (d_year#7698 = 2002))) AND isnotnull(d_date_sk#7692))"
                             operator: "filter"
                             inputs:
                             - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: d_date_sk#6644"
+                    - title: "Projection: d_date_sk#7720"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (((isnotnull(d_moy#6652) AND isnotnull(d_year#6650))\
-                          \ AND (((d_moy#6652 >= 4) AND (d_moy#6652 <= 10)) AND (d_year#6650\
-                          \ = 2002))) AND isnotnull(d_date_sk#6644))"
+                      - title: "Filter: (((isnotnull(d_moy#7728) AND isnotnull(d_year#7726))\
+                          \ AND (((d_moy#7728 >= 4) AND (d_moy#7728 <= 10)) AND (d_year#7726\
+                          \ = 2002))) AND isnotnull(d_date_sk#7720))"
                         operator: "filter"
                         inputs:
                         - title: "date_dim.parquet"

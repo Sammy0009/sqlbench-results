@@ -9,16 +9,16 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: c_last_name#571, c_first_name#570, ca_city#14905, bought_city#14895,\
-          \ ss_ticket_number#673L, extended_price#14896, extended_tax#14898, list_price#14897"
+      - title: "Projection: c_last_name#571, c_first_name#570, ca_city#16288, bought_city#16278,\
+          \ ss_ticket_number#673L, extended_price#16279, extended_tax#16281, list_price#16280"
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some(((c_current_addr_sk#566 = ca_address_sk#14899)\
-            \ AND NOT (ca_city#14905 = bought_city#14895)))"
+        - title: "Inner Join: Some(((c_current_addr_sk#566 = ca_address_sk#16282)\
+            \ AND NOT (ca_city#16288 = bought_city#16278)))"
           operator: "join"
           inputs:
-          - title: "Projection: ss_ticket_number#673L, bought_city#14895, extended_price#14896,\
-              \ list_price#14897, extended_tax#14898, c_current_addr_sk#566, c_first_name#570,\
+          - title: "Projection: ss_ticket_number#673L, bought_city#16278, extended_price#16279,\
+              \ list_price#16280, extended_tax#16281, c_current_addr_sk#566, c_first_name#570,\
               \ c_last_name#571"
             operator: "projection"
             inputs:
@@ -123,10 +123,10 @@ diagram:
                   - title: "customer.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Projection: ca_address_sk#14899, ca_city#14905"
+          - title: "Projection: ca_address_sk#16282, ca_city#16288"
             operator: "projection"
             inputs:
-            - title: "Filter: (isnotnull(ca_address_sk#14899) AND isnotnull(ca_city#14905))"
+            - title: "Filter: (isnotnull(ca_address_sk#16282) AND isnotnull(ca_city#16288))"
               operator: "filter"
               inputs:
               - title: "customer_address.parquet"

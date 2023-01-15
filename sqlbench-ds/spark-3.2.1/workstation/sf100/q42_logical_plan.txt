@@ -1,7 +1,7 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [sum(ss_ext_sales_price)#9050 DESC NULLS LAST, d_year#604 ASC NULLS FIRST, i_category_id#511 ASC NULLS FIRST, i_category#512 ASC NULLS FIRST], true
-      +- Aggregate [d_year#604, i_category_id#511, i_category#512], [d_year#604, i_category_id#511, i_category#512, MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2) AS sum(ss_ext_sales_price)#9050]
+   +- Sort [sum(ss_ext_sales_price)#10432 DESC NULLS LAST, d_year#604 ASC NULLS FIRST, i_category_id#511 ASC NULLS FIRST, i_category#512 ASC NULLS FIRST], true
+      +- Aggregate [d_year#604, i_category_id#511, i_category#512], [d_year#604, i_category_id#511, i_category#512, MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2) AS sum(ss_ext_sales_price)#10432]
          +- Project [d_year#604, ss_ext_sales_price#679, i_category_id#511, i_category#512]
             +- Join Inner, (ss_item_sk#666 = i_item_sk#500)
                :- Project [d_year#604, ss_item_sk#666, ss_ext_sales_price#679]

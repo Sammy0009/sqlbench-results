@@ -1,7 +1,7 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [ext_price#6166 DESC NULLS LAST, brand#6165 ASC NULLS FIRST, brand_id#6164 ASC NULLS FIRST, i_manufact_id#513 ASC NULLS FIRST, i_manufact#514 ASC NULLS FIRST], true
-      +- Aggregate [i_brand#508, i_brand_id#507, i_manufact_id#513, i_manufact#514], [i_brand_id#507 AS brand_id#6164, i_brand#508 AS brand#6165, i_manufact_id#513, i_manufact#514, MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2) AS ext_price#6166]
+   +- Sort [ext_price#6833 DESC NULLS LAST, brand#6832 ASC NULLS FIRST, brand_id#6831 ASC NULLS FIRST, i_manufact_id#513 ASC NULLS FIRST, i_manufact#514 ASC NULLS FIRST], true
+      +- Aggregate [i_brand#508, i_brand_id#507, i_manufact_id#513, i_manufact#514], [i_brand_id#507 AS brand_id#6831, i_brand#508 AS brand#6832, i_manufact_id#513, i_manufact#514, MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2) AS ext_price#6833]
          +- Project [ss_ext_sales_price#679, i_brand_id#507, i_brand#508, i_manufact_id#513, i_manufact#514]
             +- Join Inner, (NOT (substr(ca_zip#223, 1, 5) = substr(s_zip#351, 1, 5)) AND (ss_store_sk#671 = s_store_sk#326))
                :- Project [ss_store_sk#671, ss_ext_sales_price#679, i_brand_id#507, i_brand#508, i_manufact_id#513, i_manufact#514, ca_zip#223]

@@ -28,14 +28,14 @@ diagram:
                 - title: "Projection: c_current_cdemo_sk#564, c_current_addr_sk#566"
                   operator: "projection"
                   inputs:
-                  - title: "Filter: (exists#8453 OR exists#8454)"
+                  - title: "Filter: (exists#9529 OR exists#9530)"
                     operator: "filter"
                     inputs:
-                    - title: "ExistenceJoin(exists#8454) Join: Some((c_customer_sk#562\
+                    - title: "ExistenceJoin(exists#9530) Join: Some((c_customer_sk#562\
                         \ = cs_ship_customer_sk#125))"
                       operator: "join"
                       inputs:
-                      - title: "ExistenceJoin(exists#8453) Join: Some((c_customer_sk#562\
+                      - title: "ExistenceJoin(exists#9529) Join: Some((c_customer_sk#562\
                           \ = ws_bill_customer_sk#388))"
                         operator: "join"
                         inputs:
@@ -82,7 +82,7 @@ diagram:
                         - title: "Projection: ws_bill_customer_sk#388"
                           operator: "projection"
                           inputs:
-                          - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#8361))"
+                          - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#9437))"
                             operator: "join"
                             inputs:
                             - title: "Projection: ws_sold_date_sk#384, ws_bill_customer_sk#388"
@@ -94,12 +94,12 @@ diagram:
                                 - title: "web_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                            - title: "Projection: d_date_sk#8361"
+                            - title: "Projection: d_date_sk#9437"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (((isnotnull(d_year#8367) AND isnotnull(d_qoy#8371))\
-                                  \ AND ((d_year#8367 = 2002) AND (d_qoy#8371 < 4)))\
-                                  \ AND isnotnull(d_date_sk#8361))"
+                              - title: "Filter: (((isnotnull(d_year#9443) AND isnotnull(d_qoy#9447))\
+                                  \ AND ((d_year#9443 = 2002) AND (d_qoy#9447 < 4)))\
+                                  \ AND isnotnull(d_date_sk#9437))"
                                 operator: "filter"
                                 inputs:
                                 - title: "date_dim.parquet"
@@ -108,7 +108,7 @@ diagram:
                       - title: "Projection: cs_ship_customer_sk#125"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#8389))"
+                        - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#9465))"
                           operator: "join"
                           inputs:
                           - title: "Projection: cs_sold_date_sk#118, cs_ship_customer_sk#125"
@@ -120,12 +120,12 @@ diagram:
                               - title: "catalog_sales.parquet"
                                 operator: "scan"
                                 inputs: []
-                          - title: "Projection: d_date_sk#8389"
+                          - title: "Projection: d_date_sk#9465"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: (((isnotnull(d_year#8395) AND isnotnull(d_qoy#8399))\
-                                \ AND ((d_year#8395 = 2002) AND (d_qoy#8399 < 4)))\
-                                \ AND isnotnull(d_date_sk#8389))"
+                            - title: "Filter: (((isnotnull(d_year#9471) AND isnotnull(d_qoy#9475))\
+                                \ AND ((d_year#9471 = 2002) AND (d_qoy#9475 < 4)))\
+                                \ AND isnotnull(d_date_sk#9465))"
                               operator: "filter"
                               inputs:
                               - title: "date_dim.parquet"

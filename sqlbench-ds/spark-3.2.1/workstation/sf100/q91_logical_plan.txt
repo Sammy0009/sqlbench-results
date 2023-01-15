@@ -1,5 +1,5 @@
-Sort [Returns_Loss#19209 DESC NULLS LAST], true
-+- Aggregate [cc_call_center_id#789, cc_name#794, cc_manager#799, cd_marital_status#50, cd_education_status#51], [cc_call_center_id#789 AS Call_Center#19206, cc_name#794 AS Call_Center_Name#19207, cc_manager#799 AS Manager#19208, MakeDecimal(sum(UnscaledValue(cr_net_loss#274)),17,2) AS Returns_Loss#19209]
+Sort [Returns_Loss#20586 DESC NULLS LAST], true
++- Aggregate [cc_call_center_id#789, cc_name#794, cc_manager#799, cd_marital_status#50, cd_education_status#51], [cc_call_center_id#789 AS Call_Center#20583, cc_name#794 AS Call_Center_Name#20584, cc_manager#799 AS Manager#20585, MakeDecimal(sum(UnscaledValue(cr_net_loss#274)),17,2) AS Returns_Loss#20586]
    +- Project [cc_call_center_id#789, cc_name#794, cc_manager#799, cr_net_loss#274, cd_marital_status#50, cd_education_status#51]
       +- Join Inner, (hd_demo_sk#654 = c_current_hdemo_sk#565)
          :- Project [cc_call_center_id#789, cc_name#794, cc_manager#799, cr_net_loss#274, c_current_hdemo_sk#565, cd_marital_status#50, cd_education_status#51]

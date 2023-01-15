@@ -77,7 +77,7 @@ diagram:
                       - title: "Projection: ws_bill_customer_sk#388"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#14962))"
+                        - title: "Inner Join: Some((ws_sold_date_sk#384 = d_date_sk#16345))"
                           operator: "join"
                           inputs:
                           - title: "Projection: ws_sold_date_sk#384, ws_bill_customer_sk#388"
@@ -89,12 +89,12 @@ diagram:
                               - title: "web_sales.parquet"
                                 operator: "scan"
                                 inputs: []
-                          - title: "Projection: d_date_sk#14962"
+                          - title: "Projection: d_date_sk#16345"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: (((isnotnull(d_year#14968) AND isnotnull(d_moy#14970))\
-                                \ AND (((d_year#14968 = 2001) AND (d_moy#14970 >=\
-                                \ 1)) AND (d_moy#14970 <= 3))) AND isnotnull(d_date_sk#14962))"
+                            - title: "Filter: (((isnotnull(d_year#16351) AND isnotnull(d_moy#16353))\
+                                \ AND (((d_year#16351 = 2001) AND (d_moy#16353 >=\
+                                \ 1)) AND (d_moy#16353 <= 3))) AND isnotnull(d_date_sk#16345))"
                               operator: "filter"
                               inputs:
                               - title: "date_dim.parquet"
@@ -103,7 +103,7 @@ diagram:
                     - title: "Projection: cs_ship_customer_sk#125"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#14990))"
+                      - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#16373))"
                         operator: "join"
                         inputs:
                         - title: "Projection: cs_sold_date_sk#118, cs_ship_customer_sk#125"
@@ -115,12 +115,12 @@ diagram:
                             - title: "catalog_sales.parquet"
                               operator: "scan"
                               inputs: []
-                        - title: "Projection: d_date_sk#14990"
+                        - title: "Projection: d_date_sk#16373"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (((isnotnull(d_year#14996) AND isnotnull(d_moy#14998))\
-                              \ AND (((d_year#14996 = 2001) AND (d_moy#14998 >= 1))\
-                              \ AND (d_moy#14998 <= 3))) AND isnotnull(d_date_sk#14990))"
+                          - title: "Filter: (((isnotnull(d_year#16379) AND isnotnull(d_moy#16381))\
+                              \ AND (((d_year#16379 = 2001) AND (d_moy#16381 >= 1))\
+                              \ AND (d_moy#16381 <= 3))) AND isnotnull(d_date_sk#16373))"
                             operator: "filter"
                             inputs:
                             - title: "date_dim.parquet"

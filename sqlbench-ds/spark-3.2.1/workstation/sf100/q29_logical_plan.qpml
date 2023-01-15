@@ -30,14 +30,14 @@ diagram:
                     \ sr_return_quantity#720, cs_quantity#136"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#7434))"
+                  - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#8510))"
                     operator: "join"
                     inputs:
                     - title: "Projection: ss_item_sk#666, ss_store_sk#671, ss_quantity#674,\
                         \ sr_return_quantity#720, cs_sold_date_sk#118, cs_quantity#136"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((sr_returned_date_sk#710 = d_date_sk#7406))"
+                      - title: "Inner Join: Some((sr_returned_date_sk#710 = d_date_sk#8482))"
                         operator: "join"
                         inputs:
                         - title: "Projection: ss_item_sk#666, ss_store_sk#671, ss_quantity#674,\
@@ -117,21 +117,21 @@ diagram:
                                 - title: "date_dim.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: d_date_sk#7406"
+                        - title: "Projection: d_date_sk#8482"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (((isnotnull(d_moy#7414) AND isnotnull(d_year#7412))\
-                              \ AND (((d_moy#7414 >= 4) AND (d_moy#7414 <= 7)) AND\
-                              \ (d_year#7412 = 2000))) AND isnotnull(d_date_sk#7406))"
+                          - title: "Filter: (((isnotnull(d_moy#8490) AND isnotnull(d_year#8488))\
+                              \ AND (((d_moy#8490 >= 4) AND (d_moy#8490 <= 7)) AND\
+                              \ (d_year#8488 = 2000))) AND isnotnull(d_date_sk#8482))"
                             operator: "filter"
                             inputs:
                             - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: d_date_sk#7434"
+                    - title: "Projection: d_date_sk#8510"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (d_year#7440 IN (2000,2001,2002) AND isnotnull(d_date_sk#7434))"
+                      - title: "Filter: (d_year#8516 IN (2000,2001,2002) AND isnotnull(d_date_sk#8510))"
                         operator: "filter"
                         inputs:
                         - title: "date_dim.parquet"

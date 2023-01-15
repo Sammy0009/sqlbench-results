@@ -9,8 +9,8 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: gross_margin#8512, i_category#8524, i_class#8525, lochierarchy#8513,\
-          \ rank_within_parent#8514"
+      - title: "Projection: gross_margin#9588, i_category#9600, i_class#9601, lochierarchy#9589,\
+          \ rank_within_parent#9590"
         operator: "projection"
         inputs:
         - title: "Window (unknown)"

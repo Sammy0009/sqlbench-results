@@ -1,8 +1,8 @@
 GlobalLimit 100
 +- LocalLimit 100
    +- Sort [w_warehouse_name#188 ASC NULLS FIRST, i_item_id#501 ASC NULLS FIRST], true
-      +- Filter ((isnotnull(inv_before#6215L) AND isnotnull(inv_after#6216L)) AND (((inv_before#6215L > 0) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) >= 0.666667)) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) <= 1.5)))
-         +- Aggregate [w_warehouse_name#188, i_item_id#501], [w_warehouse_name#188, i_item_id#501, sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END) AS inv_before#6215L, sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END) AS inv_after#6216L]
+      +- Filter ((isnotnull(inv_before#6882L) AND isnotnull(inv_after#6883L)) AND (((inv_before#6882L > 0) AND ((cast(inv_after#6883L as double) / cast(inv_before#6882L as double)) >= 0.666667)) AND ((cast(inv_after#6883L as double) / cast(inv_before#6882L as double)) <= 1.5)))
+         +- Aggregate [w_warehouse_name#188, i_item_id#501], [w_warehouse_name#188, i_item_id#501, sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END) AS inv_before#6882L, sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END) AS inv_after#6883L]
             +- Project [inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501, d_date#600]
                +- Join Inner, (inv_date_sk#240 = d_date_sk#598)
                   :- Project [inv_date_sk#240, inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501]

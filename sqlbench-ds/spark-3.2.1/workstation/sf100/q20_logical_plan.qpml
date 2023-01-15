@@ -10,9 +10,9 @@ diagram:
       operator: "Sort"
       inputs:
       - title: "Projection: i_item_id#501, i_item_desc#504, i_category#512, i_class#510,\
-          \ i_current_price#505, itemrevenue#6184, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#6190)\
-          \ * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#6192)),\
-          \ DecimalType(38,17), true) AS revenueratio#6185"
+          \ i_current_price#505, itemrevenue#6851, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#6857)\
+          \ * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#6859)),\
+          \ DecimalType(38,17), true) AS revenueratio#6852"
         operator: "projection"
         inputs:
         - title: "Window (unknown)"

@@ -1,4 +1,4 @@
-Aggregate [sum(ss_quantity#674) AS sum(ss_quantity)#9833L]
+Aggregate [sum(ss_quantity#674) AS sum(ss_quantity)#11215L]
 +- Project [ss_quantity#674]
    +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#598)
       :- Project [ss_sold_date_sk#664, ss_quantity#674]

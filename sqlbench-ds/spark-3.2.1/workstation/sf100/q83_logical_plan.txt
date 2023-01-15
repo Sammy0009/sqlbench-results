@@ -1,11 +1,11 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [item_id#18043 ASC NULLS FIRST, sr_item_qty#18044L ASC NULLS FIRST], true
-      +- Project [item_id#18043, sr_item_qty#18044L, (((cast(sr_item_qty#18044L as double) / cast(((sr_item_qty#18044L + cr_item_qty#18048L) + wr_item_qty#18052L) as double)) / 3.0) * 100.0) AS sr_dev#18039, cr_item_qty#18048L, (((cast(cr_item_qty#18048L as double) / cast(((sr_item_qty#18044L + cr_item_qty#18048L) + wr_item_qty#18052L) as double)) / 3.0) * 100.0) AS cr_dev#18040, wr_item_qty#18052L, (((cast(wr_item_qty#18052L as double) / cast(((sr_item_qty#18044L + cr_item_qty#18048L) + wr_item_qty#18052L) as double)) / 3.0) * 100.0) AS wr_dev#18041, CheckOverflow((promote_precision(cast(cast(((sr_item_qty#18044L + cr_item_qty#18048L) + wr_item_qty#18052L) as decimal(20,0)) as decimal(21,1))) / 3.0), DecimalType(27,6), true) AS average#18042]
-         +- Join Inner, (item_id#18043 = item_id#18051)
-            :- Project [item_id#18043, sr_item_qty#18044L, cr_item_qty#18048L]
-            :  +- Join Inner, (item_id#18043 = item_id#18047)
-            :     :- Aggregate [i_item_id#501], [i_item_id#501 AS item_id#18043, sum(sr_return_quantity#720) AS sr_item_qty#18044L]
+   +- Sort [item_id#19420 ASC NULLS FIRST, sr_item_qty#19421L ASC NULLS FIRST], true
+      +- Project [item_id#19420, sr_item_qty#19421L, (((cast(sr_item_qty#19421L as double) / cast(((sr_item_qty#19421L + cr_item_qty#19425L) + wr_item_qty#19429L) as double)) / 3.0) * 100.0) AS sr_dev#19416, cr_item_qty#19425L, (((cast(cr_item_qty#19425L as double) / cast(((sr_item_qty#19421L + cr_item_qty#19425L) + wr_item_qty#19429L) as double)) / 3.0) * 100.0) AS cr_dev#19417, wr_item_qty#19429L, (((cast(wr_item_qty#19429L as double) / cast(((sr_item_qty#19421L + cr_item_qty#19425L) + wr_item_qty#19429L) as double)) / 3.0) * 100.0) AS wr_dev#19418, CheckOverflow((promote_precision(cast(cast(((sr_item_qty#19421L + cr_item_qty#19425L) + wr_item_qty#19429L) as decimal(20,0)) as decimal(21,1))) / 3.0), DecimalType(27,6), true) AS average#19419]
+         +- Join Inner, (item_id#19420 = item_id#19428)
+            :- Project [item_id#19420, sr_item_qty#19421L, cr_item_qty#19425L]
+            :  +- Join Inner, (item_id#19420 = item_id#19424)
+            :     :- Aggregate [i_item_id#501], [i_item_id#501 AS item_id#19420, sum(sr_return_quantity#720) AS sr_item_qty#19421L]
             :     :  +- Project [sr_return_quantity#720, i_item_id#501]
             :     :     +- Join Inner, (sr_returned_date_sk#710 = d_date_sk#598)
             :     :        :- Project [sr_returned_date_sk#710, sr_return_quantity#720, i_item_id#501]
@@ -17,60 +17,60 @@ GlobalLimit 100
             :     :        :        +- Filter (isnotnull(i_item_sk#500) AND isnotnull(i_item_id#501))
             :     :        :           +- Relation [i_item_sk#500,i_item_id#501,i_rec_start_date#502,i_rec_end_date#503,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand_id#507,i_brand#508,i_class_id#509,i_class#510,i_category_id#511,i_category#512,i_manufact_id#513,i_manufact#514,i_size#515,i_formulation#516,i_color#517,i_units#518,i_container#519,i_manager_id#520,i_product_name#521] parquet
             :     :        +- Project [d_date_sk#598]
-            :     :           +- Join LeftSemi, (d_date#600 = d_date#18241)
+            :     :           +- Join LeftSemi, (d_date#600 = d_date#19618)
             :     :              :- Project [d_date_sk#598, d_date#600]
             :     :              :  +- Filter isnotnull(d_date_sk#598)
             :     :              :     +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
-            :     :              +- Project [d_date#18241]
-            :     :                 +- Join LeftSemi, (d_week_seq#18243 = d_week_seq#18159)
-            :     :                    :- Project [d_date#18241, d_week_seq#18243]
-            :     :                    :  +- Relation [d_date_sk#18239,d_date_id#18240,d_date#18241,d_month_seq#18242,d_week_seq#18243,d_quarter_seq#18244,d_year#18245,d_dow#18246,d_moy#18247,d_dom#18248,d_qoy#18249,d_fy_year#18250,d_fy_quarter_seq#18251,d_fy_week_seq#18252,d_day_name#18253,d_quarter_name#18254,d_holiday#18255,d_weekend#18256,d_following_holiday#18257,d_first_dom#18258,d_last_dom#18259,d_same_day_ly#18260,d_same_day_lq#18261,d_current_day#18262,... 4 more fields] parquet
-            :     :                    +- Project [d_week_seq#18159]
-            :     :                       +- Filter cast(d_date#18157 as string) IN (1998-02-24,1998-10-12,1998-11-22)
-            :     :                          +- Relation [d_date_sk#18155,d_date_id#18156,d_date#18157,d_month_seq#18158,d_week_seq#18159,d_quarter_seq#18160,d_year#18161,d_dow#18162,d_moy#18163,d_dom#18164,d_qoy#18165,d_fy_year#18166,d_fy_quarter_seq#18167,d_fy_week_seq#18168,d_day_name#18169,d_quarter_name#18170,d_holiday#18171,d_weekend#18172,d_following_holiday#18173,d_first_dom#18174,d_last_dom#18175,d_same_day_ly#18176,d_same_day_lq#18177,d_current_day#18178,... 4 more fields] parquet
-            :     +- Aggregate [i_item_id#18056], [i_item_id#18056 AS item_id#18047, sum(cr_return_quantity#265) AS cr_item_qty#18048L]
-            :        +- Project [cr_return_quantity#265, i_item_id#18056]
-            :           +- Join Inner, (cr_returned_date_sk#248 = d_date_sk#18077)
-            :              :- Project [cr_returned_date_sk#248, cr_return_quantity#265, i_item_id#18056]
-            :              :  +- Join Inner, (cr_item_sk#250 = i_item_sk#18055)
+            :     :              +- Project [d_date#19618]
+            :     :                 +- Join LeftSemi, (d_week_seq#19620 = d_week_seq#19536)
+            :     :                    :- Project [d_date#19618, d_week_seq#19620]
+            :     :                    :  +- Relation [d_date_sk#19616,d_date_id#19617,d_date#19618,d_month_seq#19619,d_week_seq#19620,d_quarter_seq#19621,d_year#19622,d_dow#19623,d_moy#19624,d_dom#19625,d_qoy#19626,d_fy_year#19627,d_fy_quarter_seq#19628,d_fy_week_seq#19629,d_day_name#19630,d_quarter_name#19631,d_holiday#19632,d_weekend#19633,d_following_holiday#19634,d_first_dom#19635,d_last_dom#19636,d_same_day_ly#19637,d_same_day_lq#19638,d_current_day#19639,... 4 more fields] parquet
+            :     :                    +- Project [d_week_seq#19536]
+            :     :                       +- Filter cast(d_date#19534 as string) IN (1998-02-24,1998-10-12,1998-11-22)
+            :     :                          +- Relation [d_date_sk#19532,d_date_id#19533,d_date#19534,d_month_seq#19535,d_week_seq#19536,d_quarter_seq#19537,d_year#19538,d_dow#19539,d_moy#19540,d_dom#19541,d_qoy#19542,d_fy_year#19543,d_fy_quarter_seq#19544,d_fy_week_seq#19545,d_day_name#19546,d_quarter_name#19547,d_holiday#19548,d_weekend#19549,d_following_holiday#19550,d_first_dom#19551,d_last_dom#19552,d_same_day_ly#19553,d_same_day_lq#19554,d_current_day#19555,... 4 more fields] parquet
+            :     +- Aggregate [i_item_id#19433], [i_item_id#19433 AS item_id#19424, sum(cr_return_quantity#265) AS cr_item_qty#19425L]
+            :        +- Project [cr_return_quantity#265, i_item_id#19433]
+            :           +- Join Inner, (cr_returned_date_sk#248 = d_date_sk#19454)
+            :              :- Project [cr_returned_date_sk#248, cr_return_quantity#265, i_item_id#19433]
+            :              :  +- Join Inner, (cr_item_sk#250 = i_item_sk#19432)
             :              :     :- Project [cr_returned_date_sk#248, cr_item_sk#250, cr_return_quantity#265]
             :              :     :  +- Filter (isnotnull(cr_item_sk#250) AND isnotnull(cr_returned_date_sk#248))
             :              :     :     +- Relation [cr_returned_date_sk#248,cr_returned_time_sk#249,cr_item_sk#250,cr_refunded_customer_sk#251,cr_refunded_cdemo_sk#252,cr_refunded_hdemo_sk#253,cr_refunded_addr_sk#254,cr_returning_customer_sk#255,cr_returning_cdemo_sk#256,cr_returning_hdemo_sk#257,cr_returning_addr_sk#258,cr_call_center_sk#259,cr_catalog_page_sk#260,cr_ship_mode_sk#261,cr_warehouse_sk#262,cr_reason_sk#263,cr_order_number#264L,cr_return_quantity#265,cr_return_amount#266,cr_return_tax#267,cr_return_amt_inc_tax#268,cr_fee#269,cr_return_ship_cost#270,cr_refunded_cash#271,... 3 more fields] parquet
-            :              :     +- Project [i_item_sk#18055, i_item_id#18056]
-            :              :        +- Filter (isnotnull(i_item_sk#18055) AND isnotnull(i_item_id#18056))
-            :              :           +- Relation [i_item_sk#18055,i_item_id#18056,i_rec_start_date#18057,i_rec_end_date#18058,i_item_desc#18059,i_current_price#18060,i_wholesale_cost#18061,i_brand_id#18062,i_brand#18063,i_class_id#18064,i_class#18065,i_category_id#18066,i_category#18067,i_manufact_id#18068,i_manufact#18069,i_size#18070,i_formulation#18071,i_color#18072,i_units#18073,i_container#18074,i_manager_id#18075,i_product_name#18076] parquet
-            :              +- Project [d_date_sk#18077]
-            :                 +- Join LeftSemi, (d_date#18079 = d_date#18269)
-            :                    :- Project [d_date_sk#18077, d_date#18079]
-            :                    :  +- Filter isnotnull(d_date_sk#18077)
-            :                    :     +- Relation [d_date_sk#18077,d_date_id#18078,d_date#18079,d_month_seq#18080,d_week_seq#18081,d_quarter_seq#18082,d_year#18083,d_dow#18084,d_moy#18085,d_dom#18086,d_qoy#18087,d_fy_year#18088,d_fy_quarter_seq#18089,d_fy_week_seq#18090,d_day_name#18091,d_quarter_name#18092,d_holiday#18093,d_weekend#18094,d_following_holiday#18095,d_first_dom#18096,d_last_dom#18097,d_same_day_ly#18098,d_same_day_lq#18099,d_current_day#18100,... 4 more fields] parquet
-            :                    +- Project [d_date#18269]
-            :                       +- Join LeftSemi, (d_week_seq#18271 = d_week_seq#18187)
-            :                          :- Project [d_date#18269, d_week_seq#18271]
-            :                          :  +- Relation [d_date_sk#18267,d_date_id#18268,d_date#18269,d_month_seq#18270,d_week_seq#18271,d_quarter_seq#18272,d_year#18273,d_dow#18274,d_moy#18275,d_dom#18276,d_qoy#18277,d_fy_year#18278,d_fy_quarter_seq#18279,d_fy_week_seq#18280,d_day_name#18281,d_quarter_name#18282,d_holiday#18283,d_weekend#18284,d_following_holiday#18285,d_first_dom#18286,d_last_dom#18287,d_same_day_ly#18288,d_same_day_lq#18289,d_current_day#18290,... 4 more fields] parquet
-            :                          +- Project [d_week_seq#18187]
-            :                             +- Filter cast(d_date#18185 as string) IN (1998-02-24,1998-10-12,1998-11-22)
-            :                                +- Relation [d_date_sk#18183,d_date_id#18184,d_date#18185,d_month_seq#18186,d_week_seq#18187,d_quarter_seq#18188,d_year#18189,d_dow#18190,d_moy#18191,d_dom#18192,d_qoy#18193,d_fy_year#18194,d_fy_quarter_seq#18195,d_fy_week_seq#18196,d_day_name#18197,d_quarter_name#18198,d_holiday#18199,d_weekend#18200,d_following_holiday#18201,d_first_dom#18202,d_last_dom#18203,d_same_day_ly#18204,d_same_day_lq#18205,d_current_day#18206,... 4 more fields] parquet
-            +- Aggregate [i_item_id#18106], [i_item_id#18106 AS item_id#18051, sum(wr_return_quantity#466) AS wr_item_qty#18052L]
-               +- Project [wr_return_quantity#466, i_item_id#18106]
-                  +- Join Inner, (wr_returned_date_sk#452 = d_date_sk#18127)
-                     :- Project [wr_returned_date_sk#452, wr_return_quantity#466, i_item_id#18106]
-                     :  +- Join Inner, (wr_item_sk#454 = i_item_sk#18105)
+            :              :     +- Project [i_item_sk#19432, i_item_id#19433]
+            :              :        +- Filter (isnotnull(i_item_sk#19432) AND isnotnull(i_item_id#19433))
+            :              :           +- Relation [i_item_sk#19432,i_item_id#19433,i_rec_start_date#19434,i_rec_end_date#19435,i_item_desc#19436,i_current_price#19437,i_wholesale_cost#19438,i_brand_id#19439,i_brand#19440,i_class_id#19441,i_class#19442,i_category_id#19443,i_category#19444,i_manufact_id#19445,i_manufact#19446,i_size#19447,i_formulation#19448,i_color#19449,i_units#19450,i_container#19451,i_manager_id#19452,i_product_name#19453] parquet
+            :              +- Project [d_date_sk#19454]
+            :                 +- Join LeftSemi, (d_date#19456 = d_date#19646)
+            :                    :- Project [d_date_sk#19454, d_date#19456]
+            :                    :  +- Filter isnotnull(d_date_sk#19454)
+            :                    :     +- Relation [d_date_sk#19454,d_date_id#19455,d_date#19456,d_month_seq#19457,d_week_seq#19458,d_quarter_seq#19459,d_year#19460,d_dow#19461,d_moy#19462,d_dom#19463,d_qoy#19464,d_fy_year#19465,d_fy_quarter_seq#19466,d_fy_week_seq#19467,d_day_name#19468,d_quarter_name#19469,d_holiday#19470,d_weekend#19471,d_following_holiday#19472,d_first_dom#19473,d_last_dom#19474,d_same_day_ly#19475,d_same_day_lq#19476,d_current_day#19477,... 4 more fields] parquet
+            :                    +- Project [d_date#19646]
+            :                       +- Join LeftSemi, (d_week_seq#19648 = d_week_seq#19564)
+            :                          :- Project [d_date#19646, d_week_seq#19648]
+            :                          :  +- Relation [d_date_sk#19644,d_date_id#19645,d_date#19646,d_month_seq#19647,d_week_seq#19648,d_quarter_seq#19649,d_year#19650,d_dow#19651,d_moy#19652,d_dom#19653,d_qoy#19654,d_fy_year#19655,d_fy_quarter_seq#19656,d_fy_week_seq#19657,d_day_name#19658,d_quarter_name#19659,d_holiday#19660,d_weekend#19661,d_following_holiday#19662,d_first_dom#19663,d_last_dom#19664,d_same_day_ly#19665,d_same_day_lq#19666,d_current_day#19667,... 4 more fields] parquet
+            :                          +- Project [d_week_seq#19564]
+            :                             +- Filter cast(d_date#19562 as string) IN (1998-02-24,1998-10-12,1998-11-22)
+            :                                +- Relation [d_date_sk#19560,d_date_id#19561,d_date#19562,d_month_seq#19563,d_week_seq#19564,d_quarter_seq#19565,d_year#19566,d_dow#19567,d_moy#19568,d_dom#19569,d_qoy#19570,d_fy_year#19571,d_fy_quarter_seq#19572,d_fy_week_seq#19573,d_day_name#19574,d_quarter_name#19575,d_holiday#19576,d_weekend#19577,d_following_holiday#19578,d_first_dom#19579,d_last_dom#19580,d_same_day_ly#19581,d_same_day_lq#19582,d_current_day#19583,... 4 more fields] parquet
+            +- Aggregate [i_item_id#19483], [i_item_id#19483 AS item_id#19428, sum(wr_return_quantity#466) AS wr_item_qty#19429L]
+               +- Project [wr_return_quantity#466, i_item_id#19483]
+                  +- Join Inner, (wr_returned_date_sk#452 = d_date_sk#19504)
+                     :- Project [wr_returned_date_sk#452, wr_return_quantity#466, i_item_id#19483]
+                     :  +- Join Inner, (wr_item_sk#454 = i_item_sk#19482)
                      :     :- Project [wr_returned_date_sk#452, wr_item_sk#454, wr_return_quantity#466]
                      :     :  +- Filter (isnotnull(wr_item_sk#454) AND isnotnull(wr_returned_date_sk#452))
                      :     :     +- Relation [wr_returned_date_sk#452,wr_returned_time_sk#453,wr_item_sk#454,wr_refunded_customer_sk#455,wr_refunded_cdemo_sk#456,wr_refunded_hdemo_sk#457,wr_refunded_addr_sk#458,wr_returning_customer_sk#459,wr_returning_cdemo_sk#460,wr_returning_hdemo_sk#461,wr_returning_addr_sk#462,wr_web_page_sk#463,wr_reason_sk#464,wr_order_number#465L,wr_return_quantity#466,wr_return_amt#467,wr_return_tax#468,wr_return_amt_inc_tax#469,wr_fee#470,wr_return_ship_cost#471,wr_refunded_cash#472,wr_reversed_charge#473,wr_account_credit#474,wr_net_loss#475] parquet
-                     :     +- Project [i_item_sk#18105, i_item_id#18106]
-                     :        +- Filter (isnotnull(i_item_sk#18105) AND isnotnull(i_item_id#18106))
-                     :           +- Relation [i_item_sk#18105,i_item_id#18106,i_rec_start_date#18107,i_rec_end_date#18108,i_item_desc#18109,i_current_price#18110,i_wholesale_cost#18111,i_brand_id#18112,i_brand#18113,i_class_id#18114,i_class#18115,i_category_id#18116,i_category#18117,i_manufact_id#18118,i_manufact#18119,i_size#18120,i_formulation#18121,i_color#18122,i_units#18123,i_container#18124,i_manager_id#18125,i_product_name#18126] parquet
-                     +- Project [d_date_sk#18127]
-                        +- Join LeftSemi, (d_date#18129 = d_date#18297)
-                           :- Project [d_date_sk#18127, d_date#18129]
-                           :  +- Filter isnotnull(d_date_sk#18127)
-                           :     +- Relation [d_date_sk#18127,d_date_id#18128,d_date#18129,d_month_seq#18130,d_week_seq#18131,d_quarter_seq#18132,d_year#18133,d_dow#18134,d_moy#18135,d_dom#18136,d_qoy#18137,d_fy_year#18138,d_fy_quarter_seq#18139,d_fy_week_seq#18140,d_day_name#18141,d_quarter_name#18142,d_holiday#18143,d_weekend#18144,d_following_holiday#18145,d_first_dom#18146,d_last_dom#18147,d_same_day_ly#18148,d_same_day_lq#18149,d_current_day#18150,... 4 more fields] parquet
-                           +- Project [d_date#18297]
-                              +- Join LeftSemi, (d_week_seq#18299 = d_week_seq#18215)
-                                 :- Project [d_date#18297, d_week_seq#18299]
-                                 :  +- Relation [d_date_sk#18295,d_date_id#18296,d_date#18297,d_month_seq#18298,d_week_seq#18299,d_quarter_seq#18300,d_year#18301,d_dow#18302,d_moy#18303,d_dom#18304,d_qoy#18305,d_fy_year#18306,d_fy_quarter_seq#18307,d_fy_week_seq#18308,d_day_name#18309,d_quarter_name#18310,d_holiday#18311,d_weekend#18312,d_following_holiday#18313,d_first_dom#18314,d_last_dom#18315,d_same_day_ly#18316,d_same_day_lq#18317,d_current_day#18318,... 4 more fields] parquet
-                                 +- Project [d_week_seq#18215]
-                                    +- Filter cast(d_date#18213 as string) IN (1998-02-24,1998-10-12,1998-11-22)
-                                       +- Relation [d_date_sk#18211,d_date_id#18212,d_date#18213,d_month_seq#18214,d_week_seq#18215,d_quarter_seq#18216,d_year#18217,d_dow#18218,d_moy#18219,d_dom#18220,d_qoy#18221,d_fy_year#18222,d_fy_quarter_seq#18223,d_fy_week_seq#18224,d_day_name#18225,d_quarter_name#18226,d_holiday#18227,d_weekend#18228,d_following_holiday#18229,d_first_dom#18230,d_last_dom#18231,d_same_day_ly#18232,d_same_day_lq#18233,d_current_day#18234,... 4 more fields] parquet
+                     :     +- Project [i_item_sk#19482, i_item_id#19483]
+                     :        +- Filter (isnotnull(i_item_sk#19482) AND isnotnull(i_item_id#19483))
+                     :           +- Relation [i_item_sk#19482,i_item_id#19483,i_rec_start_date#19484,i_rec_end_date#19485,i_item_desc#19486,i_current_price#19487,i_wholesale_cost#19488,i_brand_id#19489,i_brand#19490,i_class_id#19491,i_class#19492,i_category_id#19493,i_category#19494,i_manufact_id#19495,i_manufact#19496,i_size#19497,i_formulation#19498,i_color#19499,i_units#19500,i_container#19501,i_manager_id#19502,i_product_name#19503] parquet
+                     +- Project [d_date_sk#19504]
+                        +- Join LeftSemi, (d_date#19506 = d_date#19674)
+                           :- Project [d_date_sk#19504, d_date#19506]
+                           :  +- Filter isnotnull(d_date_sk#19504)
+                           :     +- Relation [d_date_sk#19504,d_date_id#19505,d_date#19506,d_month_seq#19507,d_week_seq#19508,d_quarter_seq#19509,d_year#19510,d_dow#19511,d_moy#19512,d_dom#19513,d_qoy#19514,d_fy_year#19515,d_fy_quarter_seq#19516,d_fy_week_seq#19517,d_day_name#19518,d_quarter_name#19519,d_holiday#19520,d_weekend#19521,d_following_holiday#19522,d_first_dom#19523,d_last_dom#19524,d_same_day_ly#19525,d_same_day_lq#19526,d_current_day#19527,... 4 more fields] parquet
+                           +- Project [d_date#19674]
+                              +- Join LeftSemi, (d_week_seq#19676 = d_week_seq#19592)
+                                 :- Project [d_date#19674, d_week_seq#19676]
+                                 :  +- Relation [d_date_sk#19672,d_date_id#19673,d_date#19674,d_month_seq#19675,d_week_seq#19676,d_quarter_seq#19677,d_year#19678,d_dow#19679,d_moy#19680,d_dom#19681,d_qoy#19682,d_fy_year#19683,d_fy_quarter_seq#19684,d_fy_week_seq#19685,d_day_name#19686,d_quarter_name#19687,d_holiday#19688,d_weekend#19689,d_following_holiday#19690,d_first_dom#19691,d_last_dom#19692,d_same_day_ly#19693,d_same_day_lq#19694,d_current_day#19695,... 4 more fields] parquet
+                                 +- Project [d_week_seq#19592]
+                                    +- Filter cast(d_date#19590 as string) IN (1998-02-24,1998-10-12,1998-11-22)
+                                       +- Relation [d_date_sk#19588,d_date_id#19589,d_date#19590,d_month_seq#19591,d_week_seq#19592,d_quarter_seq#19593,d_year#19594,d_dow#19595,d_moy#19596,d_dom#19597,d_qoy#19598,d_fy_year#19599,d_fy_quarter_seq#19600,d_fy_week_seq#19601,d_day_name#19602,d_quarter_name#19603,d_holiday#19604,d_weekend#19605,d_following_holiday#19606,d_first_dom#19607,d_last_dom#19608,d_same_day_ly#19609,d_same_day_lq#19610,d_current_day#19611,... 4 more fields] parquet

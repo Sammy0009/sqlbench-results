@@ -16,10 +16,10 @@ diagram:
           operator: "projection"
           inputs:
           - title: "Filter: (substr(ca_zip#223, 1, 5) IN (85669,86197,88274,83405,86475,85392,85460,80348,81792)\
-              \ OR exists#9366)"
+              \ OR exists#10748)"
             operator: "filter"
             inputs:
-            - title: "ExistenceJoin(exists#9366) Join: Some((i_item_id#501 = i_item_id#9340))"
+            - title: "ExistenceJoin(exists#10748) Join: Some((i_item_id#501 = i_item_id#10722))"
               operator: "join"
               inputs:
               - title: "Projection: ws_sales_price#405, ca_city#220, ca_zip#223, i_item_id#501"
@@ -99,10 +99,10 @@ diagram:
                       - title: "item.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: i_item_id#9340"
+              - title: "Projection: i_item_id#10722"
                 operator: "projection"
                 inputs:
-                - title: "Filter: i_item_sk#9339 IN (2,3,5,7,11,13,17,19,23,29)"
+                - title: "Filter: i_item_sk#10721 IN (2,3,5,7,11,13,17,19,23,29)"
                   operator: "filter"
                   inputs:
                   - title: "item.parquet"

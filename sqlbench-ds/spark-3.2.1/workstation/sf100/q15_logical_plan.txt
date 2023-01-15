@@ -1,7 +1,7 @@
 GlobalLimit 100
 +- LocalLimit 100
    +- Sort [ca_zip#223 ASC NULLS FIRST], true
-      +- Aggregate [ca_zip#223], [ca_zip#223, MakeDecimal(sum(UnscaledValue(cs_sales_price#139)),17,2) AS sum(cs_sales_price)#5312]
+      +- Aggregate [ca_zip#223], [ca_zip#223, MakeDecimal(sum(UnscaledValue(cs_sales_price#139)),17,2) AS sum(cs_sales_price)#5979]
          +- Project [cs_sales_price#139, ca_zip#223]
             +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#598)
                :- Project [cs_sold_date_sk#118, cs_sales_price#139, ca_zip#223]

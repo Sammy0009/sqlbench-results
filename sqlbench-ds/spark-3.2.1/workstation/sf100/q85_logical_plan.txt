@@ -1,7 +1,7 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [substr(r_reason_desc, 1, 20)#18387 ASC NULLS FIRST, avg(ws_quantity)#18388 ASC NULLS FIRST, avg(wr_refunded_cash)#18389 ASC NULLS FIRST, avg(wr_fee)#18390 ASC NULLS FIRST], true
-      +- Aggregate [r_reason_desc#546], [substr(r_reason_desc#546, 1, 20) AS substr(r_reason_desc, 1, 20)#18387, avg(ws_quantity#402) AS avg(ws_quantity)#18388, cast((avg(UnscaledValue(wr_refunded_cash#472)) / 100.0) as decimal(11,6)) AS avg(wr_refunded_cash)#18389, cast((avg(UnscaledValue(wr_fee#470)) / 100.0) as decimal(11,6)) AS avg(wr_fee)#18390]
+   +- Sort [substr(r_reason_desc, 1, 20)#19764 ASC NULLS FIRST, avg(ws_quantity)#19765 ASC NULLS FIRST, avg(wr_refunded_cash)#19766 ASC NULLS FIRST, avg(wr_fee)#19767 ASC NULLS FIRST], true
+      +- Aggregate [r_reason_desc#546], [substr(r_reason_desc#546, 1, 20) AS substr(r_reason_desc, 1, 20)#19764, avg(ws_quantity#402) AS avg(ws_quantity)#19765, cast((avg(UnscaledValue(wr_refunded_cash#472)) / 100.0) as decimal(11,6)) AS avg(wr_refunded_cash)#19766, cast((avg(UnscaledValue(wr_fee#470)) / 100.0) as decimal(11,6)) AS avg(wr_fee)#19767]
          +- Project [ws_quantity#402, wr_fee#470, wr_refunded_cash#472, r_reason_desc#546]
             +- Join Inner, (r_reason_sk#544 = wr_reason_sk#464)
                :- Project [ws_quantity#402, wr_reason_sk#464, wr_fee#470, wr_refunded_cash#472]
@@ -9,7 +9,7 @@ GlobalLimit 100
                :     :- Project [ws_sold_date_sk#384, ws_quantity#402, wr_reason_sk#464, wr_fee#470, wr_refunded_cash#472]
                :     :  +- Join Inner, ((ca_address_sk#214 = wr_refunded_addr_sk#458) AND ((((ca_state#222 IN (SD,CO,OK) AND (ws_net_profit#417 >= 100.00)) AND (ws_net_profit#417 <= 200.00)) OR ((ca_state#222 IN (MA,GA,MI) AND (ws_net_profit#417 >= 150.00)) AND (ws_net_profit#417 <= 300.00))) OR ((ca_state#222 IN (CA,IA,IL) AND (ws_net_profit#417 >= 50.00)) AND (ws_net_profit#417 <= 250.00))))
                :     :     :- Project [ws_sold_date_sk#384, ws_quantity#402, ws_net_profit#417, wr_refunded_addr_sk#458, wr_reason_sk#464, wr_fee#470, wr_refunded_cash#472]
-               :     :     :  +- Join Inner, (((cd_demo_sk#18375 = wr_returning_cdemo_sk#460) AND (cd_marital_status#50 = cd_marital_status#18377)) AND (cd_education_status#51 = cd_education_status#18378))
+               :     :     :  +- Join Inner, (((cd_demo_sk#19752 = wr_returning_cdemo_sk#460) AND (cd_marital_status#50 = cd_marital_status#19754)) AND (cd_education_status#51 = cd_education_status#19755))
                :     :     :     :- Project [ws_sold_date_sk#384, ws_quantity#402, ws_net_profit#417, wr_refunded_addr_sk#458, wr_returning_cdemo_sk#460, wr_reason_sk#464, wr_fee#470, wr_refunded_cash#472, cd_marital_status#50, cd_education_status#51]
                :     :     :     :  +- Join Inner, (((((((cd_marital_status#50 = D) AND (cd_education_status#51 = Secondary)) AND (ws_sales_price#405 >= 100.00)) AND (ws_sales_price#405 <= 150.00)) OR ((((cd_marital_status#50 = S) AND (cd_education_status#51 = College)) AND (ws_sales_price#405 >= 50.00)) AND (ws_sales_price#405 <= 100.00))) OR ((((cd_marital_status#50 = W) AND (cd_education_status#51 = Primary)) AND (ws_sales_price#405 >= 150.00)) AND (ws_sales_price#405 <= 200.00))) AND (cd_demo_sk#48 = wr_refunded_cdemo_sk#456))
                :     :     :     :     :- Project [ws_sold_date_sk#384, ws_quantity#402, ws_sales_price#405, ws_net_profit#417, wr_refunded_cdemo_sk#456, wr_refunded_addr_sk#458, wr_returning_cdemo_sk#460, wr_reason_sk#464, wr_fee#470, wr_refunded_cash#472]
@@ -28,9 +28,9 @@ GlobalLimit 100
                :     :     :     :     +- Project [cd_demo_sk#48, cd_marital_status#50, cd_education_status#51]
                :     :     :     :        +- Filter ((isnotnull(cd_demo_sk#48) AND (isnotnull(cd_marital_status#50) AND isnotnull(cd_education_status#51))) AND ((((cd_marital_status#50 = D) AND (cd_education_status#51 = Secondary)) OR ((cd_marital_status#50 = S) AND (cd_education_status#51 = College))) OR ((cd_marital_status#50 = W) AND (cd_education_status#51 = Primary))))
                :     :     :     :           +- Relation [cd_demo_sk#48,cd_gender#49,cd_marital_status#50,cd_education_status#51,cd_purchase_estimate#52,cd_credit_rating#53,cd_dep_count#54,cd_dep_employed_count#55,cd_dep_college_count#56] parquet
-               :     :     :     +- Project [cd_demo_sk#18375, cd_marital_status#18377, cd_education_status#18378]
-               :     :     :        +- Filter ((isnotnull(cd_demo_sk#18375) AND isnotnull(cd_marital_status#18377)) AND isnotnull(cd_education_status#18378))
-               :     :     :           +- Relation [cd_demo_sk#18375,cd_gender#18376,cd_marital_status#18377,cd_education_status#18378,cd_purchase_estimate#18379,cd_credit_rating#18380,cd_dep_count#18381,cd_dep_employed_count#18382,cd_dep_college_count#18383] parquet
+               :     :     :     +- Project [cd_demo_sk#19752, cd_marital_status#19754, cd_education_status#19755]
+               :     :     :        +- Filter ((isnotnull(cd_demo_sk#19752) AND isnotnull(cd_marital_status#19754)) AND isnotnull(cd_education_status#19755))
+               :     :     :           +- Relation [cd_demo_sk#19752,cd_gender#19753,cd_marital_status#19754,cd_education_status#19755,cd_purchase_estimate#19756,cd_credit_rating#19757,cd_dep_count#19758,cd_dep_employed_count#19759,cd_dep_college_count#19760] parquet
                :     :     +- Project [ca_address_sk#214, ca_state#222]
                :     :        +- Filter (((isnotnull(ca_country#224) AND (ca_country#224 = United States)) AND isnotnull(ca_address_sk#214)) AND ((ca_state#222 IN (SD,CO,OK) OR ca_state#222 IN (MA,GA,MI)) OR ca_state#222 IN (CA,IA,IL)))
                :     :           +- Relation [ca_address_sk#214,ca_address_id#215,ca_street_number#216,ca_street_name#217,ca_street_type#218,ca_suite_number#219,ca_city#220,ca_county#221,ca_state#222,ca_zip#223,ca_country#224,ca_gmt_offset#225,ca_location_type#226] parquet

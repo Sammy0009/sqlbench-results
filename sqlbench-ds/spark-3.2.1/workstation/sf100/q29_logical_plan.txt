@@ -1,15 +1,15 @@
 GlobalLimit 100
 +- LocalLimit 100
    +- Sort [i_item_id#501 ASC NULLS FIRST, i_item_desc#504 ASC NULLS FIRST, s_store_id#327 ASC NULLS FIRST, s_store_name#331 ASC NULLS FIRST], true
-      +- Aggregate [i_item_id#501, i_item_desc#504, s_store_id#327, s_store_name#331], [i_item_id#501, i_item_desc#504, s_store_id#327, s_store_name#331, avg(ss_quantity#674) AS store_sales_quantity#7403, avg(sr_return_quantity#720) AS store_returns_quantity#7404, avg(cs_quantity#136) AS catalog_sales_quantity#7405]
+      +- Aggregate [i_item_id#501, i_item_desc#504, s_store_id#327, s_store_name#331], [i_item_id#501, i_item_desc#504, s_store_id#327, s_store_name#331, avg(ss_quantity#674) AS store_sales_quantity#8479, avg(sr_return_quantity#720) AS store_returns_quantity#8480, avg(cs_quantity#136) AS catalog_sales_quantity#8481]
          +- Project [ss_quantity#674, sr_return_quantity#720, cs_quantity#136, s_store_id#327, s_store_name#331, i_item_id#501, i_item_desc#504]
             +- Join Inner, (i_item_sk#500 = ss_item_sk#666)
                :- Project [ss_item_sk#666, ss_quantity#674, sr_return_quantity#720, cs_quantity#136, s_store_id#327, s_store_name#331]
                :  +- Join Inner, (s_store_sk#326 = ss_store_sk#671)
                :     :- Project [ss_item_sk#666, ss_store_sk#671, ss_quantity#674, sr_return_quantity#720, cs_quantity#136]
-               :     :  +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#7434)
+               :     :  +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#8510)
                :     :     :- Project [ss_item_sk#666, ss_store_sk#671, ss_quantity#674, sr_return_quantity#720, cs_sold_date_sk#118, cs_quantity#136]
-               :     :     :  +- Join Inner, (sr_returned_date_sk#710 = d_date_sk#7406)
+               :     :     :  +- Join Inner, (sr_returned_date_sk#710 = d_date_sk#8482)
                :     :     :     :- Project [ss_item_sk#666, ss_store_sk#671, ss_quantity#674, sr_returned_date_sk#710, sr_return_quantity#720, cs_sold_date_sk#118, cs_quantity#136]
                :     :     :     :  +- Join Inner, (d_date_sk#598 = ss_sold_date_sk#664)
                :     :     :     :     :- Project [ss_sold_date_sk#664, ss_item_sk#666, ss_store_sk#671, ss_quantity#674, sr_returned_date_sk#710, sr_return_quantity#720, cs_sold_date_sk#118, cs_quantity#136]
@@ -28,12 +28,12 @@ GlobalLimit 100
                :     :     :     :     +- Project [d_date_sk#598]
                :     :     :     :        +- Filter (((isnotnull(d_moy#606) AND isnotnull(d_year#604)) AND ((d_moy#606 = 4) AND (d_year#604 = 2000))) AND isnotnull(d_date_sk#598))
                :     :     :     :           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
-               :     :     :     +- Project [d_date_sk#7406]
-               :     :     :        +- Filter (((isnotnull(d_moy#7414) AND isnotnull(d_year#7412)) AND (((d_moy#7414 >= 4) AND (d_moy#7414 <= 7)) AND (d_year#7412 = 2000))) AND isnotnull(d_date_sk#7406))
-               :     :     :           +- Relation [d_date_sk#7406,d_date_id#7407,d_date#7408,d_month_seq#7409,d_week_seq#7410,d_quarter_seq#7411,d_year#7412,d_dow#7413,d_moy#7414,d_dom#7415,d_qoy#7416,d_fy_year#7417,d_fy_quarter_seq#7418,d_fy_week_seq#7419,d_day_name#7420,d_quarter_name#7421,d_holiday#7422,d_weekend#7423,d_following_holiday#7424,d_first_dom#7425,d_last_dom#7426,d_same_day_ly#7427,d_same_day_lq#7428,d_current_day#7429,... 4 more fields] parquet
-               :     :     +- Project [d_date_sk#7434]
-               :     :        +- Filter (d_year#7440 IN (2000,2001,2002) AND isnotnull(d_date_sk#7434))
-               :     :           +- Relation [d_date_sk#7434,d_date_id#7435,d_date#7436,d_month_seq#7437,d_week_seq#7438,d_quarter_seq#7439,d_year#7440,d_dow#7441,d_moy#7442,d_dom#7443,d_qoy#7444,d_fy_year#7445,d_fy_quarter_seq#7446,d_fy_week_seq#7447,d_day_name#7448,d_quarter_name#7449,d_holiday#7450,d_weekend#7451,d_following_holiday#7452,d_first_dom#7453,d_last_dom#7454,d_same_day_ly#7455,d_same_day_lq#7456,d_current_day#7457,... 4 more fields] parquet
+               :     :     :     +- Project [d_date_sk#8482]
+               :     :     :        +- Filter (((isnotnull(d_moy#8490) AND isnotnull(d_year#8488)) AND (((d_moy#8490 >= 4) AND (d_moy#8490 <= 7)) AND (d_year#8488 = 2000))) AND isnotnull(d_date_sk#8482))
+               :     :     :           +- Relation [d_date_sk#8482,d_date_id#8483,d_date#8484,d_month_seq#8485,d_week_seq#8486,d_quarter_seq#8487,d_year#8488,d_dow#8489,d_moy#8490,d_dom#8491,d_qoy#8492,d_fy_year#8493,d_fy_quarter_seq#8494,d_fy_week_seq#8495,d_day_name#8496,d_quarter_name#8497,d_holiday#8498,d_weekend#8499,d_following_holiday#8500,d_first_dom#8501,d_last_dom#8502,d_same_day_ly#8503,d_same_day_lq#8504,d_current_day#8505,... 4 more fields] parquet
+               :     :     +- Project [d_date_sk#8510]
+               :     :        +- Filter (d_year#8516 IN (2000,2001,2002) AND isnotnull(d_date_sk#8510))
+               :     :           +- Relation [d_date_sk#8510,d_date_id#8511,d_date#8512,d_month_seq#8513,d_week_seq#8514,d_quarter_seq#8515,d_year#8516,d_dow#8517,d_moy#8518,d_dom#8519,d_qoy#8520,d_fy_year#8521,d_fy_quarter_seq#8522,d_fy_week_seq#8523,d_day_name#8524,d_quarter_name#8525,d_holiday#8526,d_weekend#8527,d_following_holiday#8528,d_first_dom#8529,d_last_dom#8530,d_same_day_ly#8531,d_same_day_lq#8532,d_current_day#8533,... 4 more fields] parquet
                :     +- Project [s_store_sk#326, s_store_id#327, s_store_name#331]
                :        +- Filter isnotnull(s_store_sk#326)
                :           +- Relation [s_store_sk#326,s_store_id#327,s_rec_start_date#328,s_rec_end_date#329,s_closed_date_sk#330,s_store_name#331,s_number_employees#332,s_floor_space#333,s_hours#334,s_manager#335,s_market_id#336,s_geography_class#337,s_market_desc#338,s_market_manager#339,s_division_id#340,s_division_name#341,s_company_id#342,s_company_name#343,s_street_number#344,s_street_name#345,s_street_type#346,s_suite_number#347,s_city#348,s_county#349,... 5 more fields] parquet

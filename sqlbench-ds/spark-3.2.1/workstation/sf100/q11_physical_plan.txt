@@ -9,12 +9,12 @@ AdaptiveSparkPlan isFinalPlan=true
          :     :  :- *(29) Sort [customer_id#3785 ASC NULLS FIRST], false, 0
          :     :  :  +- AQEShuffleRead coalesced
          :     :  :     +- ShuffleQueryStage 23
-         :     :  :        +- Exchange hashpartitioning(customer_id#3785, 200), ENSURE_REQUIREMENTS, [id=#16450]
+         :     :  :        +- Exchange hashpartitioning(customer_id#3785, 200), ENSURE_REQUIREMENTS, [id=#16644]
          :     :  :           +- *(25) Filter (isnotnull(year_total#3793) AND (year_total#3793 > 0.00))
          :     :  :              +- *(25) HashAggregate(keys=[c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#681 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#678 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3785, year_total#3793])
          :     :  :                 +- AQEShuffleRead coalesced
          :     :  :                    +- ShuffleQueryStage 19
-         :     :  :                       +- Exchange hashpartitioning(c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604, 200), ENSURE_REQUIREMENTS, [id=#16049]
+         :     :  :                       +- Exchange hashpartitioning(c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604, 200), ENSURE_REQUIREMENTS, [id=#16125]
          :     :  :                          +- *(15) HashAggregate(keys=[c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#681 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#678 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604, sum#4395L])
          :     :  :                             +- *(15) Project [c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, ss_ext_discount_amt#678, ss_ext_list_price#681, d_year#604]
          :     :  :                                +- *(15) BroadcastHashJoin [ss_sold_date_sk#664], [d_date_sk#598], Inner, BuildRight, false
@@ -23,30 +23,30 @@ AdaptiveSparkPlan isFinalPlan=true
          :     :  :                                   :     :- *(13) Sort [c_customer_sk#562 ASC NULLS FIRST], false, 0
          :     :  :                                   :     :  +- AQEShuffleRead coalesced
          :     :  :                                   :     :     +- ShuffleQueryStage 0
-         :     :  :                                   :     :        +- Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14848]
+         :     :  :                                   :     :        +- Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14924]
          :     :  :                                   :     :           +- *(1) Filter (isnotnull(c_customer_sk#562) AND isnotnull(c_customer_id#563))
          :     :  :                                   :     :              +- *(1) ColumnarToRow
          :     :  :                                   :     :                 +- FileScan parquet [c_customer_sk#562,c_customer_id#563,c_first_name#570,c_last_name#571,c_preferred_cust_flag#572,c_birth_country#576,c_login#577,c_email_address#578] Batched: true, DataFilters: [isnotnull(c_customer_sk#562), isnotnull(c_customer_id#563)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk), IsNotNull(c_customer_id)], ReadSchema: struct<c_customer_sk:int,c_customer_id:string,c_first_name:string,c_last_name:string,c_preferred_...
          :     :  :                                   :     +- *(14) Sort [ss_customer_sk#667 ASC NULLS FIRST], false, 0
          :     :  :                                   :        +- AQEShuffleRead coalesced
          :     :  :                                   :           +- ShuffleQueryStage 1
-         :     :  :                                   :              +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#14865]
+         :     :  :                                   :              +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#14941]
          :     :  :                                   :                 +- *(2) Filter (isnotnull(ss_customer_sk#667) AND isnotnull(ss_sold_date_sk#664))
          :     :  :                                   :                    +- *(2) ColumnarToRow
          :     :  :                                   :                       +- FileScan parquet [ss_sold_date_sk#664,ss_customer_sk#667,ss_ext_discount_amt#678,ss_ext_list_price#681] Batched: true, DataFilters: [isnotnull(ss_customer_sk#667), isnotnull(ss_sold_date_sk#664)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_customer_sk), IsNotNull(ss_sold_date_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_customer_sk:int,ss_ext_discount_amt:decimal(7,2),ss_ext_list_price:...
          :     :  :                                   +- BroadcastQueryStage 2
-         :     :  :                                      +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14884]
+         :     :  :                                      +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14960]
          :     :  :                                         +- *(3) Filter ((isnotnull(d_year#604) AND (d_year#604 = 1998)) AND isnotnull(d_date_sk#598))
          :     :  :                                            +- *(3) ColumnarToRow
          :     :  :                                               +- FileScan parquet [d_date_sk#598,d_year#604] Batched: true, DataFilters: [isnotnull(d_year#604), (d_year#604 = 1998), isnotnull(d_date_sk#598)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,1998), IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_year:int>
          :     :  +- *(30) Sort [customer_id#3853 ASC NULLS FIRST], false, 0
          :     :     +- AQEShuffleRead coalesced
          :     :        +- ShuffleQueryStage 24
-         :     :           +- Exchange hashpartitioning(customer_id#3853, 200), ENSURE_REQUIREMENTS, [id=#16534]
+         :     :           +- Exchange hashpartitioning(customer_id#3853, 200), ENSURE_REQUIREMENTS, [id=#16728]
          :     :              +- *(26) HashAggregate(keys=[c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#3922 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#3919 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3853, customer_first_name#3854, customer_last_name#3855, customer_birth_country#3857, year_total#3861])
          :     :                 +- AQEShuffleRead coalesced
          :     :                    +- ShuffleQueryStage 20
-         :     :                       +- Exchange hashpartitioning(c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934, 200), ENSURE_REQUIREMENTS, [id=#16106]
+         :     :                       +- Exchange hashpartitioning(c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934, 200), ENSURE_REQUIREMENTS, [id=#16182]
          :     :                          +- *(18) HashAggregate(keys=[c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#3922 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#3919 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934, sum#4397L])
          :     :                             +- *(18) Project [c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, ss_ext_discount_amt#3919, ss_ext_list_price#3922, d_year#3934]
          :     :                                +- *(18) BroadcastHashJoin [ss_sold_date_sk#3905], [d_date_sk#3928], Inner, BuildRight, false
@@ -55,26 +55,26 @@ AdaptiveSparkPlan isFinalPlan=true
          :     :                                   :     :- *(16) Sort [c_customer_sk#3887 ASC NULLS FIRST], false, 0
          :     :                                   :     :  +- AQEShuffleRead coalesced
          :     :                                   :     :     +- ShuffleQueryStage 4
-         :     :                                   :     :        +- ReusedExchange [c_customer_sk#3887, c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903], Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14848]
+         :     :                                   :     :        +- ReusedExchange [c_customer_sk#3887, c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903], Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14924]
          :     :                                   :     +- *(17) Sort [ss_customer_sk#3908 ASC NULLS FIRST], false, 0
          :     :                                   :        +- AQEShuffleRead coalesced
          :     :                                   :           +- ShuffleQueryStage 6
-         :     :                                   :              +- ReusedExchange [ss_sold_date_sk#3905, ss_customer_sk#3908, ss_ext_discount_amt#3919, ss_ext_list_price#3922], Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#14865]
+         :     :                                   :              +- ReusedExchange [ss_sold_date_sk#3905, ss_customer_sk#3908, ss_ext_discount_amt#3919, ss_ext_list_price#3922], Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#14941]
          :     :                                   +- BroadcastQueryStage 7
-         :     :                                      +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14981]
+         :     :                                      +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#15057]
          :     :                                         +- *(6) Filter ((isnotnull(d_year#3934) AND (d_year#3934 = 1999)) AND isnotnull(d_date_sk#3928))
          :     :                                            +- *(6) ColumnarToRow
          :     :                                               +- FileScan parquet [d_date_sk#3928,d_year#3934] Batched: true, DataFilters: [isnotnull(d_year#3934), (d_year#3934 = 1999), isnotnull(d_date_sk#3928)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,1999), IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_year:int>
          :     +- *(32) Sort [customer_id#4195 ASC NULLS FIRST], false, 0
          :        +- AQEShuffleRead coalesced
          :           +- ShuffleQueryStage 25
-         :              +- Exchange hashpartitioning(customer_id#4195, 200), ENSURE_REQUIREMENTS, [id=#16607]
+         :              +- Exchange hashpartitioning(customer_id#4195, 200), ENSURE_REQUIREMENTS, [id=#16895]
          :                 +- *(27) Project [customer_id#3795 AS customer_id#4195, year_total#3803 AS year_total#4203]
          :                    +- *(27) Filter (isnotnull(year_total#3803) AND (year_total#3803 > 0.00))
          :                       +- *(27) HashAggregate(keys=[c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4158 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4155 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3795, year_total#3803])
          :                          +- AQEShuffleRead coalesced
          :                             +- ShuffleQueryStage 21
-         :                                +- Exchange hashpartitioning(c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173, 200), ENSURE_REQUIREMENTS, [id=#16296]
+         :                                +- Exchange hashpartitioning(c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173, 200), ENSURE_REQUIREMENTS, [id=#16490]
          :                                   +- *(21) HashAggregate(keys=[c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4158 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4155 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173, sum#4399L])
          :                                      +- *(21) Project [c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, ws_ext_discount_amt#4155, ws_ext_list_price#4158, d_year#4173]
          :                                         +- *(21) BroadcastHashJoin [ws_sold_date_sk#4133], [d_date_sk#4167], Inner, BuildRight, false
@@ -83,24 +83,24 @@ AdaptiveSparkPlan isFinalPlan=true
          :                                            :     :- *(19) Sort [c_customer_sk#4115 ASC NULLS FIRST], false, 0
          :                                            :     :  +- AQEShuffleRead coalesced
          :                                            :     :     +- ShuffleQueryStage 9
-         :                                            :     :        +- ReusedExchange [c_customer_sk#4115, c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131], Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14848]
+         :                                            :     :        +- ReusedExchange [c_customer_sk#4115, c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131], Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14924]
          :                                            :     +- *(20) Sort [ws_bill_customer_sk#4137 ASC NULLS FIRST], false, 0
          :                                            :        +- AQEShuffleRead coalesced
          :                                            :           +- ShuffleQueryStage 10
-         :                                            :              +- Exchange hashpartitioning(ws_bill_customer_sk#4137, 200), ENSURE_REQUIREMENTS, [id=#15061]
+         :                                            :              +- Exchange hashpartitioning(ws_bill_customer_sk#4137, 200), ENSURE_REQUIREMENTS, [id=#15137]
          :                                            :                 +- *(8) Filter (isnotnull(ws_bill_customer_sk#4137) AND isnotnull(ws_sold_date_sk#4133))
          :                                            :                    +- *(8) ColumnarToRow
          :                                            :                       +- FileScan parquet [ws_sold_date_sk#4133,ws_bill_customer_sk#4137,ws_ext_discount_amt#4155,ws_ext_list_price#4158] Batched: true, DataFilters: [isnotnull(ws_bill_customer_sk#4137), isnotnull(ws_sold_date_sk#4133)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/web_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ws_bill_customer_sk), IsNotNull(ws_sold_date_sk)], ReadSchema: struct<ws_sold_date_sk:int,ws_bill_customer_sk:int,ws_ext_discount_amt:decimal(7,2),ws_ext_list_p...
          :                                            +- BroadcastQueryStage 12
-         :                                               +- ReusedExchange [d_date_sk#4167, d_year#4173], BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14884]
+         :                                               +- ReusedExchange [d_date_sk#4167, d_year#4173], BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14960]
          +- *(34) Sort [customer_id#3873 ASC NULLS FIRST], false, 0
             +- AQEShuffleRead coalesced
                +- ShuffleQueryStage 26
-                  +- Exchange hashpartitioning(customer_id#3873, 200), ENSURE_REQUIREMENTS, [id=#16792]
+                  +- Exchange hashpartitioning(customer_id#3873, 200), ENSURE_REQUIREMENTS, [id=#17000]
                      +- *(28) HashAggregate(keys=[c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4317 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4314 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3873, year_total#3881])
                         +- AQEShuffleRead coalesced
                            +- ShuffleQueryStage 22
-                              +- Exchange hashpartitioning(c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332, 200), ENSURE_REQUIREMENTS, [id=#16356]
+                              +- Exchange hashpartitioning(c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332, 200), ENSURE_REQUIREMENTS, [id=#16550]
                                  +- *(24) HashAggregate(keys=[c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4317 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4314 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332, sum#4401L])
                                     +- *(24) Project [c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, ws_ext_discount_amt#4314, ws_ext_list_price#4317, d_year#4332]
                                        +- *(24) BroadcastHashJoin [ws_sold_date_sk#4292], [d_date_sk#4326], Inner, BuildRight, false
@@ -109,13 +109,13 @@ AdaptiveSparkPlan isFinalPlan=true
                                           :     :- *(22) Sort [c_customer_sk#4274 ASC NULLS FIRST], false, 0
                                           :     :  +- AQEShuffleRead coalesced
                                           :     :     +- ShuffleQueryStage 14
-                                          :     :        +- ReusedExchange [c_customer_sk#4274, c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290], Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14848]
+                                          :     :        +- ReusedExchange [c_customer_sk#4274, c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290], Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14924]
                                           :     +- *(23) Sort [ws_bill_customer_sk#4296 ASC NULLS FIRST], false, 0
                                           :        +- AQEShuffleRead coalesced
                                           :           +- ShuffleQueryStage 16
-                                          :              +- ReusedExchange [ws_sold_date_sk#4292, ws_bill_customer_sk#4296, ws_ext_discount_amt#4314, ws_ext_list_price#4317], Exchange hashpartitioning(ws_bill_customer_sk#4137, 200), ENSURE_REQUIREMENTS, [id=#15061]
+                                          :              +- ReusedExchange [ws_sold_date_sk#4292, ws_bill_customer_sk#4296, ws_ext_discount_amt#4314, ws_ext_list_price#4317], Exchange hashpartitioning(ws_bill_customer_sk#4137, 200), ENSURE_REQUIREMENTS, [id=#15137]
                                           +- BroadcastQueryStage 18
-                                             +- ReusedExchange [d_date_sk#4326, d_year#4332], BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14981]
+                                             +- ReusedExchange [d_date_sk#4326, d_year#4332], BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#15057]
 +- == Initial Plan ==
    TakeOrderedAndProject(limit=100, orderBy=[customer_id#3853 ASC NULLS FIRST,customer_first_name#3854 ASC NULLS FIRST,customer_last_name#3855 ASC NULLS FIRST,customer_birth_country#3857 ASC NULLS FIRST], output=[customer_id#3853,customer_first_name#3854,customer_last_name#3855,customer_birth_country#3857])
    +- Project [customer_id#3853, customer_first_name#3854, customer_last_name#3855, customer_birth_country#3857]
@@ -124,85 +124,85 @@ AdaptiveSparkPlan isFinalPlan=true
          :  +- SortMergeJoin [customer_id#3785], [customer_id#4195], Inner
          :     :- SortMergeJoin [customer_id#3785], [customer_id#3853], Inner
          :     :  :- Sort [customer_id#3785 ASC NULLS FIRST], false, 0
-         :     :  :  +- Exchange hashpartitioning(customer_id#3785, 200), ENSURE_REQUIREMENTS, [id=#14755]
+         :     :  :  +- Exchange hashpartitioning(customer_id#3785, 200), ENSURE_REQUIREMENTS, [id=#14831]
          :     :  :     +- Filter (isnotnull(year_total#3793) AND (year_total#3793 > 0.00))
          :     :  :        +- HashAggregate(keys=[c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#681 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#678 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3785, year_total#3793])
-         :     :  :           +- Exchange hashpartitioning(c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604, 200), ENSURE_REQUIREMENTS, [id=#14735]
+         :     :  :           +- Exchange hashpartitioning(c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604, 200), ENSURE_REQUIREMENTS, [id=#14811]
          :     :  :              +- HashAggregate(keys=[c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#681 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#678 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, d_year#604, sum#4395L])
          :     :  :                 +- Project [c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, ss_ext_discount_amt#678, ss_ext_list_price#681, d_year#604]
          :     :  :                    +- BroadcastHashJoin [ss_sold_date_sk#664], [d_date_sk#598], Inner, BuildRight, false
          :     :  :                       :- Project [c_customer_id#563, c_first_name#570, c_last_name#571, c_preferred_cust_flag#572, c_birth_country#576, c_login#577, c_email_address#578, ss_sold_date_sk#664, ss_ext_discount_amt#678, ss_ext_list_price#681]
          :     :  :                       :  +- SortMergeJoin [c_customer_sk#562], [ss_customer_sk#667], Inner
          :     :  :                       :     :- Sort [c_customer_sk#562 ASC NULLS FIRST], false, 0
-         :     :  :                       :     :  +- Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14723]
+         :     :  :                       :     :  +- Exchange hashpartitioning(c_customer_sk#562, 200), ENSURE_REQUIREMENTS, [id=#14799]
          :     :  :                       :     :     +- Filter (isnotnull(c_customer_sk#562) AND isnotnull(c_customer_id#563))
          :     :  :                       :     :        +- FileScan parquet [c_customer_sk#562,c_customer_id#563,c_first_name#570,c_last_name#571,c_preferred_cust_flag#572,c_birth_country#576,c_login#577,c_email_address#578] Batched: true, DataFilters: [isnotnull(c_customer_sk#562), isnotnull(c_customer_id#563)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk), IsNotNull(c_customer_id)], ReadSchema: struct<c_customer_sk:int,c_customer_id:string,c_first_name:string,c_last_name:string,c_preferred_...
          :     :  :                       :     +- Sort [ss_customer_sk#667 ASC NULLS FIRST], false, 0
-         :     :  :                       :        +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#14724]
+         :     :  :                       :        +- Exchange hashpartitioning(ss_customer_sk#667, 200), ENSURE_REQUIREMENTS, [id=#14800]
          :     :  :                       :           +- Filter (isnotnull(ss_customer_sk#667) AND isnotnull(ss_sold_date_sk#664))
          :     :  :                       :              +- FileScan parquet [ss_sold_date_sk#664,ss_customer_sk#667,ss_ext_discount_amt#678,ss_ext_list_price#681] Batched: true, DataFilters: [isnotnull(ss_customer_sk#667), isnotnull(ss_sold_date_sk#664)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_customer_sk), IsNotNull(ss_sold_date_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_customer_sk:int,ss_ext_discount_amt:decimal(7,2),ss_ext_list_price:...
-         :     :  :                       +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14730]
+         :     :  :                       +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14806]
          :     :  :                          +- Filter ((isnotnull(d_year#604) AND (d_year#604 = 1998)) AND isnotnull(d_date_sk#598))
          :     :  :                             +- FileScan parquet [d_date_sk#598,d_year#604] Batched: true, DataFilters: [isnotnull(d_year#604), (d_year#604 = 1998), isnotnull(d_date_sk#598)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,1998), IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_year:int>
          :     :  +- Sort [customer_id#3853 ASC NULLS FIRST], false, 0
-         :     :     +- Exchange hashpartitioning(customer_id#3853, 200), ENSURE_REQUIREMENTS, [id=#14756]
+         :     :     +- Exchange hashpartitioning(customer_id#3853, 200), ENSURE_REQUIREMENTS, [id=#14832]
          :     :        +- HashAggregate(keys=[c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#3922 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#3919 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3853, customer_first_name#3854, customer_last_name#3855, customer_birth_country#3857, year_total#3861])
-         :     :           +- Exchange hashpartitioning(c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934, 200), ENSURE_REQUIREMENTS, [id=#14751]
+         :     :           +- Exchange hashpartitioning(c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934, 200), ENSURE_REQUIREMENTS, [id=#14827]
          :     :              +- HashAggregate(keys=[c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ss_ext_list_price#3922 as decimal(8,2))) - promote_precision(cast(ss_ext_discount_amt#3919 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, d_year#3934, sum#4397L])
          :     :                 +- Project [c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, ss_ext_discount_amt#3919, ss_ext_list_price#3922, d_year#3934]
          :     :                    +- BroadcastHashJoin [ss_sold_date_sk#3905], [d_date_sk#3928], Inner, BuildRight, false
          :     :                       :- Project [c_customer_id#3888, c_first_name#3895, c_last_name#3896, c_preferred_cust_flag#3897, c_birth_country#3901, c_login#3902, c_email_address#3903, ss_sold_date_sk#3905, ss_ext_discount_amt#3919, ss_ext_list_price#3922]
          :     :                       :  +- SortMergeJoin [c_customer_sk#3887], [ss_customer_sk#3908], Inner
          :     :                       :     :- Sort [c_customer_sk#3887 ASC NULLS FIRST], false, 0
-         :     :                       :     :  +- Exchange hashpartitioning(c_customer_sk#3887, 200), ENSURE_REQUIREMENTS, [id=#14739]
+         :     :                       :     :  +- Exchange hashpartitioning(c_customer_sk#3887, 200), ENSURE_REQUIREMENTS, [id=#14815]
          :     :                       :     :     +- Filter (isnotnull(c_customer_sk#3887) AND isnotnull(c_customer_id#3888))
          :     :                       :     :        +- FileScan parquet [c_customer_sk#3887,c_customer_id#3888,c_first_name#3895,c_last_name#3896,c_preferred_cust_flag#3897,c_birth_country#3901,c_login#3902,c_email_address#3903] Batched: true, DataFilters: [isnotnull(c_customer_sk#3887), isnotnull(c_customer_id#3888)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk), IsNotNull(c_customer_id)], ReadSchema: struct<c_customer_sk:int,c_customer_id:string,c_first_name:string,c_last_name:string,c_preferred_...
          :     :                       :     +- Sort [ss_customer_sk#3908 ASC NULLS FIRST], false, 0
-         :     :                       :        +- Exchange hashpartitioning(ss_customer_sk#3908, 200), ENSURE_REQUIREMENTS, [id=#14740]
+         :     :                       :        +- Exchange hashpartitioning(ss_customer_sk#3908, 200), ENSURE_REQUIREMENTS, [id=#14816]
          :     :                       :           +- Filter (isnotnull(ss_customer_sk#3908) AND isnotnull(ss_sold_date_sk#3905))
          :     :                       :              +- FileScan parquet [ss_sold_date_sk#3905,ss_customer_sk#3908,ss_ext_discount_amt#3919,ss_ext_list_price#3922] Batched: true, DataFilters: [isnotnull(ss_customer_sk#3908), isnotnull(ss_sold_date_sk#3905)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_customer_sk), IsNotNull(ss_sold_date_sk)], ReadSchema: struct<ss_sold_date_sk:int,ss_customer_sk:int,ss_ext_discount_amt:decimal(7,2),ss_ext_list_price:...
-         :     :                       +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14746]
+         :     :                       +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14822]
          :     :                          +- Filter ((isnotnull(d_year#3934) AND (d_year#3934 = 1999)) AND isnotnull(d_date_sk#3928))
          :     :                             +- FileScan parquet [d_date_sk#3928,d_year#3934] Batched: true, DataFilters: [isnotnull(d_year#3934), (d_year#3934 = 1999), isnotnull(d_date_sk#3928)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,1999), IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_year:int>
          :     +- Sort [customer_id#4195 ASC NULLS FIRST], false, 0
-         :        +- Exchange hashpartitioning(customer_id#4195, 200), ENSURE_REQUIREMENTS, [id=#14779]
+         :        +- Exchange hashpartitioning(customer_id#4195, 200), ENSURE_REQUIREMENTS, [id=#14855]
          :           +- Project [customer_id#3795 AS customer_id#4195, year_total#3803 AS year_total#4203]
          :              +- Filter (isnotnull(year_total#3803) AND (year_total#3803 > 0.00))
          :                 +- HashAggregate(keys=[c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4158 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4155 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3795, year_total#3803])
-         :                    +- Exchange hashpartitioning(c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173, 200), ENSURE_REQUIREMENTS, [id=#14773]
+         :                    +- Exchange hashpartitioning(c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173, 200), ENSURE_REQUIREMENTS, [id=#14849]
          :                       +- HashAggregate(keys=[c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4158 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4155 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, d_year#4173, sum#4399L])
          :                          +- Project [c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, ws_ext_discount_amt#4155, ws_ext_list_price#4158, d_year#4173]
          :                             +- BroadcastHashJoin [ws_sold_date_sk#4133], [d_date_sk#4167], Inner, BuildRight, false
          :                                :- Project [c_customer_id#4116, c_first_name#4123, c_last_name#4124, c_preferred_cust_flag#4125, c_birth_country#4129, c_login#4130, c_email_address#4131, ws_sold_date_sk#4133, ws_ext_discount_amt#4155, ws_ext_list_price#4158]
          :                                :  +- SortMergeJoin [c_customer_sk#4115], [ws_bill_customer_sk#4137], Inner
          :                                :     :- Sort [c_customer_sk#4115 ASC NULLS FIRST], false, 0
-         :                                :     :  +- Exchange hashpartitioning(c_customer_sk#4115, 200), ENSURE_REQUIREMENTS, [id=#14761]
+         :                                :     :  +- Exchange hashpartitioning(c_customer_sk#4115, 200), ENSURE_REQUIREMENTS, [id=#14837]
          :                                :     :     +- Filter (isnotnull(c_customer_sk#4115) AND isnotnull(c_customer_id#4116))
          :                                :     :        +- FileScan parquet [c_customer_sk#4115,c_customer_id#4116,c_first_name#4123,c_last_name#4124,c_preferred_cust_flag#4125,c_birth_country#4129,c_login#4130,c_email_address#4131] Batched: true, DataFilters: [isnotnull(c_customer_sk#4115), isnotnull(c_customer_id#4116)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk), IsNotNull(c_customer_id)], ReadSchema: struct<c_customer_sk:int,c_customer_id:string,c_first_name:string,c_last_name:string,c_preferred_...
          :                                :     +- Sort [ws_bill_customer_sk#4137 ASC NULLS FIRST], false, 0
-         :                                :        +- Exchange hashpartitioning(ws_bill_customer_sk#4137, 200), ENSURE_REQUIREMENTS, [id=#14762]
+         :                                :        +- Exchange hashpartitioning(ws_bill_customer_sk#4137, 200), ENSURE_REQUIREMENTS, [id=#14838]
          :                                :           +- Filter (isnotnull(ws_bill_customer_sk#4137) AND isnotnull(ws_sold_date_sk#4133))
          :                                :              +- FileScan parquet [ws_sold_date_sk#4133,ws_bill_customer_sk#4137,ws_ext_discount_amt#4155,ws_ext_list_price#4158] Batched: true, DataFilters: [isnotnull(ws_bill_customer_sk#4137), isnotnull(ws_sold_date_sk#4133)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/web_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ws_bill_customer_sk), IsNotNull(ws_sold_date_sk)], ReadSchema: struct<ws_sold_date_sk:int,ws_bill_customer_sk:int,ws_ext_discount_amt:decimal(7,2),ws_ext_list_p...
-         :                                +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14768]
+         :                                +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14844]
          :                                   +- Filter ((isnotnull(d_year#4173) AND (d_year#4173 = 1998)) AND isnotnull(d_date_sk#4167))
          :                                      +- FileScan parquet [d_date_sk#4167,d_year#4173] Batched: true, DataFilters: [isnotnull(d_year#4173), (d_year#4173 = 1998), isnotnull(d_date_sk#4167)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,1998), IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_year:int>
          +- Sort [customer_id#3873 ASC NULLS FIRST], false, 0
-            +- Exchange hashpartitioning(customer_id#3873, 200), ENSURE_REQUIREMENTS, [id=#14800]
+            +- Exchange hashpartitioning(customer_id#3873, 200), ENSURE_REQUIREMENTS, [id=#14876]
                +- HashAggregate(keys=[c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332], functions=[sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4317 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4314 as decimal(8,2)))), DecimalType(8,2), true)))], output=[customer_id#3873, year_total#3881])
-                  +- Exchange hashpartitioning(c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332, 200), ENSURE_REQUIREMENTS, [id=#14796]
+                  +- Exchange hashpartitioning(c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332, 200), ENSURE_REQUIREMENTS, [id=#14872]
                      +- HashAggregate(keys=[c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332], functions=[partial_sum(UnscaledValue(CheckOverflow((promote_precision(cast(ws_ext_list_price#4317 as decimal(8,2))) - promote_precision(cast(ws_ext_discount_amt#4314 as decimal(8,2)))), DecimalType(8,2), true)))], output=[c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, d_year#4332, sum#4401L])
                         +- Project [c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, ws_ext_discount_amt#4314, ws_ext_list_price#4317, d_year#4332]
                            +- BroadcastHashJoin [ws_sold_date_sk#4292], [d_date_sk#4326], Inner, BuildRight, false
                               :- Project [c_customer_id#4275, c_first_name#4282, c_last_name#4283, c_preferred_cust_flag#4284, c_birth_country#4288, c_login#4289, c_email_address#4290, ws_sold_date_sk#4292, ws_ext_discount_amt#4314, ws_ext_list_price#4317]
                               :  +- SortMergeJoin [c_customer_sk#4274], [ws_bill_customer_sk#4296], Inner
                               :     :- Sort [c_customer_sk#4274 ASC NULLS FIRST], false, 0
-                              :     :  +- Exchange hashpartitioning(c_customer_sk#4274, 200), ENSURE_REQUIREMENTS, [id=#14784]
+                              :     :  +- Exchange hashpartitioning(c_customer_sk#4274, 200), ENSURE_REQUIREMENTS, [id=#14860]
                               :     :     +- Filter (isnotnull(c_customer_sk#4274) AND isnotnull(c_customer_id#4275))
                               :     :        +- FileScan parquet [c_customer_sk#4274,c_customer_id#4275,c_first_name#4282,c_last_name#4283,c_preferred_cust_flag#4284,c_birth_country#4288,c_login#4289,c_email_address#4290] Batched: true, DataFilters: [isnotnull(c_customer_sk#4274), isnotnull(c_customer_id#4275)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(c_customer_sk), IsNotNull(c_customer_id)], ReadSchema: struct<c_customer_sk:int,c_customer_id:string,c_first_name:string,c_last_name:string,c_preferred_...
                               :     +- Sort [ws_bill_customer_sk#4296 ASC NULLS FIRST], false, 0
-                              :        +- Exchange hashpartitioning(ws_bill_customer_sk#4296, 200), ENSURE_REQUIREMENTS, [id=#14785]
+                              :        +- Exchange hashpartitioning(ws_bill_customer_sk#4296, 200), ENSURE_REQUIREMENTS, [id=#14861]
                               :           +- Filter (isnotnull(ws_bill_customer_sk#4296) AND isnotnull(ws_sold_date_sk#4292))
                               :              +- FileScan parquet [ws_sold_date_sk#4292,ws_bill_customer_sk#4296,ws_ext_discount_amt#4314,ws_ext_list_price#4317] Batched: true, DataFilters: [isnotnull(ws_bill_customer_sk#4296), isnotnull(ws_sold_date_sk#4292)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/web_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ws_bill_customer_sk), IsNotNull(ws_sold_date_sk)], ReadSchema: struct<ws_sold_date_sk:int,ws_bill_customer_sk:int,ws_ext_discount_amt:decimal(7,2),ws_ext_list_p...
-                              +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14791]
+                              +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#14867]
                                  +- Filter ((isnotnull(d_year#4332) AND (d_year#4332 = 1999)) AND isnotnull(d_date_sk#4326))
                                     +- FileScan parquet [d_date_sk#4326,d_year#4332] Batched: true, DataFilters: [isnotnull(d_year#4332), (d_year#4332 = 1999), isnotnull(d_date_sk#4326)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_year), EqualTo(d_year,1999), IsNotNull(d_date_sk)], ReadSchema: struct<d_date_sk:int,d_year:int>

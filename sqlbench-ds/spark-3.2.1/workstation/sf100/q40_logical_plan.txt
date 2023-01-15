@@ -1,7 +1,7 @@
 GlobalLimit 100
 +- LocalLimit 100
    +- Sort [w_state#196 ASC NULLS FIRST, i_item_id#501 ASC NULLS FIRST], true
-      +- Aggregate [w_state#196, i_item_id#501], [w_state#196, i_item_id#501, sum(CASE WHEN (d_date#600 < 2002-02-27) THEN CheckOverflow((promote_precision(cast(cs_sales_price#139 as decimal(13,2))) - promote_precision(cast(coalesce(cast(cr_refunded_cash#271 as decimal(12,2)), 0.00) as decimal(13,2)))), DecimalType(13,2), true) ELSE 0.00 END) AS sales_before#8984, sum(CASE WHEN (d_date#600 >= 2002-02-27) THEN CheckOverflow((promote_precision(cast(cs_sales_price#139 as decimal(13,2))) - promote_precision(cast(coalesce(cast(cr_refunded_cash#271 as decimal(12,2)), 0.00) as decimal(13,2)))), DecimalType(13,2), true) ELSE 0.00 END) AS sales_after#8985]
+      +- Aggregate [w_state#196, i_item_id#501], [w_state#196, i_item_id#501, sum(CASE WHEN (d_date#600 < 2002-02-27) THEN CheckOverflow((promote_precision(cast(cs_sales_price#139 as decimal(13,2))) - promote_precision(cast(coalesce(cast(cr_refunded_cash#271 as decimal(12,2)), 0.00) as decimal(13,2)))), DecimalType(13,2), true) ELSE 0.00 END) AS sales_before#10366, sum(CASE WHEN (d_date#600 >= 2002-02-27) THEN CheckOverflow((promote_precision(cast(cs_sales_price#139 as decimal(13,2))) - promote_precision(cast(coalesce(cast(cr_refunded_cash#271 as decimal(12,2)), 0.00) as decimal(13,2)))), DecimalType(13,2), true) ELSE 0.00 END) AS sales_after#10367]
          +- Project [cs_sales_price#139, cr_refunded_cash#271, w_state#196, i_item_id#501, d_date#600]
             +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#598)
                :- Project [cs_sold_date_sk#118, cs_sales_price#139, cr_refunded_cash#271, w_state#196, i_item_id#501]

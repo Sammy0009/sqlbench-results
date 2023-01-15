@@ -17,7 +17,7 @@ diagram:
             \ s_suite_number#347, s_city#348, s_county#349, s_state#350, s_zip#351"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((sr_returned_date_sk#710 = d_date_sk#10610))"
+          - title: "Inner Join: Some((sr_returned_date_sk#710 = d_date_sk#11992))"
             operator: "join"
             inputs:
             - title: "Projection: ss_sold_date_sk#664, sr_returned_date_sk#710, s_store_name#331,\
@@ -90,11 +90,11 @@ diagram:
                     - title: "date_dim.parquet"
                       operator: "scan"
                       inputs: []
-            - title: "Projection: d_date_sk#10610"
+            - title: "Projection: d_date_sk#11992"
               operator: "projection"
               inputs:
-              - title: "Filter: (((isnotnull(d_year#10616) AND isnotnull(d_moy#10618))\
-                  \ AND ((d_year#10616 = 1999) AND (d_moy#10618 = 10))) AND isnotnull(d_date_sk#10610))"
+              - title: "Filter: (((isnotnull(d_year#11998) AND isnotnull(d_moy#12000))\
+                  \ AND ((d_year#11998 = 1999) AND (d_moy#12000 = 10))) AND isnotnull(d_date_sk#11992))"
                 operator: "filter"
                 inputs:
                 - title: "date_dim.parquet"

@@ -9,36 +9,36 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: rnk#9138, i_product_name#521 AS best_performing#9144,\
-          \ i_product_name#9190 AS worst_performing#9145"
+      - title: "Projection: rnk#10520, i_product_name#521 AS best_performing#10526,\
+          \ i_product_name#10572 AS worst_performing#10527"
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((i_item_sk#9169 = item_sk#9139))"
+        - title: "Inner Join: Some((i_item_sk#10551 = item_sk#10521))"
           operator: "join"
           inputs:
-          - title: "Projection: rnk#9138, item_sk#9139, i_product_name#521"
+          - title: "Projection: rnk#10520, item_sk#10521, i_product_name#521"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((i_item_sk#500 = item_sk#9134))"
+            - title: "Inner Join: Some((i_item_sk#500 = item_sk#10516))"
               operator: "join"
               inputs:
-              - title: "Projection: item_sk#9134, rnk#9138, item_sk#9139"
+              - title: "Projection: item_sk#10516, rnk#10520, item_sk#10521"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((rnk#9138 = rnk#9143))"
+                - title: "Inner Join: Some((rnk#10520 = rnk#10525))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: item_sk#9134, rnk#9138"
+                  - title: "Projection: item_sk#10516, rnk#10520"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((rnk#9138 < 11) AND isnotnull(item_sk#9134))"
+                    - title: "Filter: ((rnk#10520 < 11) AND isnotnull(item_sk#10516))"
                       operator: "filter"
                       inputs:
                       - title: "Window (unknown)"
                         operator: "Window"
                         inputs:
-                        - title: "Filter: (isnotnull(rank_col#9135) AND (cast(rank_col#9135\
-                            \ as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#9137\
+                        - title: "Filter: (isnotnull(rank_col#10517) AND (cast(rank_col#10517\
+                            \ as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#10519\
                             \ [])), DecimalType(13,7), true)))"
                           operator: "filter"
                           inputs:
@@ -55,28 +55,28 @@ diagram:
                                 - title: "store_sales.parquet"
                                   operator: "scan"
                                   inputs: []
-                  - title: "Projection: item_sk#9139, rnk#9143"
+                  - title: "Projection: item_sk#10521, rnk#10525"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((rnk#9143 < 11) AND isnotnull(item_sk#9139))"
+                    - title: "Filter: ((rnk#10525 < 11) AND isnotnull(item_sk#10521))"
                       operator: "filter"
                       inputs:
                       - title: "Window (unknown)"
                         operator: "Window"
                         inputs:
-                        - title: "Filter: (isnotnull(rank_col#9140) AND (cast(rank_col#9140\
-                            \ as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#9142\
+                        - title: "Filter: (isnotnull(rank_col#10522) AND (cast(rank_col#10522\
+                            \ as decimal(13,7)) > CheckOverflow((0.900000 * promote_precision(scalar-subquery#10524\
                             \ [])), DecimalType(13,7), true)))"
                           operator: "filter"
                           inputs:
                           - title: "Aggregate (unknown)"
                             operator: "Aggregate"
                             inputs:
-                            - title: "Projection: ss_item_sk#9148, ss_net_profit#9168"
+                            - title: "Projection: ss_item_sk#10530, ss_net_profit#10550"
                               operator: "projection"
                               inputs:
-                              - title: "Filter: (isnotnull(ss_store_sk#9153) AND (ss_store_sk#9153\
-                                  \ = 21))"
+                              - title: "Filter: (isnotnull(ss_store_sk#10535) AND\
+                                  \ (ss_store_sk#10535 = 21))"
                                 operator: "filter"
                                 inputs:
                                 - title: "store_sales.parquet"
@@ -91,10 +91,10 @@ diagram:
                   - title: "item.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Projection: i_item_sk#9169, i_product_name#9190"
+          - title: "Projection: i_item_sk#10551, i_product_name#10572"
             operator: "projection"
             inputs:
-            - title: "Filter: isnotnull(i_item_sk#9169)"
+            - title: "Filter: isnotnull(i_item_sk#10551)"
               operator: "filter"
               inputs:
               - title: "item.parquet"

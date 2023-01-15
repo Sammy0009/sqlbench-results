@@ -30,8 +30,8 @@ diagram:
                     \ ws_order_number#401L, ws_ext_ship_cost#412, ws_net_profit#417"
                   operator: "projection"
                   inputs:
-                  - title: "LeftSemi Join: Some(((ws_order_number#401L = ws_order_number#19363L)\
-                      \ AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#19361)))"
+                  - title: "LeftSemi Join: Some(((ws_order_number#401L = ws_order_number#20740L)\
+                      \ AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#20738)))"
                     operator: "join"
                     inputs:
                     - title: "Projection: ws_ship_date_sk#386, ws_ship_addr_sk#395,\
@@ -46,7 +46,7 @@ diagram:
                         - title: "web_sales.parquet"
                           operator: "scan"
                           inputs: []
-                    - title: "Projection: ws_warehouse_sk#19361, ws_order_number#19363L"
+                    - title: "Projection: ws_warehouse_sk#20738, ws_order_number#20740L"
                       operator: "projection"
                       inputs:
                       - title: "web_sales.parquet"

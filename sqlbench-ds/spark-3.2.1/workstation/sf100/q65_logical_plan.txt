@@ -1,30 +1,30 @@
 GlobalLimit 100
 +- LocalLimit 100
    +- Sort [s_store_name#331 ASC NULLS FIRST, i_item_desc#504 ASC NULLS FIRST], true
-      +- Project [s_store_name#331, i_item_desc#504, revenue#13311, i_current_price#505, i_wholesale_cost#506, i_brand#508]
-         +- Join Inner, ((ss_store_sk#671 = ss_store_sk#13319) AND (cast(revenue#13311 as decimal(23,7)) <= CheckOverflow((0.100000 * promote_precision(ave#13310)), DecimalType(23,7), true)))
-            :- Project [s_store_name#331, ss_store_sk#13319, revenue#13311, i_item_desc#504, i_current_price#505, i_wholesale_cost#506, i_brand#508]
-            :  +- Join Inner, (i_item_sk#500 = ss_item_sk#13314)
-            :     :- Project [s_store_name#331, ss_store_sk#13319, ss_item_sk#13314, revenue#13311]
-            :     :  +- Join Inner, (s_store_sk#326 = ss_store_sk#13319)
+      +- Project [s_store_name#331, i_item_desc#504, revenue#14694, i_current_price#505, i_wholesale_cost#506, i_brand#508]
+         +- Join Inner, ((ss_store_sk#671 = ss_store_sk#14702) AND (cast(revenue#14694 as decimal(23,7)) <= CheckOverflow((0.100000 * promote_precision(ave#14693)), DecimalType(23,7), true)))
+            :- Project [s_store_name#331, ss_store_sk#14702, revenue#14694, i_item_desc#504, i_current_price#505, i_wholesale_cost#506, i_brand#508]
+            :  +- Join Inner, (i_item_sk#500 = ss_item_sk#14697)
+            :     :- Project [s_store_name#331, ss_store_sk#14702, ss_item_sk#14697, revenue#14694]
+            :     :  +- Join Inner, (s_store_sk#326 = ss_store_sk#14702)
             :     :     :- Project [s_store_sk#326, s_store_name#331]
             :     :     :  +- Filter isnotnull(s_store_sk#326)
             :     :     :     +- Relation [s_store_sk#326,s_store_id#327,s_rec_start_date#328,s_rec_end_date#329,s_closed_date_sk#330,s_store_name#331,s_number_employees#332,s_floor_space#333,s_hours#334,s_manager#335,s_market_id#336,s_geography_class#337,s_market_desc#338,s_market_manager#339,s_division_id#340,s_division_name#341,s_company_id#342,s_company_name#343,s_street_number#344,s_street_name#345,s_street_type#346,s_suite_number#347,s_city#348,s_county#349,... 5 more fields] parquet
-            :     :     +- Filter isnotnull(revenue#13311)
-            :     :        +- Aggregate [ss_store_sk#13319, ss_item_sk#13314], [ss_store_sk#13319, ss_item_sk#13314, MakeDecimal(sum(UnscaledValue(ss_sales_price#13325)),17,2) AS revenue#13311]
-            :     :           +- Project [ss_item_sk#13314, ss_store_sk#13319, ss_sales_price#13325]
-            :     :              +- Join Inner, (ss_sold_date_sk#13312 = d_date_sk#13335)
-            :     :                 :- Project [ss_sold_date_sk#13312, ss_item_sk#13314, ss_store_sk#13319, ss_sales_price#13325]
-            :     :                 :  +- Filter ((isnotnull(ss_sold_date_sk#13312) AND isnotnull(ss_store_sk#13319)) AND isnotnull(ss_item_sk#13314))
-            :     :                 :     +- Relation [ss_sold_date_sk#13312,ss_sold_time_sk#13313,ss_item_sk#13314,ss_customer_sk#13315,ss_cdemo_sk#13316,ss_hdemo_sk#13317,ss_addr_sk#13318,ss_store_sk#13319,ss_promo_sk#13320,ss_ticket_number#13321L,ss_quantity#13322,ss_wholesale_cost#13323,ss_list_price#13324,ss_sales_price#13325,ss_ext_discount_amt#13326,ss_ext_sales_price#13327,ss_ext_wholesale_cost#13328,ss_ext_list_price#13329,ss_ext_tax#13330,ss_coupon_amt#13331,ss_net_paid#13332,ss_net_paid_inc_tax#13333,ss_net_profit#13334] parquet
-            :     :                 +- Project [d_date_sk#13335]
-            :     :                    +- Filter ((isnotnull(d_month_seq#13338) AND ((d_month_seq#13338 >= 1191) AND (d_month_seq#13338 <= 1202))) AND isnotnull(d_date_sk#13335))
-            :     :                       +- Relation [d_date_sk#13335,d_date_id#13336,d_date#13337,d_month_seq#13338,d_week_seq#13339,d_quarter_seq#13340,d_year#13341,d_dow#13342,d_moy#13343,d_dom#13344,d_qoy#13345,d_fy_year#13346,d_fy_quarter_seq#13347,d_fy_week_seq#13348,d_day_name#13349,d_quarter_name#13350,d_holiday#13351,d_weekend#13352,d_following_holiday#13353,d_first_dom#13354,d_last_dom#13355,d_same_day_ly#13356,d_same_day_lq#13357,d_current_day#13358,... 4 more fields] parquet
+            :     :     +- Filter isnotnull(revenue#14694)
+            :     :        +- Aggregate [ss_store_sk#14702, ss_item_sk#14697], [ss_store_sk#14702, ss_item_sk#14697, MakeDecimal(sum(UnscaledValue(ss_sales_price#14708)),17,2) AS revenue#14694]
+            :     :           +- Project [ss_item_sk#14697, ss_store_sk#14702, ss_sales_price#14708]
+            :     :              +- Join Inner, (ss_sold_date_sk#14695 = d_date_sk#14718)
+            :     :                 :- Project [ss_sold_date_sk#14695, ss_item_sk#14697, ss_store_sk#14702, ss_sales_price#14708]
+            :     :                 :  +- Filter ((isnotnull(ss_sold_date_sk#14695) AND isnotnull(ss_store_sk#14702)) AND isnotnull(ss_item_sk#14697))
+            :     :                 :     +- Relation [ss_sold_date_sk#14695,ss_sold_time_sk#14696,ss_item_sk#14697,ss_customer_sk#14698,ss_cdemo_sk#14699,ss_hdemo_sk#14700,ss_addr_sk#14701,ss_store_sk#14702,ss_promo_sk#14703,ss_ticket_number#14704L,ss_quantity#14705,ss_wholesale_cost#14706,ss_list_price#14707,ss_sales_price#14708,ss_ext_discount_amt#14709,ss_ext_sales_price#14710,ss_ext_wholesale_cost#14711,ss_ext_list_price#14712,ss_ext_tax#14713,ss_coupon_amt#14714,ss_net_paid#14715,ss_net_paid_inc_tax#14716,ss_net_profit#14717] parquet
+            :     :                 +- Project [d_date_sk#14718]
+            :     :                    +- Filter ((isnotnull(d_month_seq#14721) AND ((d_month_seq#14721 >= 1191) AND (d_month_seq#14721 <= 1202))) AND isnotnull(d_date_sk#14718))
+            :     :                       +- Relation [d_date_sk#14718,d_date_id#14719,d_date#14720,d_month_seq#14721,d_week_seq#14722,d_quarter_seq#14723,d_year#14724,d_dow#14725,d_moy#14726,d_dom#14727,d_qoy#14728,d_fy_year#14729,d_fy_quarter_seq#14730,d_fy_week_seq#14731,d_day_name#14732,d_quarter_name#14733,d_holiday#14734,d_weekend#14735,d_following_holiday#14736,d_first_dom#14737,d_last_dom#14738,d_same_day_ly#14739,d_same_day_lq#14740,d_current_day#14741,... 4 more fields] parquet
             :     +- Project [i_item_sk#500, i_item_desc#504, i_current_price#505, i_wholesale_cost#506, i_brand#508]
             :        +- Filter isnotnull(i_item_sk#500)
             :           +- Relation [i_item_sk#500,i_item_id#501,i_rec_start_date#502,i_rec_end_date#503,i_item_desc#504,i_current_price#505,i_wholesale_cost#506,i_brand_id#507,i_brand#508,i_class_id#509,i_class#510,i_category_id#511,i_category#512,i_manufact_id#513,i_manufact#514,i_size#515,i_formulation#516,i_color#517,i_units#518,i_container#519,i_manager_id#520,i_product_name#521] parquet
-            +- Aggregate [ss_store_sk#671], [ss_store_sk#671, avg(revenue#13309) AS ave#13310]
-               +- Aggregate [ss_store_sk#671, ss_item_sk#666], [ss_store_sk#671, MakeDecimal(sum(UnscaledValue(ss_sales_price#677)),17,2) AS revenue#13309]
+            +- Aggregate [ss_store_sk#671], [ss_store_sk#671, avg(revenue#14692) AS ave#14693]
+               +- Aggregate [ss_store_sk#671, ss_item_sk#666], [ss_store_sk#671, MakeDecimal(sum(UnscaledValue(ss_sales_price#677)),17,2) AS revenue#14692]
                   +- Project [ss_item_sk#666, ss_store_sk#671, ss_sales_price#677]
                      +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#598)
                         :- Project [ss_sold_date_sk#664, ss_item_sk#666, ss_store_sk#671, ss_sales_price#677]

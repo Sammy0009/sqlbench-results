@@ -9,13 +9,13 @@ diagram:
     - title: "Sort (unknown)"
       operator: "Sort"
       inputs:
-      - title: "Projection: i_manager_id#520, sum_sales#12647, avg_monthly_sales#12648"
+      - title: "Projection: i_manager_id#520, sum_sales#14030, avg_monthly_sales#14031"
         operator: "projection"
         inputs:
-        - title: "Filter: (isnotnull(avg_monthly_sales#12648) AND ((avg_monthly_sales#12648\
-            \ > 0.000000) AND (CheckOverflow((promote_precision(abs(CheckOverflow((promote_precision(cast(sum_sales#12647\
-            \ as decimal(22,6))) - promote_precision(cast(avg_monthly_sales#12648\
-            \ as decimal(22,6)))), DecimalType(22,6), true), false)) / promote_precision(cast(avg_monthly_sales#12648\
+        - title: "Filter: (isnotnull(avg_monthly_sales#14031) AND ((avg_monthly_sales#14031\
+            \ > 0.000000) AND (CheckOverflow((promote_precision(abs(CheckOverflow((promote_precision(cast(sum_sales#14030\
+            \ as decimal(22,6))) - promote_precision(cast(avg_monthly_sales#14031\
+            \ as decimal(22,6)))), DecimalType(22,6), true), false)) / promote_precision(cast(avg_monthly_sales#14031\
             \ as decimal(22,6)))), DecimalType(38,16), true) > 0.1000000000000000)))"
           operator: "filter"
           inputs:

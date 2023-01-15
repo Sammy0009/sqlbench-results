@@ -1,7 +1,7 @@
-Aggregate [sum(CASE WHEN (isnotnull(customer_sk#19688) AND isnull(customer_sk#19690)) THEN 1 ELSE 0 END) AS store_only#19685L, sum(CASE WHEN (isnull(customer_sk#19688) AND isnotnull(customer_sk#19690)) THEN 1 ELSE 0 END) AS catalog_only#19686L, sum(CASE WHEN (isnotnull(customer_sk#19688) AND isnotnull(customer_sk#19690)) THEN 1 ELSE 0 END) AS store_and_catalog#19687L]
-+- Project [customer_sk#19688, customer_sk#19690]
-   +- Join FullOuter, ((customer_sk#19688 = customer_sk#19690) AND (item_sk#19689 = item_sk#19691))
-      :- Aggregate [ss_customer_sk#667, ss_item_sk#666], [ss_customer_sk#667 AS customer_sk#19688, ss_item_sk#666 AS item_sk#19689]
+Aggregate [sum(CASE WHEN (isnotnull(customer_sk#21065) AND isnull(customer_sk#21067)) THEN 1 ELSE 0 END) AS store_only#21062L, sum(CASE WHEN (isnull(customer_sk#21065) AND isnotnull(customer_sk#21067)) THEN 1 ELSE 0 END) AS catalog_only#21063L, sum(CASE WHEN (isnotnull(customer_sk#21065) AND isnotnull(customer_sk#21067)) THEN 1 ELSE 0 END) AS store_and_catalog#21064L]
++- Project [customer_sk#21065, customer_sk#21067]
+   +- Join FullOuter, ((customer_sk#21065 = customer_sk#21067) AND (item_sk#21066 = item_sk#21068))
+      :- Aggregate [ss_customer_sk#667, ss_item_sk#666], [ss_customer_sk#667 AS customer_sk#21065, ss_item_sk#666 AS item_sk#21066]
       :  +- Project [ss_item_sk#666, ss_customer_sk#667]
       :     +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#598)
       :        :- Project [ss_sold_date_sk#664, ss_item_sk#666, ss_customer_sk#667]
@@ -10,12 +10,12 @@ Aggregate [sum(CASE WHEN (isnotnull(customer_sk#19688) AND isnull(customer_sk#19
       :        +- Project [d_date_sk#598]
       :           +- Filter ((isnotnull(d_month_seq#601) AND ((d_month_seq#601 >= 1219) AND (d_month_seq#601 <= 1230))) AND isnotnull(d_date_sk#598))
       :              +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
-      +- Aggregate [cs_bill_customer_sk#121, cs_item_sk#133], [cs_bill_customer_sk#121 AS customer_sk#19690, cs_item_sk#133 AS item_sk#19691]
+      +- Aggregate [cs_bill_customer_sk#121, cs_item_sk#133], [cs_bill_customer_sk#121 AS customer_sk#21067, cs_item_sk#133 AS item_sk#21068]
          +- Project [cs_bill_customer_sk#121, cs_item_sk#133]
-            +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#19692)
+            +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#21069)
                :- Project [cs_sold_date_sk#118, cs_bill_customer_sk#121, cs_item_sk#133]
                :  +- Filter isnotnull(cs_sold_date_sk#118)
                :     +- Relation [cs_sold_date_sk#118,cs_sold_time_sk#119,cs_ship_date_sk#120,cs_bill_customer_sk#121,cs_bill_cdemo_sk#122,cs_bill_hdemo_sk#123,cs_bill_addr_sk#124,cs_ship_customer_sk#125,cs_ship_cdemo_sk#126,cs_ship_hdemo_sk#127,cs_ship_addr_sk#128,cs_call_center_sk#129,cs_catalog_page_sk#130,cs_ship_mode_sk#131,cs_warehouse_sk#132,cs_item_sk#133,cs_promo_sk#134,cs_order_number#135L,cs_quantity#136,cs_wholesale_cost#137,cs_list_price#138,cs_sales_price#139,cs_ext_discount_amt#140,cs_ext_sales_price#141,... 10 more fields] parquet
-               +- Project [d_date_sk#19692]
-                  +- Filter ((isnotnull(d_month_seq#19695) AND ((d_month_seq#19695 >= 1219) AND (d_month_seq#19695 <= 1230))) AND isnotnull(d_date_sk#19692))
-                     +- Relation [d_date_sk#19692,d_date_id#19693,d_date#19694,d_month_seq#19695,d_week_seq#19696,d_quarter_seq#19697,d_year#19698,d_dow#19699,d_moy#19700,d_dom#19701,d_qoy#19702,d_fy_year#19703,d_fy_quarter_seq#19704,d_fy_week_seq#19705,d_day_name#19706,d_quarter_name#19707,d_holiday#19708,d_weekend#19709,d_following_holiday#19710,d_first_dom#19711,d_last_dom#19712,d_same_day_ly#19713,d_same_day_lq#19714,d_current_day#19715,... 4 more fields] parquet
+               +- Project [d_date_sk#21069]
+                  +- Filter ((isnotnull(d_month_seq#21072) AND ((d_month_seq#21072 >= 1219) AND (d_month_seq#21072 <= 1230))) AND isnotnull(d_date_sk#21069))
+                     +- Relation [d_date_sk#21069,d_date_id#21070,d_date#21071,d_month_seq#21072,d_week_seq#21073,d_quarter_seq#21074,d_year#21075,d_dow#21076,d_moy#21077,d_dom#21078,d_qoy#21079,d_fy_year#21080,d_fy_quarter_seq#21081,d_fy_week_seq#21082,d_day_name#21083,d_quarter_name#21084,d_holiday#21085,d_weekend#21086,d_following_holiday#21087,d_first_dom#21088,d_last_dom#21089,d_same_day_ly#21090,d_same_day_lq#21091,d_current_day#21092,... 4 more fields] parquet

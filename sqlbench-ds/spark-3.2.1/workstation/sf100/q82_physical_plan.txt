@@ -4,20 +4,20 @@ AdaptiveSparkPlan isFinalPlan=true
    +- *(8) HashAggregate(keys=[i_item_id#501, i_item_desc#504, i_current_price#505], functions=[], output=[i_item_id#501, i_item_desc#504, i_current_price#505])
       +- AQEShuffleRead coalesced
          +- ShuffleQueryStage 4
-            +- Exchange hashpartitioning(i_item_id#501, i_item_desc#504, i_current_price#505, 200), ENSURE_REQUIREMENTS, [id=#139744]
+            +- Exchange hashpartitioning(i_item_id#501, i_item_desc#504, i_current_price#505, 200), ENSURE_REQUIREMENTS, [id=#162564]
                +- *(7) HashAggregate(keys=[i_item_id#501, i_item_desc#504, i_current_price#505], functions=[], output=[i_item_id#501, i_item_desc#504, i_current_price#505])
                   +- *(7) Project [i_item_id#501, i_item_desc#504, i_current_price#505]
                      +- *(7) SortMergeJoin [i_item_sk#500], [ss_item_sk#666], Inner
                         :- *(5) Sort [i_item_sk#500 ASC NULLS FIRST], false, 0
                         :  +- AQEShuffleRead coalesced
                         :     +- ShuffleQueryStage 3
-                        :        +- Exchange hashpartitioning(i_item_sk#500, 200), ENSURE_REQUIREMENTS, [id=#139634]
+                        :        +- Exchange hashpartitioning(i_item_sk#500, 200), ENSURE_REQUIREMENTS, [id=#162454]
                         :           +- *(4) Project [i_item_sk#500, i_item_id#501, i_item_desc#504, i_current_price#505]
                         :              +- *(4) BroadcastHashJoin [inv_date_sk#240], [d_date_sk#598], Inner, BuildRight, false
                         :                 :- *(4) Project [i_item_sk#500, i_item_id#501, i_item_desc#504, i_current_price#505, inv_date_sk#240]
                         :                 :  +- *(4) BroadcastHashJoin [i_item_sk#500], [inv_item_sk#241], Inner, BuildLeft, false
                         :                 :     :- BroadcastQueryStage 0
-                        :                 :     :  +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#139443]
+                        :                 :     :  +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#162263]
                         :                 :     :     +- *(1) Project [i_item_sk#500, i_item_id#501, i_item_desc#504, i_current_price#505]
                         :                 :     :        +- *(1) Filter ((((isnotnull(i_current_price#505) AND (i_current_price#505 >= 73.00)) AND (i_current_price#505 <= 103.00)) AND i_manufact_id#513 IN (82,515,918,297)) AND isnotnull(i_item_sk#500))
                         :                 :     :           +- *(1) ColumnarToRow
@@ -27,7 +27,7 @@ AdaptiveSparkPlan isFinalPlan=true
                         :                 :           +- *(4) ColumnarToRow
                         :                 :              +- FileScan parquet [inv_date_sk#240,inv_item_sk#241,inv_quantity_on_hand#243] Batched: true, DataFilters: [isnotnull(inv_quantity_on_hand#243), (inv_quantity_on_hand#243 >= 100), (inv_quantity_on_hand#24..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_quantity_on_hand), GreaterThanOrEqual(inv_quantity_on_hand,100), LessThanOrEqual(i..., ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_quantity_on_hand:int>
                         :                 +- BroadcastQueryStage 1
-                        :                    +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#139464]
+                        :                    +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#162284]
                         :                       +- *(2) Project [d_date_sk#598]
                         :                          +- *(2) Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2002-03-23)) AND (d_date#600 <= 2002-05-22)) AND isnotnull(d_date_sk#598))
                         :                             +- *(2) ColumnarToRow
@@ -35,35 +35,35 @@ AdaptiveSparkPlan isFinalPlan=true
                         +- *(6) Sort [ss_item_sk#666 ASC NULLS FIRST], false, 0
                            +- AQEShuffleRead coalesced
                               +- ShuffleQueryStage 2
-                                 +- Exchange hashpartitioning(ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#139485]
+                                 +- Exchange hashpartitioning(ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#162305]
                                     +- *(3) Filter isnotnull(ss_item_sk#666)
                                        +- *(3) ColumnarToRow
                                           +- FileScan parquet [ss_item_sk#666] Batched: true, DataFilters: [isnotnull(ss_item_sk#666)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_item_sk)], ReadSchema: struct<ss_item_sk:int>
 +- == Initial Plan ==
    TakeOrderedAndProject(limit=100, orderBy=[i_item_id#501 ASC NULLS FIRST], output=[i_item_id#501,i_item_desc#504,i_current_price#505])
    +- HashAggregate(keys=[i_item_id#501, i_item_desc#504, i_current_price#505], functions=[], output=[i_item_id#501, i_item_desc#504, i_current_price#505])
-      +- Exchange hashpartitioning(i_item_id#501, i_item_desc#504, i_current_price#505, 200), ENSURE_REQUIREMENTS, [id=#139387]
+      +- Exchange hashpartitioning(i_item_id#501, i_item_desc#504, i_current_price#505, 200), ENSURE_REQUIREMENTS, [id=#162207]
          +- HashAggregate(keys=[i_item_id#501, i_item_desc#504, i_current_price#505], functions=[], output=[i_item_id#501, i_item_desc#504, i_current_price#505])
             +- Project [i_item_id#501, i_item_desc#504, i_current_price#505]
                +- SortMergeJoin [i_item_sk#500], [ss_item_sk#666], Inner
                   :- Sort [i_item_sk#500 ASC NULLS FIRST], false, 0
-                  :  +- Exchange hashpartitioning(i_item_sk#500, 200), ENSURE_REQUIREMENTS, [id=#139379]
+                  :  +- Exchange hashpartitioning(i_item_sk#500, 200), ENSURE_REQUIREMENTS, [id=#162199]
                   :     +- Project [i_item_sk#500, i_item_id#501, i_item_desc#504, i_current_price#505]
                   :        +- BroadcastHashJoin [inv_date_sk#240], [d_date_sk#598], Inner, BuildRight, false
                   :           :- Project [i_item_sk#500, i_item_id#501, i_item_desc#504, i_current_price#505, inv_date_sk#240]
                   :           :  +- BroadcastHashJoin [i_item_sk#500], [inv_item_sk#241], Inner, BuildLeft, false
-                  :           :     :- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#139370]
+                  :           :     :- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#162190]
                   :           :     :  +- Project [i_item_sk#500, i_item_id#501, i_item_desc#504, i_current_price#505]
                   :           :     :     +- Filter ((((isnotnull(i_current_price#505) AND (i_current_price#505 >= 73.00)) AND (i_current_price#505 <= 103.00)) AND i_manufact_id#513 IN (82,515,918,297)) AND isnotnull(i_item_sk#500))
                   :           :     :        +- FileScan parquet [i_item_sk#500,i_item_id#501,i_item_desc#504,i_current_price#505,i_manufact_id#513] Batched: true, DataFilters: [isnotnull(i_current_price#505), (i_current_price#505 >= 73.00), (i_current_price#505 <= 103.00),..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_current_price), GreaterThanOrEqual(i_current_price,73.00), LessThanOrEqual(i_current..., ReadSchema: struct<i_item_sk:int,i_item_id:string,i_item_desc:string,i_current_price:decimal(7,2),i_manufact_...
                   :           :     +- Project [inv_date_sk#240, inv_item_sk#241]
                   :           :        +- Filter ((((isnotnull(inv_quantity_on_hand#243) AND (inv_quantity_on_hand#243 >= 100)) AND (inv_quantity_on_hand#243 <= 500)) AND isnotnull(inv_item_sk#241)) AND isnotnull(inv_date_sk#240))
                   :           :           +- FileScan parquet [inv_date_sk#240,inv_item_sk#241,inv_quantity_on_hand#243] Batched: true, DataFilters: [isnotnull(inv_quantity_on_hand#243), (inv_quantity_on_hand#243 >= 100), (inv_quantity_on_hand#24..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_quantity_on_hand), GreaterThanOrEqual(inv_quantity_on_hand,100), LessThanOrEqual(i..., ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_quantity_on_hand:int>
-                  :           +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#139374]
+                  :           +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#162194]
                   :              +- Project [d_date_sk#598]
                   :                 +- Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2002-03-23)) AND (d_date#600 <= 2002-05-22)) AND isnotnull(d_date_sk#598))
                   :                    +- FileScan parquet [d_date_sk#598,d_date#600] Batched: true, DataFilters: [isnotnull(d_date#600), (d_date#600 >= 2002-03-23), (d_date#600 <= 2002-05-22), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2002-03-23), LessThanOrEqual(d_date,2002-05-22), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>
                   +- Sort [ss_item_sk#666 ASC NULLS FIRST], false, 0
-                     +- Exchange hashpartitioning(ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#139380]
+                     +- Exchange hashpartitioning(ss_item_sk#666, 200), ENSURE_REQUIREMENTS, [id=#162200]
                         +- Filter isnotnull(ss_item_sk#666)
                            +- FileScan parquet [ss_item_sk#666] Batched: true, DataFilters: [isnotnull(ss_item_sk#666)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_item_sk)], ReadSchema: struct<ss_item_sk:int>

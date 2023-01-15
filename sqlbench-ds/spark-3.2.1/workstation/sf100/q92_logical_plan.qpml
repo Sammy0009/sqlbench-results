@@ -13,7 +13,7 @@ diagram:
         operator: "projection"
         inputs:
         - title: "Inner Join: Some(((cast(ws_ext_discount_amt#406 as decimal(14,7))\
-            \ > (1.3 * avg(ws_ext_discount_amt))#19232) AND (ws_item_sk#19236 = i_item_sk#500)))"
+            \ > (1.3 * avg(ws_ext_discount_amt))#20609) AND (ws_item_sk#20613 = i_item_sk#500)))"
           operator: "join"
           inputs:
           - title: "Projection: ws_sold_date_sk#384, ws_ext_discount_amt#406, i_item_sk#500"
@@ -42,32 +42,32 @@ diagram:
                   - title: "item.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Filter: isnotnull((1.3 * avg(ws_ext_discount_amt))#19232)"
+          - title: "Filter: isnotnull((1.3 * avg(ws_ext_discount_amt))#20609)"
             operator: "filter"
             inputs:
             - title: "Aggregate (unknown)"
               operator: "Aggregate"
               inputs:
-              - title: "Projection: ws_item_sk#19236, ws_ext_discount_amt#19255"
+              - title: "Projection: ws_item_sk#20613, ws_ext_discount_amt#20632"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((d_date_sk#19267 = ws_sold_date_sk#19233))"
+                - title: "Inner Join: Some((d_date_sk#20644 = ws_sold_date_sk#20610))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_sold_date_sk#19233, ws_item_sk#19236, ws_ext_discount_amt#19255"
+                  - title: "Projection: ws_sold_date_sk#20610, ws_item_sk#20613, ws_ext_discount_amt#20632"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(ws_sold_date_sk#19233) AND isnotnull(ws_item_sk#19236))"
+                    - title: "Filter: (isnotnull(ws_sold_date_sk#20610) AND isnotnull(ws_item_sk#20613))"
                       operator: "filter"
                       inputs:
                       - title: "web_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: d_date_sk#19267"
+                  - title: "Projection: d_date_sk#20644"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((isnotnull(d_date#19269) AND ((d_date#19269\
-                        \ >= 2000-03-20) AND (d_date#19269 <= 2000-06-18))) AND isnotnull(d_date_sk#19267))"
+                    - title: "Filter: ((isnotnull(d_date#20646) AND ((d_date#20646\
+                        \ >= 2000-03-20) AND (d_date#20646 <= 2000-06-18))) AND isnotnull(d_date_sk#20644))"
                       operator: "filter"
                       inputs:
                       - title: "date_dim.parquet"

@@ -1,15 +1,15 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [total_cnt#15322L DESC NULLS LAST, i_item_desc#504 ASC NULLS FIRST, w_warehouse_name#188 ASC NULLS FIRST, d_week_seq#602 ASC NULLS FIRST], true
-      +- Aggregate [i_item_desc#504, w_warehouse_name#188, d_week_seq#602], [i_item_desc#504, w_warehouse_name#188, d_week_seq#602, sum(CASE WHEN isnull(p_promo_sk#750) THEN 1 ELSE 0 END) AS no_promo#15320L, sum(CASE WHEN isnotnull(p_promo_sk#750) THEN 1 ELSE 0 END) AS promo#15321L, count(1) AS total_cnt#15322L]
+   +- Sort [total_cnt#16705L DESC NULLS LAST, i_item_desc#504 ASC NULLS FIRST, w_warehouse_name#188 ASC NULLS FIRST, d_week_seq#602 ASC NULLS FIRST], true
+      +- Aggregate [i_item_desc#504, w_warehouse_name#188, d_week_seq#602], [i_item_desc#504, w_warehouse_name#188, d_week_seq#602, sum(CASE WHEN isnull(p_promo_sk#750) THEN 1 ELSE 0 END) AS no_promo#16703L, sum(CASE WHEN isnotnull(p_promo_sk#750) THEN 1 ELSE 0 END) AS promo#16704L, count(1) AS total_cnt#16705L]
          +- Project [w_warehouse_name#188, i_item_desc#504, d_week_seq#602, p_promo_sk#750]
             +- Join LeftOuter, ((cr_item_sk#250 = cs_item_sk#133) AND (cr_order_number#264L = cs_order_number#135L))
                :- Project [cs_item_sk#133, cs_order_number#135L, w_warehouse_name#188, i_item_desc#504, d_week_seq#602, p_promo_sk#750]
                :  +- Join LeftOuter, (cs_promo_sk#134 = p_promo_sk#750)
                :     :- Project [cs_item_sk#133, cs_promo_sk#134, cs_order_number#135L, w_warehouse_name#188, i_item_desc#504, d_week_seq#602]
-               :     :  +- Join Inner, ((d_date#15353 > date_add(d_date#600, 5)) AND (cs_ship_date_sk#120 = d_date_sk#15351))
+               :     :  +- Join Inner, ((d_date#16736 > date_add(d_date#600, 5)) AND (cs_ship_date_sk#120 = d_date_sk#16734))
                :     :     :- Project [cs_ship_date_sk#120, cs_item_sk#133, cs_promo_sk#134, cs_order_number#135L, w_warehouse_name#188, i_item_desc#504, d_date#600, d_week_seq#602]
-               :     :     :  +- Join Inner, ((d_week_seq#602 = d_week_seq#15327) AND (inv_date_sk#240 = d_date_sk#15323))
+               :     :     :  +- Join Inner, ((d_week_seq#602 = d_week_seq#16710) AND (inv_date_sk#240 = d_date_sk#16706))
                :     :     :     :- Project [cs_ship_date_sk#120, cs_item_sk#133, cs_promo_sk#134, cs_order_number#135L, inv_date_sk#240, w_warehouse_name#188, i_item_desc#504, d_date#600, d_week_seq#602]
                :     :     :     :  +- Join Inner, (cs_sold_date_sk#118 = d_date_sk#598)
                :     :     :     :     :- Project [cs_sold_date_sk#118, cs_ship_date_sk#120, cs_item_sk#133, cs_promo_sk#134, cs_order_number#135L, inv_date_sk#240, w_warehouse_name#188, i_item_desc#504]
@@ -42,12 +42,12 @@ GlobalLimit 100
                :     :     :     :     +- Project [d_date_sk#598, d_date#600, d_week_seq#602]
                :     :     :     :        +- Filter (((isnotnull(d_year#604) AND (d_year#604 = 2000)) AND isnotnull(d_date_sk#598)) AND (isnotnull(d_week_seq#602) AND isnotnull(d_date#600)))
                :     :     :     :           +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
-               :     :     :     +- Project [d_date_sk#15323, d_week_seq#15327]
-               :     :     :        +- Filter (isnotnull(d_week_seq#15327) AND isnotnull(d_date_sk#15323))
-               :     :     :           +- Relation [d_date_sk#15323,d_date_id#15324,d_date#15325,d_month_seq#15326,d_week_seq#15327,d_quarter_seq#15328,d_year#15329,d_dow#15330,d_moy#15331,d_dom#15332,d_qoy#15333,d_fy_year#15334,d_fy_quarter_seq#15335,d_fy_week_seq#15336,d_day_name#15337,d_quarter_name#15338,d_holiday#15339,d_weekend#15340,d_following_holiday#15341,d_first_dom#15342,d_last_dom#15343,d_same_day_ly#15344,d_same_day_lq#15345,d_current_day#15346,... 4 more fields] parquet
-               :     :     +- Project [d_date_sk#15351, d_date#15353]
-               :     :        +- Filter (isnotnull(d_date#15353) AND isnotnull(d_date_sk#15351))
-               :     :           +- Relation [d_date_sk#15351,d_date_id#15352,d_date#15353,d_month_seq#15354,d_week_seq#15355,d_quarter_seq#15356,d_year#15357,d_dow#15358,d_moy#15359,d_dom#15360,d_qoy#15361,d_fy_year#15362,d_fy_quarter_seq#15363,d_fy_week_seq#15364,d_day_name#15365,d_quarter_name#15366,d_holiday#15367,d_weekend#15368,d_following_holiday#15369,d_first_dom#15370,d_last_dom#15371,d_same_day_ly#15372,d_same_day_lq#15373,d_current_day#15374,... 4 more fields] parquet
+               :     :     :     +- Project [d_date_sk#16706, d_week_seq#16710]
+               :     :     :        +- Filter (isnotnull(d_week_seq#16710) AND isnotnull(d_date_sk#16706))
+               :     :     :           +- Relation [d_date_sk#16706,d_date_id#16707,d_date#16708,d_month_seq#16709,d_week_seq#16710,d_quarter_seq#16711,d_year#16712,d_dow#16713,d_moy#16714,d_dom#16715,d_qoy#16716,d_fy_year#16717,d_fy_quarter_seq#16718,d_fy_week_seq#16719,d_day_name#16720,d_quarter_name#16721,d_holiday#16722,d_weekend#16723,d_following_holiday#16724,d_first_dom#16725,d_last_dom#16726,d_same_day_ly#16727,d_same_day_lq#16728,d_current_day#16729,... 4 more fields] parquet
+               :     :     +- Project [d_date_sk#16734, d_date#16736]
+               :     :        +- Filter (isnotnull(d_date#16736) AND isnotnull(d_date_sk#16734))
+               :     :           +- Relation [d_date_sk#16734,d_date_id#16735,d_date#16736,d_month_seq#16737,d_week_seq#16738,d_quarter_seq#16739,d_year#16740,d_dow#16741,d_moy#16742,d_dom#16743,d_qoy#16744,d_fy_year#16745,d_fy_quarter_seq#16746,d_fy_week_seq#16747,d_day_name#16748,d_quarter_name#16749,d_holiday#16750,d_weekend#16751,d_following_holiday#16752,d_first_dom#16753,d_last_dom#16754,d_same_day_ly#16755,d_same_day_lq#16756,d_current_day#16757,... 4 more fields] parquet
                :     +- Project [p_promo_sk#750]
                :        +- Filter isnotnull(p_promo_sk#750)
                :           +- Relation [p_promo_sk#750,p_promo_id#751,p_start_date_sk#752,p_end_date_sk#753,p_item_sk#754,p_cost#755,p_response_target#756,p_promo_name#757,p_channel_dmail#758,p_channel_email#759,p_channel_catalog#760,p_channel_tv#761,p_channel_radio#762,p_channel_press#763,p_channel_event#764,p_channel_demo#765,p_channel_details#766,p_purpose#767,p_discount_active#768] parquet

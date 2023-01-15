@@ -1,7 +1,7 @@
 GlobalLimit 100
 +- LocalLimit 100
    +- Sort [i_item_id#501 ASC NULLS FIRST], true
-      +- Aggregate [i_item_id#501], [i_item_id#501, avg(cs_quantity#136) AS agg1#6708, cast((avg(UnscaledValue(cs_list_price#138)) / 100.0) as decimal(11,6)) AS agg2#6709, cast((avg(UnscaledValue(cs_coupon_amt#145)) / 100.0) as decimal(11,6)) AS agg3#6710, cast((avg(UnscaledValue(cs_sales_price#139)) / 100.0) as decimal(11,6)) AS agg4#6711]
+      +- Aggregate [i_item_id#501], [i_item_id#501, avg(cs_quantity#136) AS agg1#7784, cast((avg(UnscaledValue(cs_list_price#138)) / 100.0) as decimal(11,6)) AS agg2#7785, cast((avg(UnscaledValue(cs_coupon_amt#145)) / 100.0) as decimal(11,6)) AS agg3#7786, cast((avg(UnscaledValue(cs_sales_price#139)) / 100.0) as decimal(11,6)) AS agg4#7787]
          +- Project [cs_quantity#136, cs_list_price#138, cs_sales_price#139, cs_coupon_amt#145, i_item_id#501]
             +- Join Inner, (cs_promo_sk#134 = p_promo_sk#750)
                :- Project [cs_promo_sk#134, cs_quantity#136, cs_list_price#138, cs_sales_price#139, cs_coupon_amt#145, i_item_id#501]

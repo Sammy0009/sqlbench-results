@@ -3,8 +3,8 @@ diagram:
   title: "Sort (unknown)"
   operator: "Sort"
   inputs:
-  - title: "Filter: (isnotnull(paid#6525) AND (cast(paid#6525 as decimal(33,8)) >\
-      \ cast(scalar-subquery#6526 [] as decimal(33,8))))"
+  - title: "Filter: (isnotnull(paid#7525) AND (cast(paid#7525 as decimal(33,8)) >\
+      \ cast(scalar-subquery#7526 [] as decimal(33,8))))"
     operator: "filter"
     inputs:
     - title: "Aggregate (unknown)"

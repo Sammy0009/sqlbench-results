@@ -4,9 +4,9 @@ diagram:
   operator: "Sort"
   inputs:
   - title: "Projection: i_item_id#501, i_item_desc#504, i_category#512, i_class#510,\
-      \ i_current_price#505, itemrevenue#19748, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#19754)\
-      \ * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#19756)),\
-      \ DecimalType(38,17), true) AS revenueratio#19749"
+      \ i_current_price#505, itemrevenue#21125, CheckOverflow((promote_precision(cast(CheckOverflow((promote_precision(_w0#21131)\
+      \ * 100.00), DecimalType(21,2), true) as decimal(27,2))) / promote_precision(_we0#21133)),\
+      \ DecimalType(38,17), true) AS revenueratio#21126"
     operator: "projection"
     inputs:
     - title: "Window (unknown)"

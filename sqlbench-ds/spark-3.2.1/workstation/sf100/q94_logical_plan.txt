@@ -1,4 +1,4 @@
-Aggregate [count(distinct ws_order_number#401L) AS order count#19341L, MakeDecimal(sum(UnscaledValue(ws_ext_ship_cost#412)),17,2) AS total shipping cost#19342, MakeDecimal(sum(UnscaledValue(ws_net_profit#417)),17,2) AS total net profit#19343]
+Aggregate [count(distinct ws_order_number#401L) AS order count#20718L, MakeDecimal(sum(UnscaledValue(ws_ext_ship_cost#412)),17,2) AS total shipping cost#20719, MakeDecimal(sum(UnscaledValue(ws_net_profit#417)),17,2) AS total net profit#20720]
 +- Project [ws_order_number#401L, ws_ext_ship_cost#412, ws_net_profit#417]
    +- Join Inner, (ws_web_site_sk#397 = web_site_sk#66)
       :- Project [ws_web_site_sk#397, ws_order_number#401L, ws_ext_ship_cost#412, ws_net_profit#417]
@@ -7,12 +7,12 @@ Aggregate [count(distinct ws_order_number#401L) AS order count#19341L, MakeDecim
       :     :  +- Join Inner, (ws_ship_date_sk#386 = d_date_sk#598)
       :     :     :- Join LeftAnti, (ws_order_number#401L = wr_order_number#465L)
       :     :     :  :- Project [ws_ship_date_sk#386, ws_ship_addr_sk#395, ws_web_site_sk#397, ws_order_number#401L, ws_ext_ship_cost#412, ws_net_profit#417]
-      :     :     :  :  +- Join LeftSemi, ((ws_order_number#401L = ws_order_number#19363L) AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#19361))
+      :     :     :  :  +- Join LeftSemi, ((ws_order_number#401L = ws_order_number#20740L) AND NOT (ws_warehouse_sk#399 = ws_warehouse_sk#20738))
       :     :     :  :     :- Project [ws_ship_date_sk#386, ws_ship_addr_sk#395, ws_web_site_sk#397, ws_warehouse_sk#399, ws_order_number#401L, ws_ext_ship_cost#412, ws_net_profit#417]
       :     :     :  :     :  +- Filter ((isnotnull(ws_ship_date_sk#386) AND isnotnull(ws_ship_addr_sk#395)) AND isnotnull(ws_web_site_sk#397))
       :     :     :  :     :     +- Relation [ws_sold_date_sk#384,ws_sold_time_sk#385,ws_ship_date_sk#386,ws_item_sk#387,ws_bill_customer_sk#388,ws_bill_cdemo_sk#389,ws_bill_hdemo_sk#390,ws_bill_addr_sk#391,ws_ship_customer_sk#392,ws_ship_cdemo_sk#393,ws_ship_hdemo_sk#394,ws_ship_addr_sk#395,ws_web_page_sk#396,ws_web_site_sk#397,ws_ship_mode_sk#398,ws_warehouse_sk#399,ws_promo_sk#400,ws_order_number#401L,ws_quantity#402,ws_wholesale_cost#403,ws_list_price#404,ws_sales_price#405,ws_ext_discount_amt#406,ws_ext_sales_price#407,... 10 more fields] parquet
-      :     :     :  :     +- Project [ws_warehouse_sk#19361, ws_order_number#19363L]
-      :     :     :  :        +- Relation [ws_sold_date_sk#19346,ws_sold_time_sk#19347,ws_ship_date_sk#19348,ws_item_sk#19349,ws_bill_customer_sk#19350,ws_bill_cdemo_sk#19351,ws_bill_hdemo_sk#19352,ws_bill_addr_sk#19353,ws_ship_customer_sk#19354,ws_ship_cdemo_sk#19355,ws_ship_hdemo_sk#19356,ws_ship_addr_sk#19357,ws_web_page_sk#19358,ws_web_site_sk#19359,ws_ship_mode_sk#19360,ws_warehouse_sk#19361,ws_promo_sk#19362,ws_order_number#19363L,ws_quantity#19364,ws_wholesale_cost#19365,ws_list_price#19366,ws_sales_price#19367,ws_ext_discount_amt#19368,ws_ext_sales_price#19369,... 10 more fields] parquet
+      :     :     :  :     +- Project [ws_warehouse_sk#20738, ws_order_number#20740L]
+      :     :     :  :        +- Relation [ws_sold_date_sk#20723,ws_sold_time_sk#20724,ws_ship_date_sk#20725,ws_item_sk#20726,ws_bill_customer_sk#20727,ws_bill_cdemo_sk#20728,ws_bill_hdemo_sk#20729,ws_bill_addr_sk#20730,ws_ship_customer_sk#20731,ws_ship_cdemo_sk#20732,ws_ship_hdemo_sk#20733,ws_ship_addr_sk#20734,ws_web_page_sk#20735,ws_web_site_sk#20736,ws_ship_mode_sk#20737,ws_warehouse_sk#20738,ws_promo_sk#20739,ws_order_number#20740L,ws_quantity#20741,ws_wholesale_cost#20742,ws_list_price#20743,ws_sales_price#20744,ws_ext_discount_amt#20745,ws_ext_sales_price#20746,... 10 more fields] parquet
       :     :     :  +- Project [wr_order_number#465L]
       :     :     :     +- Relation [wr_returned_date_sk#452,wr_returned_time_sk#453,wr_item_sk#454,wr_refunded_customer_sk#455,wr_refunded_cdemo_sk#456,wr_refunded_hdemo_sk#457,wr_refunded_addr_sk#458,wr_returning_customer_sk#459,wr_returning_cdemo_sk#460,wr_returning_hdemo_sk#461,wr_returning_addr_sk#462,wr_web_page_sk#463,wr_reason_sk#464,wr_order_number#465L,wr_return_quantity#466,wr_return_amt#467,wr_return_tax#468,wr_return_amt_inc_tax#469,wr_fee#470,wr_return_ship_cost#471,wr_refunded_cash#472,wr_reversed_charge#473,wr_account_credit#474,wr_net_loss#475] parquet
       :     :     +- Project [d_date_sk#598]

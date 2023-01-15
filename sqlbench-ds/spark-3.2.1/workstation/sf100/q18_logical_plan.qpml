@@ -46,7 +46,7 @@ diagram:
                           \ c_birth_year#575"
                         operator: "projection"
                         inputs:
-                        - title: "Inner Join: Some((c_current_cdemo_sk#564 = cd_demo_sk#6032))"
+                        - title: "Inner Join: Some((c_current_cdemo_sk#564 = cd_demo_sk#6699))"
                           operator: "join"
                           inputs:
                           - title: "Projection: cs_sold_date_sk#118, cs_item_sk#133,\
@@ -108,10 +108,10 @@ diagram:
                                   - title: "customer.parquet"
                                     operator: "scan"
                                     inputs: []
-                          - title: "Projection: cd_demo_sk#6032"
+                          - title: "Projection: cd_demo_sk#6699"
                             operator: "projection"
                             inputs:
-                            - title: "Filter: isnotnull(cd_demo_sk#6032)"
+                            - title: "Filter: isnotnull(cd_demo_sk#6699)"
                               operator: "filter"
                               inputs:
                               - title: "customer_demographics.parquet"

@@ -6,17 +6,17 @@ diagram:
   - title: "Aggregate (unknown)"
     operator: "Aggregate"
     inputs:
-    - title: "Projection: i_brand_id#507, i_brand#508, ext_price#15230, t_hour#31,\
+    - title: "Projection: i_brand_id#507, i_brand#508, ext_price#16613, t_hour#31,\
         \ t_minute#32"
       operator: "projection"
       inputs:
-      - title: "Inner Join: Some((time_sk#15233 = t_time_sk#28))"
+      - title: "Inner Join: Some((time_sk#16616 = t_time_sk#28))"
         operator: "join"
         inputs:
-        - title: "Projection: i_brand_id#507, i_brand#508, ext_price#15230, time_sk#15233"
+        - title: "Projection: i_brand_id#507, i_brand#508, ext_price#16613, time_sk#16616"
           operator: "projection"
           inputs:
-          - title: "Inner Join: Some((sold_item_sk#15232 = i_item_sk#500))"
+          - title: "Inner Join: Some((sold_item_sk#16615 = i_item_sk#500))"
             operator: "join"
             inputs:
             - title: "Projection: i_item_sk#500, i_brand_id#507, i_brand#508"
@@ -32,8 +32,8 @@ diagram:
             - title: "Union (unknown)"
               operator: "Union"
               inputs:
-              - title: "Projection: ws_ext_sales_price#407 AS ext_price#15230, ws_item_sk#387\
-                  \ AS sold_item_sk#15232, ws_sold_time_sk#385 AS time_sk#15233"
+              - title: "Projection: ws_ext_sales_price#407 AS ext_price#16613, ws_item_sk#387\
+                  \ AS sold_item_sk#16615, ws_sold_time_sk#385 AS time_sk#16616"
                 operator: "projection"
                 inputs:
                 - title: "Inner Join: Some((d_date_sk#598 = ws_sold_date_sk#384))"
@@ -60,11 +60,11 @@ diagram:
                       - title: "date_dim.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: cs_ext_sales_price#141 AS ext_price#15234, cs_item_sk#133\
-                  \ AS sold_item_sk#15236, cs_sold_time_sk#119 AS time_sk#15237"
+              - title: "Projection: cs_ext_sales_price#141 AS ext_price#16617, cs_item_sk#133\
+                  \ AS sold_item_sk#16619, cs_sold_time_sk#119 AS time_sk#16620"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((d_date_sk#15245 = cs_sold_date_sk#118))"
+                - title: "Inner Join: Some((d_date_sk#16628 = cs_sold_date_sk#118))"
                   operator: "join"
                   inputs:
                   - title: "Projection: cs_sold_date_sk#118, cs_sold_time_sk#119,\
@@ -78,22 +78,22 @@ diagram:
                       - title: "catalog_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: d_date_sk#15245"
+                  - title: "Projection: d_date_sk#16628"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (((isnotnull(d_moy#15253) AND isnotnull(d_year#15251))\
-                        \ AND ((d_moy#15253 = 11) AND (d_year#15251 = 2001))) AND\
-                        \ isnotnull(d_date_sk#15245))"
+                    - title: "Filter: (((isnotnull(d_moy#16636) AND isnotnull(d_year#16634))\
+                        \ AND ((d_moy#16636 = 11) AND (d_year#16634 = 2001))) AND\
+                        \ isnotnull(d_date_sk#16628))"
                       operator: "filter"
                       inputs:
                       - title: "date_dim.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: ss_ext_sales_price#679 AS ext_price#15238, ss_item_sk#666\
-                  \ AS sold_item_sk#15240, ss_sold_time_sk#665 AS time_sk#15241"
+              - title: "Projection: ss_ext_sales_price#679 AS ext_price#16621, ss_item_sk#666\
+                  \ AS sold_item_sk#16623, ss_sold_time_sk#665 AS time_sk#16624"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((d_date_sk#15273 = ss_sold_date_sk#664))"
+                - title: "Inner Join: Some((d_date_sk#16656 = ss_sold_date_sk#664))"
                   operator: "join"
                   inputs:
                   - title: "Projection: ss_sold_date_sk#664, ss_sold_time_sk#665,\
@@ -107,12 +107,12 @@ diagram:
                       - title: "store_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: d_date_sk#15273"
+                  - title: "Projection: d_date_sk#16656"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (((isnotnull(d_moy#15281) AND isnotnull(d_year#15279))\
-                        \ AND ((d_moy#15281 = 11) AND (d_year#15279 = 2001))) AND\
-                        \ isnotnull(d_date_sk#15273))"
+                    - title: "Filter: (((isnotnull(d_moy#16664) AND isnotnull(d_year#16662))\
+                        \ AND ((d_moy#16664 = 11) AND (d_year#16662 = 2001))) AND\
+                        \ isnotnull(d_date_sk#16656))"
                       operator: "filter"
                       inputs:
                       - title: "date_dim.parquet"

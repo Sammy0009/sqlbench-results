@@ -1,7 +1,7 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [ext_price#10932 DESC NULLS LAST, brand_id#10930 ASC NULLS FIRST], true
-      +- Aggregate [i_brand#508, i_brand_id#507], [i_brand_id#507 AS brand_id#10930, i_brand#508 AS brand#10931, MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2) AS ext_price#10932]
+   +- Sort [ext_price#12315 DESC NULLS LAST, brand_id#12313 ASC NULLS FIRST], true
+      +- Aggregate [i_brand#508, i_brand_id#507], [i_brand_id#507 AS brand_id#12313, i_brand#508 AS brand#12314, MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2) AS ext_price#12315]
          +- Project [ss_ext_sales_price#679, i_brand_id#507, i_brand#508]
             +- Join Inner, (ss_item_sk#666 = i_item_sk#500)
                :- Project [ss_item_sk#666, ss_ext_sales_price#679]

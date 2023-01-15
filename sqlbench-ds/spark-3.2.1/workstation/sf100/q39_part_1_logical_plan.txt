@@ -1,8 +1,8 @@
-Sort [w_warehouse_sk#186 ASC NULLS FIRST, i_item_sk#500 ASC NULLS FIRST, d_moy#606 ASC NULLS FIRST, mean#8679 ASC NULLS FIRST, cov#8680 ASC NULLS FIRST, d_moy#8780 ASC NULLS FIRST, mean#8712 ASC NULLS FIRST, cov#8713 ASC NULLS FIRST], true
-+- Join Inner, ((i_item_sk#500 = i_item_sk#8736) AND (w_warehouse_sk#186 = w_warehouse_sk#8758))
-   :- Project [w_warehouse_sk#186, i_item_sk#500, d_moy#606, mean#8679, CASE WHEN (mean#8679 = 0.0) THEN null ELSE (stdev#8678 / mean#8679) END AS cov#8680]
-   :  +- Filter ((isnotnull(stdev#8678) AND isnotnull(mean#8679)) AND (NOT coalesce((mean#8679 = 0.0), false) AND ((stdev#8678 / mean#8679) > 1.0)))
-   :     +- Aggregate [w_warehouse_name#188, w_warehouse_sk#186, i_item_sk#500, d_moy#606], [w_warehouse_sk#186, i_item_sk#500, d_moy#606, stddev_samp(cast(inv_quantity_on_hand#243 as double)) AS stdev#8678, avg(inv_quantity_on_hand#243) AS mean#8679]
+Sort [w_warehouse_sk#186 ASC NULLS FIRST, i_item_sk#500 ASC NULLS FIRST, d_moy#606 ASC NULLS FIRST, mean#9755 ASC NULLS FIRST, cov#9756 ASC NULLS FIRST, d_moy#9856 ASC NULLS FIRST, mean#9788 ASC NULLS FIRST, cov#9789 ASC NULLS FIRST], true
++- Join Inner, ((i_item_sk#500 = i_item_sk#9812) AND (w_warehouse_sk#186 = w_warehouse_sk#9834))
+   :- Project [w_warehouse_sk#186, i_item_sk#500, d_moy#606, mean#9755, CASE WHEN (mean#9755 = 0.0) THEN null ELSE (stdev#9754 / mean#9755) END AS cov#9756]
+   :  +- Filter ((isnotnull(stdev#9754) AND isnotnull(mean#9755)) AND (NOT coalesce((mean#9755 = 0.0), false) AND ((stdev#9754 / mean#9755) > 1.0)))
+   :     +- Aggregate [w_warehouse_name#188, w_warehouse_sk#186, i_item_sk#500, d_moy#606], [w_warehouse_sk#186, i_item_sk#500, d_moy#606, stddev_samp(cast(inv_quantity_on_hand#243 as double)) AS stdev#9754, avg(inv_quantity_on_hand#243) AS mean#9755]
    :        +- Project [inv_quantity_on_hand#243, i_item_sk#500, w_warehouse_sk#186, w_warehouse_name#188, d_moy#606]
    :           +- Join Inner, (inv_date_sk#240 = d_date_sk#598)
    :              :- Project [inv_date_sk#240, inv_quantity_on_hand#243, i_item_sk#500, w_warehouse_sk#186, w_warehouse_name#188]
@@ -20,23 +20,23 @@ Sort [w_warehouse_sk#186 ASC NULLS FIRST, i_item_sk#500 ASC NULLS FIRST, d_moy#6
    :              +- Project [d_date_sk#598, d_moy#606]
    :                 +- Filter (((isnotnull(d_year#604) AND isnotnull(d_moy#606)) AND ((d_year#604 = 2001) AND (d_moy#606 = 1))) AND isnotnull(d_date_sk#598))
    :                    +- Relation [d_date_sk#598,d_date_id#599,d_date#600,d_month_seq#601,d_week_seq#602,d_quarter_seq#603,d_year#604,d_dow#605,d_moy#606,d_dom#607,d_qoy#608,d_fy_year#609,d_fy_quarter_seq#610,d_fy_week_seq#611,d_day_name#612,d_quarter_name#613,d_holiday#614,d_weekend#615,d_following_holiday#616,d_first_dom#617,d_last_dom#618,d_same_day_ly#619,d_same_day_lq#620,d_current_day#621,... 4 more fields] parquet
-   +- Project [w_warehouse_sk#8758, i_item_sk#8736, d_moy#8780, mean#8679 AS mean#8712, CASE WHEN (mean#8679 = 0.0) THEN null ELSE (stdev#8678 / mean#8679) END AS cov#8713]
-      +- Filter ((isnotnull(stdev#8678) AND isnotnull(mean#8679)) AND (NOT coalesce((mean#8679 = 0.0), false) AND ((stdev#8678 / mean#8679) > 1.0)))
-         +- Aggregate [w_warehouse_name#8760, w_warehouse_sk#8758, i_item_sk#8736, d_moy#8780], [w_warehouse_sk#8758, i_item_sk#8736, d_moy#8780, stddev_samp(cast(inv_quantity_on_hand#8735 as double)) AS stdev#8678, avg(inv_quantity_on_hand#8735) AS mean#8679]
-            +- Project [inv_quantity_on_hand#8735, i_item_sk#8736, w_warehouse_sk#8758, w_warehouse_name#8760, d_moy#8780]
-               +- Join Inner, (inv_date_sk#8732 = d_date_sk#8772)
-                  :- Project [inv_date_sk#8732, inv_quantity_on_hand#8735, i_item_sk#8736, w_warehouse_sk#8758, w_warehouse_name#8760]
-                  :  +- Join Inner, (inv_warehouse_sk#8734 = w_warehouse_sk#8758)
-                  :     :- Project [inv_date_sk#8732, inv_warehouse_sk#8734, inv_quantity_on_hand#8735, i_item_sk#8736]
-                  :     :  +- Join Inner, (inv_item_sk#8733 = i_item_sk#8736)
-                  :     :     :- Filter (isnotnull(inv_item_sk#8733) AND (isnotnull(inv_warehouse_sk#8734) AND isnotnull(inv_date_sk#8732)))
-                  :     :     :  +- Relation [inv_date_sk#8732,inv_item_sk#8733,inv_warehouse_sk#8734,inv_quantity_on_hand#8735] parquet
-                  :     :     +- Project [i_item_sk#8736]
-                  :     :        +- Filter isnotnull(i_item_sk#8736)
-                  :     :           +- Relation [i_item_sk#8736,i_item_id#8737,i_rec_start_date#8738,i_rec_end_date#8739,i_item_desc#8740,i_current_price#8741,i_wholesale_cost#8742,i_brand_id#8743,i_brand#8744,i_class_id#8745,i_class#8746,i_category_id#8747,i_category#8748,i_manufact_id#8749,i_manufact#8750,i_size#8751,i_formulation#8752,i_color#8753,i_units#8754,i_container#8755,i_manager_id#8756,i_product_name#8757] parquet
-                  :     +- Project [w_warehouse_sk#8758, w_warehouse_name#8760]
-                  :        +- Filter isnotnull(w_warehouse_sk#8758)
-                  :           +- Relation [w_warehouse_sk#8758,w_warehouse_id#8759,w_warehouse_name#8760,w_warehouse_sq_ft#8761,w_street_number#8762,w_street_name#8763,w_street_type#8764,w_suite_number#8765,w_city#8766,w_county#8767,w_state#8768,w_zip#8769,w_country#8770,w_gmt_offset#8771] parquet
-                  +- Project [d_date_sk#8772, d_moy#8780]
-                     +- Filter (((isnotnull(d_year#8778) AND isnotnull(d_moy#8780)) AND ((d_year#8778 = 2001) AND (d_moy#8780 = 2))) AND isnotnull(d_date_sk#8772))
-                        +- Relation [d_date_sk#8772,d_date_id#8773,d_date#8774,d_month_seq#8775,d_week_seq#8776,d_quarter_seq#8777,d_year#8778,d_dow#8779,d_moy#8780,d_dom#8781,d_qoy#8782,d_fy_year#8783,d_fy_quarter_seq#8784,d_fy_week_seq#8785,d_day_name#8786,d_quarter_name#8787,d_holiday#8788,d_weekend#8789,d_following_holiday#8790,d_first_dom#8791,d_last_dom#8792,d_same_day_ly#8793,d_same_day_lq#8794,d_current_day#8795,... 4 more fields] parquet
+   +- Project [w_warehouse_sk#9834, i_item_sk#9812, d_moy#9856, mean#9755 AS mean#9788, CASE WHEN (mean#9755 = 0.0) THEN null ELSE (stdev#9754 / mean#9755) END AS cov#9789]
+      +- Filter ((isnotnull(stdev#9754) AND isnotnull(mean#9755)) AND (NOT coalesce((mean#9755 = 0.0), false) AND ((stdev#9754 / mean#9755) > 1.0)))
+         +- Aggregate [w_warehouse_name#9836, w_warehouse_sk#9834, i_item_sk#9812, d_moy#9856], [w_warehouse_sk#9834, i_item_sk#9812, d_moy#9856, stddev_samp(cast(inv_quantity_on_hand#9811 as double)) AS stdev#9754, avg(inv_quantity_on_hand#9811) AS mean#9755]
+            +- Project [inv_quantity_on_hand#9811, i_item_sk#9812, w_warehouse_sk#9834, w_warehouse_name#9836, d_moy#9856]
+               +- Join Inner, (inv_date_sk#9808 = d_date_sk#9848)
+                  :- Project [inv_date_sk#9808, inv_quantity_on_hand#9811, i_item_sk#9812, w_warehouse_sk#9834, w_warehouse_name#9836]
+                  :  +- Join Inner, (inv_warehouse_sk#9810 = w_warehouse_sk#9834)
+                  :     :- Project [inv_date_sk#9808, inv_warehouse_sk#9810, inv_quantity_on_hand#9811, i_item_sk#9812]
+                  :     :  +- Join Inner, (inv_item_sk#9809 = i_item_sk#9812)
+                  :     :     :- Filter (isnotnull(inv_item_sk#9809) AND (isnotnull(inv_warehouse_sk#9810) AND isnotnull(inv_date_sk#9808)))
+                  :     :     :  +- Relation [inv_date_sk#9808,inv_item_sk#9809,inv_warehouse_sk#9810,inv_quantity_on_hand#9811] parquet
+                  :     :     +- Project [i_item_sk#9812]
+                  :     :        +- Filter isnotnull(i_item_sk#9812)
+                  :     :           +- Relation [i_item_sk#9812,i_item_id#9813,i_rec_start_date#9814,i_rec_end_date#9815,i_item_desc#9816,i_current_price#9817,i_wholesale_cost#9818,i_brand_id#9819,i_brand#9820,i_class_id#9821,i_class#9822,i_category_id#9823,i_category#9824,i_manufact_id#9825,i_manufact#9826,i_size#9827,i_formulation#9828,i_color#9829,i_units#9830,i_container#9831,i_manager_id#9832,i_product_name#9833] parquet
+                  :     +- Project [w_warehouse_sk#9834, w_warehouse_name#9836]
+                  :        +- Filter isnotnull(w_warehouse_sk#9834)
+                  :           +- Relation [w_warehouse_sk#9834,w_warehouse_id#9835,w_warehouse_name#9836,w_warehouse_sq_ft#9837,w_street_number#9838,w_street_name#9839,w_street_type#9840,w_suite_number#9841,w_city#9842,w_county#9843,w_state#9844,w_zip#9845,w_country#9846,w_gmt_offset#9847] parquet
+                  +- Project [d_date_sk#9848, d_moy#9856]
+                     +- Filter (((isnotnull(d_year#9854) AND isnotnull(d_moy#9856)) AND ((d_year#9854 = 2001) AND (d_moy#9856 = 2))) AND isnotnull(d_date_sk#9848))
+                        +- Relation [d_date_sk#9848,d_date_id#9849,d_date#9850,d_month_seq#9851,d_week_seq#9852,d_quarter_seq#9853,d_year#9854,d_dow#9855,d_moy#9856,d_dom#9857,d_qoy#9858,d_fy_year#9859,d_fy_quarter_seq#9860,d_fy_week_seq#9861,d_day_name#9862,d_quarter_name#9863,d_holiday#9864,d_weekend#9865,d_following_holiday#9866,d_first_dom#9867,d_last_dom#9868,d_same_day_ly#9869,d_same_day_lq#9870,d_current_day#9871,... 4 more fields] parquet

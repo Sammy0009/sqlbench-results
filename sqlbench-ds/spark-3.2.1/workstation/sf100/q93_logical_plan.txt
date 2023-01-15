@@ -1,8 +1,8 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [sumsales#19324 ASC NULLS FIRST, ss_customer_sk#667 ASC NULLS FIRST], true
-      +- Aggregate [ss_customer_sk#667], [ss_customer_sk#667, sum(act_sales#19323) AS sumsales#19324]
-         +- Project [ss_customer_sk#667, CASE WHEN isnotnull(sr_return_quantity#720) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#674 - sr_return_quantity#720) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#674 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#19323]
+   +- Sort [sumsales#20701 ASC NULLS FIRST, ss_customer_sk#667 ASC NULLS FIRST], true
+      +- Aggregate [ss_customer_sk#667], [ss_customer_sk#667, sum(act_sales#20700) AS sumsales#20701]
+         +- Project [ss_customer_sk#667, CASE WHEN isnotnull(sr_return_quantity#720) THEN CheckOverflow((promote_precision(cast(cast((ss_quantity#674 - sr_return_quantity#720) as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) ELSE CheckOverflow((promote_precision(cast(cast(ss_quantity#674 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#677 as decimal(12,2)))), DecimalType(18,2), true) END AS act_sales#20700]
             +- Join Inner, (sr_reason_sk#718 = r_reason_sk#544)
                :- Project [ss_customer_sk#667, ss_quantity#674, ss_sales_price#677, sr_reason_sk#718, sr_return_quantity#720]
                :  +- Join Inner, ((sr_item_sk#712 = ss_item_sk#666) AND (sr_ticket_number#719L = ss_ticket_number#673L))

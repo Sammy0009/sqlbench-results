@@ -34,14 +34,14 @@ diagram:
           - title: "Aggregate (unknown)"
             operator: "Aggregate"
             inputs:
-            - title: "Projection: ss_list_price#6867"
+            - title: "Projection: ss_list_price#7943"
               operator: "projection"
               inputs:
-              - title: "Filter: (isnotnull(ss_quantity#6865) AND (((ss_quantity#6865\
-                  \ >= 6) AND (ss_quantity#6865 <= 10)) AND ((((ss_list_price#6867\
-                  \ >= 14.00) AND (ss_list_price#6867 <= 24.00)) OR ((ss_coupon_amt#6874\
-                  \ >= 92.00) AND (ss_coupon_amt#6874 <= 1092.00))) OR ((ss_wholesale_cost#6866\
-                  \ >= 13.00) AND (ss_wholesale_cost#6866 <= 33.00)))))"
+              - title: "Filter: (isnotnull(ss_quantity#7941) AND (((ss_quantity#7941\
+                  \ >= 6) AND (ss_quantity#7941 <= 10)) AND ((((ss_list_price#7943\
+                  \ >= 14.00) AND (ss_list_price#7943 <= 24.00)) OR ((ss_coupon_amt#7950\
+                  \ >= 92.00) AND (ss_coupon_amt#7950 <= 1092.00))) OR ((ss_wholesale_cost#7942\
+                  \ >= 13.00) AND (ss_wholesale_cost#7942 <= 33.00)))))"
                 operator: "filter"
                 inputs:
                 - title: "store_sales.parquet"
@@ -50,14 +50,14 @@ diagram:
         - title: "Aggregate (unknown)"
           operator: "Aggregate"
           inputs:
-          - title: "Projection: ss_list_price#6890"
+          - title: "Projection: ss_list_price#7966"
             operator: "projection"
             inputs:
-            - title: "Filter: (isnotnull(ss_quantity#6888) AND (((ss_quantity#6888\
-                \ >= 11) AND (ss_quantity#6888 <= 15)) AND ((((ss_list_price#6890\
-                \ >= 124.00) AND (ss_list_price#6890 <= 134.00)) OR ((ss_coupon_amt#6897\
-                \ >= 4023.00) AND (ss_coupon_amt#6897 <= 5023.00))) OR ((ss_wholesale_cost#6889\
-                \ >= 50.00) AND (ss_wholesale_cost#6889 <= 70.00)))))"
+            - title: "Filter: (isnotnull(ss_quantity#7964) AND (((ss_quantity#7964\
+                \ >= 11) AND (ss_quantity#7964 <= 15)) AND ((((ss_list_price#7966\
+                \ >= 124.00) AND (ss_list_price#7966 <= 134.00)) OR ((ss_coupon_amt#7973\
+                \ >= 4023.00) AND (ss_coupon_amt#7973 <= 5023.00))) OR ((ss_wholesale_cost#7965\
+                \ >= 50.00) AND (ss_wholesale_cost#7965 <= 70.00)))))"
               operator: "filter"
               inputs:
               - title: "store_sales.parquet"
@@ -66,14 +66,14 @@ diagram:
       - title: "Aggregate (unknown)"
         operator: "Aggregate"
         inputs:
-        - title: "Projection: ss_list_price#6913"
+        - title: "Projection: ss_list_price#7989"
           operator: "projection"
           inputs:
-          - title: "Filter: (isnotnull(ss_quantity#6911) AND (((ss_quantity#6911 >=\
-              \ 16) AND (ss_quantity#6911 <= 20)) AND ((((ss_list_price#6913 >= 74.00)\
-              \ AND (ss_list_price#6913 <= 84.00)) OR ((ss_coupon_amt#6920 >= 3534.00)\
-              \ AND (ss_coupon_amt#6920 <= 4534.00))) OR ((ss_wholesale_cost#6912\
-              \ >= 11.00) AND (ss_wholesale_cost#6912 <= 31.00)))))"
+          - title: "Filter: (isnotnull(ss_quantity#7987) AND (((ss_quantity#7987 >=\
+              \ 16) AND (ss_quantity#7987 <= 20)) AND ((((ss_list_price#7989 >= 74.00)\
+              \ AND (ss_list_price#7989 <= 84.00)) OR ((ss_coupon_amt#7996 >= 3534.00)\
+              \ AND (ss_coupon_amt#7996 <= 4534.00))) OR ((ss_wholesale_cost#7988\
+              \ >= 11.00) AND (ss_wholesale_cost#7988 <= 31.00)))))"
             operator: "filter"
             inputs:
             - title: "store_sales.parquet"
@@ -82,14 +82,14 @@ diagram:
     - title: "Aggregate (unknown)"
       operator: "Aggregate"
       inputs:
-      - title: "Projection: ss_list_price#6936"
+      - title: "Projection: ss_list_price#8012"
         operator: "projection"
         inputs:
-        - title: "Filter: (isnotnull(ss_quantity#6934) AND (((ss_quantity#6934 >=\
-            \ 21) AND (ss_quantity#6934 <= 25)) AND ((((ss_list_price#6936 >= 173.00)\
-            \ AND (ss_list_price#6936 <= 183.00)) OR ((ss_coupon_amt#6943 >= 6017.00)\
-            \ AND (ss_coupon_amt#6943 <= 7017.00))) OR ((ss_wholesale_cost#6935 >=\
-            \ 45.00) AND (ss_wholesale_cost#6935 <= 65.00)))))"
+        - title: "Filter: (isnotnull(ss_quantity#8010) AND (((ss_quantity#8010 >=\
+            \ 21) AND (ss_quantity#8010 <= 25)) AND ((((ss_list_price#8012 >= 173.00)\
+            \ AND (ss_list_price#8012 <= 183.00)) OR ((ss_coupon_amt#8019 >= 6017.00)\
+            \ AND (ss_coupon_amt#8019 <= 7017.00))) OR ((ss_wholesale_cost#8011 >=\
+            \ 45.00) AND (ss_wholesale_cost#8011 <= 65.00)))))"
           operator: "filter"
           inputs:
           - title: "store_sales.parquet"
@@ -98,14 +98,14 @@ diagram:
   - title: "Aggregate (unknown)"
     operator: "Aggregate"
     inputs:
-    - title: "Projection: ss_list_price#6959"
+    - title: "Projection: ss_list_price#8035"
       operator: "projection"
       inputs:
-      - title: "Filter: (isnotnull(ss_quantity#6957) AND (((ss_quantity#6957 >= 26)\
-          \ AND (ss_quantity#6957 <= 30)) AND ((((ss_list_price#6959 >= 2.00) AND\
-          \ (ss_list_price#6959 <= 12.00)) OR ((ss_coupon_amt#6966 >= 16961.00) AND\
-          \ (ss_coupon_amt#6966 <= 17961.00))) OR ((ss_wholesale_cost#6958 >= 18.00)\
-          \ AND (ss_wholesale_cost#6958 <= 38.00)))))"
+      - title: "Filter: (isnotnull(ss_quantity#8033) AND (((ss_quantity#8033 >= 26)\
+          \ AND (ss_quantity#8033 <= 30)) AND ((((ss_list_price#8035 >= 2.00) AND\
+          \ (ss_list_price#8035 <= 12.00)) OR ((ss_coupon_amt#8042 >= 16961.00) AND\
+          \ (ss_coupon_amt#8042 <= 17961.00))) OR ((ss_wholesale_cost#8034 >= 18.00)\
+          \ AND (ss_wholesale_cost#8034 <= 38.00)))))"
         operator: "filter"
         inputs:
         - title: "store_sales.parquet"

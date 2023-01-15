@@ -1,12 +1,12 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   *(1) Project [CASE WHEN (Subquery subquery#3168, [id=#12391] > 320784) THEN Subquery subquery#3169, [id=#12404] ELSE Subquery subquery#3170, [id=#12417] END AS bucket1#3171, CASE WHEN (Subquery subquery#3172, [id=#12430] > 498796) THEN Subquery subquery#3173, [id=#12443] ELSE Subquery subquery#3174, [id=#12456] END AS bucket2#3175, CASE WHEN (Subquery subquery#3176, [id=#12469] > 1637521) THEN Subquery subquery#3177, [id=#12482] ELSE Subquery subquery#3178, [id=#12495] END AS bucket3#3179, CASE WHEN (Subquery subquery#3180, [id=#12508] > 1340218) THEN Subquery subquery#3181, [id=#12521] ELSE Subquery subquery#3182, [id=#12534] END AS bucket4#3183, CASE WHEN (Subquery subquery#3184, [id=#12547] > 2730070) THEN Subquery subquery#3185, [id=#12560] ELSE Subquery subquery#3186, [id=#12573] END AS bucket5#3187]
-   :  :- Subquery subquery#3168, [id=#12391]
+   *(1) Project [CASE WHEN (Subquery subquery#3168, [id=#12535] > 320784) THEN Subquery subquery#3169, [id=#12548] ELSE Subquery subquery#3170, [id=#12561] END AS bucket1#3171, CASE WHEN (Subquery subquery#3172, [id=#12574] > 498796) THEN Subquery subquery#3173, [id=#12587] ELSE Subquery subquery#3174, [id=#12600] END AS bucket2#3175, CASE WHEN (Subquery subquery#3176, [id=#12613] > 1637521) THEN Subquery subquery#3177, [id=#12626] ELSE Subquery subquery#3178, [id=#12639] END AS bucket3#3179, CASE WHEN (Subquery subquery#3180, [id=#12652] > 1340218) THEN Subquery subquery#3181, [id=#12665] ELSE Subquery subquery#3182, [id=#12678] END AS bucket4#3183, CASE WHEN (Subquery subquery#3184, [id=#12691] > 2730070) THEN Subquery subquery#3185, [id=#12704] ELSE Subquery subquery#3186, [id=#12717] END AS bucket5#3187]
+   :  :- Subquery subquery#3168, [id=#12535]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3189L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12741]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12907]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3546L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#674) AND (ss_quantity#674 >= 1)) AND (ss_quantity#674 <= 20))
@@ -14,17 +14,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#674] Batched: true, DataFilters: [isnotnull(ss_quantity#674), (ss_quantity#674 >= 1), (ss_quantity#674 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3189L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12389]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12533]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3546L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#674) AND (ss_quantity#674 >= 1)) AND (ss_quantity#674 <= 20))
                         +- FileScan parquet [ss_quantity#674] Batched: true, DataFilters: [isnotnull(ss_quantity#674), (ss_quantity#674 >= 1), (ss_quantity#674 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3169, [id=#12404]
+   :  :- Subquery subquery#3169, [id=#12548]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[avg(ss_ext_discount_amt)#3191])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12829]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12922]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[sum#3549, count#3550L])
                      +- *(1) Project [ss_ext_discount_amt#3232]
                         +- *(1) Filter ((isnotnull(ss_quantity#3228) AND (ss_quantity#3228 >= 1)) AND (ss_quantity#3228 <= 20))
@@ -32,17 +32,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3228,ss_ext_discount_amt#3232] Batched: true, DataFilters: [isnotnull(ss_quantity#3228), (ss_quantity#3228 >= 1), (ss_quantity#3228 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[avg(ss_ext_discount_amt)#3191])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12402]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12546]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[sum#3549, count#3550L])
                   +- Project [ss_ext_discount_amt#3232]
                      +- Filter ((isnotnull(ss_quantity#3228) AND (ss_quantity#3228 >= 1)) AND (ss_quantity#3228 <= 20))
                         +- FileScan parquet [ss_quantity#3228,ss_ext_discount_amt#3232] Batched: true, DataFilters: [isnotnull(ss_quantity#3228), (ss_quantity#3228 >= 1), (ss_quantity#3228 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3170, [id=#12417]
+   :  :- Subquery subquery#3170, [id=#12561]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3263))], output=[avg(ss_net_profit)#3193])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12880]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12943]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3263))], output=[sum#3553, count#3554L])
                      +- *(1) Project [ss_net_profit#3263]
                         +- *(1) Filter ((isnotnull(ss_quantity#3251) AND (ss_quantity#3251 >= 1)) AND (ss_quantity#3251 <= 20))
@@ -50,17 +50,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3251,ss_net_profit#3263] Batched: true, DataFilters: [isnotnull(ss_quantity#3251), (ss_quantity#3251 >= 1), (ss_quantity#3251 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3263))], output=[avg(ss_net_profit)#3193])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12415]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12559]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3263))], output=[sum#3553, count#3554L])
                   +- Project [ss_net_profit#3263]
                      +- Filter ((isnotnull(ss_quantity#3251) AND (ss_quantity#3251 >= 1)) AND (ss_quantity#3251 <= 20))
                         +- FileScan parquet [ss_quantity#3251,ss_net_profit#3263] Batched: true, DataFilters: [isnotnull(ss_quantity#3251), (ss_quantity#3251 >= 1), (ss_quantity#3251 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3172, [id=#12430]
+   :  :- Subquery subquery#3172, [id=#12574]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3195L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12916]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12962]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3556L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3274) AND (ss_quantity#3274 >= 21)) AND (ss_quantity#3274 <= 40))
@@ -68,17 +68,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3274] Batched: true, DataFilters: [isnotnull(ss_quantity#3274), (ss_quantity#3274 >= 21), (ss_quantity#3274 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3195L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12428]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12572]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3556L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3274) AND (ss_quantity#3274 >= 21)) AND (ss_quantity#3274 <= 40))
                         +- FileScan parquet [ss_quantity#3274] Batched: true, DataFilters: [isnotnull(ss_quantity#3274), (ss_quantity#3274 >= 21), (ss_quantity#3274 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3173, [id=#12443]
+   :  :- Subquery subquery#3173, [id=#12587]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[avg(ss_ext_discount_amt)#3197])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12812]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12939]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[sum#3559, count#3560L])
                      +- *(1) Project [ss_ext_discount_amt#3301]
                         +- *(1) Filter ((isnotnull(ss_quantity#3297) AND (ss_quantity#3297 >= 21)) AND (ss_quantity#3297 <= 40))
@@ -86,17 +86,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3297,ss_ext_discount_amt#3301] Batched: true, DataFilters: [isnotnull(ss_quantity#3297), (ss_quantity#3297 >= 21), (ss_quantity#3297 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[avg(ss_ext_discount_amt)#3197])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12441]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12585]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[sum#3559, count#3560L])
                   +- Project [ss_ext_discount_amt#3301]
                      +- Filter ((isnotnull(ss_quantity#3297) AND (ss_quantity#3297 >= 21)) AND (ss_quantity#3297 <= 40))
                         +- FileScan parquet [ss_quantity#3297,ss_ext_discount_amt#3301] Batched: true, DataFilters: [isnotnull(ss_quantity#3297), (ss_quantity#3297 >= 21), (ss_quantity#3297 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3174, [id=#12456]
+   :  :- Subquery subquery#3174, [id=#12600]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3332))], output=[avg(ss_net_profit)#3199])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12869]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12960]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3332))], output=[sum#3563, count#3564L])
                      +- *(1) Project [ss_net_profit#3332]
                         +- *(1) Filter ((isnotnull(ss_quantity#3320) AND (ss_quantity#3320 >= 21)) AND (ss_quantity#3320 <= 40))
@@ -104,17 +104,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3320,ss_net_profit#3332] Batched: true, DataFilters: [isnotnull(ss_quantity#3320), (ss_quantity#3320 >= 21), (ss_quantity#3320 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3332))], output=[avg(ss_net_profit)#3199])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12454]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12598]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3332))], output=[sum#3563, count#3564L])
                   +- Project [ss_net_profit#3332]
                      +- Filter ((isnotnull(ss_quantity#3320) AND (ss_quantity#3320 >= 21)) AND (ss_quantity#3320 <= 40))
                         +- FileScan parquet [ss_quantity#3320,ss_net_profit#3332] Batched: true, DataFilters: [isnotnull(ss_quantity#3320), (ss_quantity#3320 >= 21), (ss_quantity#3320 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3176, [id=#12469]
+   :  :- Subquery subquery#3176, [id=#12613]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3201L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12848]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13063]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3566L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3343) AND (ss_quantity#3343 >= 41)) AND (ss_quantity#3343 <= 60))
@@ -122,17 +122,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3343] Batched: true, DataFilters: [isnotnull(ss_quantity#3343), (ss_quantity#3343 >= 41), (ss_quantity#3343 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3201L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12467]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12611]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3566L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3343) AND (ss_quantity#3343 >= 41)) AND (ss_quantity#3343 <= 60))
                         +- FileScan parquet [ss_quantity#3343] Batched: true, DataFilters: [isnotnull(ss_quantity#3343), (ss_quantity#3343 >= 41), (ss_quantity#3343 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3177, [id=#12482]
+   :  :- Subquery subquery#3177, [id=#12626]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[avg(ss_ext_discount_amt)#3203])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12872]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13015]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[sum#3569, count#3570L])
                      +- *(1) Project [ss_ext_discount_amt#3370]
                         +- *(1) Filter ((isnotnull(ss_quantity#3366) AND (ss_quantity#3366 >= 41)) AND (ss_quantity#3366 <= 60))
@@ -140,17 +140,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3366,ss_ext_discount_amt#3370] Batched: true, DataFilters: [isnotnull(ss_quantity#3366), (ss_quantity#3366 >= 41), (ss_quantity#3366 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[avg(ss_ext_discount_amt)#3203])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12480]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12624]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[sum#3569, count#3570L])
                   +- Project [ss_ext_discount_amt#3370]
                      +- Filter ((isnotnull(ss_quantity#3366) AND (ss_quantity#3366 >= 41)) AND (ss_quantity#3366 <= 60))
                         +- FileScan parquet [ss_quantity#3366,ss_ext_discount_amt#3370] Batched: true, DataFilters: [isnotnull(ss_quantity#3366), (ss_quantity#3366 >= 41), (ss_quantity#3366 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3178, [id=#12495]
+   :  :- Subquery subquery#3178, [id=#12639]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3401))], output=[avg(ss_net_profit)#3205])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12973]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13035]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3401))], output=[sum#3573, count#3574L])
                      +- *(1) Project [ss_net_profit#3401]
                         +- *(1) Filter ((isnotnull(ss_quantity#3389) AND (ss_quantity#3389 >= 41)) AND (ss_quantity#3389 <= 60))
@@ -158,17 +158,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3389,ss_net_profit#3401] Batched: true, DataFilters: [isnotnull(ss_quantity#3389), (ss_quantity#3389 >= 41), (ss_quantity#3389 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3401))], output=[avg(ss_net_profit)#3205])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12493]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12637]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3401))], output=[sum#3573, count#3574L])
                   +- Project [ss_net_profit#3401]
                      +- Filter ((isnotnull(ss_quantity#3389) AND (ss_quantity#3389 >= 41)) AND (ss_quantity#3389 <= 60))
                         +- FileScan parquet [ss_quantity#3389,ss_net_profit#3401] Batched: true, DataFilters: [isnotnull(ss_quantity#3389), (ss_quantity#3389 >= 41), (ss_quantity#3389 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3180, [id=#12508]
+   :  :- Subquery subquery#3180, [id=#12652]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3207L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13051]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13118]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3576L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3412) AND (ss_quantity#3412 >= 61)) AND (ss_quantity#3412 <= 80))
@@ -176,17 +176,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3412] Batched: true, DataFilters: [isnotnull(ss_quantity#3412), (ss_quantity#3412 >= 61), (ss_quantity#3412 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3207L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12506]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12650]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3576L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3412) AND (ss_quantity#3412 >= 61)) AND (ss_quantity#3412 <= 80))
                         +- FileScan parquet [ss_quantity#3412] Batched: true, DataFilters: [isnotnull(ss_quantity#3412), (ss_quantity#3412 >= 61), (ss_quantity#3412 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3181, [id=#12521]
+   :  :- Subquery subquery#3181, [id=#12665]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[avg(ss_ext_discount_amt)#3209])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13014]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13142]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[sum#3579, count#3580L])
                      +- *(1) Project [ss_ext_discount_amt#3439]
                         +- *(1) Filter ((isnotnull(ss_quantity#3435) AND (ss_quantity#3435 >= 61)) AND (ss_quantity#3435 <= 80))
@@ -194,17 +194,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3435,ss_ext_discount_amt#3439] Batched: true, DataFilters: [isnotnull(ss_quantity#3435), (ss_quantity#3435 >= 61), (ss_quantity#3435 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[avg(ss_ext_discount_amt)#3209])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12519]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12663]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[sum#3579, count#3580L])
                   +- Project [ss_ext_discount_amt#3439]
                      +- Filter ((isnotnull(ss_quantity#3435) AND (ss_quantity#3435 >= 61)) AND (ss_quantity#3435 <= 80))
                         +- FileScan parquet [ss_quantity#3435,ss_ext_discount_amt#3439] Batched: true, DataFilters: [isnotnull(ss_quantity#3435), (ss_quantity#3435 >= 61), (ss_quantity#3435 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3182, [id=#12534]
+   :  :- Subquery subquery#3182, [id=#12678]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3470))], output=[avg(ss_net_profit)#3211])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12912]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13143]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3470))], output=[sum#3583, count#3584L])
                      +- *(1) Project [ss_net_profit#3470]
                         +- *(1) Filter ((isnotnull(ss_quantity#3458) AND (ss_quantity#3458 >= 61)) AND (ss_quantity#3458 <= 80))
@@ -212,17 +212,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3458,ss_net_profit#3470] Batched: true, DataFilters: [isnotnull(ss_quantity#3458), (ss_quantity#3458 >= 61), (ss_quantity#3458 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3470))], output=[avg(ss_net_profit)#3211])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12532]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12676]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3470))], output=[sum#3583, count#3584L])
                   +- Project [ss_net_profit#3470]
                      +- Filter ((isnotnull(ss_quantity#3458) AND (ss_quantity#3458 >= 61)) AND (ss_quantity#3458 <= 80))
                         +- FileScan parquet [ss_quantity#3458,ss_net_profit#3470] Batched: true, DataFilters: [isnotnull(ss_quantity#3458), (ss_quantity#3458 >= 61), (ss_quantity#3458 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3184, [id=#12547]
+   :  :- Subquery subquery#3184, [id=#12691]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3213L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12924]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13159]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3586L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3481) AND (ss_quantity#3481 >= 81)) AND (ss_quantity#3481 <= 100))
@@ -230,17 +230,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3481] Batched: true, DataFilters: [isnotnull(ss_quantity#3481), (ss_quantity#3481 >= 81), (ss_quantity#3481 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3213L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12545]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12689]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3586L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3481) AND (ss_quantity#3481 >= 81)) AND (ss_quantity#3481 <= 100))
                         +- FileScan parquet [ss_quantity#3481] Batched: true, DataFilters: [isnotnull(ss_quantity#3481), (ss_quantity#3481 >= 81), (ss_quantity#3481 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3185, [id=#12560]
+   :  :- Subquery subquery#3185, [id=#12704]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[avg(ss_ext_discount_amt)#3215])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12918]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13170]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[sum#3589, count#3590L])
                      +- *(1) Project [ss_ext_discount_amt#3508]
                         +- *(1) Filter ((isnotnull(ss_quantity#3504) AND (ss_quantity#3504 >= 81)) AND (ss_quantity#3504 <= 100))
@@ -248,17 +248,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3504,ss_ext_discount_amt#3508] Batched: true, DataFilters: [isnotnull(ss_quantity#3504), (ss_quantity#3504 >= 81), (ss_quantity#3504 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[avg(ss_ext_discount_amt)#3215])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12558]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12702]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[sum#3589, count#3590L])
                   +- Project [ss_ext_discount_amt#3508]
                      +- Filter ((isnotnull(ss_quantity#3504) AND (ss_quantity#3504 >= 81)) AND (ss_quantity#3504 <= 100))
                         +- FileScan parquet [ss_quantity#3504,ss_ext_discount_amt#3508] Batched: true, DataFilters: [isnotnull(ss_quantity#3504), (ss_quantity#3504 >= 81), (ss_quantity#3504 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  +- Subquery subquery#3186, [id=#12573]
+   :  +- Subquery subquery#3186, [id=#12717]
    :     +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3539))], output=[avg(ss_net_profit)#3217])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12881]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13217]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3539))], output=[sum#3593, count#3594L])
                      +- *(1) Project [ss_net_profit#3539]
                         +- *(1) Filter ((isnotnull(ss_quantity#3527) AND (ss_quantity#3527 >= 81)) AND (ss_quantity#3527 <= 100))
@@ -266,7 +266,7 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3527,ss_net_profit#3539] Batched: true, DataFilters: [isnotnull(ss_quantity#3527), (ss_quantity#3527 >= 81), (ss_quantity#3527 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3539))], output=[avg(ss_net_profit)#3217])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12571]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12715]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3539))], output=[sum#3593, count#3594L])
                   +- Project [ss_net_profit#3539]
                      +- Filter ((isnotnull(ss_quantity#3527) AND (ss_quantity#3527 >= 81)) AND (ss_quantity#3527 <= 100))
@@ -275,13 +275,13 @@ AdaptiveSparkPlan isFinalPlan=true
       +- *(1) ColumnarToRow
          +- FileScan parquet [r_reason_sk#544] Batched: true, DataFilters: [isnotnull(r_reason_sk#544), (r_reason_sk#544 = 1)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/reason.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(r_reason_sk), EqualTo(r_reason_sk,1)], ReadSchema: struct<r_reason_sk:int>
 +- == Initial Plan ==
-   Project [CASE WHEN (Subquery subquery#3168, [id=#12391] > 320784) THEN Subquery subquery#3169, [id=#12404] ELSE Subquery subquery#3170, [id=#12417] END AS bucket1#3171, CASE WHEN (Subquery subquery#3172, [id=#12430] > 498796) THEN Subquery subquery#3173, [id=#12443] ELSE Subquery subquery#3174, [id=#12456] END AS bucket2#3175, CASE WHEN (Subquery subquery#3176, [id=#12469] > 1637521) THEN Subquery subquery#3177, [id=#12482] ELSE Subquery subquery#3178, [id=#12495] END AS bucket3#3179, CASE WHEN (Subquery subquery#3180, [id=#12508] > 1340218) THEN Subquery subquery#3181, [id=#12521] ELSE Subquery subquery#3182, [id=#12534] END AS bucket4#3183, CASE WHEN (Subquery subquery#3184, [id=#12547] > 2730070) THEN Subquery subquery#3185, [id=#12560] ELSE Subquery subquery#3186, [id=#12573] END AS bucket5#3187]
-   :  :- Subquery subquery#3168, [id=#12391]
+   Project [CASE WHEN (Subquery subquery#3168, [id=#12535] > 320784) THEN Subquery subquery#3169, [id=#12548] ELSE Subquery subquery#3170, [id=#12561] END AS bucket1#3171, CASE WHEN (Subquery subquery#3172, [id=#12574] > 498796) THEN Subquery subquery#3173, [id=#12587] ELSE Subquery subquery#3174, [id=#12600] END AS bucket2#3175, CASE WHEN (Subquery subquery#3176, [id=#12613] > 1637521) THEN Subquery subquery#3177, [id=#12626] ELSE Subquery subquery#3178, [id=#12639] END AS bucket3#3179, CASE WHEN (Subquery subquery#3180, [id=#12652] > 1340218) THEN Subquery subquery#3181, [id=#12665] ELSE Subquery subquery#3182, [id=#12678] END AS bucket4#3183, CASE WHEN (Subquery subquery#3184, [id=#12691] > 2730070) THEN Subquery subquery#3185, [id=#12704] ELSE Subquery subquery#3186, [id=#12717] END AS bucket5#3187]
+   :  :- Subquery subquery#3168, [id=#12535]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3189L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12741]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12907]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3546L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#674) AND (ss_quantity#674 >= 1)) AND (ss_quantity#674 <= 20))
@@ -289,17 +289,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#674] Batched: true, DataFilters: [isnotnull(ss_quantity#674), (ss_quantity#674 >= 1), (ss_quantity#674 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3189L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12389]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12533]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3546L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#674) AND (ss_quantity#674 >= 1)) AND (ss_quantity#674 <= 20))
                         +- FileScan parquet [ss_quantity#674] Batched: true, DataFilters: [isnotnull(ss_quantity#674), (ss_quantity#674 >= 1), (ss_quantity#674 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3169, [id=#12404]
+   :  :- Subquery subquery#3169, [id=#12548]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[avg(ss_ext_discount_amt)#3191])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12829]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12922]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[sum#3549, count#3550L])
                      +- *(1) Project [ss_ext_discount_amt#3232]
                         +- *(1) Filter ((isnotnull(ss_quantity#3228) AND (ss_quantity#3228 >= 1)) AND (ss_quantity#3228 <= 20))
@@ -307,17 +307,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3228,ss_ext_discount_amt#3232] Batched: true, DataFilters: [isnotnull(ss_quantity#3228), (ss_quantity#3228 >= 1), (ss_quantity#3228 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[avg(ss_ext_discount_amt)#3191])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12402]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12546]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3232))], output=[sum#3549, count#3550L])
                   +- Project [ss_ext_discount_amt#3232]
                      +- Filter ((isnotnull(ss_quantity#3228) AND (ss_quantity#3228 >= 1)) AND (ss_quantity#3228 <= 20))
                         +- FileScan parquet [ss_quantity#3228,ss_ext_discount_amt#3232] Batched: true, DataFilters: [isnotnull(ss_quantity#3228), (ss_quantity#3228 >= 1), (ss_quantity#3228 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3170, [id=#12417]
+   :  :- Subquery subquery#3170, [id=#12561]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3263))], output=[avg(ss_net_profit)#3193])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12880]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12943]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3263))], output=[sum#3553, count#3554L])
                      +- *(1) Project [ss_net_profit#3263]
                         +- *(1) Filter ((isnotnull(ss_quantity#3251) AND (ss_quantity#3251 >= 1)) AND (ss_quantity#3251 <= 20))
@@ -325,17 +325,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3251,ss_net_profit#3263] Batched: true, DataFilters: [isnotnull(ss_quantity#3251), (ss_quantity#3251 >= 1), (ss_quantity#3251 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3263))], output=[avg(ss_net_profit)#3193])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12415]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12559]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3263))], output=[sum#3553, count#3554L])
                   +- Project [ss_net_profit#3263]
                      +- Filter ((isnotnull(ss_quantity#3251) AND (ss_quantity#3251 >= 1)) AND (ss_quantity#3251 <= 20))
                         +- FileScan parquet [ss_quantity#3251,ss_net_profit#3263] Batched: true, DataFilters: [isnotnull(ss_quantity#3251), (ss_quantity#3251 >= 1), (ss_quantity#3251 <= 20)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,1), LessThanOrEqual(ss_quantity,20)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3172, [id=#12430]
+   :  :- Subquery subquery#3172, [id=#12574]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3195L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12916]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12962]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3556L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3274) AND (ss_quantity#3274 >= 21)) AND (ss_quantity#3274 <= 40))
@@ -343,17 +343,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3274] Batched: true, DataFilters: [isnotnull(ss_quantity#3274), (ss_quantity#3274 >= 21), (ss_quantity#3274 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3195L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12428]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12572]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3556L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3274) AND (ss_quantity#3274 >= 21)) AND (ss_quantity#3274 <= 40))
                         +- FileScan parquet [ss_quantity#3274] Batched: true, DataFilters: [isnotnull(ss_quantity#3274), (ss_quantity#3274 >= 21), (ss_quantity#3274 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3173, [id=#12443]
+   :  :- Subquery subquery#3173, [id=#12587]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[avg(ss_ext_discount_amt)#3197])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12812]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12939]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[sum#3559, count#3560L])
                      +- *(1) Project [ss_ext_discount_amt#3301]
                         +- *(1) Filter ((isnotnull(ss_quantity#3297) AND (ss_quantity#3297 >= 21)) AND (ss_quantity#3297 <= 40))
@@ -361,17 +361,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3297,ss_ext_discount_amt#3301] Batched: true, DataFilters: [isnotnull(ss_quantity#3297), (ss_quantity#3297 >= 21), (ss_quantity#3297 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[avg(ss_ext_discount_amt)#3197])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12441]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12585]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3301))], output=[sum#3559, count#3560L])
                   +- Project [ss_ext_discount_amt#3301]
                      +- Filter ((isnotnull(ss_quantity#3297) AND (ss_quantity#3297 >= 21)) AND (ss_quantity#3297 <= 40))
                         +- FileScan parquet [ss_quantity#3297,ss_ext_discount_amt#3301] Batched: true, DataFilters: [isnotnull(ss_quantity#3297), (ss_quantity#3297 >= 21), (ss_quantity#3297 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3174, [id=#12456]
+   :  :- Subquery subquery#3174, [id=#12600]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3332))], output=[avg(ss_net_profit)#3199])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12869]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12960]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3332))], output=[sum#3563, count#3564L])
                      +- *(1) Project [ss_net_profit#3332]
                         +- *(1) Filter ((isnotnull(ss_quantity#3320) AND (ss_quantity#3320 >= 21)) AND (ss_quantity#3320 <= 40))
@@ -379,17 +379,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3320,ss_net_profit#3332] Batched: true, DataFilters: [isnotnull(ss_quantity#3320), (ss_quantity#3320 >= 21), (ss_quantity#3320 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3332))], output=[avg(ss_net_profit)#3199])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12454]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12598]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3332))], output=[sum#3563, count#3564L])
                   +- Project [ss_net_profit#3332]
                      +- Filter ((isnotnull(ss_quantity#3320) AND (ss_quantity#3320 >= 21)) AND (ss_quantity#3320 <= 40))
                         +- FileScan parquet [ss_quantity#3320,ss_net_profit#3332] Batched: true, DataFilters: [isnotnull(ss_quantity#3320), (ss_quantity#3320 >= 21), (ss_quantity#3320 <= 40)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,21), LessThanOrEqual(ss_quantity,40)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3176, [id=#12469]
+   :  :- Subquery subquery#3176, [id=#12613]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3201L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12848]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13063]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3566L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3343) AND (ss_quantity#3343 >= 41)) AND (ss_quantity#3343 <= 60))
@@ -397,17 +397,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3343] Batched: true, DataFilters: [isnotnull(ss_quantity#3343), (ss_quantity#3343 >= 41), (ss_quantity#3343 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3201L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12467]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12611]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3566L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3343) AND (ss_quantity#3343 >= 41)) AND (ss_quantity#3343 <= 60))
                         +- FileScan parquet [ss_quantity#3343] Batched: true, DataFilters: [isnotnull(ss_quantity#3343), (ss_quantity#3343 >= 41), (ss_quantity#3343 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3177, [id=#12482]
+   :  :- Subquery subquery#3177, [id=#12626]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[avg(ss_ext_discount_amt)#3203])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12872]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13015]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[sum#3569, count#3570L])
                      +- *(1) Project [ss_ext_discount_amt#3370]
                         +- *(1) Filter ((isnotnull(ss_quantity#3366) AND (ss_quantity#3366 >= 41)) AND (ss_quantity#3366 <= 60))
@@ -415,17 +415,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3366,ss_ext_discount_amt#3370] Batched: true, DataFilters: [isnotnull(ss_quantity#3366), (ss_quantity#3366 >= 41), (ss_quantity#3366 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[avg(ss_ext_discount_amt)#3203])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12480]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12624]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3370))], output=[sum#3569, count#3570L])
                   +- Project [ss_ext_discount_amt#3370]
                      +- Filter ((isnotnull(ss_quantity#3366) AND (ss_quantity#3366 >= 41)) AND (ss_quantity#3366 <= 60))
                         +- FileScan parquet [ss_quantity#3366,ss_ext_discount_amt#3370] Batched: true, DataFilters: [isnotnull(ss_quantity#3366), (ss_quantity#3366 >= 41), (ss_quantity#3366 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3178, [id=#12495]
+   :  :- Subquery subquery#3178, [id=#12639]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3401))], output=[avg(ss_net_profit)#3205])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12973]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13035]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3401))], output=[sum#3573, count#3574L])
                      +- *(1) Project [ss_net_profit#3401]
                         +- *(1) Filter ((isnotnull(ss_quantity#3389) AND (ss_quantity#3389 >= 41)) AND (ss_quantity#3389 <= 60))
@@ -433,17 +433,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3389,ss_net_profit#3401] Batched: true, DataFilters: [isnotnull(ss_quantity#3389), (ss_quantity#3389 >= 41), (ss_quantity#3389 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3401))], output=[avg(ss_net_profit)#3205])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12493]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12637]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3401))], output=[sum#3573, count#3574L])
                   +- Project [ss_net_profit#3401]
                      +- Filter ((isnotnull(ss_quantity#3389) AND (ss_quantity#3389 >= 41)) AND (ss_quantity#3389 <= 60))
                         +- FileScan parquet [ss_quantity#3389,ss_net_profit#3401] Batched: true, DataFilters: [isnotnull(ss_quantity#3389), (ss_quantity#3389 >= 41), (ss_quantity#3389 <= 60)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,41), LessThanOrEqual(ss_quantity,60)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3180, [id=#12508]
+   :  :- Subquery subquery#3180, [id=#12652]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3207L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13051]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13118]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3576L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3412) AND (ss_quantity#3412 >= 61)) AND (ss_quantity#3412 <= 80))
@@ -451,17 +451,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3412] Batched: true, DataFilters: [isnotnull(ss_quantity#3412), (ss_quantity#3412 >= 61), (ss_quantity#3412 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3207L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12506]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12650]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3576L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3412) AND (ss_quantity#3412 >= 61)) AND (ss_quantity#3412 <= 80))
                         +- FileScan parquet [ss_quantity#3412] Batched: true, DataFilters: [isnotnull(ss_quantity#3412), (ss_quantity#3412 >= 61), (ss_quantity#3412 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3181, [id=#12521]
+   :  :- Subquery subquery#3181, [id=#12665]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[avg(ss_ext_discount_amt)#3209])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13014]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13142]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[sum#3579, count#3580L])
                      +- *(1) Project [ss_ext_discount_amt#3439]
                         +- *(1) Filter ((isnotnull(ss_quantity#3435) AND (ss_quantity#3435 >= 61)) AND (ss_quantity#3435 <= 80))
@@ -469,17 +469,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3435,ss_ext_discount_amt#3439] Batched: true, DataFilters: [isnotnull(ss_quantity#3435), (ss_quantity#3435 >= 61), (ss_quantity#3435 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[avg(ss_ext_discount_amt)#3209])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12519]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12663]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3439))], output=[sum#3579, count#3580L])
                   +- Project [ss_ext_discount_amt#3439]
                      +- Filter ((isnotnull(ss_quantity#3435) AND (ss_quantity#3435 >= 61)) AND (ss_quantity#3435 <= 80))
                         +- FileScan parquet [ss_quantity#3435,ss_ext_discount_amt#3439] Batched: true, DataFilters: [isnotnull(ss_quantity#3435), (ss_quantity#3435 >= 61), (ss_quantity#3435 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  :- Subquery subquery#3182, [id=#12534]
+   :  :- Subquery subquery#3182, [id=#12678]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3470))], output=[avg(ss_net_profit)#3211])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12912]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13143]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3470))], output=[sum#3583, count#3584L])
                      +- *(1) Project [ss_net_profit#3470]
                         +- *(1) Filter ((isnotnull(ss_quantity#3458) AND (ss_quantity#3458 >= 61)) AND (ss_quantity#3458 <= 80))
@@ -487,17 +487,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3458,ss_net_profit#3470] Batched: true, DataFilters: [isnotnull(ss_quantity#3458), (ss_quantity#3458 >= 61), (ss_quantity#3458 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3470))], output=[avg(ss_net_profit)#3211])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12532]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12676]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3470))], output=[sum#3583, count#3584L])
                   +- Project [ss_net_profit#3470]
                      +- Filter ((isnotnull(ss_quantity#3458) AND (ss_quantity#3458 >= 61)) AND (ss_quantity#3458 <= 80))
                         +- FileScan parquet [ss_quantity#3458,ss_net_profit#3470] Batched: true, DataFilters: [isnotnull(ss_quantity#3458), (ss_quantity#3458 >= 61), (ss_quantity#3458 <= 80)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,61), LessThanOrEqual(ss_quantity,80)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
-   :  :- Subquery subquery#3184, [id=#12547]
+   :  :- Subquery subquery#3184, [id=#12691]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3213L])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12924]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13159]
                   +- *(1) HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3586L])
                      +- *(1) Project
                         +- *(1) Filter ((isnotnull(ss_quantity#3481) AND (ss_quantity#3481 >= 81)) AND (ss_quantity#3481 <= 100))
@@ -505,17 +505,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3481] Batched: true, DataFilters: [isnotnull(ss_quantity#3481), (ss_quantity#3481 >= 81), (ss_quantity#3481 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[count(1)], output=[count(1)#3213L])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12545]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12689]
                +- HashAggregate(keys=[], functions=[partial_count(1)], output=[count#3586L])
                   +- Project
                      +- Filter ((isnotnull(ss_quantity#3481) AND (ss_quantity#3481 >= 81)) AND (ss_quantity#3481 <= 100))
                         +- FileScan parquet [ss_quantity#3481] Batched: true, DataFilters: [isnotnull(ss_quantity#3481), (ss_quantity#3481 >= 81), (ss_quantity#3481 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int>
-   :  :- Subquery subquery#3185, [id=#12560]
+   :  :- Subquery subquery#3185, [id=#12704]
    :  :  +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[avg(ss_ext_discount_amt)#3215])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12918]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13170]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[sum#3589, count#3590L])
                      +- *(1) Project [ss_ext_discount_amt#3508]
                         +- *(1) Filter ((isnotnull(ss_quantity#3504) AND (ss_quantity#3504 >= 81)) AND (ss_quantity#3504 <= 100))
@@ -523,17 +523,17 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3504,ss_ext_discount_amt#3508] Batched: true, DataFilters: [isnotnull(ss_quantity#3504), (ss_quantity#3504 >= 81), (ss_quantity#3504 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[avg(ss_ext_discount_amt)#3215])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12558]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12702]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_ext_discount_amt#3508))], output=[sum#3589, count#3590L])
                   +- Project [ss_ext_discount_amt#3508]
                      +- Filter ((isnotnull(ss_quantity#3504) AND (ss_quantity#3504 >= 81)) AND (ss_quantity#3504 <= 100))
                         +- FileScan parquet [ss_quantity#3504,ss_ext_discount_amt#3508] Batched: true, DataFilters: [isnotnull(ss_quantity#3504), (ss_quantity#3504 >= 81), (ss_quantity#3504 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_ext_discount_amt:decimal(7,2)>
-   :  +- Subquery subquery#3186, [id=#12573]
+   :  +- Subquery subquery#3186, [id=#12717]
    :     +- AdaptiveSparkPlan isFinalPlan=true
          +- == Final Plan ==
             *(2) HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3539))], output=[avg(ss_net_profit)#3217])
             +- ShuffleQueryStage 0
-               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12881]
+               +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#13217]
                   +- *(1) HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3539))], output=[sum#3593, count#3594L])
                      +- *(1) Project [ss_net_profit#3539]
                         +- *(1) Filter ((isnotnull(ss_quantity#3527) AND (ss_quantity#3527 >= 81)) AND (ss_quantity#3527 <= 100))
@@ -541,7 +541,7 @@ AdaptiveSparkPlan isFinalPlan=true
                               +- FileScan parquet [ss_quantity#3527,ss_net_profit#3539] Batched: true, DataFilters: [isnotnull(ss_quantity#3527), (ss_quantity#3527 >= 81), (ss_quantity#3527 <= 100)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/store_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ss_quantity), GreaterThanOrEqual(ss_quantity,81), LessThanOrEqual(ss_quantity,100)], ReadSchema: struct<ss_quantity:int,ss_net_profit:decimal(7,2)>
          +- == Initial Plan ==
             HashAggregate(keys=[], functions=[avg(UnscaledValue(ss_net_profit#3539))], output=[avg(ss_net_profit)#3217])
-            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12571]
+            +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#12715]
                +- HashAggregate(keys=[], functions=[partial_avg(UnscaledValue(ss_net_profit#3539))], output=[sum#3593, count#3594L])
                   +- Project [ss_net_profit#3539]
                      +- Filter ((isnotnull(ss_quantity#3527) AND (ss_quantity#3527 >= 81)) AND (ss_quantity#3527 <= 100))

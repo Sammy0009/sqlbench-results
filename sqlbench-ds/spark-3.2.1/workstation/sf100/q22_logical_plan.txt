@@ -1,8 +1,8 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [qoh#6238 ASC NULLS FIRST, i_product_name#6245 ASC NULLS FIRST, i_brand#6246 ASC NULLS FIRST, i_class#6247 ASC NULLS FIRST, i_category#6248 ASC NULLS FIRST], true
-      +- Aggregate [i_product_name#6245, i_brand#6246, i_class#6247, i_category#6248, spark_grouping_id#6244L], [i_product_name#6245, i_brand#6246, i_class#6247, i_category#6248, avg(inv_quantity_on_hand#243) AS qoh#6238]
-         +- Expand [[inv_quantity_on_hand#243, i_product_name#521, i_brand#508, i_class#510, i_category#512, 0], [inv_quantity_on_hand#243, i_product_name#521, i_brand#508, i_class#510, null, 1], [inv_quantity_on_hand#243, i_product_name#521, i_brand#508, null, null, 3], [inv_quantity_on_hand#243, i_product_name#521, null, null, null, 7], [inv_quantity_on_hand#243, null, null, null, null, 15]], [inv_quantity_on_hand#243, i_product_name#6245, i_brand#6246, i_class#6247, i_category#6248, spark_grouping_id#6244L]
+   +- Sort [qoh#6905 ASC NULLS FIRST, i_product_name#6912 ASC NULLS FIRST, i_brand#6913 ASC NULLS FIRST, i_class#6914 ASC NULLS FIRST, i_category#6915 ASC NULLS FIRST], true
+      +- Aggregate [i_product_name#6912, i_brand#6913, i_class#6914, i_category#6915, spark_grouping_id#6911L], [i_product_name#6912, i_brand#6913, i_class#6914, i_category#6915, avg(inv_quantity_on_hand#243) AS qoh#6905]
+         +- Expand [[inv_quantity_on_hand#243, i_product_name#521, i_brand#508, i_class#510, i_category#512, 0], [inv_quantity_on_hand#243, i_product_name#521, i_brand#508, i_class#510, null, 1], [inv_quantity_on_hand#243, i_product_name#521, i_brand#508, null, null, 3], [inv_quantity_on_hand#243, i_product_name#521, null, null, null, 7], [inv_quantity_on_hand#243, null, null, null, null, 15]], [inv_quantity_on_hand#243, i_product_name#6912, i_brand#6913, i_class#6914, i_category#6915, spark_grouping_id#6911L]
             +- Project [inv_quantity_on_hand#243, i_product_name#521, i_brand#508, i_class#510, i_category#512]
                +- Join Inner, (inv_item_sk#241 = i_item_sk#500)
                   :- Project [inv_item_sk#241, inv_quantity_on_hand#243]

@@ -15,11 +15,11 @@ diagram:
         - title: "Union (unknown)"
           operator: "Union"
           inputs:
-          - title: "Projection: web AS channel#9847, item#9842, return_ratio#9843,\
-              \ return_rank#9845, currency_rank#9846"
+          - title: "Projection: web AS channel#11229, item#11224, return_ratio#11225,\
+              \ return_rank#11227, currency_rank#11228"
             operator: "projection"
             inputs:
-            - title: "Filter: ((return_rank#9845 <= 10) OR (currency_rank#9846 <=\
+            - title: "Filter: ((return_rank#11227 <= 10) OR (currency_rank#11228 <=\
                 \ 10))"
               operator: "filter"
               inputs:
@@ -85,11 +85,11 @@ diagram:
                             - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-          - title: "Projection: catalog AS channel#9853, item#9848, return_ratio#9849,\
-              \ return_rank#9851, currency_rank#9852"
+          - title: "Projection: catalog AS channel#11235, item#11230, return_ratio#11231,\
+              \ return_rank#11233, currency_rank#11234"
             operator: "projection"
             inputs:
-            - title: "Filter: ((return_rank#9851 <= 10) OR (currency_rank#9852 <=\
+            - title: "Filter: ((return_rank#11233 <= 10) OR (currency_rank#11234 <=\
                 \ 10))"
               operator: "filter"
               inputs:
@@ -106,7 +106,7 @@ diagram:
                         \ cr_return_quantity#265, cr_return_amount#266"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#9860))"
+                      - title: "Inner Join: Some((cs_sold_date_sk#118 = d_date_sk#11242))"
                         operator: "join"
                         inputs:
                         - title: "Projection: cs_sold_date_sk#118, cs_item_sk#133,\
@@ -144,22 +144,22 @@ diagram:
                                 - title: "catalog_returns.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: d_date_sk#9860"
+                        - title: "Projection: d_date_sk#11242"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (((isnotnull(d_year#9866) AND isnotnull(d_moy#9868))\
-                              \ AND ((d_year#9866 = 2000) AND (d_moy#9868 = 11)))\
-                              \ AND isnotnull(d_date_sk#9860))"
+                          - title: "Filter: (((isnotnull(d_year#11248) AND isnotnull(d_moy#11250))\
+                              \ AND ((d_year#11248 = 2000) AND (d_moy#11250 = 11)))\
+                              \ AND isnotnull(d_date_sk#11242))"
                             operator: "filter"
                             inputs:
                             - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-          - title: "Projection: store AS channel#9859, item#9854, return_ratio#9855,\
-              \ return_rank#9857, currency_rank#9858"
+          - title: "Projection: store AS channel#11241, item#11236, return_ratio#11237,\
+              \ return_rank#11239, currency_rank#11240"
             operator: "projection"
             inputs:
-            - title: "Filter: ((return_rank#9857 <= 10) OR (currency_rank#9858 <=\
+            - title: "Filter: ((return_rank#11239 <= 10) OR (currency_rank#11240 <=\
                 \ 10))"
               operator: "filter"
               inputs:
@@ -176,7 +176,7 @@ diagram:
                         \ sr_return_quantity#720, sr_return_amt#721"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#9888))"
+                      - title: "Inner Join: Some((ss_sold_date_sk#664 = d_date_sk#11270))"
                         operator: "join"
                         inputs:
                         - title: "Projection: ss_sold_date_sk#664, ss_item_sk#666,\
@@ -214,12 +214,12 @@ diagram:
                                 - title: "store_returns.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: d_date_sk#9888"
+                        - title: "Projection: d_date_sk#11270"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (((isnotnull(d_year#9894) AND isnotnull(d_moy#9896))\
-                              \ AND ((d_year#9894 = 2000) AND (d_moy#9896 = 11)))\
-                              \ AND isnotnull(d_date_sk#9888))"
+                          - title: "Filter: (((isnotnull(d_year#11276) AND isnotnull(d_moy#11278))\
+                              \ AND ((d_year#11276 = 2000) AND (d_moy#11278 = 11)))\
+                              \ AND isnotnull(d_date_sk#11270))"
                             operator: "filter"
                             inputs:
                             - title: "date_dim.parquet"

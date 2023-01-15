@@ -13,7 +13,7 @@ diagram:
         operator: "Aggregate"
         inputs:
         - title: "Projection: ws_sold_date_sk#384, ws_ship_date_sk#386, sm_type#552,\
-            \ web_name#70, substr(w_warehouse_name#188, 1, 20) AS _groupingexpression#12612"
+            \ web_name#70, substr(w_warehouse_name#188, 1, 20) AS _groupingexpression#13995"
           operator: "projection"
           inputs:
           - title: "Inner Join: Some((ws_ship_date_sk#386 = d_date_sk#598))"

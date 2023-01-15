@@ -1,10 +1,10 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [segment#10821 ASC NULLS FIRST, num_customers#10810L ASC NULLS FIRST], true
-      +- Aggregate [segment#10821], [segment#10821, count(1) AS num_customers#10810L, (segment#10821 * 50) AS segment_base#10811]
-         +- Aggregate [c_customer_sk#562], [cast(CheckOverflow((promote_precision(MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2)) / 50.00), DecimalType(21,6), true) as int) AS segment#10821]
+   +- Sort [segment#12203 ASC NULLS FIRST, num_customers#12192L ASC NULLS FIRST], true
+      +- Aggregate [segment#12203], [segment#12203, count(1) AS num_customers#12192L, (segment#12203 * 50) AS segment_base#12193]
+         +- Aggregate [c_customer_sk#562], [cast(CheckOverflow((promote_precision(MakeDecimal(sum(UnscaledValue(ss_ext_sales_price#679)),17,2)) / 50.00), DecimalType(21,6), true) as int) AS segment#12203]
             +- Project [c_customer_sk#562, ss_ext_sales_price#679]
-               +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#10822)
+               +- Join Inner, (ss_sold_date_sk#664 = d_date_sk#12204)
                   :- Project [c_customer_sk#562, ss_sold_date_sk#664, ss_ext_sales_price#679]
                   :  +- Join Inner, ((ca_county#221 = s_county#349) AND (ca_state#222 = s_state#350))
                   :     :- Project [c_customer_sk#562, ss_sold_date_sk#664, ss_ext_sales_price#679, ca_county#221, ca_state#222]
@@ -13,16 +13,16 @@ GlobalLimit 100
                   :     :     :  +- Join Inner, (c_customer_sk#562 = ss_customer_sk#667)
                   :     :     :     :- Aggregate [c_customer_sk#562, c_current_addr_sk#566], [c_customer_sk#562, c_current_addr_sk#566]
                   :     :     :     :  +- Project [c_customer_sk#562, c_current_addr_sk#566]
-                  :     :     :     :     +- Join Inner, (c_customer_sk#562 = customer_sk#10813)
-                  :     :     :     :        :- Project [customer_sk#10813]
-                  :     :     :     :        :  +- Join Inner, (sold_date_sk#10812 = d_date_sk#598)
-                  :     :     :     :        :     :- Project [sold_date_sk#10812, customer_sk#10813]
-                  :     :     :     :        :     :  +- Join Inner, (item_sk#10814 = i_item_sk#500)
+                  :     :     :     :     +- Join Inner, (c_customer_sk#562 = customer_sk#12195)
+                  :     :     :     :        :- Project [customer_sk#12195]
+                  :     :     :     :        :  +- Join Inner, (sold_date_sk#12194 = d_date_sk#598)
+                  :     :     :     :        :     :- Project [sold_date_sk#12194, customer_sk#12195]
+                  :     :     :     :        :     :  +- Join Inner, (item_sk#12196 = i_item_sk#500)
                   :     :     :     :        :     :     :- Union false, false
-                  :     :     :     :        :     :     :  :- Project [cs_sold_date_sk#118 AS sold_date_sk#10812, cs_bill_customer_sk#121 AS customer_sk#10813, cs_item_sk#133 AS item_sk#10814]
+                  :     :     :     :        :     :     :  :- Project [cs_sold_date_sk#118 AS sold_date_sk#12194, cs_bill_customer_sk#121 AS customer_sk#12195, cs_item_sk#133 AS item_sk#12196]
                   :     :     :     :        :     :     :  :  +- Filter (isnotnull(cs_item_sk#133) AND (isnotnull(cs_sold_date_sk#118) AND isnotnull(cs_bill_customer_sk#121)))
                   :     :     :     :        :     :     :  :     +- Relation [cs_sold_date_sk#118,cs_sold_time_sk#119,cs_ship_date_sk#120,cs_bill_customer_sk#121,cs_bill_cdemo_sk#122,cs_bill_hdemo_sk#123,cs_bill_addr_sk#124,cs_ship_customer_sk#125,cs_ship_cdemo_sk#126,cs_ship_hdemo_sk#127,cs_ship_addr_sk#128,cs_call_center_sk#129,cs_catalog_page_sk#130,cs_ship_mode_sk#131,cs_warehouse_sk#132,cs_item_sk#133,cs_promo_sk#134,cs_order_number#135L,cs_quantity#136,cs_wholesale_cost#137,cs_list_price#138,cs_sales_price#139,cs_ext_discount_amt#140,cs_ext_sales_price#141,... 10 more fields] parquet
-                  :     :     :     :        :     :     :  +- Project [ws_sold_date_sk#384 AS sold_date_sk#10815, ws_bill_customer_sk#388 AS customer_sk#10816, ws_item_sk#387 AS item_sk#10817]
+                  :     :     :     :        :     :     :  +- Project [ws_sold_date_sk#384 AS sold_date_sk#12197, ws_bill_customer_sk#388 AS customer_sk#12198, ws_item_sk#387 AS item_sk#12199]
                   :     :     :     :        :     :     :     +- Filter (isnotnull(ws_item_sk#387) AND (isnotnull(ws_sold_date_sk#384) AND isnotnull(ws_bill_customer_sk#388)))
                   :     :     :     :        :     :     :        +- Relation [ws_sold_date_sk#384,ws_sold_time_sk#385,ws_ship_date_sk#386,ws_item_sk#387,ws_bill_customer_sk#388,ws_bill_cdemo_sk#389,ws_bill_hdemo_sk#390,ws_bill_addr_sk#391,ws_ship_customer_sk#392,ws_ship_cdemo_sk#393,ws_ship_hdemo_sk#394,ws_ship_addr_sk#395,ws_web_page_sk#396,ws_web_site_sk#397,ws_ship_mode_sk#398,ws_warehouse_sk#399,ws_promo_sk#400,ws_order_number#401L,ws_quantity#402,ws_wholesale_cost#403,ws_list_price#404,ws_sales_price#405,ws_ext_discount_amt#406,ws_ext_sales_price#407,... 10 more fields] parquet
                   :     :     :     :        :     :     +- Project [i_item_sk#500]
@@ -43,14 +43,14 @@ GlobalLimit 100
                   :     +- Project [s_county#349, s_state#350]
                   :        +- Filter (isnotnull(s_county#349) AND isnotnull(s_state#350))
                   :           +- Relation [s_store_sk#326,s_store_id#327,s_rec_start_date#328,s_rec_end_date#329,s_closed_date_sk#330,s_store_name#331,s_number_employees#332,s_floor_space#333,s_hours#334,s_manager#335,s_market_id#336,s_geography_class#337,s_market_desc#338,s_market_manager#339,s_division_id#340,s_division_name#341,s_company_id#342,s_company_name#343,s_street_number#344,s_street_name#345,s_street_type#346,s_suite_number#347,s_city#348,s_county#349,... 5 more fields] parquet
-                  +- Project [d_date_sk#10822]
-                     +- Filter ((isnotnull(d_month_seq#10825) AND ((d_month_seq#10825 >= scalar-subquery#10819 []) AND (d_month_seq#10825 <= scalar-subquery#10820 []))) AND isnotnull(d_date_sk#10822))
-                        :  :- Aggregate [(d_month_seq + 1)#10851], [(d_month_seq + 1)#10851]
-                        :  :  +- Project [(d_month_seq#10856 + 1) AS (d_month_seq + 1)#10851]
-                        :  :     +- Filter ((isnotnull(d_year#10859) AND isnotnull(d_moy#10861)) AND ((d_year#10859 = 2001) AND (d_moy#10861 = 7)))
-                        :  :        +- Relation [d_date_sk#10853,d_date_id#10854,d_date#10855,d_month_seq#10856,d_week_seq#10857,d_quarter_seq#10858,d_year#10859,d_dow#10860,d_moy#10861,d_dom#10862,d_qoy#10863,d_fy_year#10864,d_fy_quarter_seq#10865,d_fy_week_seq#10866,d_day_name#10867,d_quarter_name#10868,d_holiday#10869,d_weekend#10870,d_following_holiday#10871,d_first_dom#10872,d_last_dom#10873,d_same_day_ly#10874,d_same_day_lq#10875,d_current_day#10876,... 4 more fields] parquet
-                        :  +- Aggregate [(d_month_seq + 3)#10852], [(d_month_seq + 3)#10852]
-                        :     +- Project [(d_month_seq#10884 + 3) AS (d_month_seq + 3)#10852]
-                        :        +- Filter ((isnotnull(d_year#10887) AND isnotnull(d_moy#10889)) AND ((d_year#10887 = 2001) AND (d_moy#10889 = 7)))
-                        :           +- Relation [d_date_sk#10881,d_date_id#10882,d_date#10883,d_month_seq#10884,d_week_seq#10885,d_quarter_seq#10886,d_year#10887,d_dow#10888,d_moy#10889,d_dom#10890,d_qoy#10891,d_fy_year#10892,d_fy_quarter_seq#10893,d_fy_week_seq#10894,d_day_name#10895,d_quarter_name#10896,d_holiday#10897,d_weekend#10898,d_following_holiday#10899,d_first_dom#10900,d_last_dom#10901,d_same_day_ly#10902,d_same_day_lq#10903,d_current_day#10904,... 4 more fields] parquet
-                        +- Relation [d_date_sk#10822,d_date_id#10823,d_date#10824,d_month_seq#10825,d_week_seq#10826,d_quarter_seq#10827,d_year#10828,d_dow#10829,d_moy#10830,d_dom#10831,d_qoy#10832,d_fy_year#10833,d_fy_quarter_seq#10834,d_fy_week_seq#10835,d_day_name#10836,d_quarter_name#10837,d_holiday#10838,d_weekend#10839,d_following_holiday#10840,d_first_dom#10841,d_last_dom#10842,d_same_day_ly#10843,d_same_day_lq#10844,d_current_day#10845,... 4 more fields] parquet
+                  +- Project [d_date_sk#12204]
+                     +- Filter ((isnotnull(d_month_seq#12207) AND ((d_month_seq#12207 >= scalar-subquery#12201 []) AND (d_month_seq#12207 <= scalar-subquery#12202 []))) AND isnotnull(d_date_sk#12204))
+                        :  :- Aggregate [(d_month_seq + 1)#12233], [(d_month_seq + 1)#12233]
+                        :  :  +- Project [(d_month_seq#12238 + 1) AS (d_month_seq + 1)#12233]
+                        :  :     +- Filter ((isnotnull(d_year#12241) AND isnotnull(d_moy#12243)) AND ((d_year#12241 = 2001) AND (d_moy#12243 = 7)))
+                        :  :        +- Relation [d_date_sk#12235,d_date_id#12236,d_date#12237,d_month_seq#12238,d_week_seq#12239,d_quarter_seq#12240,d_year#12241,d_dow#12242,d_moy#12243,d_dom#12244,d_qoy#12245,d_fy_year#12246,d_fy_quarter_seq#12247,d_fy_week_seq#12248,d_day_name#12249,d_quarter_name#12250,d_holiday#12251,d_weekend#12252,d_following_holiday#12253,d_first_dom#12254,d_last_dom#12255,d_same_day_ly#12256,d_same_day_lq#12257,d_current_day#12258,... 4 more fields] parquet
+                        :  +- Aggregate [(d_month_seq + 3)#12234], [(d_month_seq + 3)#12234]
+                        :     +- Project [(d_month_seq#12266 + 3) AS (d_month_seq + 3)#12234]
+                        :        +- Filter ((isnotnull(d_year#12269) AND isnotnull(d_moy#12271)) AND ((d_year#12269 = 2001) AND (d_moy#12271 = 7)))
+                        :           +- Relation [d_date_sk#12263,d_date_id#12264,d_date#12265,d_month_seq#12266,d_week_seq#12267,d_quarter_seq#12268,d_year#12269,d_dow#12270,d_moy#12271,d_dom#12272,d_qoy#12273,d_fy_year#12274,d_fy_quarter_seq#12275,d_fy_week_seq#12276,d_day_name#12277,d_quarter_name#12278,d_holiday#12279,d_weekend#12280,d_following_holiday#12281,d_first_dom#12282,d_last_dom#12283,d_same_day_ly#12284,d_same_day_lq#12285,d_current_day#12286,... 4 more fields] parquet
+                        +- Relation [d_date_sk#12204,d_date_id#12205,d_date#12206,d_month_seq#12207,d_week_seq#12208,d_quarter_seq#12209,d_year#12210,d_dow#12211,d_moy#12212,d_dom#12213,d_qoy#12214,d_fy_year#12215,d_fy_quarter_seq#12216,d_fy_week_seq#12217,d_day_name#12218,d_quarter_name#12219,d_holiday#12220,d_weekend#12221,d_following_holiday#12222,d_first_dom#12223,d_last_dom#12224,d_same_day_ly#12225,d_same_day_lq#12226,d_current_day#12227,... 4 more fields] parquet

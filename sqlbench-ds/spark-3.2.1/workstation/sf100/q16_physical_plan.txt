@@ -1,11 +1,11 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   *(12) HashAggregate(keys=[], functions=[sum(UnscaledValue(cs_ext_ship_cost#146)), sum(UnscaledValue(cs_net_profit#151)), count(distinct cs_order_number#135L)], output=[order count#5323L, total shipping cost#5324, total net profit#5325])
+   *(12) HashAggregate(keys=[], functions=[sum(UnscaledValue(cs_ext_ship_cost#146)), sum(UnscaledValue(cs_net_profit#151)), count(distinct cs_order_number#135L)], output=[order count#5990L, total shipping cost#5991, total net profit#5992])
    +- ShuffleQueryStage 6
-      +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#42766]
-         +- *(11) HashAggregate(keys=[], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151)), partial_count(distinct cs_order_number#135L)], output=[sum#5370L, sum#5372L, count#5375L])
-            +- *(11) HashAggregate(keys=[cs_order_number#135L], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#5370L, sum#5372L])
-               +- *(11) HashAggregate(keys=[cs_order_number#135L], functions=[partial_sum(UnscaledValue(cs_ext_ship_cost#146)), partial_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#5370L, sum#5372L])
+      +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#55407]
+         +- *(11) HashAggregate(keys=[], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151)), partial_count(distinct cs_order_number#135L)], output=[sum#6037L, sum#6039L, count#6042L])
+            +- *(11) HashAggregate(keys=[cs_order_number#135L], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#6037L, sum#6039L])
+               +- *(11) HashAggregate(keys=[cs_order_number#135L], functions=[partial_sum(UnscaledValue(cs_ext_ship_cost#146)), partial_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#6037L, sum#6039L])
                   +- *(11) Project [cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
                      +- *(11) BroadcastHashJoin [cs_call_center_sk#129], [cc_call_center_sk#788], Inner, BuildRight, false
                         :- *(11) Project [cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
@@ -14,50 +14,50 @@ AdaptiveSparkPlan isFinalPlan=true
                         :     :  +- *(11) BroadcastHashJoin [cs_ship_date_sk#120], [d_date_sk#598], Inner, BuildRight, false
                         :     :     :- *(11) SortMergeJoin [cs_order_number#135L], [cr_order_number#264L], LeftAnti
                         :     :     :  :- *(9) Project [cs_ship_date_sk#120, cs_ship_addr_sk#128, cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
-                        :     :     :  :  +- *(9) SortMergeJoin [cs_order_number#135L], [cs_order_number#5345L], LeftSemi, NOT (cs_warehouse_sk#132 = cs_warehouse_sk#5342)
+                        :     :     :  :  +- *(9) SortMergeJoin [cs_order_number#135L], [cs_order_number#6012L], LeftSemi, NOT (cs_warehouse_sk#132 = cs_warehouse_sk#6009)
                         :     :     :  :     :- *(7) Sort [cs_order_number#135L ASC NULLS FIRST], false, 0
                         :     :     :  :     :  +- AQEShuffleRead coalesced
                         :     :     :  :     :     +- ShuffleQueryStage 0
-                        :     :     :  :     :        +- Exchange hashpartitioning(cs_order_number#135L, 200), ENSURE_REQUIREMENTS, [id=#42016]
+                        :     :     :  :     :        +- Exchange hashpartitioning(cs_order_number#135L, 200), ENSURE_REQUIREMENTS, [id=#54657]
                         :     :     :  :     :           +- *(1) Filter ((isnotnull(cs_ship_date_sk#120) AND isnotnull(cs_ship_addr_sk#128)) AND isnotnull(cs_call_center_sk#129))
                         :     :     :  :     :              +- *(1) ColumnarToRow
                         :     :     :  :     :                 +- FileScan parquet [cs_ship_date_sk#120,cs_ship_addr_sk#128,cs_call_center_sk#129,cs_warehouse_sk#132,cs_order_number#135L,cs_ext_ship_cost#146,cs_net_profit#151] Batched: true, DataFilters: [isnotnull(cs_ship_date_sk#120), isnotnull(cs_ship_addr_sk#128), isnotnull(cs_call_center_sk#129)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cs_ship_date_sk), IsNotNull(cs_ship_addr_sk), IsNotNull(cs_call_center_sk)], ReadSchema: struct<cs_ship_date_sk:int,cs_ship_addr_sk:int,cs_call_center_sk:int,cs_warehouse_sk:int,cs_order...
-                        :     :     :  :     +- *(8) Sort [cs_order_number#5345L ASC NULLS FIRST], false, 0
+                        :     :     :  :     +- *(8) Sort [cs_order_number#6012L ASC NULLS FIRST], false, 0
                         :     :     :  :        +- AQEShuffleRead coalesced
                         :     :     :  :           +- ShuffleQueryStage 1
-                        :     :     :  :              +- Exchange hashpartitioning(cs_order_number#5345L, 200), ENSURE_REQUIREMENTS, [id=#42031]
+                        :     :     :  :              +- Exchange hashpartitioning(cs_order_number#6012L, 200), ENSURE_REQUIREMENTS, [id=#54672]
                         :     :     :  :                 +- *(2) ColumnarToRow
-                        :     :     :  :                    +- FileScan parquet [cs_warehouse_sk#5342,cs_order_number#5345L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cs_warehouse_sk:int,cs_order_number:bigint>
+                        :     :     :  :                    +- FileScan parquet [cs_warehouse_sk#6009,cs_order_number#6012L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cs_warehouse_sk:int,cs_order_number:bigint>
                         :     :     :  +- *(10) Sort [cr_order_number#264L ASC NULLS FIRST], false, 0
                         :     :     :     +- AQEShuffleRead coalesced
                         :     :     :        +- ShuffleQueryStage 2
-                        :     :     :           +- Exchange hashpartitioning(cr_order_number#264L, 200), ENSURE_REQUIREMENTS, [id=#42046]
+                        :     :     :           +- Exchange hashpartitioning(cr_order_number#264L, 200), ENSURE_REQUIREMENTS, [id=#54687]
                         :     :     :              +- *(3) ColumnarToRow
                         :     :     :                 +- FileScan parquet [cr_order_number#264L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_returns.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cr_order_number:bigint>
                         :     :     +- BroadcastQueryStage 3
-                        :     :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#42064]
+                        :     :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#54705]
                         :     :           +- *(4) Project [d_date_sk#598]
                         :     :              +- *(4) Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2001-04-01)) AND (d_date#600 <= 2001-05-31)) AND isnotnull(d_date_sk#598))
                         :     :                 +- *(4) ColumnarToRow
                         :     :                    +- FileScan parquet [d_date_sk#598,d_date#600] Batched: true, DataFilters: [isnotnull(d_date#600), (d_date#600 >= 2001-04-01), (d_date#600 <= 2001-05-31), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2001-04-01), LessThanOrEqual(d_date,2001-05-31), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>
                         :     +- BroadcastQueryStage 4
-                        :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#42085]
+                        :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#54726]
                         :           +- *(5) Project [ca_address_sk#214]
                         :              +- *(5) Filter ((isnotnull(ca_state#222) AND (ca_state#222 = TX)) AND isnotnull(ca_address_sk#214))
                         :                 +- *(5) ColumnarToRow
                         :                    +- FileScan parquet [ca_address_sk#214,ca_state#222] Batched: true, DataFilters: [isnotnull(ca_state#222), (ca_state#222 = TX), isnotnull(ca_address_sk#214)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer_address.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ca_state), EqualTo(ca_state,TX), IsNotNull(ca_address_sk)], ReadSchema: struct<ca_address_sk:int,ca_state:string>
                         +- BroadcastQueryStage 5
-                           +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#42106]
+                           +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#54747]
                               +- *(6) Project [cc_call_center_sk#788]
                                  +- *(6) Filter (cc_county#813 IN (Franklin Parish,Walker County,Ziebach County,Fairfield County,Daviess County) AND isnotnull(cc_call_center_sk#788))
                                     +- *(6) ColumnarToRow
                                        +- FileScan parquet [cc_call_center_sk#788,cc_county#813] Batched: true, DataFilters: [cc_county#813 IN (Franklin Parish,Walker County,Ziebach County,Fairfield County,Daviess County),..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/call_center.parquet], PartitionFilters: [], PushedFilters: [In(cc_county, [Daviess County,Fairfield County,Franklin Parish,Walker County,Ziebach County]), I..., ReadSchema: struct<cc_call_center_sk:int,cc_county:string>
 +- == Initial Plan ==
-   HashAggregate(keys=[], functions=[sum(UnscaledValue(cs_ext_ship_cost#146)), sum(UnscaledValue(cs_net_profit#151)), count(distinct cs_order_number#135L)], output=[order count#5323L, total shipping cost#5324, total net profit#5325])
-   +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#41947]
-      +- HashAggregate(keys=[], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151)), partial_count(distinct cs_order_number#135L)], output=[sum#5370L, sum#5372L, count#5375L])
-         +- HashAggregate(keys=[cs_order_number#135L], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#5370L, sum#5372L])
-            +- HashAggregate(keys=[cs_order_number#135L], functions=[partial_sum(UnscaledValue(cs_ext_ship_cost#146)), partial_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#5370L, sum#5372L])
+   HashAggregate(keys=[], functions=[sum(UnscaledValue(cs_ext_ship_cost#146)), sum(UnscaledValue(cs_net_profit#151)), count(distinct cs_order_number#135L)], output=[order count#5990L, total shipping cost#5991, total net profit#5992])
+   +- Exchange SinglePartition, ENSURE_REQUIREMENTS, [id=#54588]
+      +- HashAggregate(keys=[], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151)), partial_count(distinct cs_order_number#135L)], output=[sum#6037L, sum#6039L, count#6042L])
+         +- HashAggregate(keys=[cs_order_number#135L], functions=[merge_sum(UnscaledValue(cs_ext_ship_cost#146)), merge_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#6037L, sum#6039L])
+            +- HashAggregate(keys=[cs_order_number#135L], functions=[partial_sum(UnscaledValue(cs_ext_ship_cost#146)), partial_sum(UnscaledValue(cs_net_profit#151))], output=[cs_order_number#135L, sum#6037L, sum#6039L])
                +- Project [cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
                   +- BroadcastHashJoin [cs_call_center_sk#129], [cc_call_center_sk#788], Inner, BuildRight, false
                      :- Project [cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
@@ -66,26 +66,26 @@ AdaptiveSparkPlan isFinalPlan=true
                      :     :  +- BroadcastHashJoin [cs_ship_date_sk#120], [d_date_sk#598], Inner, BuildRight, false
                      :     :     :- SortMergeJoin [cs_order_number#135L], [cr_order_number#264L], LeftAnti
                      :     :     :  :- Project [cs_ship_date_sk#120, cs_ship_addr_sk#128, cs_call_center_sk#129, cs_order_number#135L, cs_ext_ship_cost#146, cs_net_profit#151]
-                     :     :     :  :  +- SortMergeJoin [cs_order_number#135L], [cs_order_number#5345L], LeftSemi, NOT (cs_warehouse_sk#132 = cs_warehouse_sk#5342)
+                     :     :     :  :  +- SortMergeJoin [cs_order_number#135L], [cs_order_number#6012L], LeftSemi, NOT (cs_warehouse_sk#132 = cs_warehouse_sk#6009)
                      :     :     :  :     :- Sort [cs_order_number#135L ASC NULLS FIRST], false, 0
-                     :     :     :  :     :  +- Exchange hashpartitioning(cs_order_number#135L, 200), ENSURE_REQUIREMENTS, [id=#41920]
+                     :     :     :  :     :  +- Exchange hashpartitioning(cs_order_number#135L, 200), ENSURE_REQUIREMENTS, [id=#54561]
                      :     :     :  :     :     +- Filter ((isnotnull(cs_ship_date_sk#120) AND isnotnull(cs_ship_addr_sk#128)) AND isnotnull(cs_call_center_sk#129))
                      :     :     :  :     :        +- FileScan parquet [cs_ship_date_sk#120,cs_ship_addr_sk#128,cs_call_center_sk#129,cs_warehouse_sk#132,cs_order_number#135L,cs_ext_ship_cost#146,cs_net_profit#151] Batched: true, DataFilters: [isnotnull(cs_ship_date_sk#120), isnotnull(cs_ship_addr_sk#128), isnotnull(cs_call_center_sk#129)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(cs_ship_date_sk), IsNotNull(cs_ship_addr_sk), IsNotNull(cs_call_center_sk)], ReadSchema: struct<cs_ship_date_sk:int,cs_ship_addr_sk:int,cs_call_center_sk:int,cs_warehouse_sk:int,cs_order...
-                     :     :     :  :     +- Sort [cs_order_number#5345L ASC NULLS FIRST], false, 0
-                     :     :     :  :        +- Exchange hashpartitioning(cs_order_number#5345L, 200), ENSURE_REQUIREMENTS, [id=#41921]
-                     :     :     :  :           +- FileScan parquet [cs_warehouse_sk#5342,cs_order_number#5345L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cs_warehouse_sk:int,cs_order_number:bigint>
+                     :     :     :  :     +- Sort [cs_order_number#6012L ASC NULLS FIRST], false, 0
+                     :     :     :  :        +- Exchange hashpartitioning(cs_order_number#6012L, 200), ENSURE_REQUIREMENTS, [id=#54562]
+                     :     :     :  :           +- FileScan parquet [cs_warehouse_sk#6009,cs_order_number#6012L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_sales.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cs_warehouse_sk:int,cs_order_number:bigint>
                      :     :     :  +- Sort [cr_order_number#264L ASC NULLS FIRST], false, 0
-                     :     :     :     +- Exchange hashpartitioning(cr_order_number#264L, 200), ENSURE_REQUIREMENTS, [id=#41928]
+                     :     :     :     +- Exchange hashpartitioning(cr_order_number#264L, 200), ENSURE_REQUIREMENTS, [id=#54569]
                      :     :     :        +- FileScan parquet [cr_order_number#264L] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/catalog_returns.parquet], PartitionFilters: [], PushedFilters: [], ReadSchema: struct<cr_order_number:bigint>
-                     :     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#41932]
+                     :     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#54573]
                      :     :        +- Project [d_date_sk#598]
                      :     :           +- Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2001-04-01)) AND (d_date#600 <= 2001-05-31)) AND isnotnull(d_date_sk#598))
                      :     :              +- FileScan parquet [d_date_sk#598,d_date#600] Batched: true, DataFilters: [isnotnull(d_date#600), (d_date#600 >= 2001-04-01), (d_date#600 <= 2001-05-31), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2001-04-01), LessThanOrEqual(d_date,2001-05-31), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>
-                     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#41936]
+                     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#54577]
                      :        +- Project [ca_address_sk#214]
                      :           +- Filter ((isnotnull(ca_state#222) AND (ca_state#222 = TX)) AND isnotnull(ca_address_sk#214))
                      :              +- FileScan parquet [ca_address_sk#214,ca_state#222] Batched: true, DataFilters: [isnotnull(ca_state#222), (ca_state#222 = TX), isnotnull(ca_address_sk#214)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/customer_address.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(ca_state), EqualTo(ca_state,TX), IsNotNull(ca_address_sk)], ReadSchema: struct<ca_address_sk:int,ca_state:string>
-                     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#41940]
+                     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#54581]
                         +- Project [cc_call_center_sk#788]
                            +- Filter (cc_county#813 IN (Franklin Parish,Walker County,Ziebach County,Fairfield County,Daviess County) AND isnotnull(cc_call_center_sk#788))
                               +- FileScan parquet [cc_call_center_sk#788,cc_county#813] Batched: true, DataFilters: [cc_county#813 IN (Franklin Parish,Walker County,Ziebach County,Fairfield County,Daviess County),..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/call_center.parquet], PartitionFilters: [], PushedFilters: [In(cc_county, [Daviess County,Fairfield County,Franklin Parish,Walker County,Ziebach County]), I..., ReadSchema: struct<cc_call_center_sk:int,cc_county:string>

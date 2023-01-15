@@ -1,10 +1,10 @@
 GlobalLimit 100
 +- LocalLimit 100
-   +- Sort [lochierarchy#18434 DESC NULLS LAST, CASE WHEN (lochierarchy#18434 = 0) THEN i_category#18443 END ASC NULLS FIRST, rank_within_parent#18435 ASC NULLS FIRST], true
-      +- Project [total_sum#18433, i_category#18443, i_class#18444, lochierarchy#18434, rank_within_parent#18435]
-         +- Window [rank(_w3#18459) windowspecdefinition(_w1#18457, _w2#18458, _w3#18459 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rank_within_parent#18435], [_w1#18457, _w2#18458], [_w3#18459 DESC NULLS LAST]
-            +- Aggregate [i_category#18443, i_class#18444, spark_grouping_id#18442L], [MakeDecimal(sum(UnscaledValue(ws_net_paid#413)),17,2) AS total_sum#18433, i_category#18443, i_class#18444, (cast((shiftright(spark_grouping_id#18442L, 1) & 1) as tinyint) + cast((shiftright(spark_grouping_id#18442L, 0) & 1) as tinyint)) AS lochierarchy#18434, (cast((shiftright(spark_grouping_id#18442L, 1) & 1) as tinyint) + cast((shiftright(spark_grouping_id#18442L, 0) & 1) as tinyint)) AS _w1#18457, CASE WHEN (cast((shiftright(spark_grouping_id#18442L, 0) & 1) as tinyint) = 0) THEN i_category#18443 END AS _w2#18458, MakeDecimal(sum(UnscaledValue(ws_net_paid#413)),17,2) AS _w3#18459]
-               +- Expand [[ws_net_paid#413, i_category#512, i_class#510, 0], [ws_net_paid#413, i_category#512, null, 1], [ws_net_paid#413, null, null, 3]], [ws_net_paid#413, i_category#18443, i_class#18444, spark_grouping_id#18442L]
+   +- Sort [lochierarchy#19811 DESC NULLS LAST, CASE WHEN (lochierarchy#19811 = 0) THEN i_category#19820 END ASC NULLS FIRST, rank_within_parent#19812 ASC NULLS FIRST], true
+      +- Project [total_sum#19810, i_category#19820, i_class#19821, lochierarchy#19811, rank_within_parent#19812]
+         +- Window [rank(_w3#19836) windowspecdefinition(_w1#19834, _w2#19835, _w3#19836 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS rank_within_parent#19812], [_w1#19834, _w2#19835], [_w3#19836 DESC NULLS LAST]
+            +- Aggregate [i_category#19820, i_class#19821, spark_grouping_id#19819L], [MakeDecimal(sum(UnscaledValue(ws_net_paid#413)),17,2) AS total_sum#19810, i_category#19820, i_class#19821, (cast((shiftright(spark_grouping_id#19819L, 1) & 1) as tinyint) + cast((shiftright(spark_grouping_id#19819L, 0) & 1) as tinyint)) AS lochierarchy#19811, (cast((shiftright(spark_grouping_id#19819L, 1) & 1) as tinyint) + cast((shiftright(spark_grouping_id#19819L, 0) & 1) as tinyint)) AS _w1#19834, CASE WHEN (cast((shiftright(spark_grouping_id#19819L, 0) & 1) as tinyint) = 0) THEN i_category#19820 END AS _w2#19835, MakeDecimal(sum(UnscaledValue(ws_net_paid#413)),17,2) AS _w3#19836]
+               +- Expand [[ws_net_paid#413, i_category#512, i_class#510, 0], [ws_net_paid#413, i_category#512, null, 1], [ws_net_paid#413, null, null, 3]], [ws_net_paid#413, i_category#19820, i_class#19821, spark_grouping_id#19819L]
                   +- Project [ws_net_paid#413, i_category#512, i_class#510]
                      +- Join Inner, (i_item_sk#500 = ws_item_sk#387)
                         :- Project [ws_item_sk#387, ws_net_paid#413]

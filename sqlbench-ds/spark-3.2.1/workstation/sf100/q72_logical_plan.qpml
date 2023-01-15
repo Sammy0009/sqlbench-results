@@ -31,8 +31,8 @@ diagram:
                     \ w_warehouse_name#188, i_item_desc#504, d_week_seq#602"
                   operator: "projection"
                   inputs:
-                  - title: "Inner Join: Some(((d_date#15353 > date_add(d_date#600,\
-                      \ 5)) AND (cs_ship_date_sk#120 = d_date_sk#15351)))"
+                  - title: "Inner Join: Some(((d_date#16736 > date_add(d_date#600,\
+                      \ 5)) AND (cs_ship_date_sk#120 = d_date_sk#16734)))"
                     operator: "join"
                     inputs:
                     - title: "Projection: cs_ship_date_sk#120, cs_item_sk#133, cs_promo_sk#134,\
@@ -40,8 +40,8 @@ diagram:
                         \ d_date#600, d_week_seq#602"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some(((d_week_seq#602 = d_week_seq#15327)\
-                          \ AND (inv_date_sk#240 = d_date_sk#15323)))"
+                      - title: "Inner Join: Some(((d_week_seq#602 = d_week_seq#16710)\
+                          \ AND (inv_date_sk#240 = d_date_sk#16706)))"
                         operator: "join"
                         inputs:
                         - title: "Projection: cs_ship_date_sk#120, cs_item_sk#133,\
@@ -181,19 +181,19 @@ diagram:
                                 - title: "date_dim.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: d_date_sk#15323, d_week_seq#15327"
+                        - title: "Projection: d_date_sk#16706, d_week_seq#16710"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: (isnotnull(d_week_seq#15327) AND isnotnull(d_date_sk#15323))"
+                          - title: "Filter: (isnotnull(d_week_seq#16710) AND isnotnull(d_date_sk#16706))"
                             operator: "filter"
                             inputs:
                             - title: "date_dim.parquet"
                               operator: "scan"
                               inputs: []
-                    - title: "Projection: d_date_sk#15351, d_date#15353"
+                    - title: "Projection: d_date_sk#16734, d_date#16736"
                       operator: "projection"
                       inputs:
-                      - title: "Filter: (isnotnull(d_date#15353) AND isnotnull(d_date_sk#15351))"
+                      - title: "Filter: (isnotnull(d_date#16736) AND isnotnull(d_date_sk#16734))"
                         operator: "filter"
                         inputs:
                         - title: "date_dim.parquet"

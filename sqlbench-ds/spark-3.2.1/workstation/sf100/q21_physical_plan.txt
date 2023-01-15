@@ -1,12 +1,12 @@
 AdaptiveSparkPlan isFinalPlan=true
 +- == Final Plan ==
-   TakeOrderedAndProject(limit=100, orderBy=[w_warehouse_name#188 ASC NULLS FIRST,i_item_id#501 ASC NULLS FIRST], output=[w_warehouse_name#188,i_item_id#501,inv_before#6215L,inv_after#6216L])
-   +- *(5) Filter ((isnotnull(inv_before#6215L) AND isnotnull(inv_after#6216L)) AND (((inv_before#6215L > 0) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) >= 0.666667)) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) <= 1.5)))
-      +- *(5) HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, inv_before#6215L, inv_after#6216L])
+   TakeOrderedAndProject(limit=100, orderBy=[w_warehouse_name#188 ASC NULLS FIRST,i_item_id#501 ASC NULLS FIRST], output=[w_warehouse_name#188,i_item_id#501,inv_before#6882L,inv_after#6883L])
+   +- *(5) Filter ((isnotnull(inv_before#6882L) AND isnotnull(inv_after#6883L)) AND (((inv_before#6882L > 0) AND ((cast(inv_after#6883L as double) / cast(inv_before#6882L as double)) >= 0.666667)) AND ((cast(inv_after#6883L as double) / cast(inv_before#6882L as double)) <= 1.5)))
+      +- *(5) HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, inv_before#6882L, inv_after#6883L])
          +- AQEShuffleRead coalesced
             +- ShuffleQueryStage 3
-               +- Exchange hashpartitioning(w_warehouse_name#188, i_item_id#501, 200), ENSURE_REQUIREMENTS, [id=#46835]
-                  +- *(4) HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[partial_sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), partial_sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, sum#6225L, sum#6226L])
+               +- Exchange hashpartitioning(w_warehouse_name#188, i_item_id#501, 200), ENSURE_REQUIREMENTS, [id=#59396]
+                  +- *(4) HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[partial_sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), partial_sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, sum#6892L, sum#6893L])
                      +- *(4) Project [inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501, d_date#600]
                         +- *(4) BroadcastHashJoin [inv_date_sk#240], [d_date_sk#598], Inner, BuildRight, false
                            :- *(4) Project [inv_date_sk#240, inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501]
@@ -17,27 +17,27 @@ AdaptiveSparkPlan isFinalPlan=true
                            :     :     :  +- *(4) ColumnarToRow
                            :     :     :     +- FileScan parquet [inv_date_sk#240,inv_item_sk#241,inv_warehouse_sk#242,inv_quantity_on_hand#243] Batched: true, DataFilters: [isnotnull(inv_warehouse_sk#242), isnotnull(inv_item_sk#241), isnotnull(inv_date_sk#240)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_warehouse_sk), IsNotNull(inv_item_sk), IsNotNull(inv_date_sk)], ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_warehouse_sk:int,inv_quantity_on_hand:int>
                            :     :     +- BroadcastQueryStage 0
-                           :     :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46586]
+                           :     :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#59199]
                            :     :           +- *(1) Filter isnotnull(w_warehouse_sk#186)
                            :     :              +- *(1) ColumnarToRow
                            :     :                 +- FileScan parquet [w_warehouse_sk#186,w_warehouse_name#188] Batched: true, DataFilters: [isnotnull(w_warehouse_sk#186)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/warehouse.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(w_warehouse_sk)], ReadSchema: struct<w_warehouse_sk:int,w_warehouse_name:string>
                            :     +- BroadcastQueryStage 1
-                           :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#46605]
+                           :        +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#59218]
                            :           +- *(2) Project [i_item_sk#500, i_item_id#501]
                            :              +- *(2) Filter (((isnotnull(i_current_price#505) AND (i_current_price#505 >= 0.99)) AND (i_current_price#505 <= 1.49)) AND isnotnull(i_item_sk#500))
                            :                 +- *(2) ColumnarToRow
                            :                    +- FileScan parquet [i_item_sk#500,i_item_id#501,i_current_price#505] Batched: true, DataFilters: [isnotnull(i_current_price#505), (i_current_price#505 >= 0.99), (i_current_price#505 <= 1.49), is..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_current_price), GreaterThanOrEqual(i_current_price,0.99), LessThanOrEqual(i_current_..., ReadSchema: struct<i_item_sk:int,i_item_id:string,i_current_price:decimal(7,2)>
                            +- BroadcastQueryStage 2
-                              +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46624]
+                              +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#59237]
                                  +- *(3) Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2000-04-19)) AND (d_date#600 <= 2000-06-18)) AND isnotnull(d_date_sk#598))
                                     +- *(3) ColumnarToRow
                                        +- FileScan parquet [d_date_sk#598,d_date#600] Batched: true, DataFilters: [isnotnull(d_date#600), (d_date#600 >= 2000-04-19), (d_date#600 <= 2000-06-18), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2000-04-19), LessThanOrEqual(d_date,2000-06-18), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>
 +- == Initial Plan ==
-   TakeOrderedAndProject(limit=100, orderBy=[w_warehouse_name#188 ASC NULLS FIRST,i_item_id#501 ASC NULLS FIRST], output=[w_warehouse_name#188,i_item_id#501,inv_before#6215L,inv_after#6216L])
-   +- Filter ((isnotnull(inv_before#6215L) AND isnotnull(inv_after#6216L)) AND (((inv_before#6215L > 0) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) >= 0.666667)) AND ((cast(inv_after#6216L as double) / cast(inv_before#6215L as double)) <= 1.5)))
-      +- HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, inv_before#6215L, inv_after#6216L])
-         +- Exchange hashpartitioning(w_warehouse_name#188, i_item_id#501, 200), ENSURE_REQUIREMENTS, [id=#46542]
-            +- HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[partial_sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), partial_sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, sum#6225L, sum#6226L])
+   TakeOrderedAndProject(limit=100, orderBy=[w_warehouse_name#188 ASC NULLS FIRST,i_item_id#501 ASC NULLS FIRST], output=[w_warehouse_name#188,i_item_id#501,inv_before#6882L,inv_after#6883L])
+   +- Filter ((isnotnull(inv_before#6882L) AND isnotnull(inv_after#6883L)) AND (((inv_before#6882L > 0) AND ((cast(inv_after#6883L as double) / cast(inv_before#6882L as double)) >= 0.666667)) AND ((cast(inv_after#6883L as double) / cast(inv_before#6882L as double)) <= 1.5)))
+      +- HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, inv_before#6882L, inv_after#6883L])
+         +- Exchange hashpartitioning(w_warehouse_name#188, i_item_id#501, 200), ENSURE_REQUIREMENTS, [id=#59155]
+            +- HashAggregate(keys=[w_warehouse_name#188, i_item_id#501], functions=[partial_sum(CASE WHEN (d_date#600 < 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END), partial_sum(CASE WHEN (d_date#600 >= 2000-05-19) THEN inv_quantity_on_hand#243 ELSE 0 END)], output=[w_warehouse_name#188, i_item_id#501, sum#6892L, sum#6893L])
                +- Project [inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501, d_date#600]
                   +- BroadcastHashJoin [inv_date_sk#240], [d_date_sk#598], Inner, BuildRight, false
                      :- Project [inv_date_sk#240, inv_quantity_on_hand#243, w_warehouse_name#188, i_item_id#501]
@@ -46,13 +46,13 @@ AdaptiveSparkPlan isFinalPlan=true
                      :     :  +- BroadcastHashJoin [inv_warehouse_sk#242], [w_warehouse_sk#186], Inner, BuildRight, false
                      :     :     :- Filter ((isnotnull(inv_warehouse_sk#242) AND isnotnull(inv_item_sk#241)) AND isnotnull(inv_date_sk#240))
                      :     :     :  +- FileScan parquet [inv_date_sk#240,inv_item_sk#241,inv_warehouse_sk#242,inv_quantity_on_hand#243] Batched: true, DataFilters: [isnotnull(inv_warehouse_sk#242), isnotnull(inv_item_sk#241), isnotnull(inv_date_sk#240)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/inventory.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(inv_warehouse_sk), IsNotNull(inv_item_sk), IsNotNull(inv_date_sk)], ReadSchema: struct<inv_date_sk:int,inv_item_sk:int,inv_warehouse_sk:int,inv_quantity_on_hand:int>
-                     :     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46529]
+                     :     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#59142]
                      :     :        +- Filter isnotnull(w_warehouse_sk#186)
                      :     :           +- FileScan parquet [w_warehouse_sk#186,w_warehouse_name#188] Batched: true, DataFilters: [isnotnull(w_warehouse_sk#186)], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/warehouse.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(w_warehouse_sk)], ReadSchema: struct<w_warehouse_sk:int,w_warehouse_name:string>
-                     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#46533]
+                     :     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)),false), [id=#59146]
                      :        +- Project [i_item_sk#500, i_item_id#501]
                      :           +- Filter (((isnotnull(i_current_price#505) AND (i_current_price#505 >= 0.99)) AND (i_current_price#505 <= 1.49)) AND isnotnull(i_item_sk#500))
                      :              +- FileScan parquet [i_item_sk#500,i_item_id#501,i_current_price#505] Batched: true, DataFilters: [isnotnull(i_current_price#505), (i_current_price#505 >= 0.99), (i_current_price#505 <= 1.49), is..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/item.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(i_current_price), GreaterThanOrEqual(i_current_price,0.99), LessThanOrEqual(i_current_..., ReadSchema: struct<i_item_sk:int,i_item_id:string,i_current_price:decimal(7,2)>
-                     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#46537]
+                     +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, false] as bigint)),false), [id=#59150]
                         +- Filter (((isnotnull(d_date#600) AND (d_date#600 >= 2000-04-19)) AND (d_date#600 <= 2000-06-18)) AND isnotnull(d_date_sk#598))
                            +- FileScan parquet [d_date_sk#598,d_date#600] Batched: true, DataFilters: [isnotnull(d_date#600), (d_date#600 >= 2000-04-19), (d_date#600 <= 2000-06-18), isnotnull(d_date_..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/mnt/bigdata/tpcds/sf100-parquet/date_dim.parquet], PartitionFilters: [], PushedFilters: [IsNotNull(d_date), GreaterThanOrEqual(d_date,2000-04-19), LessThanOrEqual(d_date,2000-06-18), Is..., ReadSchema: struct<d_date_sk:int,d_date:date>

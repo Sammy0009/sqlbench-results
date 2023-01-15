@@ -40,9 +40,9 @@ diagram:
                         \ wr_refunded_addr_sk#458, wr_reason_sk#464, wr_fee#470, wr_refunded_cash#472"
                       operator: "projection"
                       inputs:
-                      - title: "Inner Join: Some((((cd_demo_sk#18375 = wr_returning_cdemo_sk#460)\
-                          \ AND (cd_marital_status#50 = cd_marital_status#18377))\
-                          \ AND (cd_education_status#51 = cd_education_status#18378)))"
+                      - title: "Inner Join: Some((((cd_demo_sk#19752 = wr_returning_cdemo_sk#460)\
+                          \ AND (cd_marital_status#50 = cd_marital_status#19754))\
+                          \ AND (cd_education_status#51 = cd_education_status#19755)))"
                         operator: "join"
                         inputs:
                         - title: "Projection: ws_sold_date_sk#384, ws_quantity#402,\
@@ -146,12 +146,12 @@ diagram:
                                 - title: "customer_demographics.parquet"
                                   operator: "scan"
                                   inputs: []
-                        - title: "Projection: cd_demo_sk#18375, cd_marital_status#18377,\
-                            \ cd_education_status#18378"
+                        - title: "Projection: cd_demo_sk#19752, cd_marital_status#19754,\
+                            \ cd_education_status#19755"
                           operator: "projection"
                           inputs:
-                          - title: "Filter: ((isnotnull(cd_demo_sk#18375) AND isnotnull(cd_marital_status#18377))\
-                              \ AND isnotnull(cd_education_status#18378))"
+                          - title: "Filter: ((isnotnull(cd_demo_sk#19752) AND isnotnull(cd_marital_status#19754))\
+                              \ AND isnotnull(cd_education_status#19755))"
                             operator: "filter"
                             inputs:
                             - title: "customer_demographics.parquet"

@@ -1,8 +1,8 @@
 Sort [c_last_name#571 ASC NULLS FIRST, c_first_name#570 ASC NULLS FIRST, c_salutation#569 ASC NULLS FIRST, c_preferred_cust_flag#572 DESC NULLS LAST, ss_ticket_number#673L ASC NULLS FIRST], true
-+- Project [c_last_name#571, c_first_name#570, c_salutation#569, c_preferred_cust_flag#572, ss_ticket_number#673L, cnt#8335L]
++- Project [c_last_name#571, c_first_name#570, c_salutation#569, c_preferred_cust_flag#572, ss_ticket_number#673L, cnt#9411L]
    +- Join Inner, (ss_customer_sk#667 = c_customer_sk#562)
-      :- Filter ((cnt#8335L >= 15) AND (cnt#8335L <= 20))
-      :  +- Aggregate [ss_ticket_number#673L, ss_customer_sk#667], [ss_ticket_number#673L, ss_customer_sk#667, count(1) AS cnt#8335L]
+      :- Filter ((cnt#9411L >= 15) AND (cnt#9411L <= 20))
+      :  +- Aggregate [ss_ticket_number#673L, ss_customer_sk#667], [ss_ticket_number#673L, ss_customer_sk#667, count(1) AS cnt#9411L]
       :     +- Project [ss_customer_sk#667, ss_ticket_number#673L]
       :        +- Join Inner, (ss_hdemo_sk#669 = hd_demo_sk#654)
       :           :- Project [ss_customer_sk#667, ss_hdemo_sk#669, ss_ticket_number#673L]

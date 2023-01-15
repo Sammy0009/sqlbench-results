@@ -1,8 +1,8 @@
 ---
 diagram:
-  title: "Projection: CheckOverflow((promote_precision(cast(amc#19131L as decimal(15,4)))\
-    \ / promote_precision(cast(pmc#19132L as decimal(15,4)))), DecimalType(35,20),\
-    \ true) AS am_pm_ratio#19133"
+  title: "Projection: CheckOverflow((promote_precision(cast(amc#20508L as decimal(15,4)))\
+    \ / promote_precision(cast(pmc#20509L as decimal(15,4)))), DecimalType(35,20),\
+    \ true) AS am_pm_ratio#20510"
   operator: "projection"
   inputs:
   - title: "Inner Join: None"
@@ -76,57 +76,57 @@ diagram:
       - title: "Projection: "
         operator: "projection"
         inputs:
-        - title: "Inner Join: Some((ws_web_page_sk#19146 = wp_web_page_sk#19183))"
+        - title: "Inner Join: Some((ws_web_page_sk#20523 = wp_web_page_sk#20560))"
           operator: "join"
           inputs:
-          - title: "Projection: ws_web_page_sk#19146"
+          - title: "Projection: ws_web_page_sk#20523"
             operator: "projection"
             inputs:
-            - title: "Inner Join: Some((ws_sold_time_sk#19135 = t_time_sk#19173))"
+            - title: "Inner Join: Some((ws_sold_time_sk#20512 = t_time_sk#20550))"
               operator: "join"
               inputs:
-              - title: "Projection: ws_sold_time_sk#19135, ws_web_page_sk#19146"
+              - title: "Projection: ws_sold_time_sk#20512, ws_web_page_sk#20523"
                 operator: "projection"
                 inputs:
-                - title: "Inner Join: Some((ws_ship_hdemo_sk#19144 = hd_demo_sk#19168))"
+                - title: "Inner Join: Some((ws_ship_hdemo_sk#20521 = hd_demo_sk#20545))"
                   operator: "join"
                   inputs:
-                  - title: "Projection: ws_sold_time_sk#19135, ws_ship_hdemo_sk#19144,\
-                      \ ws_web_page_sk#19146"
+                  - title: "Projection: ws_sold_time_sk#20512, ws_ship_hdemo_sk#20521,\
+                      \ ws_web_page_sk#20523"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: (isnotnull(ws_ship_hdemo_sk#19144) AND (isnotnull(ws_sold_time_sk#19135)\
-                        \ AND isnotnull(ws_web_page_sk#19146)))"
+                    - title: "Filter: (isnotnull(ws_ship_hdemo_sk#20521) AND (isnotnull(ws_sold_time_sk#20512)\
+                        \ AND isnotnull(ws_web_page_sk#20523)))"
                       operator: "filter"
                       inputs:
                       - title: "web_sales.parquet"
                         operator: "scan"
                         inputs: []
-                  - title: "Projection: hd_demo_sk#19168"
+                  - title: "Projection: hd_demo_sk#20545"
                     operator: "projection"
                     inputs:
-                    - title: "Filter: ((isnotnull(hd_dep_count#19171) AND (hd_dep_count#19171\
-                        \ = 6)) AND isnotnull(hd_demo_sk#19168))"
+                    - title: "Filter: ((isnotnull(hd_dep_count#20548) AND (hd_dep_count#20548\
+                        \ = 6)) AND isnotnull(hd_demo_sk#20545))"
                       operator: "filter"
                       inputs:
                       - title: "household_demographics.parquet"
                         operator: "scan"
                         inputs: []
-              - title: "Projection: t_time_sk#19173"
+              - title: "Projection: t_time_sk#20550"
                 operator: "projection"
                 inputs:
-                - title: "Filter: ((isnotnull(t_hour#19176) AND ((t_hour#19176 >=\
-                    \ 18) AND (t_hour#19176 <= 19))) AND isnotnull(t_time_sk#19173))"
+                - title: "Filter: ((isnotnull(t_hour#20553) AND ((t_hour#20553 >=\
+                    \ 18) AND (t_hour#20553 <= 19))) AND isnotnull(t_time_sk#20550))"
                   operator: "filter"
                   inputs:
                   - title: "time_dim.parquet"
                     operator: "scan"
                     inputs: []
-          - title: "Projection: wp_web_page_sk#19183"
+          - title: "Projection: wp_web_page_sk#20560"
             operator: "projection"
             inputs:
-            - title: "Filter: ((isnotnull(wp_char_count#19193) AND ((wp_char_count#19193\
-                \ >= 5000) AND (wp_char_count#19193 <= 5200))) AND isnotnull(wp_web_page_sk#19183))"
+            - title: "Filter: ((isnotnull(wp_char_count#20570) AND ((wp_char_count#20570\
+                \ >= 5000) AND (wp_char_count#20570 <= 5200))) AND isnotnull(wp_web_page_sk#20560))"
               operator: "filter"
               inputs:
               - title: "web_page.parquet"
