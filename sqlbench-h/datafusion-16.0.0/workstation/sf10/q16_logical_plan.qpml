@@ -1,0 +1,20 @@
+diagram:
+  title: 'Sort: supplier_cnt DESC NULLS FIRST, part.p_brand ASC NULLS LAST, part.p_type ASC NULLS LAST, part.p_size ASC NULLS LAST'
+  style: sort
+  inputs:
+  - title: 'Projection: part.p_brand, part.p_type, part.p_size, COUNT(DISTINCT partsupp.ps_suppkey) AS supplier_cnt'
+    style: projection
+    inputs:
+    - title: 'Aggregate: groupBy=[[part.p_brand, part.p_type, part.p_size]], aggr=[[COUNT(DISTINCT partsupp.ps_suppkey)]]'
+      style: aggregate
+      inputs:
+      - title: 'Filter: part.p_partkey = partsupp.ps_partkey AND part.p_brand != Utf8("Brand#25") AND part.p_type NOT LIKE Utf8("STANDARD BURNISHED%") AND part.p_size IN ([Int64(34), Int64(7), Int64(40), Int64(3), Int64(26), Int64(35), Int64(4), Int64(17)]) AND partsupp.ps_suppkey NOT IN (<subquery>)'
+        style: filter
+        inputs:
+        - title: 'CrossJoin:'
+          style: crossjoin
+          inputs:
+          - title: 'TableScan: partsupp'
+            style: tablescan
+          - title: 'TableScan: part'
+            style: tablescan

@@ -1,0 +1,20 @@
+diagram:
+  title: 'Sort: lineitem.l_shipmode ASC NULLS LAST'
+  style: sort
+  inputs:
+  - title: 'Projection: lineitem.l_shipmode, SUM(CASE WHEN orders.o_orderpriority = Utf8("1-URGENT") OR orders.o_orderpriority = Utf8("2-HIGH") THEN Int64(1) ELSE Int64(0) END) AS high_line_count, SUM(CASE WHEN orders.o_orderpriority != Utf8("1-URGENT") AND orders.o_orderpriority != Utf8("2-HIGH") THEN Int64(1) ELSE Int64(0) END) AS low_line_count'
+    style: projection
+    inputs:
+    - title: 'Aggregate: groupBy=[[lineitem.l_shipmode]], aggr=[[SUM(CASE WHEN orders.o_orderpriority = Utf8("1-URGENT") OR orders.o_orderpriority = Utf8("2-HIGH") THEN Int64(1) ELSE Int64(0) END), SUM(CASE WHEN orders.o_orderpriority != Utf8("1-URGENT") AND orders.o_orderpriority != Utf8("2-HIGH") THEN Int64(1) ELSE Int64(0) END)]]'
+      style: aggregate
+      inputs:
+      - title: 'Filter: orders.o_orderkey = lineitem.l_orderkey AND lineitem.l_shipmode IN ([Utf8("FOB"), Utf8("AIR")]) AND lineitem.l_commitdate < lineitem.l_receiptdate AND lineitem.l_shipdate < lineitem.l_commitdate AND lineitem.l_receiptdate >= CAST(Utf8("1994-01-01") AS Date32) AND lineitem.l_receiptdate < CAST(Utf8("1994-01-01") AS Date32) + IntervalYearMonth("12")'
+        style: filter
+        inputs:
+        - title: 'CrossJoin:'
+          style: crossjoin
+          inputs:
+          - title: 'TableScan: orders'
+            style: tablescan
+          - title: 'TableScan: lineitem'
+            style: tablescan

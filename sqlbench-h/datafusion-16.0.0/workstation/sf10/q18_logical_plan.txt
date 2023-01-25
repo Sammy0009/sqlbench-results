@@ -1,0 +1,15 @@
+Limit: skip=0, fetch=100
+  Sort: orders.o_totalprice DESC NULLS FIRST, orders.o_orderdate ASC NULLS LAST
+    Projection: customer.c_name, customer.c_custkey, orders.o_orderkey, orders.o_orderdate, orders.o_totalprice, SUM(lineitem.l_quantity)
+      Aggregate: groupBy=[[customer.c_name, customer.c_custkey, orders.o_orderkey, orders.o_orderdate, orders.o_totalprice]], aggr=[[SUM(lineitem.l_quantity)]]
+        Filter: orders.o_orderkey IN (<subquery>) AND customer.c_custkey = orders.o_custkey AND orders.o_orderkey = lineitem.l_orderkey
+          Subquery:
+            Projection: lineitem.l_orderkey
+              Filter: SUM(lineitem.l_quantity) > Int64(312)
+                Aggregate: groupBy=[[lineitem.l_orderkey]], aggr=[[SUM(lineitem.l_quantity)]]
+                  TableScan: lineitem
+          CrossJoin:
+            CrossJoin:
+              TableScan: customer
+              TableScan: orders
+            TableScan: lineitem

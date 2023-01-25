@@ -1,0 +1,17 @@
+diagram:
+  title: 'Projection: SUM(lineitem.l_extendedprice) / Float64(7) AS avg_yearly'
+  style: projection
+  inputs:
+  - title: 'Aggregate: groupBy=[[]], aggr=[[SUM(lineitem.l_extendedprice)]]'
+    style: aggregate
+    inputs:
+    - title: 'Filter: part.p_partkey = lineitem.l_partkey AND part.p_brand = Utf8("Brand#51") AND part.p_container = Utf8("JUMBO BAG") AND lineitem.l_quantity < (<subquery>)'
+      style: filter
+      inputs:
+      - title: 'CrossJoin:'
+        style: crossjoin
+        inputs:
+        - title: 'TableScan: lineitem'
+          style: tablescan
+        - title: 'TableScan: part'
+          style: tablescan

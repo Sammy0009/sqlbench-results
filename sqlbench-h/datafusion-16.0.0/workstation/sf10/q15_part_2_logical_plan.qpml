@@ -1,0 +1,17 @@
+diagram:
+  title: 'Sort: supplier.s_suppkey ASC NULLS LAST'
+  style: sort
+  inputs:
+  - title: 'Projection: supplier.s_suppkey, supplier.s_name, supplier.s_address, supplier.s_phone, revenue0.total_revenue'
+    style: projection
+    inputs:
+    - title: 'Filter: supplier.s_suppkey = revenue0.supplier_no AND revenue0.total_revenue = (<subquery>)'
+      style: filter
+      inputs:
+      - title: 'CrossJoin:'
+        style: crossjoin
+        inputs:
+        - title: 'TableScan: supplier'
+          style: tablescan
+        - title: 'TableScan: revenue0'
+          style: tablescan

@@ -1,0 +1,35 @@
+diagram:
+  title: 'Limit: skip=0, fetch=100'
+  style: limit
+  inputs:
+  - title: 'Sort: supplier.s_acctbal DESC NULLS FIRST, nation.n_name ASC NULLS LAST, supplier.s_name ASC NULLS LAST, part.p_partkey ASC NULLS LAST'
+    style: sort
+    inputs:
+    - title: 'Projection: supplier.s_acctbal, supplier.s_name, nation.n_name, part.p_partkey, part.p_mfgr, supplier.s_address, supplier.s_phone, supplier.s_comment'
+      style: projection
+      inputs:
+      - title: 'Filter: part.p_partkey = partsupp.ps_partkey AND supplier.s_suppkey = partsupp.ps_suppkey AND part.p_size = Int64(8) AND part.p_type LIKE Utf8("%BRASS") AND supplier.s_nationkey = nation.n_nationkey AND nation.n_regionkey = region.r_regionkey AND region.r_name = Utf8("EUROPE") AND partsupp.ps_supplycost = (<subquery>)'
+        style: filter
+        inputs:
+        - title: 'CrossJoin:'
+          style: crossjoin
+          inputs:
+          - title: 'CrossJoin:'
+            style: crossjoin
+            inputs:
+            - title: 'CrossJoin:'
+              style: crossjoin
+              inputs:
+              - title: 'CrossJoin:'
+                style: crossjoin
+                inputs:
+                - title: 'TableScan: part'
+                  style: tablescan
+                - title: 'TableScan: supplier'
+                  style: tablescan
+              - title: 'TableScan: partsupp'
+                style: tablescan
+            - title: 'TableScan: nation'
+              style: tablescan
+          - title: 'TableScan: region'
+            style: tablescan

@@ -1,0 +1,24 @@
+Limit: skip=0, fetch=100
+  Sort: supplier.s_acctbal DESC NULLS FIRST, nation.n_name ASC NULLS LAST, supplier.s_name ASC NULLS LAST, part.p_partkey ASC NULLS LAST
+    Projection: supplier.s_acctbal, supplier.s_name, nation.n_name, part.p_partkey, part.p_mfgr, supplier.s_address, supplier.s_phone, supplier.s_comment
+      Filter: part.p_partkey = partsupp.ps_partkey AND supplier.s_suppkey = partsupp.ps_suppkey AND part.p_size = Int64(8) AND part.p_type LIKE Utf8("%BRASS") AND supplier.s_nationkey = nation.n_nationkey AND nation.n_regionkey = region.r_regionkey AND region.r_name = Utf8("EUROPE") AND partsupp.ps_supplycost = (<subquery>)
+        Subquery:
+          Projection: MIN(partsupp.ps_supplycost)
+            Aggregate: groupBy=[[]], aggr=[[MIN(partsupp.ps_supplycost)]]
+              Filter: part.p_partkey = partsupp.ps_partkey AND supplier.s_suppkey = partsupp.ps_suppkey AND supplier.s_nationkey = nation.n_nationkey AND nation.n_regionkey = region.r_regionkey AND region.r_name = Utf8("EUROPE")
+                CrossJoin:
+                  CrossJoin:
+                    CrossJoin:
+                      TableScan: partsupp
+                      TableScan: supplier
+                    TableScan: nation
+                  TableScan: region
+        CrossJoin:
+          CrossJoin:
+            CrossJoin:
+              CrossJoin:
+                TableScan: part
+                TableScan: supplier
+              TableScan: partsupp
+            TableScan: nation
+          TableScan: region

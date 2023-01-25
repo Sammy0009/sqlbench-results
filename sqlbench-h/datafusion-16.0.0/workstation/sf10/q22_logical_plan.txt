@@ -1,0 +1,16 @@
+Sort: custsale.cntrycode ASC NULLS LAST
+  Projection: custsale.cntrycode, COUNT(UInt8(1)) AS numcust, SUM(custsale.c_acctbal) AS totacctbal
+    Aggregate: groupBy=[[custsale.cntrycode]], aggr=[[COUNT(UInt8(1)), SUM(custsale.c_acctbal)]]
+      SubqueryAlias: custsale
+        Projection: substr(customer.c_phone, Int64(1), Int64(2)) AS cntrycode, customer.c_acctbal
+          Filter: substr(customer.c_phone, Int64(1), Int64(2)) IN ([Utf8("29"), Utf8("22"), Utf8("27"), Utf8("10"), Utf8("18"), Utf8("24"), Utf8("30")]) AND customer.c_acctbal > (<subquery>) AND NOT EXISTS (<subquery>)
+            Subquery:
+              Projection: AVG(customer.c_acctbal)
+                Aggregate: groupBy=[[]], aggr=[[AVG(customer.c_acctbal)]]
+                  Filter: customer.c_acctbal > Float64(0) AND substr(customer.c_phone, Int64(1), Int64(2)) IN ([Utf8("29"), Utf8("22"), Utf8("27"), Utf8("10"), Utf8("18"), Utf8("24"), Utf8("30")])
+                    TableScan: customer
+            Subquery:
+              Projection: orders.o_orderkey, orders.o_custkey, orders.o_orderstatus, orders.o_totalprice, orders.o_orderdate, orders.o_orderpriority, orders.o_clerk, orders.o_shippriority, orders.o_comment
+                Filter: orders.o_custkey = customer.c_custkey
+                  TableScan: orders
+            TableScan: customer

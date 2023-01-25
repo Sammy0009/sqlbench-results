@@ -1,0 +1,29 @@
+diagram:
+  title: 'Sort: custdist DESC NULLS FIRST, c_count DESC NULLS FIRST'
+  style: sort
+  inputs:
+  - title: 'Projection: c_count, COUNT(UInt8(1)) AS custdist'
+    style: projection
+    inputs:
+    - title: 'Aggregate: groupBy=[[c_count]], aggr=[[COUNT(UInt8(1))]]'
+      style: aggregate
+      inputs:
+      - title: 'Projection: c_orders.c_custkey AS c_custkey, c_orders.COUNT(orders.o_orderkey) AS c_count'
+        style: projection
+        inputs:
+        - title: 'SubqueryAlias: c_orders'
+          style: subqueryalias
+          inputs:
+          - title: 'Projection: customer.c_custkey, COUNT(orders.o_orderkey)'
+            style: projection
+            inputs:
+            - title: 'Aggregate: groupBy=[[customer.c_custkey]], aggr=[[COUNT(orders.o_orderkey)]]'
+              style: aggregate
+              inputs:
+              - title: 'Left Join:  Filter: customer.c_custkey = orders.o_custkey AND orders.o_comment NOT LIKE Utf8("%special%requests%")'
+                style: left join
+                inputs:
+                - title: 'TableScan: customer'
+                  style: tablescan
+                - title: 'TableScan: orders'
+                  style: tablescan

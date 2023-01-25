@@ -1,0 +1,36 @@
+diagram:
+  title: 'Limit: skip=0, fetch=100'
+  style: limit
+  inputs:
+  - title: 'Sort: numwait DESC NULLS FIRST, supplier.s_name ASC NULLS LAST'
+    style: sort
+    inputs:
+    - title: 'Projection: supplier.s_name, COUNT(UInt8(1)) AS numwait'
+      style: projection
+      inputs:
+      - title: 'Aggregate: groupBy=[[supplier.s_name]], aggr=[[COUNT(UInt8(1))]]'
+        style: aggregate
+        inputs:
+        - title: 'Filter: supplier.s_suppkey = l1.l_suppkey AND orders.o_orderkey = l1.l_orderkey AND orders.o_orderstatus = Utf8("F") AND l1.l_receiptdate > l1.l_commitdate AND EXISTS (<subquery>) AND NOT EXISTS (<subquery>) AND supplier.s_nationkey = nation.n_nationkey AND nation.n_name = Utf8("ROMANIA")'
+          style: filter
+          inputs:
+          - title: 'CrossJoin:'
+            style: crossjoin
+            inputs:
+            - title: 'CrossJoin:'
+              style: crossjoin
+              inputs:
+              - title: 'CrossJoin:'
+                style: crossjoin
+                inputs:
+                - title: 'TableScan: supplier'
+                  style: tablescan
+                - title: 'SubqueryAlias: l1'
+                  style: subqueryalias
+                  inputs:
+                  - title: 'TableScan: lineitem'
+                    style: tablescan
+              - title: 'TableScan: orders'
+                style: tablescan
+            - title: 'TableScan: nation'
+              style: tablescan
