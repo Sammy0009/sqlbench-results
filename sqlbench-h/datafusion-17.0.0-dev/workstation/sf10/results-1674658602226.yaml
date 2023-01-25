@@ -1,0 +1,230 @@
+{
+  "system_time": 1674658602226,
+  "datafusion_version": "16.0.0",
+  "datafusion_github_sha": null,
+  "config": {
+    "datafusion.catalog.information_schema": "false",
+    "datafusion.explain.physical_plan_only": "false",
+    "datafusion.optimizer.repartition_aggregations": "true",
+    "datafusion.optimizer.top_down_join_key_reordering": "true",
+    "datafusion.execution.parquet.skip_metadata": "true",
+    "datafusion.optimizer.max_passes": "3",
+    "datafusion.catalog.default_catalog": "datafusion",
+    "datafusion.catalog.has_header": "false",
+    "datafusion.execution.parquet.pushdown_filters": "true",
+    "datafusion.execution.coalesce_batches": "true",
+    "datafusion.execution.time_zone": "+00:00",
+    "datafusion.execution.parquet.reorder_filters": "true",
+    "datafusion.optimizer.enable_round_robin_repartition": "true",
+    "datafusion.execution.target_partitions": "24",
+    "datafusion.catalog.create_default_catalog_and_schema": "true",
+    "datafusion.execution.collect_statistics": "false",
+    "datafusion.optimizer.repartition_joins": "true",
+    "datafusion.optimizer.filter_null_join_keys": "true",
+    "datafusion.optimizer.skip_failed_rules": "true",
+    "datafusion.execution.batch_size": "8192",
+    "datafusion.optimizer.prefer_hash_join": "true",
+    "datafusion.optimizer.hash_join_single_partition_threshold": "1048576",
+    "datafusion.explain.logical_plan_only": "false",
+    "datafusion.execution.parquet.pruning": "true",
+    "datafusion.execution.parquet.enable_page_index": "true",
+    "datafusion.optimizer.repartition_windows": "true",
+    "datafusion.catalog.default_schema": "public"
+  },
+  "command_line_args": [
+    "/home/andy/git/sql-benchmarks/sqlbench-runners/datafusion//target/release/sqlbench-datafusion",
+    "--concurrency",
+    "24",
+    "--config-path",
+    "./default-configs.properties",
+    "--data-path",
+    "/mnt/bigdata/tpch/sf10-parquet/",
+    "--query-path",
+    "/home/andy/git/sql-benchmarks/sqlbench-h/queries/sf=10/",
+    "--iterations",
+    "3",
+    "--output",
+    "/home/andy/git/sql-benchmarks/sqlbench-results/sqlbench-h/datafusion-17.0.0-dev/workstation/sf10/",
+    "--num-queries",
+    "22"
+  ],
+  "register_tables_time": 22,
+  "query_times": [
+    [
+      1,
+      [
+        1951,
+        1553,
+        1628
+      ]
+    ],
+    [
+      2,
+      [
+        504,
+        392,
+        382
+      ]
+    ],
+    [
+      3,
+      [
+        1142,
+        1127,
+        1131
+      ]
+    ],
+    [
+      4,
+      [
+        917,
+        901,
+        908
+      ]
+    ],
+    [
+      5,
+      [
+        2248,
+        2236,
+        2237
+      ]
+    ],
+    [
+      6,
+      [
+        411,
+        386,
+        366
+      ]
+    ],
+    [
+      7,
+      [
+        4368,
+        4169,
+        4007
+      ]
+    ],
+    [
+      8,
+      [
+        1870,
+        1792,
+        1771
+      ]
+    ],
+    [
+      9,
+      [
+        3487,
+        3546,
+        3403
+      ]
+    ],
+    [
+      10,
+      [
+        1093,
+        1077,
+        1102
+      ]
+    ],
+    [
+      11,
+      [
+        589,
+        588,
+        595
+      ]
+    ],
+    [
+      12,
+      [
+        890,
+        908,
+        860
+      ]
+    ],
+    [
+      13,
+      [
+        1873,
+        1871,
+        1793
+      ]
+    ],
+    [
+      14,
+      [
+        359,
+        370,
+        371
+      ]
+    ],
+    [
+      15,
+      [
+        1069,
+        1091,
+        1095
+      ]
+    ],
+    [
+      16,
+      [
+        657,
+        769,
+        591
+      ]
+    ],
+    [
+      17,
+      [
+        20215,
+        14351,
+        14401
+      ]
+    ],
+    [
+      18,
+      [
+        9453,
+        9713,
+        9811
+      ]
+    ],
+    [
+      19,
+      [
+        693,
+        596,
+        561
+      ]
+    ],
+    [
+      20,
+      [
+        2925,
+        3031,
+        2908
+      ]
+    ],
+    [
+      21,
+      [
+        5161,
+        5192,
+        5155
+      ]
+    ],
+    [
+      22,
+      [
+        1227,
+        1142,
+        1156
+      ]
+    ]
+  ]
+}

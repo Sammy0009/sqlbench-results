@@ -1,0 +1,4 @@
+Projection: SUM(lineitem.l_extendedprice * lineitem.l_discount) AS revenue
+  Aggregate: groupBy=[[]], aggr=[[SUM(lineitem.l_extendedprice * lineitem.l_discount)]]
+    Filter: lineitem.l_shipdate >= CAST(Utf8("1997-01-01") AS Date32) AND lineitem.l_shipdate < CAST(Utf8("1997-01-01") AS Date32) + IntervalYearMonth("12") AND lineitem.l_discount BETWEEN Float64(0.07) - Float64(0.01) AND Float64(0.07) + Float64(0.01) AND lineitem.l_quantity < Int64(25)
+      TableScan: lineitem

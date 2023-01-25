@@ -1,0 +1,10 @@
+Sort: supplier.s_suppkey ASC NULLS LAST
+  Projection: supplier.s_suppkey, supplier.s_name, supplier.s_address, supplier.s_phone, revenue0.total_revenue
+    Filter: supplier.s_suppkey = revenue0.supplier_no AND revenue0.total_revenue = (<subquery>)
+      Subquery:
+        Projection: MAX(revenue0.total_revenue)
+          Aggregate: groupBy=[[]], aggr=[[MAX(revenue0.total_revenue)]]
+            TableScan: revenue0
+      CrossJoin:
+        TableScan: supplier
+        TableScan: revenue0

@@ -1,0 +1,12 @@
+Limit: skip=0, fetch=20
+  Sort: revenue DESC NULLS FIRST
+    Projection: customer.c_custkey, customer.c_name, SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount) AS revenue, customer.c_acctbal, nation.n_name, customer.c_address, customer.c_phone, customer.c_comment
+      Aggregate: groupBy=[[customer.c_custkey, customer.c_name, customer.c_acctbal, customer.c_phone, nation.n_name, customer.c_address, customer.c_comment]], aggr=[[SUM(lineitem.l_extendedprice * (Int64(1) - lineitem.l_discount))]]
+        Filter: customer.c_custkey = orders.o_custkey AND lineitem.l_orderkey = orders.o_orderkey AND orders.o_orderdate >= CAST(Utf8("1993-03-01") AS Date32) AND orders.o_orderdate < CAST(Utf8("1993-03-01") AS Date32) + IntervalYearMonth("3") AND lineitem.l_returnflag = Utf8("R") AND customer.c_nationkey = nation.n_nationkey
+          CrossJoin:
+            CrossJoin:
+              CrossJoin:
+                TableScan: customer
+                TableScan: orders
+              TableScan: lineitem
+            TableScan: nation

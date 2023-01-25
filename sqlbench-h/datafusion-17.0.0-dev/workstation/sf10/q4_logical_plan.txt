@@ -1,0 +1,9 @@
+Sort: orders.o_orderpriority ASC NULLS LAST
+  Projection: orders.o_orderpriority, COUNT(UInt8(1)) AS order_count
+    Aggregate: groupBy=[[orders.o_orderpriority]], aggr=[[COUNT(UInt8(1))]]
+      Filter: orders.o_orderdate >= CAST(Utf8("1996-02-01") AS Date32) AND orders.o_orderdate < CAST(Utf8("1996-02-01") AS Date32) + IntervalYearMonth("3") AND EXISTS (<subquery>)
+        Subquery:
+          Projection: lineitem.l_orderkey, lineitem.l_partkey, lineitem.l_suppkey, lineitem.l_linenumber, lineitem.l_quantity, lineitem.l_extendedprice, lineitem.l_discount, lineitem.l_tax, lineitem.l_returnflag, lineitem.l_linestatus, lineitem.l_shipdate, lineitem.l_commitdate, lineitem.l_receiptdate, lineitem.l_shipinstruct, lineitem.l_shipmode, lineitem.l_comment
+            Filter: lineitem.l_orderkey = orders.o_orderkey AND lineitem.l_commitdate < lineitem.l_receiptdate
+              TableScan: lineitem
+        TableScan: orders
