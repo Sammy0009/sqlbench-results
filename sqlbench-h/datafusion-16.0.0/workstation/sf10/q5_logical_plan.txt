@@ -1,15 +1,16 @@
 Sort: revenue DESC NULLS FIRST
   Projection: nation.n_name, SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount) AS revenue
-    Aggregate: groupBy=[[nation.n_name]], aggr=[[SUM(lineitem.l_extendedprice * (Int64(1) - lineitem.l_discount))]]
-      Filter: customer.c_custkey = orders.o_custkey AND lineitem.l_orderkey = orders.o_orderkey AND lineitem.l_suppkey = supplier.s_suppkey AND customer.c_nationkey = supplier.s_nationkey AND supplier.s_nationkey = nation.n_nationkey AND nation.n_regionkey = region.r_regionkey AND region.r_name = Utf8("AFRICA") AND orders.o_orderdate >= CAST(Utf8("1997-01-01") AS Date32) AND orders.o_orderdate < CAST(Utf8("1997-01-01") AS Date32) + IntervalYearMonth("12")
-        CrossJoin:
-          CrossJoin:
-            CrossJoin:
-              CrossJoin:
-                CrossJoin:
-                  TableScan: customer
-                  TableScan: orders
-                TableScan: lineitem
-              TableScan: supplier
-            TableScan: nation
-          TableScan: region
+    Aggregate: groupBy=[[nation.n_name]], aggr=[[SUM(CAST(lineitem.l_extendedprice AS Decimal128(35, 4)) * CAST(Decimal128(Some(100),23,2) - CAST(lineitem.l_discount AS Decimal128(23, 2)) AS Decimal128(35, 4))) AS SUM(lineitem.l_extendedprice * Int64(1) - lineitem.l_discount)]]
+      Inner Join: nation.n_regionkey = region.r_regionkey
+        Inner Join: supplier.s_nationkey = nation.n_nationkey
+          Inner Join: lineitem.l_suppkey = supplier.s_suppkey, customer.c_nationkey = supplier.s_nationkey
+            Inner Join: orders.o_orderkey = lineitem.l_orderkey
+              Inner Join: customer.c_custkey = orders.o_custkey
+                TableScan: customer projection=[c_custkey, c_nationkey]
+                Filter: orders.o_orderdate >= Date32("9862") AND orders.o_orderdate < Date32("10227")
+                  TableScan: orders projection=[o_orderkey, o_custkey, o_orderdate], partial_filters=[orders.o_orderdate >= Date32("9862"), orders.o_orderdate < Date32("10227")]
+              TableScan: lineitem projection=[l_orderkey, l_suppkey, l_extendedprice, l_discount]
+            TableScan: supplier projection=[s_suppkey, s_nationkey]
+          TableScan: nation projection=[n_nationkey, n_name, n_regionkey]
+        Filter: region.r_name = Utf8("AFRICA")
+          TableScan: region projection=[r_regionkey, r_name], partial_filters=[region.r_name = Utf8("AFRICA")]

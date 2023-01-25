@@ -1,35 +1,35 @@
 {
-  "system_time": 1674658602226,
-  "datafusion_version": "16.0.0",
+  "system_time": 1674661303512,
+  "datafusion_version": "16.1.0",
   "datafusion_github_sha": null,
   "config": {
-    "datafusion.catalog.information_schema": "false",
-    "datafusion.explain.physical_plan_only": "false",
-    "datafusion.optimizer.repartition_aggregations": "true",
-    "datafusion.optimizer.top_down_join_key_reordering": "true",
+    "datafusion.execution.target_partitions": "24",
     "datafusion.execution.parquet.skip_metadata": "true",
-    "datafusion.optimizer.max_passes": "3",
-    "datafusion.catalog.default_catalog": "datafusion",
+    "datafusion.catalog.default_schema": "public",
+    "datafusion.optimizer.repartition_windows": "true",
     "datafusion.catalog.has_header": "false",
     "datafusion.execution.parquet.pushdown_filters": "true",
+    "datafusion.optimizer.repartition_aggregations": "true",
+    "datafusion.catalog.information_schema": "false",
     "datafusion.execution.coalesce_batches": "true",
-    "datafusion.execution.time_zone": "+00:00",
-    "datafusion.execution.parquet.reorder_filters": "true",
-    "datafusion.optimizer.enable_round_robin_repartition": "true",
-    "datafusion.execution.target_partitions": "24",
-    "datafusion.catalog.create_default_catalog_and_schema": "true",
-    "datafusion.execution.collect_statistics": "false",
-    "datafusion.optimizer.repartition_joins": "true",
-    "datafusion.optimizer.filter_null_join_keys": "true",
-    "datafusion.optimizer.skip_failed_rules": "true",
     "datafusion.execution.batch_size": "8192",
+    "datafusion.catalog.create_default_catalog_and_schema": "true",
     "datafusion.optimizer.prefer_hash_join": "true",
-    "datafusion.optimizer.hash_join_single_partition_threshold": "1048576",
+    "datafusion.execution.collect_statistics": "false",
+    "datafusion.optimizer.filter_null_join_keys": "true",
+    "datafusion.optimizer.top_down_join_key_reordering": "true",
     "datafusion.explain.logical_plan_only": "false",
+    "datafusion.execution.parquet.reorder_filters": "true",
+    "datafusion.optimizer.repartition_joins": "true",
+    "datafusion.optimizer.skip_failed_rules": "true",
+    "datafusion.optimizer.max_passes": "3",
+    "datafusion.catalog.default_catalog": "datafusion",
+    "datafusion.explain.physical_plan_only": "false",
+    "datafusion.optimizer.enable_round_robin_repartition": "true",
+    "datafusion.optimizer.hash_join_single_partition_threshold": "1048576",
     "datafusion.execution.parquet.pruning": "true",
     "datafusion.execution.parquet.enable_page_index": "true",
-    "datafusion.optimizer.repartition_windows": "true",
-    "datafusion.catalog.default_schema": "public"
+    "datafusion.execution.time_zone": "+00:00"
   },
   "command_line_args": [
     "/home/andy/git/sql-benchmarks/sqlbench-runners/datafusion//target/release/sqlbench-datafusion",
@@ -44,7 +44,7 @@
     "--iterations",
     "3",
     "--output",
-    "/home/andy/git/sql-benchmarks/sqlbench-results/sqlbench-h/datafusion-17.0.0-dev/workstation/sf10/",
+    "/home/andy/git/sql-benchmarks/sqlbench-results/sqlbench-h/datafusion-16.0.0/workstation/sf10/",
     "--num-queries",
     "22"
   ],
@@ -53,177 +53,177 @@
     [
       1,
       [
-        1951,
-        1553,
-        1628
+        1501,
+        1479,
+        1532
       ]
     ],
     [
       2,
       [
-        504,
-        392,
-        382
+        634,
+        385,
+        364
       ]
     ],
     [
       3,
       [
-        1142,
-        1127,
-        1131
+        1130,
+        1070,
+        1072
       ]
     ],
     [
       4,
       [
-        917,
-        901,
-        908
+        834,
+        783,
+        793
       ]
     ],
     [
       5,
       [
-        2248,
-        2236,
-        2237
+        1995,
+        1926,
+        2166
       ]
     ],
     [
       6,
       [
-        411,
-        386,
-        366
+        435,
+        393,
+        382
       ]
     ],
     [
       7,
       [
-        4368,
-        4169,
-        4007
+        4087,
+        4003,
+        4138
       ]
     ],
     [
       8,
       [
-        1870,
-        1792,
-        1771
+        1637,
+        1546,
+        1629
       ]
     ],
     [
       9,
       [
-        3487,
-        3546,
-        3403
+        3113,
+        3299,
+        3367
       ]
     ],
     [
       10,
       [
-        1093,
-        1077,
-        1102
+        1095,
+        1134,
+        1075
       ]
     ],
     [
       11,
       [
-        589,
-        588,
-        595
+        581,
+        584,
+        582
       ]
     ],
     [
       12,
       [
-        890,
-        908,
-        860
+        1005,
+        923,
+        933
       ]
     ],
     [
       13,
       [
-        1873,
-        1871,
-        1793
+        1819,
+        1904,
+        1751
       ]
     ],
     [
       14,
       [
-        359,
-        370,
-        371
+        414,
+        394,
+        368
       ]
     ],
     [
       15,
       [
-        1069,
-        1091,
-        1095
+        1354,
+        1311,
+        1338
       ]
     ],
     [
       16,
       [
-        657,
-        769,
-        591
+        758,
+        567,
+        602
       ]
     ],
     [
       17,
       [
-        20215,
-        14351,
-        14401
+        28207,
+        18489,
+        16272
       ]
     ],
     [
       18,
       [
-        9453,
-        9713,
-        9811
+        11107,
+        11850,
+        14983
       ]
     ],
     [
       19,
       [
-        693,
-        596,
-        561
+        1376,
+        612,
+        586
       ]
     ],
     [
       20,
       [
-        2925,
-        3031,
-        2908
+        4373,
+        4345,
+        4227
       ]
     ],
     [
       21,
       [
-        5161,
-        5192,
-        5155
+        6229,
+        5373,
+        5735
       ]
     ],
     [
       22,
       [
-        1227,
-        1142,
-        1156
+        1176,
+        1100,
+        1146
       ]
     ]
   ]

@@ -1,11 +1,12 @@
-Projection: SUM(lineitem.l_extendedprice) / Float64(7) AS avg_yearly
+Projection: CAST(SUM(lineitem.l_extendedprice) AS Float64) / Float64(7) AS avg_yearly
   Aggregate: groupBy=[[]], aggr=[[SUM(lineitem.l_extendedprice)]]
-    Filter: part.p_partkey = lineitem.l_partkey AND part.p_brand = Utf8("Brand#51") AND part.p_container = Utf8("JUMBO BAG") AND lineitem.l_quantity < (<subquery>)
-      Subquery:
-        Projection: Float64(0.2) * AVG(lineitem.l_quantity)
-          Aggregate: groupBy=[[]], aggr=[[AVG(lineitem.l_quantity)]]
-            Filter: lineitem.l_partkey = part.p_partkey
-              TableScan: lineitem
-      CrossJoin:
-        TableScan: lineitem
-        TableScan: part
+    Filter: CAST(lineitem.l_quantity AS Decimal128(30, 15)) < CAST(__scalar_sq_14.__value AS Decimal128(30, 15))
+      Inner Join: part.p_partkey = __scalar_sq_14.l_partkey, lineitem.l_partkey = __scalar_sq_14.l_partkey
+        Inner Join: lineitem.l_partkey = part.p_partkey
+          TableScan: lineitem projection=[l_partkey, l_quantity, l_extendedprice]
+          Filter: part.p_brand = Utf8("Brand#51") AND part.p_container = Utf8("JUMBO BAG")
+            TableScan: part projection=[p_partkey, p_brand, p_container], partial_filters=[part.p_brand = Utf8("Brand#51"), part.p_container = Utf8("JUMBO BAG")]
+        SubqueryAlias: __scalar_sq_14
+          Projection: lineitem.l_partkey, Float64(0.2) * CAST(AVG(lineitem.l_quantity) AS Float64) AS __value
+            Aggregate: groupBy=[[lineitem.l_partkey]], aggr=[[AVG(lineitem.l_quantity)]]
+              TableScan: lineitem projection=[l_partkey, l_quantity]

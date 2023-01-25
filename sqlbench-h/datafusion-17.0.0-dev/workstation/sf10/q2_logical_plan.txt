@@ -1,24 +1,28 @@
 Limit: skip=0, fetch=100
-  Sort: supplier.s_acctbal DESC NULLS FIRST, nation.n_name ASC NULLS LAST, supplier.s_name ASC NULLS LAST, part.p_partkey ASC NULLS LAST
+  Sort: supplier.s_acctbal DESC NULLS FIRST, nation.n_name ASC NULLS LAST, supplier.s_name ASC NULLS LAST, part.p_partkey ASC NULLS LAST, fetch=100
     Projection: supplier.s_acctbal, supplier.s_name, nation.n_name, part.p_partkey, part.p_mfgr, supplier.s_address, supplier.s_phone, supplier.s_comment
-      Filter: part.p_partkey = partsupp.ps_partkey AND supplier.s_suppkey = partsupp.ps_suppkey AND part.p_size = Int64(8) AND part.p_type LIKE Utf8("%BRASS") AND supplier.s_nationkey = nation.n_nationkey AND nation.n_regionkey = region.r_regionkey AND region.r_name = Utf8("EUROPE") AND partsupp.ps_supplycost = (<subquery>)
-        Subquery:
-          Projection: MIN(partsupp.ps_supplycost)
-            Aggregate: groupBy=[[]], aggr=[[MIN(partsupp.ps_supplycost)]]
-              Filter: part.p_partkey = partsupp.ps_partkey AND supplier.s_suppkey = partsupp.ps_suppkey AND supplier.s_nationkey = nation.n_nationkey AND nation.n_regionkey = region.r_regionkey AND region.r_name = Utf8("EUROPE")
-                CrossJoin:
-                  CrossJoin:
-                    CrossJoin:
-                      TableScan: partsupp
-                      TableScan: supplier
-                    TableScan: nation
-                  TableScan: region
-        CrossJoin:
-          CrossJoin:
-            CrossJoin:
-              CrossJoin:
-                TableScan: part
-                TableScan: supplier
-              TableScan: partsupp
-            TableScan: nation
-          TableScan: region
+      Projection: part.p_partkey, part.p_mfgr, supplier.s_name, supplier.s_address, supplier.s_phone, supplier.s_acctbal, supplier.s_comment, nation.n_name
+        Inner Join: part.p_partkey = __scalar_sq_2.ps_partkey, partsupp.ps_supplycost = __scalar_sq_2.__value
+          Inner Join: nation.n_regionkey = region.r_regionkey
+            Inner Join: supplier.s_nationkey = nation.n_nationkey
+              Inner Join: partsupp.ps_suppkey = supplier.s_suppkey
+                Inner Join: part.p_partkey = partsupp.ps_partkey
+                  Filter: part.p_size = Int32(8) AND part.p_type LIKE Utf8("%BRASS")
+                    TableScan: part projection=[p_partkey, p_mfgr, p_type, p_size], partial_filters=[part.p_size = Int32(8), part.p_type LIKE Utf8("%BRASS")]
+                  TableScan: partsupp projection=[ps_partkey, ps_suppkey, ps_supplycost]
+                TableScan: supplier projection=[s_suppkey, s_name, s_address, s_nationkey, s_phone, s_acctbal, s_comment]
+              TableScan: nation projection=[n_nationkey, n_name, n_regionkey]
+            Filter: region.r_name = Utf8("EUROPE")
+              TableScan: region projection=[r_regionkey, r_name], partial_filters=[region.r_name = Utf8("EUROPE")]
+          SubqueryAlias: __scalar_sq_2
+            Projection: partsupp.ps_partkey, MIN(partsupp.ps_supplycost) AS __value
+              Filter: MIN(partsupp.ps_supplycost) IS NOT NULL
+                Aggregate: groupBy=[[partsupp.ps_partkey]], aggr=[[MIN(partsupp.ps_supplycost)]]
+                  Inner Join: nation.n_regionkey = region.r_regionkey
+                    Inner Join: supplier.s_nationkey = nation.n_nationkey
+                      Inner Join: partsupp.ps_suppkey = supplier.s_suppkey
+                        TableScan: partsupp projection=[ps_partkey, ps_suppkey, ps_supplycost]
+                        TableScan: supplier projection=[s_suppkey, s_nationkey]
+                      TableScan: nation projection=[n_nationkey, n_regionkey]
+                    Filter: region.r_name = Utf8("EUROPE")
+                      TableScan: region projection=[r_regionkey, r_name], partial_filters=[region.r_name = Utf8("EUROPE")]

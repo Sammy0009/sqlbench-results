@@ -1,35 +1,35 @@
 {
-  "system_time": 1674657331224,
+  "system_time": 1674660992352,
   "datafusion_version": "16.0.0",
   "datafusion_github_sha": null,
   "config": {
+    "datafusion.execution.parquet.enable_page_index": "true",
     "datafusion.catalog.has_header": "false",
-    "datafusion.explain.physical_plan_only": "false",
-    "datafusion.optimizer.prefer_hash_join": "true",
     "datafusion.execution.parquet.pruning": "true",
+    "datafusion.catalog.create_default_catalog_and_schema": "true",
+    "datafusion.catalog.information_schema": "false",
+    "datafusion.optimizer.repartition_windows": "true",
     "datafusion.optimizer.repartition_aggregations": "true",
-    "datafusion.optimizer.hash_join_single_partition_threshold": "1048576",
-    "datafusion.execution.parquet.pushdown_filters": "true",
-    "datafusion.execution.target_partitions": "24",
-    "datafusion.catalog.default_schema": "public",
-    "datafusion.execution.collect_statistics": "false",
-    "datafusion.execution.time_zone": "+00:00",
-    "datafusion.execution.coalesce_batches": "true",
-    "datafusion.execution.parquet.skip_metadata": "true",
     "datafusion.optimizer.enable_round_robin_repartition": "true",
+    "datafusion.execution.collect_statistics": "false",
+    "datafusion.optimizer.top_down_join_key_reordering": "true",
+    "datafusion.catalog.default_catalog": "datafusion",
+    "datafusion.catalog.default_schema": "public",
+    "datafusion.execution.parquet.pushdown_filters": "true",
+    "datafusion.execution.coalesce_batches": "true",
+    "datafusion.execution.parquet.reorder_filters": "true",
+    "datafusion.execution.batch_size": "8192",
+    "datafusion.execution.target_partitions": "24",
+    "datafusion.execution.time_zone": "+00:00",
+    "datafusion.execution.parquet.skip_metadata": "true",
     "datafusion.optimizer.filter_null_join_keys": "true",
     "datafusion.optimizer.repartition_joins": "true",
-    "datafusion.optimizer.repartition_windows": "true",
-    "datafusion.execution.batch_size": "8192",
-    "datafusion.execution.parquet.reorder_filters": "true",
-    "datafusion.catalog.default_catalog": "datafusion",
-    "datafusion.optimizer.skip_failed_rules": "true",
-    "datafusion.execution.parquet.enable_page_index": "true",
     "datafusion.optimizer.max_passes": "3",
-    "datafusion.optimizer.top_down_join_key_reordering": "true",
-    "datafusion.catalog.create_default_catalog_and_schema": "true",
+    "datafusion.optimizer.skip_failed_rules": "true",
+    "datafusion.optimizer.prefer_hash_join": "true",
+    "datafusion.optimizer.hash_join_single_partition_threshold": "1048576",
     "datafusion.explain.logical_plan_only": "false",
-    "datafusion.catalog.information_schema": "false"
+    "datafusion.explain.physical_plan_only": "false"
   },
   "command_line_args": [
     "/home/andy/git/sql-benchmarks/sqlbench-runners/datafusion//target/release/sqlbench-datafusion",
@@ -44,186 +44,186 @@
     "--iterations",
     "3",
     "--output",
-    "/home/andy/git/sql-benchmarks/sqlbench-results/sqlbench-h/datafusion-16.0.0/workstation/sf10/",
+    "/home/andy/git/sql-benchmarks/sqlbench-results/sqlbench-h/datafusion-17.0.0-dev/workstation/sf10/",
     "--num-queries",
     "22"
   ],
-  "register_tables_time": 23,
+  "register_tables_time": 22,
   "query_times": [
     [
       1,
       [
-        1320,
-        1299,
-        1299
+        1794,
+        1653,
+        1569
       ]
     ],
     [
       2,
       [
-        543,
-        381,
-        379
+        478,
+        415,
+        432
       ]
     ],
     [
       3,
       [
-        1132,
-        1015,
-        1010
+        1206,
+        1103,
+        1163
       ]
     ],
     [
       4,
       [
-        804,
-        800,
-        791
+        940,
+        904,
+        918
       ]
     ],
     [
       5,
       [
-        2032,
-        2127,
-        2046
+        2246,
+        2202,
+        2160
       ]
     ],
     [
       6,
       [
-        400,
-        402,
-        401
+        396,
+        391,
+        379
       ]
     ],
     [
       7,
       [
-        4149,
-        4166,
-        3957
+        4170,
+        3977,
+        4037
       ]
     ],
     [
       8,
       [
-        1617,
-        1638,
-        1662
+        1892,
+        1816,
+        1856
       ]
     ],
     [
       9,
       [
-        3252,
-        3011,
-        3102
+        3497,
+        3656,
+        3586
       ]
     ],
     [
       10,
       [
-        1047,
-        1072,
-        1050
+        1156,
+        1105,
+        1134
       ]
     ],
     [
       11,
       [
-        548,
-        563,
-        527
+        591,
+        606,
+        603
       ]
     ],
     [
       12,
       [
-        927,
-        909,
-        912
+        901,
+        885,
+        944
       ]
     ],
     [
       13,
       [
-        1701,
-        1696,
-        1703
+        1916,
+        1952,
+        1842
       ]
     ],
     [
       14,
       [
-        361,
-        391,
-        376
+        372,
+        376,
+        374
       ]
     ],
     [
       15,
       [
-        1329,
-        1263,
-        1226
+        1086,
+        1068,
+        1063
       ]
     ],
     [
       16,
       [
-        578,
-        525,
-        865
+        603,
+        650,
+        678
       ]
     ],
     [
       17,
       [
-        25151,
-        18566,
-        16575
+        21837,
+        15029,
+        13673
       ]
     ],
     [
       18,
       [
-        10758,
-        10447,
-        10277
+        10224,
+        10039,
+        10285
       ]
     ],
     [
       19,
       [
-        666,
-        603,
-        577
+        657,
+        557,
+        588
       ]
     ],
     [
       20,
       [
-        3716,
-        4389,
-        4005
+        2880,
+        3011,
+        2882
       ]
     ],
     [
       21,
       [
-        5220,
-        5075,
-        5249
+        5181,
+        5361,
+        5663
       ]
     ],
     [
       22,
       [
-        1129,
-        1165,
-        1155
+        1307,
+        1308,
+        1290
       ]
     ]
   ]
